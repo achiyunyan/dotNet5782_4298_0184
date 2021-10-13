@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Targil1
+namespace ConsoleUI
 {
     class Program
     {

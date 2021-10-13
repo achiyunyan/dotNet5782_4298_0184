@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mV2IZC4Bn/YJxoGLEsi7jbTyFgcb+PN5518OmPqTbTL8LNvAhL/oXc9ja+K0/lisE3Y9iPwEi+OdzgLUCyQTSQ==",
+  "dgSpecHash": "MX8qOuYWfqHLt2dUtnwJNkj+57W5IsWXvoSNk+3i/oxCOXfH061s09NW9R/amLLftLNSTw/tPz/fA4CIm9c6gw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\dotNet5782_4298_0184\\Targil1\\ConsoleUI.csproj",
+  "projectFilePath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\ConsoleUI\\ConsoleUI.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
