@@ -4,7 +4,7 @@ namespace IDAL
 {
     namespace DO
     {
-        enum
+        enum e{ };
     }
 }
 namespace DalObject
