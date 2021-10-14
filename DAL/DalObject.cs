@@ -43,13 +43,14 @@ namespace DalObject
         public int DroneId { set; get; }
         public int StationId { set; get; }
     }
-}
-        
-    
+
     struct Drone
         {
            public int Id { set; get; }
            public string Model { set; get; } 
-
+           public IDAL.DO.WeightCategories MaxWeight { set; get; }
+           public IDAL.DO.DroneStatus Status { set; get; }
+           public double Battery { set; get; }
         }
-   }
+
+}
