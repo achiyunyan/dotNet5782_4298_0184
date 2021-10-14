@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    class DataSource
+    struct Customer
+    { 
+        public int id { set; get; }
+        public string name { set; get; }
+        public string phone { set; get; }
+        public double longitude { set; get; }
+        public double latitude { set; get; 
+    }
+    struct parcel
     {
-
+        
     }
 }
