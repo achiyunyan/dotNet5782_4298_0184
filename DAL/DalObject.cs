@@ -45,11 +45,11 @@ namespace DalObject
     }
 }
         
-    }
+    
     struct Drone
         {
            public int Id { set; get; }
            public string Model { set; get; } 
-            public
+
         }
-    }
+   }
