@@ -44,3 +44,12 @@ namespace DalObject
         public int StationId { set; get; }
     }
 }
+        
+    }
+    struct Drone
+        {
+           public int Id { set; get; }
+           public string Model { set; get; } 
+            public
+        }
+    }
