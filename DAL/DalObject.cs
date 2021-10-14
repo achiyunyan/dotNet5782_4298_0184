@@ -6,8 +6,5 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    class DataSource
-    {
-
-    }
+    
 }
