@@ -28,15 +28,14 @@ namespace DalObject
         public DateTime Delivered { set; get; }
     }
     
-    struct Station
-
-}
-        
-    }
+    struct Station     
     struct Drone
         {
            public int Id { set; get; }
            public string Model { set; get; } 
-            public
+           public IDAL.DO.WeightCategories MaxWeight { set; get; }
+           public IDAL.DO.DroneStatus Status { set; get; }
+           public double Battery { set; get; }
         }
-    }
+        
+  }
