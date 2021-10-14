@@ -28,7 +28,24 @@ namespace DalObject
         public DateTime Delivered { set; get; }
     }
     
-    struct Station     
+    struct Station
+    {
+        public int Id { set; get; }
+        public int Name { set; get; }
+        public double Longitude { set; get; }
+        public double lattitude { set; get; }
+        public int ChargeSlots { set; get; }
+
+    }
+
+    struct DroneCharge
+    {
+        public int DroneId { set; get; }
+        public int StationId { set; get; }
+    }
+}
+        
+    }
     struct Drone
         {
            public int Id { set; get; }
