@@ -9,7 +9,10 @@
             public double Longitude { set; get; }
             public double lattitude { set; get; }
             public int ChargeSlots { set; get; }
-
+            public override string ToString()
+            {
+                return "Id: " + Id + " Name: " + Name + " Longitude: " + Longitude + " lattitude: " + lattitude + " ChargeSlots: " + ChargeSlots;
+            }
         }
     }
 }
