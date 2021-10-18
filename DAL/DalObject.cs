@@ -18,6 +18,9 @@ namespace DalObject
         {
             internal static void Initialize()
             {
+                Random rand = new Random();
+                int a = new int();
+                a = rand.Next();
                 //adds ranmdom data
             }
         }
