@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IDAL.DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,51 +7,19 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    struct Customer
-    { 
-        public int Id { set; get; }
-        public string Name { set; get; }
-        public string Phone { set; get; }
-        public double Longitude { set; get; }
-        public double Latitude { set; get; } 
-    }
-    struct parcel
+    public class DataSource
     {
-        public int Id { set; get; }
-        public int SenderId { set; get; }
-        public int TargetId { set; get; }
-        public IDAL.DO.WeightCategories Weight { set; get; }
-        public IDAL.DO.Priorities Priority { set; get; }
-        public DateTime Requested { set; get; }
-        public int DroneId { set; get; }
-        public DateTime Scheduled { set; get; }
-        public DateTime PickedUp { set; get; }
-        public DateTime Delivered { set; get; }
-    }
-    
-    struct Station
-    {
-        public int Id { set; get; }
-        public int Name { set; get; }
-        public double Longitude { set; get; }
-        public double lattitude { set; get; }
-        public int ChargeSlots { set; get; }
+        internal static List<Drone> Drones = new List<Drone>(10);
+        internal static List<Station> Stations = new List<Station>(5);
+        internal static List<Customer> Customers = new List<Customer>(100);
+        internal static List<Parcel> Parcels = new List<Parcel>(1000);
 
-    }
-
-    struct DroneCharge
-    {
-        public int DroneId { set; get; }
-        public int StationId { set; get; }
-    }
-
-    struct Drone
+        internal class Config
         {
-           public int Id { set; get; }
-           public string Model { set; get; } 
-           public IDAL.DO.WeightCategories MaxWeight { set; get; }
-           public IDAL.DO.DroneStatus Status { set; get; }
-           public double Battery { set; get; }
+            internal static void Initialize()
+            {
+                //adds ranmdom data
+            }
         }
-
+    }
 }

@@ -1,4 +1,9 @@
-﻿using System;
+﻿using IDAL.DO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ConsoleUI
 {
@@ -7,29 +12,33 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             int choise = new int();
-            Console.WriteLine("Insert the number of the action you would like to commit:\n");
-            Console.WriteLine("1.Options of adding \n"+
-                              "2.Options of updating\n"+
-                              "3.Options of display\n"+
-                              "4.options of lists' displaing\n"+
-                              "5.exit\n");
-           choise= InputCheck(5);
-           switch (choise)
+            choise = 0;
+            while (choise != 5)
             {
-                case 1:
-                    Adding();
-                    break;
-                case 2:
-                   Updating();
-                    break;
-                case 3:
-                    Displaying();
-                    break;
-                case 4:
-                    ListsView();
-                    break;
-                case 5:
-                    return;
+                Console.WriteLine("Insert the number of the action you would like to commit:\n");
+                Console.WriteLine("1.Options of adding \n" +
+                                  "2.Options of updating\n" +
+                                  "3.Options of display\n" +
+                                  "4.options of lists' displaing\n" +
+                                  "5.exit\n");
+                choise = InputCheck(5);
+                switch (choise)
+                {
+                    case 1:
+                        Adding();
+                        break;
+                    case 2:
+                        Updating();
+                        break;
+                    case 3:
+                        Displaying();
+                        break;
+                    case 4:
+                        ListsView();
+                        break;
+                    case 5:
+                       break;
+                }
             }
 
         }
