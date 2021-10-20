@@ -9,7 +9,7 @@ namespace ConsoleUI
     partial class Program
     {
 
-        static public void ListsPrint(int choise)
+        static public void ObjectPrint(int choise)
         {
             bool success = new bool();
             int tempId = new int();
@@ -48,6 +48,40 @@ namespace ConsoleUI
                     foreach (IDAL.DO.Parcel target in DalObject.DataSource.Parcel)
                     {
                         if (target.Id.Equals(choise))
+                            Console.WriteLine(target.ToString());
+                    }
+                    break;
+            }
+        }
+        static public void ListPrint(int choise)
+        {
+            switch (choise)
+            {
+                case 1://station
+                    Console.WriteLine("Stations:");
+                    foreach (IDAL.DO.Station target in DalObject.DataSource.Stations)
+                    {
+                            Console.WriteLine(target.ToString());
+                    }
+                    break;
+                case 2://drone
+                    Console.WriteLine("Drones:");
+                    foreach (IDAL.DO.Drone target in DalObject.DataSource.Drones)
+                    {
+                            Console.WriteLine(target.ToString());
+                    }
+                    break;
+                case 3://customer
+                    Console.WriteLine("Customers:");
+                    foreach (IDAL.DO.Customer target in DalObject.DataSource.Customer)
+                    {
+                            Console.WriteLine(target.ToString());
+                    }
+                    break;
+                case 4://parcel
+                    Console.WriteLine("Parcels:");
+                    foreach (IDAL.DO.Parcel target in DalObject.DataSource.Parcel)
+                    {
                             Console.WriteLine(target.ToString());
                     }
                     break;

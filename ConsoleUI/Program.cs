@@ -15,6 +15,7 @@ namespace ConsoleUI
             choise = 0;
             while (choise != 5)
             {
+                Console.Clear();
                 Console.WriteLine("Insert the number of the action you would like to commit:\n");
                 Console.WriteLine("1.Options of adding \n" +
                                   "2.Options of updating\n" +
@@ -100,7 +101,7 @@ namespace ConsoleUI
                               "5.List of non affiliated parcels\n"+
                               "6.List of stations where there are free charging hubs");
             choice = InputCheck(6);
-            ListsPrint(choice);
+            //ListsPrint(choice);
         }
     }
 }
