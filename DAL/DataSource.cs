@@ -21,20 +21,20 @@ namespace DalObject
                 RandomStations();
                 RandomDrones();
                 RandomCustomers();
-
+                RandomParcel();
             }
             private static void RandomStations()
             {
                 Random rand = new Random();
                 int size = new int();
-                size = rand.Next() % 4 + 2;
+                size = rand.Next(2,6);
                 for (int i = 0; i < size; i++)
                 {
                     Stations.Add(new Station
                     {
-                        Id = i,
-                        Name = rand.Next() % 100 + i * 100,
-                        ChargeSlots = rand.Next() % 3 + 1
+                        Id = rand.Next(10000,100000),
+                        Name = rand.Next(10000,100000),
+                        ChargeSlots = rand.Next(1,4)
                     });
                 }
             }
@@ -42,17 +42,17 @@ namespace DalObject
             {
                 Random rand = new Random();
                 int size = new int();
-                size = rand.Next() % 6 + 5;
+                size = rand.Next(5,11);
                 for (int i = 0; i < size; i++)
                 {
-                    int intMaxWeight = rand.Next() % 3;
+                    int intMaxWeight = rand.Next(3);
                     Drones.Add(new Drone
                     {
-                        Id = i,
+                        Id = rand.Next(10000,100000),
                         Model = "EX50" + (intMaxWeight + 1).ToString(),
-                        Battery = (rand.Next() % 101),
+                        Battery = (rand.Next(101)),
                         MaxWeight = (WeightCategories)intMaxWeight,
-                        Status = (DroneStatus)(rand.Next() % 3)
+                        Status = (DroneStatus)rand.Next(2)
                     }); 
                 }
             }
@@ -60,15 +60,15 @@ namespace DalObject
             {
                 Random rand = new Random();
                 int size = new int();
-                size = rand.Next() % 91 + 10;
+                size = rand.Next(10,100);
                 string []names = { "Adam", "Alex", "Aaron", "Ben", "Carl", "Dan", "David", "Edward", "Fred", "Frank", "George", "Hal", "Hank", "Ike", "John", "Jack", "Joe", "Larry", "Monte", "Matthew", "Mark", "Nathan", "Otto", "Paul", "Peter", "Roger", "Roger", "Steve", "Thomas", "Tim", "Ty", "Victor", "Walter", "Wiktor", "Wilkie", "Will", "William", "William-John", "Willum", "Wilson", "Windsor", "Wojciech", "Woyenbrakemi", "Wyatt", "Wylie", "Wynn", "Xabier", "Xander", "Xavier", "Xiao", "Xida", "Xin", "Xue", "Yadgor", "Yago", "Yahya", "Yakup", "Yang", "Yanick", "Yann", "Yannick", "Yaseen", "Yasin", "Yasir", "Yassin", "Yoji", "Yong", "Yoolgeun", "Yorgos", "Youcef", "Yousif", "Youssef", "Yu", "Yuanyu", "Yuri", "Yusef", "Yusuf", "Yves", "Zaaine", "Zaak", "Zac", "Zach", "Zachariah", "Zacharias", "Zacharie", "Zacharius", "Zachariya", "Zachary", "Zachary-Marc", "Zachery", "Zack", "Zackary", "Zaid", "Zain", "Zaine", "Miguel", "Mika", "Mikael", "Mikee", "Mikey", "Mikhail", "Mikolaj", "Miles", "Millar", "Miller", "Milo", "Milos", "Milosz", "Mir", "Mirza", "Mitch", "Mitchel", "Mitchell", "Moad", "Moayd", "Mobeen", "Modoulamin", "Modu", "Mohamad", "Mohamed", "Mohammad", "Mohammad-Bilal", "Mohammed", "Mohanad", "Mohd", "Momin", "Momooreoluwa", "Montague", "Montgomery", "Monty" };
                 for (int i = 0; i < size; i++)
                 {
                     Customers.Add(new Customer
                     {
-                        Id = rand.Next() % 1000000000,
-                        Name = names[rand.Next() % names.Length],
-                        Phone = "05" + (rand.Next() % 100000000).ToString(),
+                        Id = rand.Next(1000000000),
+                        Name = names[rand.Next(names.Length)],
+                        Phone = "0" + (rand.Next(100000000) + 5000000000 ).ToString(),
                     });
                 }
             }
@@ -77,16 +77,18 @@ namespace DalObject
             {
                 Random rand = new Random();
                 int size = new int();
-                size = rand.Next() % 991 + 10;
+                size = rand.Next(10,1000);
                 for (int i = 0; i < size; i++)
                 {
                     Parcels.Add(new Parcel
                     {
-                        Id = rand.Next() % 1000000000,
-                        SenderId = Customers[rand.Next() % Customers.Count].Id,
-                        TargetId = Customers[rand.Next() % Customers.Count].Id,
-                        Weight = (WeightCategories)(rand.Next() % 3),
-
+                        Id = i,
+                        SenderId = Customers[rand.Next(Customers.Count)].Id,
+                        TargetId = Customers[rand.Next(Customers.Count)].Id,
+                        Weight = (WeightCategories)rand.Next(3),
+                        Priority = (Priorities)rand.Next(3),
+                        DroneId = 0,
+                        Requested = DateTime.Now,
                     });
                 }
             }
