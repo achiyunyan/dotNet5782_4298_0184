@@ -8,9 +8,6 @@ namespace ConsoleUI
 {
     class Functions
     {
-        static public void listd()
-        {
-           IDAL.DO.Station.
-        }
+        5
     }
 }
