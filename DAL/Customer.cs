@@ -2,8 +2,9 @@
 {
     namespace DO
     {
-        struct Customer
+        public struct Customer
         {
+
             public int Id { set; get; }
             public string Name { set; get; }
             public string Phone { set; get; }

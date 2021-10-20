@@ -2,7 +2,7 @@
 {
     namespace DO
     {
-        struct Station
+        public struct Station
         {
             public int Id { set; get; }
             public int Name { set; get; }
