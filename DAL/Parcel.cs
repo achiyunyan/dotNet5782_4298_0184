@@ -18,9 +18,16 @@ namespace IDAL
             public DateTime Delivered { set; get; }
             public override string ToString()
             {
-                return "Id: " + Id + " Sender Id: " + SenderId + " Target Id: " + TargetId + " Weight: " + Weight +
-                    "\nPriority: " + Priority + " Requested time: " + Requested.ToString() + " Drone Id: " + DroneId +
-                    "\nScheduled time: " + Scheduled.ToString() + " PickedUp time: " + PickedUp.ToString() + "Delivery time: " + Delivered.ToString();
+                return $" Parcel Id:        {Id}\n" +
+                       $" Sender Id:        {SenderId}\n" +
+                       $" Target Id:        {TargetId}\n" +
+                       $" Weight category:  {Weight}\n" +
+                       $" Priority:         {Priority}\n" +
+                       $" Drone Id:         {DroneId}\n" +
+                       $" Requested time:   {Requested}\n" +
+                       $" Scheduled time:   {Scheduled}\n" +
+                       $" PickedUp time:    {PickedUp}\n" +
+                       $" Delivery time:    {Delivered}\n";
             }
         }
     }

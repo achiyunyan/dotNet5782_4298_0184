@@ -5,13 +5,16 @@
         public struct Station
         {
             public int Id { set; get; }
-            public int Name { set; get; }
+            public string Name { set; get; }
             public double Longitude { set; get; }
-            public double lattitude { set; get; }
+            public double Latitude { set; get; }
             public int ChargeSlots { set; get; }
             public override string ToString()
             {
-                return "Id: " + Id + " Name: " + Name + " location: (" + Longitude + ", " + lattitude + ") ChargeSlots: " + ChargeSlots;
+                return $" Station Id:       {Id}\n" +
+                       $" Name:             {Name}\n" +
+                       $" Location:         ({Latitude},{Longitude})\n" +
+                       $" Charge Slots:     {ChargeSlots}\n";
             }
         }
     }

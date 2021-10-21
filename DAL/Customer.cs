@@ -12,8 +12,10 @@
             public double Latitude { set; get; }
             public override string ToString()
             {
-                return "Id: " + Id + " Name: " + Name + " Phone: " + Phone + 
-                    "\nLongitude: " + Longitude + " Latitude: " + Latitude;
+                return $" Customer Id:       {Id}\n" +
+                       $" Name:              {Name}\n" +
+                       $" Phone number:      {Phone}\n" +
+                       $" Location:          ({Latitude},{Longitude})\n";
             }
         }
     }
