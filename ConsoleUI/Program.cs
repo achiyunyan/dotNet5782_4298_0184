@@ -11,6 +11,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            DalObject.DalObject dataBase = new DalObject.DalObject();
             int choise = new int();
             choise = 0;
             while (choise != 5)
@@ -41,7 +42,6 @@ namespace ConsoleUI
                        break;
                 }
             }
-
         }
         static int InputCheck(int max)
         {
