@@ -14,15 +14,12 @@ namespace DalObject
         {
             DataSource.Config.Initialize();
         }
-        static public Station GetStation()
+        static public Station GetStation(int id)
         {
-            int tempId = new int();
             Station targ = new Station();
-            Console.WriteLine("Enter the id of the station you would like to see:");
-            Int32.TryParse(Console.ReadLine(), out tempId);
             foreach (Station target in DataSource.Stations)
             {
-                if (target.Id.Equals(tempId))
+                if (target.Id.Equals(id))
                     return target;
             }
             return targ;

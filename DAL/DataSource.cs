@@ -9,16 +9,16 @@ namespace DalObject
 {
     public class DataSource
     {
-        internal static List<Drone> Drones = new List<Drone>(10);
-        internal static List<Station> Stations = new List<Station>(5);
-        internal static List<Customer> Customers = new List<Customer>(100);
-        internal static List<Parcel> Parcels = new List<Parcel>(1000);
+        internal static List<Drone> Drones = new List<Drone>();
+        internal static List<Station> Stations = new List<Station>();
+        internal static List<Customer> Customers = new List<Customer>();
+        internal static List<Parcel> Parcels = new List<Parcel>();
 
-        internal class Config
+        private static Random rand = new Random();
+        internal static class Config
         {
-            private static int parcelNum;
-            private static string[] names = new string[] { "Adam", "Alex", "Aaron", "Ben", "Carl", "Dan", "David", "Edward", "Fred", "Frank", "George", "Hal", "Hank", "Ike", "John", "Jack", "Joe", "Larry", "Monte", "Matthew", "Mark", "Nathan", "Otto", "Paul", "Peter", "Roger", "Roger", "Steve", "Thomas", "Tim", "Ty", "Victor", "Walter", "Wiktor", "Wilkie", "Will", "William", "William-John", "Willum", "Wilson", "Windsor", "Wojciech", "Woyenbrakemi", "Wyatt", "Wylie", "Wynn", "Xabier", "Xander", "Xavier", "Xiao", "Xida", "Xin", "Xue", "Yadgor", "Yago", "Yahya", "Yakup", "Yang", "Yanick", "Yann", "Yannick", "Yaseen", "Yasin", "Yasir", "Yassin", "Yoji", "Yong", "Yoolgeun", "Yorgos", "Youcef", "Yousif", "Youssef", "Yu", "Yuanyu", "Yuri", "Yusef", "Yusuf", "Yves", "Zaaine", "Zaak", "Zac", "Zach", "Zachariya", "Zachary", "Zachary-Marc", "Zachery", "Zack", "Zackary", "Zaid", "Zain", "Zaine", "Miguel", "Mika", "Mikael", "Mikee", "Mikey", "Mikhail", "Mikolaj", "Miles", "Millar", "Miller", "Milo", "Milos", "Milosz", "Mir", "Mirza", "Mitch", "Mitchel", "Mitchell", "Moad", "Moayd", "Mobeen", "Modoulamin", "Modu", "Mohamad", "Mohamed", "Mohammad", "Mohammad-Bilal", "Mohammed", "Mohanad", "Mohd", "Momin", "Momooreoluwa", "Montague", "Montgomery", "Monty" };
-            internal Config() { parcelNum = 0; }
+            private static int parcelNum =0;
+ 
             internal static void Initialize()
             {
                 RandomStations();
@@ -28,17 +28,20 @@ namespace DalObject
             }
             private static void RandomStations()
             {
-                Random rand = new Random();
-                int size = new int();
-                size = rand.Next(2,6);
+                int size = rand.Next(2,6);
                 for (int i = 0; i < size; i++)
                 {
                     Stations.Add(new Station
                     {
-                        Id = rand.Next(10000,100000),
-                        Name = rand.Next(10000,100000),
-                        ChargeSlots = rand.Next(1,4)
-                    });
+                        Id = rand.Next(10000, 100000),
+                        Name = rand.Next(10000, 100000),
+                        ChargeSlots = rand.Next(1, 4),
+                        lattitude = rand.NextDouble() * (31.803392 - 31.746814) + 31.746814,
+                        //to finish...
+                    }) ;
+                  
+                    //31.746814, 35.167912
+                    //31.803392, 35.227046
                 }
             }
             private static void RandomDrones()

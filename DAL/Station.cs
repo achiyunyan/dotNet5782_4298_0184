@@ -11,7 +11,7 @@
             public int ChargeSlots { set; get; }
             public override string ToString()
             {
-                return "Id: " + Id + " Name: " + Name + " Longitude: " + Longitude + " lattitude: " + lattitude + " ChargeSlots: " + ChargeSlots;
+                return "Id: " + Id + " Name: " + Name + " location: (" + Longitude + ", " + lattitude + ") ChargeSlots: " + ChargeSlots;
             }
         }
     }
