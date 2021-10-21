@@ -11,10 +11,13 @@ namespace ConsoleUI
     {
         static public void ObjectPrint(int choise)
         {
+            int tempId=new int();
             switch (choise)
             {
                 case 1://station
-                    Console.WriteLine(DalObject.DalObject.GetStation().ToString());
+                    Console.WriteLine("Enter the id of the station you would like to see:");
+                    Int32.TryParse(Console.ReadLine(), out tempId);
+                    Console.WriteLine(DalObject.DalObject.GetStation(tempId).ToString());
                     break;
                 case 2://drone
                     Console.WriteLine(DalObject.DalObject.GetDrone().ToString());

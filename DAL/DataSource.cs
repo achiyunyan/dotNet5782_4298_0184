@@ -9,15 +9,16 @@ namespace DalObject
 {
     public class DataSource
     {
-        internal static List<Drone> Drones = new List<Drone>(10);
-        internal static List<Station> Stations = new List<Station>(5);
-        internal static List<Customer> Customers = new List<Customer>(100);
-        internal static List<Parcel> Parcels = new List<Parcel>(1000);
+        internal static List<Drone> Drones = new List<Drone>();
+        internal static List<Station> Stations = new List<Station>();
+        internal static List<Customer> Customers = new List<Customer>();
+        internal static List<Parcel> Parcels = new List<Parcel>();
 
-        internal class Config
+        private static Random rand = new Random();
+        internal static class Config
         {
-            private static int parcelNum;
-            internal Config() { parcelNum = 0; }
+            private static int parcelNum =0;
+ 
             internal static void Initialize()
             {
                 RandomStations();
@@ -27,17 +28,20 @@ namespace DalObject
             }
             private static void RandomStations()
             {
-                Random rand = new Random();
-                int size = new int();
-                size = rand.Next(2,6);
+                int size = rand.Next(2,6);
                 for (int i = 0; i < size; i++)
                 {
                     Stations.Add(new Station
                     {
-                        Id = rand.Next(10000,100000),
-                        Name = rand.Next(10000,100000),
-                        ChargeSlots = rand.Next(1,4)
-                    });
+                        Id = rand.Next(10000, 100000),
+                        Name = rand.Next(10000, 100000),
+                        ChargeSlots = rand.Next(1, 4),
+                        lattitude = rand.NextDouble() * (31.803392 - 31.746814) + 31.746814,
+                        //to finish...
+                    }) ;
+                  
+                    //31.746814, 35.167912
+                    //31.803392, 35.227046
                 }
             }
             private static void RandomDrones()
