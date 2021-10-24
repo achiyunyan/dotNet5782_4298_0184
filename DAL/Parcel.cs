@@ -25,9 +25,9 @@ namespace IDAL
                        $" Priority:         {Priority}\n" +
                        $" Drone Id:         {DroneId}\n" +
                        $" Requested time:   {Requested}\n" +
-                       $" Scheduled time:   {Scheduled}\n" +
-                       $" PickedUp time:    {PickedUp}\n" +
-                       $" Delivery time:    {Delivered}\n";
+                       ((Scheduled == DateTime.MinValue) ? "" : $" Scheduled time:   {Scheduled}\n") +
+                       ((PickedUp == DateTime.MinValue) ? "" : $" PickedUp time:    {PickedUp}\n") +
+                       ((Delivered == DateTime.MinValue) ? "" : $" Delivery time:    {Delivered}\n");
             }
         }
     }
