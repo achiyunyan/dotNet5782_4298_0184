@@ -88,7 +88,7 @@ namespace ConsoleUI
                               "3.Displaying a customer\n" +
                               "4.Displaying a parcel\n");
             choice = InputCheck(4);
-            //add the results of choose and funcs so it will actualy do something...
+            ObjectPrint(choice);
         }
         static void ListsView()
         {
@@ -98,10 +98,10 @@ namespace ConsoleUI
                               "2.List of drones\n" +
                               "3.List of the customers \n" +
                               "4.List of parcels \n" +
-                              "5.List of non affiliated parcels\n"+
+                              "5.List of non linked parcels\n"+
                               "6.List of stations where there are free charging hubs");
             choice = InputCheck(6);
-            //ListsPrint(choice);
+            ListPrint(choice);
         }
     }
 }

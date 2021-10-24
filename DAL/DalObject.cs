@@ -14,9 +14,57 @@ namespace DalObject
         {
             DataSource.Config.Initialize();
         }
+        static public void AddStation(Station addStation)
+        {
+            if (GetStation(addStation.Id).Id!=-1)
+                return;
+            DataSource.Stations.Add(addStation);
+        }
+        static public void AddDrone(Drone AddDrone)
+        {
+            if (GetDrone(AddDrone.Id).Id != -1)
+                return;
+            DataSource.Drones.Add(AddDrone);
+        }
+        static public void AddCustomer(Customer AddCustomer)
+        {
+            if (GetCustomer(AddCustomer.Id).Id != -1)
+                return;
+            DataSource.Customers.Add(AddCustomer);
+        }
+        static public void AddParcel(Parcel AddParcel)
+        {
+            if (GetParcel(AddParcel.Id).Id != -1)
+                return;
+            DataSource.Parcels.Add(AddParcel);
+        }
+        static public bool LinkParcelToDrone(int parcelId)//
+        {
+            Parcel linkedParcel= GetParcel(parcelId);
+            List<Drone> tempDronesList = GetDronesList();
+            int sizeOfLIst = GetDronesList().Count();
+            for (int i = 0; i <sizeOfLIst ; i++)
+            {
+                if (tempDronesList[i].Status == DroneStatus.available && tempDronesList[i].MaxWeight >= linkedParcel.Weight)
+                {
+                    Drone temp = tempDronesList[i];
+                    temp.Status = DroneStatus.delivery;//not necessarily works,requires further tests
+                    linkedParcel.DroneId = tempDronesList[i].Id;
+                    linkedParcel.Scheduled = DateTime.Now;
+                    return true;
+                }
+            }
+            return false;
+        }
+        static public void PickUp(int parcelId)
+        {
+            Parcel pickedParcel = GetParcel(parcelId);
+            pickedParcel.PickedUp = DateTime.Now;
+        }
         static public Station GetStation(int id)
         {
             Station targ = new Station();
+            targ.Id = -1;
             foreach (Station target in DataSource.Stations)
             {
                 if (target.Id.Equals(id))
@@ -24,93 +72,55 @@ namespace DalObject
             }
             return targ;
         }
-        static public Drone GetDrone()
+        static public Drone GetDrone(int id)
         {
-            int tempId = new int();
             Drone targ = new Drone();
-            Console.WriteLine("Enter the id of the drone you would like to see:");
-            Int32.TryParse(Console.ReadLine(), out tempId);
+            targ.Id = -1;
             foreach (Drone target in DataSource.Drones)
             {
-                if (target.Id.Equals(tempId))
+                if (target.Id.Equals(id))
                     return target;
             }
             return targ;
         }
-        static public Customer GetCustomer()
+        static public Customer GetCustomer(int id)
         {
-            int tempId = new int();
             Customer targ = new Customer();
-            Console.WriteLine("Enter the id of the customer you would like to see:");
-            Int32.TryParse(Console.ReadLine(), out tempId);
+            targ.Id = -1;
             foreach (Customer target in DataSource.Customers)
             {
-                if (target.Id.Equals(tempId))
+                if (target.Id.Equals(id))
                     return target;
             }
             return targ;
         }
-        static public Parcel GetParcel()
+        static public Parcel GetParcel(int id)
         {
-            int tempId = new int();
             Parcel targ = new Parcel();
-            Console.WriteLine("Enter the id of the parcel you would like to see:");
-            Int32.TryParse(Console.ReadLine(), out tempId);
+            targ.Id = -1;
             foreach (Parcel target in DataSource.Parcels)
             {
-                if (target.Id.Equals(tempId))
+                if (target.Id.Equals(id))
                     Console.WriteLine(target.ToString());
             }
             return targ;
         }
-
-        static public void ListPrint(int choise)
+        static public List<Station> GetStationsList()
         {
-            switch (choise)
-            {
-                case 1://station
-                    Console.WriteLine("Stations:");
-                    foreach (IDAL.DO.Station target in DataSource.Stations)
-                    {
-                        Console.WriteLine(target.ToString());
-                    }
-                    break;
-                case 2://drone
-                    Console.WriteLine("Drones:");
-                    foreach (IDAL.DO.Drone target in DataSource.Drones)
-                    {
-                        Console.WriteLine(target.ToString());
-                    }
-                    break;
-                case 3://customer
-                    Console.WriteLine("Customers:");
-                    foreach (IDAL.DO.Customer target in DataSource.Customers)
-                    {
-                        Console.WriteLine(target.ToString());
-                    }
-                    break;
-                case 4://parcel
-                    Console.WriteLine("Parcels:");
-                    foreach (IDAL.DO.Parcel target in DataSource.Parcels)
-                    {
-                        Console.WriteLine(target.ToString());
-                    }
-                    break;
-                case 5://non affiliated parcels
-                    foreach (IDAL.DO.Parcel target in DataSource.Parcels)
-                    {
-                        if (target.DroneId == -1)
-                            Console.WriteLine(target.ToString() + "\n");
-                    }
-                    break;
-                case 6://stations with free hubs
-                    foreach (IDAL.DO.Station target in DataSource.Stations)
-                    {
-                        if (target.ChargeSlots > 0)
-                            Console.WriteLine(target.ToString() + "\n");
-                    }
-                    break;
-            }
+            return DataSource.Stations.ToList();
         }
+        static public List<Drone> GetDronesList()
+        {
+            return DataSource.Drones.ToList();
+        }
+        static public List<Customer> GetCustomersList()
+        {
+            return DataSource.Customers.ToList();
+        }  
+        static public List<Parcel> GetParcelsList()
+        {
+            return DataSource.Parcels.ToList();
+        }
+        
     }
 }
