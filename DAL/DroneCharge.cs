@@ -8,7 +8,8 @@
             public int StationId { set; get; }
             public override string ToString()
             {
-                return "Drone Id: " + DroneId + " Station ID: " + StationId;
+                return $" Drone Id:         {DroneId}\n" +
+                       $" Station Id:       {StationId}\n";
             }
         }
     }

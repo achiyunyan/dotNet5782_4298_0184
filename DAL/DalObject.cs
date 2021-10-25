@@ -41,6 +41,7 @@ namespace DalObject
         static public bool LinkParcelToDrone(int parcelId)//
         {
             Parcel linkedParcel= GetParcel(parcelId);
+            int indexOfLinked = DataSource.Parcels.IndexOf(linkedParcel);
             List<Drone> tempDronesList = GetDronesList();
             int sizeOfLIst = GetDronesList().Count();
             for (int i = 0; i <sizeOfLIst ; i++)
@@ -51,15 +52,31 @@ namespace DalObject
                     temp.Status = DroneStatus.delivery;//not necessarily works,requires further tests
                     linkedParcel.DroneId = tempDronesList[i].Id;
                     linkedParcel.Scheduled = DateTime.Now;
+                    DataSource.Parcels[indexOfLinked] = linkedParcel;
                     return true;
                 }
             }
             return false;
         }
-        static public void PickUp(int parcelId)
+        static public void PickUpParcel(int parcelId)
         {
             Parcel pickedParcel = GetParcel(parcelId);
+            int indexOfLinked = DataSource.Parcels.IndexOf(pickedParcel);
             pickedParcel.PickedUp = DateTime.Now;
+            DataSource.Parcels[indexOfLinked] = pickedParcel;
+        }
+        static public void DeliverParcel(int parcelId)//to finish...
+        {
+            Parcel pickedParcel = GetParcel(parcelId);
+            int indexOfPicked = DataSource.Parcels.IndexOf(pickedParcel);
+            pickedParcel.Delivered = DateTime.Now;
+            DataSource.Parcels[indexOfPicked] = pickedParcel;
+        }
+        static public void SendDroneToCharge(int DroneId)
+        {
+            Drone ToCharge = GetDrone(DroneId);
+            int indexOfCharged = DataSource.Drones.IndexOf(ToCharge);
+            //not final
         }
         static public Station GetStation(int id)
         {
@@ -101,7 +118,7 @@ namespace DalObject
             foreach (Parcel target in DataSource.Parcels)
             {
                 if (target.Id.Equals(id))
-                    Console.WriteLine(target.ToString());
+                    return target;
             }
             return targ;
         }

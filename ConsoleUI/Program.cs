@@ -39,8 +39,10 @@ namespace ConsoleUI
                         ListsView();
                         break;
                     case 5:
-                       break;
+                       return;
                 }
+                Console.WriteLine("\nPress ENTER to continue:");
+                Console.ReadLine();
             }
         }
         static int InputCheck(int max)
@@ -65,19 +67,19 @@ namespace ConsoleUI
                               "3.Add a new customer\n" +
                               "4.Add a parcel to delivery\n");
             choice = InputCheck(4);
-            //add the results of choose and funcs so it will actualy do something...
+            AddObject(choice);
         }
         static void Updating()
         {
             int choice = new int();
             Console.WriteLine("Insert the number of the action you would like to commit:\n");
-            Console.WriteLine("1.Affiliating a parcel to a drone \n" +
+            Console.WriteLine("1.Linking a parcel to a drone \n" +
                               "2.Pick up a parcel with a drone\n" +
                               "3.Suplying a parcel to the customer \n" +
                               "4.Sending a drone to charge in a base station\n" +
                               "5.Releasing a drone from charging in a base station\n");
             choice = InputCheck(5);
-            //add the results of choose and funcs so it will actualy do something...
+            UpdateObject(choice);
         }
         static void Displaying()
         {
