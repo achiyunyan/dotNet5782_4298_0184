@@ -23,10 +23,10 @@ namespace DalObject
             private static double[] longitudes = new double[] { 35.21284491679851, 35.206849163507805, 35.19817109950662, 35.21964424530334, 35.20602291668603 };
             internal static void Initialize()
             {
-                /*RandomCustomers();
+                RandomCustomers();
                 RandomStations();
                 RandomDrones();
-                RandomParcel();*/
+                RandomParcel();
             }
             private static void RandomStations()
             {
@@ -37,7 +37,7 @@ namespace DalObject
                     {
                         Id = rand.Next(10000, 100000),
                         Name = stationsNames[i],
-                        ChargeSlots = 3,
+                        ChargeSlots = rand.Next(2,4),
                         Latitude = latitudes[i],
                         Longitude = longitudes[i]
                     });
@@ -82,7 +82,7 @@ namespace DalObject
                             Priority = (Priorities)rand.Next(3),
                             DroneId = id,
                             Requested = now - timeSpan1,
-                            Scheduled = now - timeSpan1+timeSpan2,
+                            Scheduled = (rand.Next(2) == 0) ? DateTime.MinValue : now - timeSpan1 + timeSpan2,
                             Delivered = DateTime.MinValue,
                             PickedUp = DateTime.MinValue
                         });
@@ -98,7 +98,7 @@ namespace DalObject
                     {
                         Id = rand.Next(1000000000),
                         Name = names[rand.Next(names.Length)],
-                        Phone = $"0{rand.Next(100000000) + 5000000000}",
+                        Phone = $"0{rand.Next(1000000000) + 5000000000}",
                         Latitude = rand.NextDouble() * (31.809648051878856 - 31.742227429597634) + 31.742227429597634,
                         Longitude = rand.NextDouble() * (35.22496332365079 - 35.16242159781234) + 35.16242159781234
                     });

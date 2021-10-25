@@ -30,5 +30,7 @@ namespace IDAL
                        ((Delivered == DateTime.MinValue) ? "" : $" Delivery time:    {Delivered}\n");
             }
         }
+        
     }
 }
+
