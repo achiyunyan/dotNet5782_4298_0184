@@ -23,9 +23,9 @@ namespace DalObject
             private static double[] longitudes = new double[] { 35.21284491679851, 35.206849163507805, 35.19817109950662, 35.21964424530334, 35.20602291668603 };
             internal static void Initialize()
             {
+                RandomCustomers();
                 RandomStations();
                 RandomDrones();
-                RandomCustomers();
                 RandomParcel();
             }
             private static void RandomStations()
