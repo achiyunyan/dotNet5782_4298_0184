@@ -52,12 +52,18 @@ namespace DalObject
                     DroneStatus status = new DroneStatus();
                     int id = new int();
                     id = rand.Next(10000, 100000);
-                    status = (DroneStatus)rand.Next(3);
+                    int battery = (rand.Next(101));
+                    if (battery < 20)
+                        status = DroneStatus.maintenance;
+                    else if (rand.Next(2) == 0)
+                        status = DroneStatus.available;
+                    else
+                        status = DroneStatus.delivery;
                     Drones.Add(new Drone
                     {
                         Id = id,
                         Model = "EX50" + (intMaxWeight + 1).ToString(),
-                        Battery = (rand.Next(101)),
+                        Battery = battery,
                         MaxWeight = (WeightCategories)intMaxWeight,
                         Status = status
                     });
