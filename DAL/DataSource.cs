@@ -23,10 +23,10 @@ namespace DalObject
             private static double[] longitudes = new double[] { 35.21284491679851, 35.206849163507805, 35.19817109950662, 35.21964424530334, 35.20602291668603 };
             internal static void Initialize()
             {
-                RandomCustomers();
+                /*RandomCustomers();
                 RandomStations();
                 RandomDrones();
-                RandomParcel();
+                RandomParcel();*/
             }
             private static void RandomStations()
             {
@@ -69,7 +69,8 @@ namespace DalObject
                     });
                     if (status == DroneStatus.delivery)
                     {
-                        DateTime now = DateTime.Now;
+                        DateTime now = new DateTime();
+                        now=   DateTime.Now;
                         TimeSpan timeSpan1 = new TimeSpan(rand.Next(2,4), rand.Next(24), rand.Next(60), rand.Next(60));
                         TimeSpan timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
                         Parcels.Add(new Parcel

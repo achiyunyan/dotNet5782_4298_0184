@@ -35,3 +35,4 @@ C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\Cons
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\ref\ConsoleUI.dll
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\ConsoleUI.pdb
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\ConsoleUI.genruntimeconfig.cache
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\ConsoleUI.csproj.CopyComplete

@@ -39,8 +39,10 @@ namespace ConsoleUI
                         ListsView();
                         break;
                     case 5:
-                       break;
+                       return;
                 }
+                Console.WriteLine("\nPress ENTER to continue:");
+                Console.ReadLine();
             }
         }
         static int InputCheck(int max)
@@ -65,19 +67,19 @@ namespace ConsoleUI
                               "3.Add a new customer\n" +
                               "4.Add a parcel to delivery\n");
             choice = InputCheck(4);
-            //add the results of choose and funcs so it will actualy do something...
+            AddObject(choice);
         }
         static void Updating()
         {
             int choice = new int();
             Console.WriteLine("Insert the number of the action you would like to commit:\n");
-            Console.WriteLine("1.Affiliating a parcel to a drone \n" +
+            Console.WriteLine("1.Linking a parcel to a drone \n" +
                               "2.Pick up a parcel with a drone\n" +
                               "3.Suplying a parcel to the customer \n" +
                               "4.Sending a drone to charge in a base station\n" +
                               "5.Releasing a drone from charging in a base station\n");
             choice = InputCheck(5);
-            //add the results of choose and funcs so it will actualy do something...
+            UpdateObject(choice);
         }
         static void Displaying()
         {
@@ -88,7 +90,7 @@ namespace ConsoleUI
                               "3.Displaying a customer\n" +
                               "4.Displaying a parcel\n");
             choice = InputCheck(4);
-            //add the results of choose and funcs so it will actualy do something...
+            ObjectPrint(choice);
         }
         static void ListsView()
         {
@@ -98,10 +100,10 @@ namespace ConsoleUI
                               "2.List of drones\n" +
                               "3.List of the customers \n" +
                               "4.List of parcels \n" +
-                              "5.List of non affiliated parcels\n"+
+                              "5.List of non linked parcels\n"+
                               "6.List of stations where there are free charging hubs");
             choice = InputCheck(6);
-            //ListsPrint(choice);
+            ListPrint(choice);
         }
     }
 }
