@@ -13,6 +13,7 @@ namespace DalObject
         internal static List<Station> Stations = new List<Station>();
         internal static List<Customer> Customers = new List<Customer>();
         internal static List<Parcel> Parcels = new List<Parcel>();
+        internal static List<DroneCharge> DroneCharges = new List<DroneCharge>();
         private static Random rand = new Random();
         internal static class Config
         {
@@ -54,7 +55,14 @@ namespace DalObject
                     id = rand.Next(10000, 100000);
                     int battery = (rand.Next(101));
                     if (battery < 20)
+                    {
                         status = DroneStatus.maintenance;
+                        DroneCharges.Add(new DroneCharge
+                        { 
+                            DroneId = id, 
+                            StationId = Stations[rand.Next(Stations.Count)].Id 
+                        });
+                    }
                     else if (rand.Next(2) == 0)
                         status = DroneStatus.available;
                     else
