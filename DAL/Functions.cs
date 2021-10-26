@@ -3,7 +3,7 @@ namespace IDAL
 {
     namespace DO
     {
-        internal static class Functions
+        internal class Functions
         {
             internal static string ToSexagesimal(double lat, double lon)
             {

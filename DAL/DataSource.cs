@@ -138,7 +138,7 @@ namespace DalObject
                     else // new deliverd parcel
                     {
                         DateTime now = DateTime.Now;
-                        TimeSpan timeSpan1 = new TimeSpan(rand.Next(7,14), rand.Next(24), rand.Next(60), rand.Next(60));
+                        TimeSpan timeSpan1 = new TimeSpan(rand.Next(7, 14), rand.Next(24), rand.Next(60), rand.Next(60));
                         TimeSpan timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
                         TimeSpan timeSpan3 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
                         TimeSpan timeSpan4 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
