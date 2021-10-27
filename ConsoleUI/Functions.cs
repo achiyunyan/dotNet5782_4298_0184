@@ -251,7 +251,7 @@ namespace ConsoleUI
                     break;
             }
         }
-        static public double DistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
+        static public double DistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2)
         {
             double rlat1 = Math.PI * lat1 / 180;
             double rlat2 = Math.PI * lat2 / 180;
@@ -263,18 +263,7 @@ namespace ConsoleUI
             dist = Math.Acos(dist);
             dist = dist * 180 / Math.PI;
             dist = dist * 60 * 1.1515;
-
-            switch (unit)
-            {
-                case 'K': //Kilometers -> default
-                    return dist * 1.609344;
-                case 'N': //Nautical Miles 
-                    return dist * 0.8684;
-                case 'M': //Miles
-                    return dist;
-            }
-
-            return dist;
+            return dist * 1.609344;
         }
 
     }
