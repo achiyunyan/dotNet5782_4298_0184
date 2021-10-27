@@ -109,7 +109,8 @@ namespace DalObject
             freeDrone.Battery = 100;
             ChargeStation.ChargeSlots += 1;
             DroneCharges.Remove(new DroneCharge { DroneId = droneId, StationId = stationId });
-            DataSource.Drones[indexOfFree] = freeDrone;
+            Drones[indexOfFree] = freeDrone;
+            Stations[indexOfChargeStation] = ChargeStation;
 
         }
         static public Station GetStation(int id)

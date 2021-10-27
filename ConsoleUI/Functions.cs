@@ -138,6 +138,14 @@ namespace ConsoleUI
                     int.TryParse(Console.ReadLine(), out stationId);
                     SendDroneToCharge(droneId,stationId);
                     break;
+                case 5://free drone from charge
+                    Console.WriteLine();
+                    Console.WriteLine("Enter Drone Id: ");
+                    int.TryParse(Console.ReadLine(), out droneId);
+                    Console.WriteLine("Enter Station Id: ");
+                    int.TryParse(Console.ReadLine(), out stationId);
+                    freeDroneFromCharge(droneId, stationId);
+                    break;
 
             }
         }

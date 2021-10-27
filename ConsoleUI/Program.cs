@@ -16,7 +16,7 @@ namespace ConsoleUI
             choise = 0;
             while (choise != 5)
             {
-                Console.Clear();
+                //Console.Clear();
                 Console.WriteLine("Insert the number of the action you would like to commit:\n");
                 Console.WriteLine("1.Options of adding \n" +
                                   "2.Options of updating\n" +
