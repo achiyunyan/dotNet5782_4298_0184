@@ -23,7 +23,6 @@ namespace ConsoleUI
                     int.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter station name: ");
                     name = Console.ReadLine();
-                    //Right now the client chooses the cordinates.not final...
                     Console.WriteLine("Enter station latitude: (between  31.742227429597634 to 31.809648051878856 )");
                     double.TryParse(Console.ReadLine(), out latitude);
                     Console.WriteLine("Enter station longitude: (between  35.16242159781234 to 35.22496332365079 )");
@@ -118,7 +117,7 @@ namespace ConsoleUI
                     PickUpParcel(id);
                     break;
                 case 3:
-
+                    Console.WriteLine("Enter Parcel Id: ");
                     break;
 
             }
