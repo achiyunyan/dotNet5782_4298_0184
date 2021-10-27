@@ -1,4 +1,6 @@
-﻿//                ______     _       _  __                    _     
+﻿//achiya yunyan& zvi korach
+//this is a drones' delivery program
+//                ______     _       _  __                    _     
 //               |___  /    (_)     | |/ /                   | |    
 //                  / /_   ___      | ' / ___  _ __ __ _  ___| |__  
 //                 / /\ \ / / |     |  < / _ \| '__/ _` |/ __| '_ \ 
@@ -60,6 +62,11 @@ namespace ConsoleUI
                 Console.ReadLine();
             }
         }
+        /// <summary>
+        /// right now does nothing,will be relevant later...
+        /// </summary>
+        /// <param name="max"></param>
+        /// <returns></returns>
         static int InputCheck(int max)
         {
             int choise = new int();
@@ -73,6 +80,9 @@ namespace ConsoleUI
             //} while (!(choise >= 1 && choise <= max));
             return choise;
         }
+        /// <summary>
+        /// manages the adding menu
+        /// </summary>
         static void Adding()
         {
             int choice = new int();
@@ -84,6 +94,9 @@ namespace ConsoleUI
             choice = InputCheck(4);
             AddObject(choice);
         }
+        /// <summary>
+        /// manages the updating menu
+        /// </summary>
         static void Updating()
         {
             int choice = new int();
@@ -96,6 +109,9 @@ namespace ConsoleUI
             choice = InputCheck(5);
             UpdateObject(choice);
         }
+        /// <summary>
+        /// manages the object displaying menu
+        /// </summary>
         static void Displaying()
         {
             int choice = new int();
@@ -107,6 +123,9 @@ namespace ConsoleUI
             choice = InputCheck(4);
             ObjectPrint(choice);
         }
+        /// <summary>
+        /// manages the lists displaying menu
+        /// </summary>
         static void ListsView()
         {
             int choice = new int();
