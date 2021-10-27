@@ -12,7 +12,6 @@ C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\Cons
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\ConsoleUI.AssemblyInfoInputs.cache
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\ConsoleUI.AssemblyInfo.cs
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\ConsoleUI.csproj.CoreCompileInputs.cache
-C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\ConsoleUI.csproj.CopyComplete
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\ConsoleUI.dll
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\ref\ConsoleUI.dll
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI\obj\Debug\net5.0\ConsoleUI.pdb

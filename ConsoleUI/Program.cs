@@ -11,8 +11,8 @@
 //     / /\ \ / __| '_ \| | | | |/ _` |    \   / | | | '_ \| | | |/ _` | '_ \ 
 //    / ____ \ (__| | | | | |_| | (_| |     | || |_| | | | | |_| | (_| | | | |
 //   /_/    \_\___|_| |_|_|\__, |\__,_|     |_| \__,_|_| |_|\__, |\__,_|_| |_|
-//                          __/ |                           __/ |            
-//                         |___/                           |___/             
+//                          __/ |                            __/ |            
+//                         |___/                            |___/             
 //
 //this is a drones' delivery program
 //using IDAL.DO;
@@ -33,7 +33,7 @@ namespace ConsoleUI
             choise = 0;
             while (choise != 5)
             {
-                //Console.Clear();
+                Console.Clear();
                 Console.WriteLine("Insert the number of the action you would like to commit:\n");
                 Console.WriteLine(@"1.Options of adding 
                                     2.Options of updating
