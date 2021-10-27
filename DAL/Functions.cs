@@ -5,6 +5,7 @@ namespace IDAL
     {
         internal class Functions
         {
+            // return a string of the sexagesimal presentation of a coordinate 
             internal static string ToSexagesimal(double lat, double lon)
             {
                 int m1 = (int)lat;
