@@ -90,8 +90,8 @@ namespace ConsoleUI
                         SenderId = senderId,
                         TargetId = reciverId,
                         DroneId = 0,
-                        Priority=IDAL.DO.Priorities.normal,
-                        Weight = (IDAL.DO.WeightCategories)(weight-1),
+                        Priority = IDAL.DO.Priorities.normal,
+                        Weight = (IDAL.DO.WeightCategories)(weight - 1),
                         Requested = DateTime.Now,
                         Scheduled = DateTime.MinValue,
                         Delivered = DateTime.MinValue,
@@ -103,21 +103,48 @@ namespace ConsoleUI
 
         static public void UpdateObject(int choise)
         {
-            int id = new int();
+            int parcelId = new int();
+            int droneId = new int();
+            int stationId = new int();
             switch (choise)
             {
                 case 1://Link Parcel to Drone
                     Console.WriteLine("Enter Parcel Id: ");
-                    int.TryParse(Console.ReadLine(), out id);
-                    LinkParcelToDrone(id);
+                    int.TryParse(Console.ReadLine(), out parcelId);
+                    Console.WriteLine("Enter Drone Id: ");
+                    int.TryParse(Console.ReadLine(), out droneId);
+                    LinkParcelToDrone(parcelId, droneId);
                     break;
                 case 2://pick up a parcel by a drone
                     Console.WriteLine("Enter Parcel Id: ");
-                    int.TryParse(Console.ReadLine(), out id);
-                    PickUpParcel(id);
+                    int.TryParse(Console.ReadLine(), out parcelId);
+                    PickUpParcel(parcelId);
                     break;
-                case 3:
+                case 3://deliver a parcel
                     Console.WriteLine("Enter Parcel Id: ");
+                    int.TryParse(Console.ReadLine(), out parcelId);
+                    DeliverParcel(parcelId);
+                    break;
+                case 4://Send a drone to charge
+                    Console.WriteLine("Enter Drone Id: ");
+                    int.TryParse(Console.ReadLine(), out droneId);
+                    Console.WriteLine("Choose a station to charge the drone here from the options below:\n\n ");
+                    foreach (IDAL.DO.Station target in GetStationsList())
+                    {
+                        if (target.ChargeSlots > 0)
+                            Console.WriteLine(target.ToString() + "\n");
+                    }
+                    Console.WriteLine("Enter the id of the wanted station please: ");
+                    int.TryParse(Console.ReadLine(), out stationId);
+                    SendDroneToCharge(droneId,stationId);
+                    break;
+                case 5://free drone from charge
+                    Console.WriteLine();
+                    Console.WriteLine("Enter Drone Id: ");
+                    int.TryParse(Console.ReadLine(), out droneId);
+                    Console.WriteLine("Enter Station Id: ");
+                    int.TryParse(Console.ReadLine(), out stationId);
+                    freeDroneFromCharge(droneId, stationId);
                     break;
 
             }
