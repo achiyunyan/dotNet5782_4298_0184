@@ -9,6 +9,10 @@ namespace ConsoleUI
 {
     partial class Program
     {
+        /// <summary>
+        /// The function does an adding operation according to the choice
+        /// </summary>
+        /// <param name="choice"></param>
         static public void AddObject(int choice)
         {
             int id = new int();
@@ -100,7 +104,10 @@ namespace ConsoleUI
                     break;
             }
         }
-
+        /// <summary>
+        /// The function does an updating operation according to the choice
+        /// </summary>
+        /// <param name="choise"></param>
         static public void UpdateObject(int choise)
         {
             int parcelId = new int();
@@ -136,7 +143,7 @@ namespace ConsoleUI
                     }
                     Console.WriteLine("Enter the id of the wanted station please: ");
                     int.TryParse(Console.ReadLine(), out stationId);
-                    SendDroneToCharge(droneId,stationId);
+                    SendDroneToCharge(droneId, stationId);
                     break;
                 case 5://free drone from charge
                     Console.WriteLine();
@@ -149,86 +156,93 @@ namespace ConsoleUI
 
             }
         }
-
+        /// <summary>
+        /// The function does a printing operation according to the choice
+        /// </summary>
+        /// <param name="choise"></param>
         static public void ObjectPrint(int choise)
         {
             int tempId = new int();
             switch (choise)
             {
-                case 1://station
+                case 1://station print
                     Console.WriteLine("Enter the id of the station you would like to see:");
                     Int32.TryParse(Console.ReadLine(), out tempId);
-                    if (GetStation(tempId).Id == -1)
+                    if (GetStation(tempId).Id == 0)
                         Console.WriteLine("Station was not found");
                     else
                         Console.WriteLine(GetStation(tempId).ToString());
                     break;
-                case 2://drone
+                case 2://drone print
                     Console.WriteLine("Enter the id of the drone you would like to see:");
                     Int32.TryParse(Console.ReadLine(), out tempId);
-                    if (GetDrone(tempId).Id == -1)
+                    if (GetDrone(tempId).Id == 0)
                         Console.WriteLine("Drone was not found");
                     else
                         Console.WriteLine(GetDrone(tempId).ToString());
                     break;
-                case 3://customer
+                case 3://customer print
                     Console.WriteLine("Enter the id of the customer you would like to see:");
                     Int32.TryParse(Console.ReadLine(), out tempId);
-                    if (GetCustomer(tempId).Id == -1)
+                    if (GetCustomer(tempId).Id == 0)
                         Console.WriteLine("Customer was not found");
                     else
                         Console.WriteLine(GetCustomer(tempId).ToString());
                     break;
-                case 4://parcel
+                case 4://parcel print
                     Console.WriteLine("Enter the id of the parcel you would like to see:");
                     Int32.TryParse(Console.ReadLine(), out tempId);
-                    if (GetParcel(tempId).Id == -1)
+                    if (GetParcel(tempId).Id == 0)
                         Console.WriteLine("Parcel was not found");
                     else
                         Console.WriteLine(GetParcel(tempId).ToString());
                     break;
             }
         }
+        /// <summary>
+        /// The function does a list print operation according to the choice
+        /// </summary>
+        /// <param name="choise"></param>
         static public void ListPrint(int choise)
         {
             switch (choise)
             {
-                case 1://station
+                case 1://stations' list print
                     Console.WriteLine("Stations:\n");
                     foreach (IDAL.DO.Station target in GetStationsList())
                     {
                         Console.WriteLine(target.ToString());
                     }
                     break;
-                case 2://drone
+                case 2://drones' list print
                     Console.WriteLine("Drones:");
                     foreach (IDAL.DO.Drone target in GetDronesList())
                     {
                         Console.WriteLine(target.ToString());
                     }
                     break;
-                case 3://customer
+                case 3://customers' list print
                     Console.WriteLine("Customers:");
                     foreach (IDAL.DO.Customer target in GetCustomersList())
                     {
                         Console.WriteLine(target.ToString());
                     }
                     break;
-                case 4://parcel
+                case 4://parcels' list print
                     Console.WriteLine("Parcels:");
                     foreach (IDAL.DO.Parcel target in GetParcelsList())
                     {
                         Console.WriteLine(target.ToString());
                     }
                     break;
-                case 5://non linked parcels
+                case 5://non linked parcels print
                     foreach (IDAL.DO.Parcel target in GetParcelsList())
                     {
                         if (target.DroneId == 0)
                             Console.WriteLine(target.ToString() + "\n");
                     }
                     break;
-                case 6://stations with free hubs
+                case 6://stations with free hubs print
                     foreach (IDAL.DO.Station target in GetStationsList())
                     {
                         if (target.ChargeSlots > 0)
