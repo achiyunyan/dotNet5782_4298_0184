@@ -21,6 +21,7 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;*/
+using static DalObject.DalObject;
 
 namespace ConsoleUI
 {
@@ -33,13 +34,13 @@ namespace ConsoleUI
             choise = 0;
             while (choise != 5)
             {
-                Console.Clear();
+                //Console.Clear();
                 Console.WriteLine("Insert the number of the action you would like to commit:\n");
-                Console.WriteLine(@"1.Options of adding 
-                                    2.Options of updating
-                                    3.Options of display
-                                    4.options of lists' displaing
-                                    5.Bonus:destination from point to station/customer " +
+                Console.WriteLine(  "1.Options of adding\n"+ 
+                                    "2.Options of updating\n"+
+                                    "3.Options of display\n"+
+                                    "4.options of lists' displaing\n"+
+                                    "5.Bonus:destination from point to station/customer\n" +
                                    "6.exit\n");
                 choise = InputCheck(5);
                 switch (choise)
@@ -149,9 +150,9 @@ namespace ConsoleUI
             double longitude = new double();
             int choice = new int();
             int id = new int();
-            Console.WriteLine(@"What would you like to measure distance from?
-                                1)station
-                                2)drone" + "\n\n\n");
+            Console.WriteLine("What would you like to measure distance from? \n"+
+                               "1)station\n"+
+                                "2)drone  \n\n\n");
             choice = InputCheck(2);
             Console.WriteLine("Enter cordinate latitude: (between  31.742227429597634 to 31.809648051878856 )");
             double.TryParse(Console.ReadLine(), out latitude);
@@ -161,6 +162,17 @@ namespace ConsoleUI
             {
                 case 1:
                     Console.WriteLine($"Enter the station id: ");
+                    int.TryParse(Console.ReadLine(), out id);
+                    IDAL.DO.Station dest1 = GetStation(id);
+                    Console.WriteLine($"Distance between station {id}:  "+
+                    DistanceBetweenTwoPoints(latitude, longitude, dest1.Latitude, dest1.Longitude).ToString()+" km");
+                    break;
+                case 2:
+                    Console.WriteLine($"Enter the drone id: ");
+                    int.TryParse(Console.ReadLine(), out id);
+                    IDAL.DO.Customer dest2 = GetCustomer(id);
+                    Console.WriteLine($"Distance between drone {id}:  " +
+                    DistanceBetweenTwoPoints(latitude, longitude, dest2.Latitude, dest2.Longitude).ToString()+" km");
                     break;
             }
 
