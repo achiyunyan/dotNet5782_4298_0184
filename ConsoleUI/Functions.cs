@@ -3,7 +3,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;*/
-using DalObject;
+using static DalObject.DalObject;
 
 namespace ConsoleUI
 {
@@ -28,7 +28,7 @@ namespace ConsoleUI
                     double.TryParse(Console.ReadLine(), out latitude);
                     Console.WriteLine("Enter station longitude: (between  35.16242159781234 to 35.22496332365079 )");
                     double.TryParse(Console.ReadLine(), out longitude);
-                    DalObject.DalObject.AddStation(new IDAL.DO.Station
+                    AddStation(new IDAL.DO.Station
                     {
                         Id = id,
                         Name = name,
@@ -43,7 +43,7 @@ namespace ConsoleUI
                     int.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter drone Max Weight lift ability: \n1)Light \n2)Medium \n3)Heavy");
                     int.TryParse(Console.ReadLine(), out weight);
-                    DalObject.DalObject.AddDrone(new IDAL.DO.Drone
+                    AddDrone(new IDAL.DO.Drone
                     {
                         Id = id,
                         Model = "EX50" + (weight).ToString(),
@@ -65,7 +65,7 @@ namespace ConsoleUI
                     double.TryParse(Console.ReadLine(), out latitude);
                     Console.WriteLine("Enter customer longitude: (between  35.16242159781234 to 35.22496332365079 )");
                     double.TryParse(Console.ReadLine(), out longitude);
-                    DalObject.DalObject.AddCustomer(new IDAL.DO.Customer
+                    AddCustomer(new IDAL.DO.Customer
                     {
                         Id = id,
                         Name = name,
@@ -85,7 +85,7 @@ namespace ConsoleUI
                     int.TryParse(Console.ReadLine(), out reciverId);
                     Console.WriteLine("Enter parcel Weight lift: \n1)Light \n2)Medium \n3)Heavy");
                     int.TryParse(Console.ReadLine(), out weight);
-                    DalObject.DalObject.AddParcel(new IDAL.DO.Parcel
+                    AddParcel(new IDAL.DO.Parcel
                     {
                         Id = id,
                         SenderId = senderId,
@@ -110,12 +110,12 @@ namespace ConsoleUI
                 case 1://Link Parcel to Drone
                     Console.WriteLine("Enter Parcel Id: ");
                     int.TryParse(Console.ReadLine(), out id);
-                    DalObject.DalObject.LinkParcelToDrone(id);
+                    LinkParcelToDrone(id);
                     break;
                 case 2://pick up a parcel by a drone
                     Console.WriteLine("Enter Parcel Id: ");
                     int.TryParse(Console.ReadLine(), out id);
-                    DalObject.DalObject.PickUpParcel(id);
+                    PickUpParcel(id);
                     break;
                 case 3:
 
@@ -132,34 +132,34 @@ namespace ConsoleUI
                 case 1://station
                     Console.WriteLine("Enter the id of the station you would like to see:");
                     Int32.TryParse(Console.ReadLine(), out tempId);
-                    if (DalObject.DalObject.GetStation(tempId).Id == -1)
+                    if (GetStation(tempId).Id == -1)
                         Console.WriteLine("Station was not found");
                     else
-                        Console.WriteLine(DalObject.DalObject.GetStation(tempId).ToString());
+                        Console.WriteLine(GetStation(tempId).ToString());
                     break;
                 case 2://drone
                     Console.WriteLine("Enter the id of the drone you would like to see:");
                     Int32.TryParse(Console.ReadLine(), out tempId);
-                    if (DalObject.DalObject.GetDrone(tempId).Id == -1)
+                    if (GetDrone(tempId).Id == -1)
                         Console.WriteLine("Drone was not found");
                     else
-                        Console.WriteLine(DalObject.DalObject.GetDrone(tempId).ToString());
+                        Console.WriteLine(GetDrone(tempId).ToString());
                     break;
                 case 3://customer
                     Console.WriteLine("Enter the id of the customer you would like to see:");
                     Int32.TryParse(Console.ReadLine(), out tempId);
-                    if (DalObject.DalObject.GetCustomer(tempId).Id == -1)
+                    if (GetCustomer(tempId).Id == -1)
                         Console.WriteLine("Customer was not found");
                     else
-                        Console.WriteLine(DalObject.DalObject.GetCustomer(tempId).ToString());
+                        Console.WriteLine(GetCustomer(tempId).ToString());
                     break;
                 case 4://parcel
                     Console.WriteLine("Enter the id of the parcel you would like to see:");
                     Int32.TryParse(Console.ReadLine(), out tempId);
-                    if (DalObject.DalObject.GetParcel(tempId).Id == -1)
+                    if (GetParcel(tempId).Id == -1)
                         Console.WriteLine("Parcel was not found");
                     else
-                        Console.WriteLine(DalObject.DalObject.GetParcel(tempId).ToString());
+                        Console.WriteLine(GetParcel(tempId).ToString());
                     break;
             }
         }
@@ -169,41 +169,41 @@ namespace ConsoleUI
             {
                 case 1://station
                     Console.WriteLine("Stations:\n");
-                    foreach (IDAL.DO.Station target in DalObject.DalObject.GetStationsList())
+                    foreach (IDAL.DO.Station target in GetStationsList())
                     {
                         Console.WriteLine(target.ToString());
                     }
                     break;
                 case 2://drone
                     Console.WriteLine("Drones:");
-                    foreach (IDAL.DO.Drone target in DalObject.DalObject.GetDronesList())
+                    foreach (IDAL.DO.Drone target in GetDronesList())
                     {
                         Console.WriteLine(target.ToString());
                     }
                     break;
                 case 3://customer
                     Console.WriteLine("Customers:");
-                    foreach (IDAL.DO.Customer target in DalObject.DalObject.GetCustomersList())
+                    foreach (IDAL.DO.Customer target in GetCustomersList())
                     {
                         Console.WriteLine(target.ToString());
                     }
                     break;
                 case 4://parcel
                     Console.WriteLine("Parcels:");
-                    foreach (IDAL.DO.Parcel target in DalObject.DalObject.GetParcelsList())
+                    foreach (IDAL.DO.Parcel target in GetParcelsList())
                     {
                         Console.WriteLine(target.ToString());
                     }
                     break;
                 case 5://non linked parcels
-                    foreach (IDAL.DO.Parcel target in DalObject.DalObject.GetParcelsList())
+                    foreach (IDAL.DO.Parcel target in GetParcelsList())
                     {
                         if (target.DroneId == 0)
                             Console.WriteLine(target.ToString() + "\n");
                     }
                     break;
                 case 6://stations with free hubs
-                    foreach (IDAL.DO.Station target in DalObject.DalObject.GetStationsList())
+                    foreach (IDAL.DO.Station target in GetStationsList())
                     {
                         if (target.ChargeSlots > 0)
                             Console.WriteLine(target.ToString() + "\n");
