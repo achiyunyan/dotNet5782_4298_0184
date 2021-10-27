@@ -1,6 +1,4 @@
-﻿//achiya yunyan& zvi korach
-//this is a drones' delivery program
-//                ______     _       _  __                    _     
+﻿//                ______     _       _  __                    _     
 //               |___  /    (_)     | |/ /                   | |    
 //                  / /_   ___      | ' / ___  _ __ __ _  ___| |__  
 //                 / /\ \ / / |     |  < / _ \| '__/ _` |/ __| '_ \ 
@@ -15,6 +13,8 @@
 //   /_/    \_\___|_| |_|_|\__, |\__,_|     |_| \__,_|_| |_|\__, |\__,_|_| |_|
 //                          __/ |                           __/ |            
 //                         |___/                           |___/             
+//
+//this is a drones' delivery program
 //using IDAL.DO;
 using System;
 /*using System.Collections.Generic;
