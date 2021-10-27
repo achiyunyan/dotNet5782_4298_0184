@@ -48,14 +48,14 @@ namespace ConsoleUI
         static int InputCheck(int max)
         {
             int choise = new int();
-            do
-            {
+            /*do
+            {*/
                 bool success = Int32.TryParse(Console.ReadLine(), out choise);
-                if (!(choise >= 1 && choise <= max)||!success)
-                {
-                    Console.WriteLine("Your number must be between 1 to {0}",max);
-                }
-            } while (!(choise >= 1 && choise <= max));
+                /* if (!(choise >= 1 && choise <= max)||!success)
+                 {
+                     Console.WriteLine("Your number must be between 1 to {0}",max);
+                 }*/
+            //} while (!(choise >= 1 && choise <= max));
             return choise;
         }
         static void Adding()
