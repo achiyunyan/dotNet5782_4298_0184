@@ -21,8 +21,8 @@ namespace DalObject
         /// <param name="addStation"></param>
         static public void AddStation(Station addStation)
         {
-            //if (GetStation(addStation.Id).Id != 0)
-            //    return;
+            if (GetStation(addStation.Id).Id != 0)
+                return;
             DataSource.Stations.Add(addStation);
         }
         /// <summary>
@@ -31,8 +31,8 @@ namespace DalObject
         /// <param name="AddDrone"></param>
         static public void AddDrone(Drone AddDrone)
         {
-            //if (GetDrone(AddDrone.Id).Id != 0)
-            //    return;
+            if (GetDrone(AddDrone.Id).Id != 0)
+                return;
             DataSource.Drones.Add(AddDrone);
         }
         /// <summary>
@@ -41,8 +41,8 @@ namespace DalObject
         /// <param name="AddCustomer"></param>
         static public void AddCustomer(Customer AddCustomer)
         {
-            //if (GetCustomer(AddCustomer.Id).Id !=0)
-            //    return;
+            if (GetCustomer(AddCustomer.Id).Id !=0)
+                return;
             DataSource.Customers.Add(AddCustomer);
         }
         /// <summary>
@@ -51,8 +51,8 @@ namespace DalObject
         /// <param name="AddParcel"></param>
         static public void AddParcel(Parcel AddParcel)
         {
-            //if (GetParcel(AddParcel.Id).Id !=0)
-            //    return;
+            if (GetParcel(AddParcel.Id).Id !=0)
+                return;
             DataSource.Parcels.Add(AddParcel);
         }
         /// <summary>
