@@ -119,7 +119,6 @@ namespace DalObject
             int indexOfPicked = DataSource.Parcels.IndexOf(pickedParcel);
             int indexOfDrone = DataSource.Drones.IndexOf(deliveryDrone);
             pickedParcel.Delivered = DateTime.Now;
-            deliveryDrone.Status = DroneStatus.available;
             DataSource.Parcels[indexOfPicked] = pickedParcel;
             DataSource.Drones[indexOfDrone] = deliveryDrone;
 
@@ -135,7 +134,6 @@ namespace DalObject
             Station ChargeStation = GetStation(stationId);
             int indexOfChargedDrone = DataSource.Drones.IndexOf(ToCharge);
             int indexOfChargeStation = DataSource.Stations.IndexOf(ChargeStation);
-            ToCharge.Status = DroneStatus.maintenance;
             ChargeStation.ChargeSlots -= 1;
             DataSource.DroneCharges.Add(new DroneCharge
             {
@@ -156,8 +154,6 @@ namespace DalObject
             Station ChargeStation = GetStation(stationId);
             int indexOfFree = DataSource.Drones.IndexOf(freeDrone);
             int indexOfChargeStation = DataSource.Stations.IndexOf(ChargeStation);
-            freeDrone.Status = DroneStatus.available;
-            freeDrone.Battery = 100;
             ChargeStation.ChargeSlots += 1;
             DataSource.DroneCharges.Remove(new DroneCharge { DroneId = droneId, StationId = stationId });
             DataSource.Drones[indexOfFree] = freeDrone;

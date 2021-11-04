@@ -58,53 +58,12 @@ namespace DalObject
                 for (int i = 0; i < size; i++)
                 {
                     int intMaxWeight = rand.Next(3);
-                    DroneStatus status = new DroneStatus();
-                    int id = new int();
-                    id = rand.Next(10000, 100000);
-                    int battery = (rand.Next(101));
-                    if (battery < 20) // If the battery is low puts the drone in charging
-                    {
-                        status = DroneStatus.maintenance;
-                        DroneCharges.Add(new DroneCharge
-                        {
-                            DroneId = id,
-                            StationId = Stations[rand.Next(Stations.Count)].Id
-                        });
-                    }
-                    else if (rand.Next(2) == 0)
-                        status = DroneStatus.available;
-                    else
-                        status = DroneStatus.delivery;
                     Drones.Add(new Drone
                     {
-                        Id = id,
+                        Id = rand.Next(10000, 100000),
                         Model = "EX50" + (intMaxWeight + 1).ToString(),
-                        Battery = battery,
-                        MaxWeight = (WeightCategories)intMaxWeight,
-                        Status = status
+                        MaxWeight = (WeightCategories)intMaxWeight
                     });
-                    
-                    // Adds a linked parcel to the drone if it is in delivery
-                    if (status == DroneStatus.delivery)
-                    {
-                        DateTime now = new DateTime();
-                        now = DateTime.Now;
-                        TimeSpan timeSpan1 = new TimeSpan(rand.Next(2, 4), rand.Next(24), rand.Next(60), rand.Next(60));
-                        TimeSpan timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
-                        Parcels.Add(new Parcel
-                        {
-                            Id = parcelNum++,
-                            SenderId = Customers[rand.Next(Customers.Count)].Id,
-                            TargetId = Customers[rand.Next(Customers.Count)].Id,
-                            Weight = (WeightCategories)rand.Next(intMaxWeight),
-                            Priority = (Priorities)rand.Next(3),
-                            DroneId = id,
-                            Requested = now - timeSpan1,
-                            Scheduled = (rand.Next(2) == 0) ? DateTime.MinValue : now - timeSpan1 + timeSpan2,
-                            Delivered = DateTime.MinValue,
-                            PickedUp = DateTime.MinValue
-                        });
-                    }
                 }
             }
 
@@ -133,7 +92,7 @@ namespace DalObject
             private static  void RandomParcel() 
             {
                 int size = rand.Next(10, 1001);
-                for (int i = Parcels.Count; i < size; i++)
+                for (int i = 0; i < size; i++) 
                 {
                     if (rand.Next(0, 5) != 0) // new unlinked parcel from the last week
                     {
