@@ -13,13 +13,12 @@ namespace BL
                 Id = blStation.Id,
                 Name = blStation.Name,
                 ChargeSlots = blStation.ChargeSlots,
-                Latitude = blStation.Latitude,
-                Longitude = blStation.Longitude
+                Latitude = blStation.Location.Latitude,
+                Longitude = blStation.Location.Longitude
             };
             try
             {
                 myDal.AddStation(dalStation);
-
             }
             catch (IDAL.DO.StationException stex)
             {

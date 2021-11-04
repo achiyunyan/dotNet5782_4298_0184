@@ -1,18 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
-namespace IDAL
+namespace IDAL.DO
 {
-    namespace DO
+    [Serializable]
+    public class StationException : Exception
     {
-        [Serializable]
-        public class StationException : Exception
+        public StationException()
         {
-            string parcelInfo = " Station exception";
-            //TODO
+        }
+
+        public StationException(string message) : base(message)
+        {
+        }
+
+        public StationException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected StationException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
     }
 }
