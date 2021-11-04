@@ -6,8 +6,7 @@
         {
             public int Id { set; get; }
             public string Name { set; get; }
-            public double Longitude { set; get; }
-            public double Latitude { set; get; }
+            public Location Location { get; set; }
             public int ChargeSlots { set; get; }
         }
     }

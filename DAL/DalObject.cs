@@ -21,8 +21,10 @@ namespace DalObject
         /// <param name="addStation"></param>
         public void AddStation(Station addStation)
         {
-            if (GetStation(addStation.Id).Id != 0)
-                return;
+            if(DataSource.Stations.Any(st => st.Id == addStation.Id))
+            {
+                throw new StationException($"id: {addStation.Id} already exists!!");
+            }
             DataSource.Stations.Add(addStation);
         }
         /// <summary>
