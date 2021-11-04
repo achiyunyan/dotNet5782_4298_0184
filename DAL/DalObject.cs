@@ -31,31 +31,37 @@ namespace DalObject
         /// Adds drone to the drones' list 
         /// </summary>
         /// <param name="AddDrone"></param>
-        public void AddDrone(Drone AddDrone)
+        public void AddDrone(Drone addDrone)
         {
-            if (GetDrone(AddDrone.Id).Id != 0)
-                return;
-            DataSource.Drones.Add(AddDrone);
+            if (DataSource.Drones.Any(st => st.Id == addDrone.Id))
+            {
+                throw new DroneException($"id: {addDrone.Id} already exists!!");
+            }
+            DataSource.Drones.Add(addDrone);
         }
         /// <summary>
         /// Adds customer to the customers' list
         /// </summary>
         /// <param name="AddCustomer"></param>
-        public void AddCustomer(Customer AddCustomer)
+        public void AddCustomer(Customer addCustomer)
         {
-            if (GetCustomer(AddCustomer.Id).Id != 0)
-                return;
-            DataSource.Customers.Add(AddCustomer);
+            if (DataSource.Customers.Any(st => st.Id == addCustomer.Id))
+            {
+                throw new CustomerException($"id: {addCustomer.Id} already exists!!");
+            }
+            DataSource.Customers.Add(addCustomer);
         }
         /// <summary>
         /// Adds parcel to the parcels' list
         /// </summary>
         /// <param name="AddParcel"></param>
-        public void AddParcel(Parcel AddParcel)
+        public void AddParcel(Parcel addParcel)
         {
-            if (GetParcel(AddParcel.Id).Id != 0)
-                return;
-            DataSource.Parcels.Add(AddParcel);
+            if (DataSource.Parcels.Any(st => st.Id == addParcel.Id))
+            {
+                throw new ParcelException($"id: {addParcel.Id} already exists!!");
+            }
+            DataSource.Parcels.Add(addParcel);
         }
         /// <summary>
         /// links a chosen parcel to a chosen drone 
@@ -68,7 +74,7 @@ namespace DalObject
             linkedParcel.DroneId = droneId;
             int indexOfParcel = DataSource.Parcels.IndexOf(linkedParcel);
             DataSource.Parcels[indexOfParcel] = linkedParcel;
-
+            
             // Drone linkedDrone = GetDrone(droneId);
             //  int indexOfDrone = DataSource.Drones.IndexOf(linkedDrone);
             //            linkedParcel.DroneId = linkedDrone.Id;

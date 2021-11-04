@@ -1,17 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
-namespace IDAL
+namespace DalObject
 {
-    namespace DO
+    [Serializable]
+    internal class ParcelException : Exception
     {
-        public class ParcelException : Exception
+        public ParcelException()
         {
-            string parcelInfo = " Parcel exception";
-            //TODO
+        }
+
+        public ParcelException(string message) : base(message)
+        {
+        }
+
+        public ParcelException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected ParcelException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
     }
 }
