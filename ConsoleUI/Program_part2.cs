@@ -52,8 +52,6 @@ namespace ConsoleUI
                         Id = id,
                         Model = "EX50" + (weight).ToString(),
                         MaxWeight = (IDAL.DO.WeightCategories)(weight - 1),
-                        Battery = rand.Next(40, 60),
-                        Status = (IDAL.DO.DroneStatus.available)
                     });
                     break;
                 case 3:// add a customer
