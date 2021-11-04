@@ -1,9 +1,10 @@
-﻿using System;
+﻿using IDAL.DO;
+using System;
 /*using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;*/
-using static DalObject.DalObject;
+
 
 namespace ConsoleUI
 {
@@ -13,7 +14,7 @@ namespace ConsoleUI
         /// The function does an adding operation according to the choice
         /// </summary>
         /// <param name="choice"></param>
-        static public void AddObject(int choice)
+        static private void AddObject(int choice)
         {
             int id = new int();
             int weight = new int();
@@ -31,7 +32,7 @@ namespace ConsoleUI
                     double.TryParse(Console.ReadLine(), out latitude);
                     Console.WriteLine("Enter station longitude: (between  35.16242159781234 to 35.22496332365079 )");
                     double.TryParse(Console.ReadLine(), out longitude);
-                    AddStation(new IDAL.DO.Station
+                    dataBase.AddStation(new IDAL.DO.Station
                     {
                         Id = id,
                         Name = name,
@@ -46,7 +47,7 @@ namespace ConsoleUI
                     int.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter drone Max Weight lift ability: \n1)Light \n2)Medium \n3)Heavy");
                     int.TryParse(Console.ReadLine(), out weight);
-                    AddDrone(new IDAL.DO.Drone
+                    dataBase.AddDrone(new IDAL.DO.Drone
                     {
                         Id = id,
                         Model = "EX50" + (weight).ToString(),
@@ -68,7 +69,7 @@ namespace ConsoleUI
                     double.TryParse(Console.ReadLine(), out latitude);
                     Console.WriteLine("Enter customer longitude: (between  35.16242159781234 to 35.22496332365079 )");
                     double.TryParse(Console.ReadLine(), out longitude);
-                    AddCustomer(new IDAL.DO.Customer
+                    dataBase.AddCustomer(new IDAL.DO.Customer
                     {
                         Id = id,
                         Name = name,
@@ -88,7 +89,7 @@ namespace ConsoleUI
                     int.TryParse(Console.ReadLine(), out reciverId);
                     Console.WriteLine("Enter parcel Weight lift: \n1)Light \n2)Medium \n3)Heavy");
                     int.TryParse(Console.ReadLine(), out weight);
-                    AddParcel(new IDAL.DO.Parcel
+                    dataBase.AddParcel(new IDAL.DO.Parcel
                     {
                         Id = id,
                         SenderId = senderId,
@@ -108,7 +109,7 @@ namespace ConsoleUI
         /// The function does an updating operation according to the choice
         /// </summary>
         /// <param name="choise"></param>
-        static public void UpdateObject(int choise)
+         static private void UpdateObject(int choise)
         {
             int parcelId = new int();
             int droneId = new int();
@@ -120,30 +121,35 @@ namespace ConsoleUI
                     int.TryParse(Console.ReadLine(), out parcelId);
                     Console.WriteLine("Enter Drone Id: ");
                     int.TryParse(Console.ReadLine(), out droneId);
-                    LinkParcelToDrone(parcelId, droneId);
+                    Parcel parcel = new Parcel
+                    {
+                        Id = parcelId,
+                         Priority=Priorities.emergency
+                    };
+                    dataBase.LinkParcelToDrone(parcel, droneId);
                     break;
                 case 2://pick up a parcel by a drone
                     Console.WriteLine("Enter Parcel Id: ");
                     int.TryParse(Console.ReadLine(), out parcelId);
-                    PickUpParcel(parcelId);
+                    dataBase.PickUpParcel(parcelId);
                     break;
                 case 3://deliver a parcel
                     Console.WriteLine("Enter Parcel Id: ");
                     int.TryParse(Console.ReadLine(), out parcelId);
-                    DeliverParcel(parcelId);
+                    dataBase.DeliverParcel(parcelId);
                     break;
                 case 4://Send a drone to charge
                     Console.WriteLine("Enter Drone Id: ");
                     int.TryParse(Console.ReadLine(), out droneId);
                     Console.WriteLine("Choose a station to charge the drone here from the options below:\n\n ");
-                    foreach (IDAL.DO.Station target in GetStationsList())
+                    foreach (IDAL.DO.Station target in dataBase.GetStationsList())
                     {
                         if (target.ChargeSlots > 0)
                             Console.WriteLine(target.ToString() + "\n");
                     }
                     Console.WriteLine("Enter the id of the wanted station please: ");
                     int.TryParse(Console.ReadLine(), out stationId);
-                    SendDroneToCharge(droneId, stationId);
+                    dataBase.SendDroneToCharge(droneId, stationId);
                     break;
                 case 5://free drone from charge
                     Console.WriteLine();
@@ -151,7 +157,7 @@ namespace ConsoleUI
                     int.TryParse(Console.ReadLine(), out droneId);
                     Console.WriteLine("Enter Station Id: ");
                     int.TryParse(Console.ReadLine(), out stationId);
-                    freeDroneFromCharge(droneId, stationId);
+                    dataBase.freeDroneFromCharge(droneId, stationId);
                     break;
 
             }
@@ -160,7 +166,7 @@ namespace ConsoleUI
         /// The function does a printing operation according to the choice
         /// </summary>
         /// <param name="choise"></param>
-        static public void ObjectPrint(int choise)
+        static private void ObjectPrint(int choise)
         {
             int tempId = new int();
             switch (choise)
@@ -168,34 +174,34 @@ namespace ConsoleUI
                 case 1://station print
                     Console.WriteLine("Enter the id of the station you would like to see:");
                     Int32.TryParse(Console.ReadLine(), out tempId);
-                    if (GetStation(tempId).Id == 0)
+                    if (dataBase.GetStation(tempId).Id == 0)
                         Console.WriteLine("Station was not found");
                     else
-                        Console.WriteLine(GetStation(tempId).ToString());
+                        Console.WriteLine(dataBase.GetStation(tempId).ToString());
                     break;
                 case 2://drone print
                     Console.WriteLine("Enter the id of the drone you would like to see:");
                     Int32.TryParse(Console.ReadLine(), out tempId);
-                    if (GetDrone(tempId).Id == 0)
+                    if (dataBase.GetDrone(tempId).Id == 0)
                         Console.WriteLine("Drone was not found");
                     else
-                        Console.WriteLine(GetDrone(tempId).ToString());
+                        Console.WriteLine(dataBase.GetDrone(tempId).ToString());
                     break;
                 case 3://customer print
                     Console.WriteLine("Enter the id of the customer you would like to see:");
                     Int32.TryParse(Console.ReadLine(), out tempId);
-                    if (GetCustomer(tempId).Id == 0)
+                    if (dataBase.GetCustomer(tempId).Id == 0)
                         Console.WriteLine("Customer was not found");
                     else
-                        Console.WriteLine(GetCustomer(tempId).ToString());
+                        Console.WriteLine(dataBase.GetCustomer(tempId).ToString());
                     break;
                 case 4://parcel print
                     Console.WriteLine("Enter the id of the parcel you would like to see:");
                     Int32.TryParse(Console.ReadLine(), out tempId);
-                    if (GetParcel(tempId).Id == 0)
+                    if (dataBase.GetParcel(tempId).Id == 0)
                         Console.WriteLine("Parcel was not found");
                     else
-                        Console.WriteLine(GetParcel(tempId).ToString());
+                        Console.WriteLine(dataBase.GetParcel(tempId).ToString());
                     break;
             }
         }
@@ -203,47 +209,47 @@ namespace ConsoleUI
         /// The function does a list print operation according to the choice
         /// </summary>
         /// <param name="choise"></param>
-        static public void ListPrint(int choise)
+         static private void ListPrint(int choise)
         {
             switch (choise)
             {
                 case 1://stations' list print
                     Console.WriteLine("Stations:\n");
-                    foreach (IDAL.DO.Station target in GetStationsList())
+                    foreach (IDAL.DO.Station target in dataBase.GetStationsList())
                     {
                         Console.WriteLine(target.ToString());
                     }
                     break;
                 case 2://drones' list print
                     Console.WriteLine("Drones:");
-                    foreach (IDAL.DO.Drone target in GetDronesList())
+                    foreach (IDAL.DO.Drone target in dataBase.GetDronesList())
                     {
                         Console.WriteLine(target.ToString());
                     }
                     break;
                 case 3://customers' list print
                     Console.WriteLine("Customers:");
-                    foreach (IDAL.DO.Customer target in GetCustomersList())
+                    foreach (IDAL.DO.Customer target in dataBase.GetCustomersList())
                     {
                         Console.WriteLine(target.ToString());
                     }
                     break;
                 case 4://parcels' list print
                     Console.WriteLine("Parcels:");
-                    foreach (IDAL.DO.Parcel target in GetParcelsList())
+                    foreach (IDAL.DO.Parcel target in dataBase.GetParcelsList())
                     {
                         Console.WriteLine(target.ToString());
                     }
                     break;
                 case 5://non linked parcels print
-                    foreach (IDAL.DO.Parcel target in GetParcelsList())
+                    foreach (IDAL.DO.Parcel target in dataBase.GetParcelsList())
                     {
                         if (target.DroneId == 0)
                             Console.WriteLine(target.ToString() + "\n");
                     }
                     break;
                 case 6://stations with free hubs print
-                    foreach (IDAL.DO.Station target in GetStationsList())
+                    foreach (IDAL.DO.Station target in dataBase.GetStationsList())
                     {
                         if (target.ChargeSlots > 0)
                             Console.WriteLine(target.ToString() + "\n");
@@ -251,7 +257,7 @@ namespace ConsoleUI
                     break;
             }
         }
-        static public double DistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2)
+        static private double DistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2)
         {
             double rlat1 = Math.PI * lat1 / 180;
             double rlat2 = Math.PI * lat2 / 180;

@@ -1,5 +1,4 @@
-﻿using static IDAL.DO.Functions;
-namespace IDAL
+﻿namespace IDAL
 {
     namespace DO
     {
@@ -14,7 +13,7 @@ namespace IDAL
             {
                 return $" Station Id:       {Id}\n" +
                        $" Name:             {Name}\n" +
-                       $" Location:         ({ToSexagesimal(Latitude,Longitude)})\n" +
+                       $" Location:         ({Functions.ToSexagesimal(Latitude,Longitude)})\n" +
                        $" Charge Slots:     {ChargeSlots}\n";
             }
         }

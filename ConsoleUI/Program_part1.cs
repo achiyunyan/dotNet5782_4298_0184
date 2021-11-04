@@ -21,25 +21,26 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;*/
-using static DalObject.DalObject;
 
 namespace ConsoleUI
 {
     partial class Program
     {
+
+        static IDAL.IDal dataBase = new DalObject.DalObject();
+
         static void Main(string[] args)
         {
-            DalObject.DalObject dataBase = new DalObject.DalObject();
             int choise = new int();
             choise = 0;
             while (choise != 5)
             {
                 //Console.Clear();
                 Console.WriteLine("Insert the number of the action you would like to commit:\n");
-                Console.WriteLine(  "1.Options of adding\n"+ 
-                                    "2.Options of updating\n"+
-                                    "3.Options of display\n"+
-                                    "4.options of lists' displaing\n"+
+                Console.WriteLine("1.Options of adding\n" +
+                                    "2.Options of updating\n" +
+                                    "3.Options of display\n" +
+                                    "4.options of lists' displaing\n" +
                                     "5.Bonus:destination from point to station/customer\n" +
                                    "6.exit\n");
                 choise = InputCheck(5);
@@ -75,14 +76,14 @@ namespace ConsoleUI
         static int InputCheck(int max)
         {
             int choise = new int();
-            /*do
-            {*/
-            bool success = Int32.TryParse(Console.ReadLine(), out choise);
-            /* if (!(choise >= 1 && choise <= max)||!success)
-             {
-                 Console.WriteLine("Your number must be between 1 to {0}",max);
-             }*/
-            //} while (!(choise >= 1 && choise <= max));
+            do
+            {
+                bool success = Int32.TryParse(Console.ReadLine(), out choise);
+                if (!(choise >= 1 && choise <= max) || !success)
+                {
+                    Console.WriteLine("Your number must be between 1 to {0}", max);
+                }
+            } while (!(choise >= 1 && choise <= max));
             return choise;
         }
         /// <summary>
@@ -150,8 +151,8 @@ namespace ConsoleUI
             double longitude = new double();
             int choice = new int();
             int id = new int();
-            Console.WriteLine("What would you like to measure distance from? \n"+
-                               "1)station\n"+
+            Console.WriteLine("What would you like to measure distance from? \n" +
+                               "1)station\n" +
                                 "2)drone  \n\n\n");
             choice = InputCheck(2);
             Console.WriteLine("Enter cordinate latitude: (between  31.742227429597634 to 31.809648051878856 )");
@@ -163,16 +164,16 @@ namespace ConsoleUI
                 case 1:
                     Console.WriteLine($"Enter the station id: ");
                     int.TryParse(Console.ReadLine(), out id);
-                    IDAL.DO.Station dest1 = GetStation(id);
-                    Console.WriteLine($"Distance between station {id}:  "+
-                    DistanceBetweenTwoPoints(latitude, longitude, dest1.Latitude, dest1.Longitude).ToString()+" km");
+                    IDAL.DO.Station dest1 = dataBase.GetStation(id);
+                    Console.WriteLine($"Distance between station {id}:  " +
+                    DistanceBetweenTwoPoints(latitude, longitude, dest1.Latitude, dest1.Longitude).ToString() + " km");
                     break;
                 case 2:
                     Console.WriteLine($"Enter the drone id: ");
                     int.TryParse(Console.ReadLine(), out id);
-                    IDAL.DO.Customer dest2 = GetCustomer(id);
+                    IDAL.DO.Customer dest2 = dataBase.GetCustomer(id);
                     Console.WriteLine($"Distance between drone {id}:  " +
-                    DistanceBetweenTwoPoints(latitude, longitude, dest2.Latitude, dest2.Longitude).ToString()+" km");
+                    DistanceBetweenTwoPoints(latitude, longitude, dest2.Latitude, dest2.Longitude).ToString() + " km");
                     break;
             }
 
