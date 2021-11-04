@@ -3,10 +3,10 @@ namespace IDAL
 {
     namespace DO
     {
-        internal class Functions
+        internal static  class Functions
         {
             // return a string of the sexagesimal presentation of a coordinate 
-            internal static string ToSexagesimal(double lat, double lon)
+            internal static  string ToSexagesimal(double lat, double lon)
             {
                 int m1 = (int)lat;
                 double help = (lat - m1) * 60;
