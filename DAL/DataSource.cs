@@ -34,13 +34,18 @@ namespace DalObject
             /// Adds between 2 to 5 stations
             /// </summary>
             private static  void RandomStations() 
-            {
+            {           
                 int size = rand.Next(2, 6);
                 for (int i = 0; i < size; i++)
                 {
+                    int id;
+                    do
+                    {
+                        id = rand.Next(10000, 100000);
+                    } while (!Stations.Any(st => st.Id == id));
                     Stations.Add(new Station
                     {
-                        Id = rand.Next(10000, 100000),
+                        Id = id,
                         Name = stationsNames[i],
                         ChargeSlots = rand.Next(2, 4),
                         Latitude = latitudes[i],
@@ -57,10 +62,15 @@ namespace DalObject
                 int size = rand.Next(5, 11);
                 for (int i = 0; i < size; i++)
                 {
+                    int id;
+                    do
+                    {
+                        id = rand.Next(10000, 100000);
+                    } while (!Drones.Any(dr => dr.Id == id));
                     int intMaxWeight = rand.Next(3);
                     Drones.Add(new Drone
                     {
-                        Id = rand.Next(10000, 100000),
+                        Id = id,
                         Model = "EX50" + (intMaxWeight + 1).ToString(),
                         MaxWeight = (WeightCategories)intMaxWeight
                     });
@@ -75,9 +85,14 @@ namespace DalObject
                 int size = rand.Next(10, 100);
                 for (int i = 0; i < size; i++)
                 {
+                    int id;
+                    do
+                    {
+                        id = rand.Next(1000000000);
+                    } while (!Customers.Any(st => st.Id == id));
                     Customers.Add(new Customer
                     {
-                        Id = rand.Next(1000000000),
+                        Id = id,
                         Name = names[rand.Next(names.Length)],
                         Phone = $"0{rand.Next(1000000000) + 5000000000}",
                         Latitude = rand.NextDouble() * (31.809648051878856 - 31.742227429597634) + 31.742227429597634,
