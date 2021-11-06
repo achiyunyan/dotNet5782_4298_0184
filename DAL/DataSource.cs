@@ -9,20 +9,20 @@ namespace DalObject
 {
     public class DataSource
     {
-        internal static  List<Drone> Drones = new List<Drone>();
-        internal static  List<Station> Stations = new List<Station>();
-        internal static  List<Customer> Customers = new List<Customer>();
-        internal static  List<Parcel> Parcels = new List<Parcel>();
-        internal static  List<DroneCharge> DroneCharges = new List<DroneCharge>();
-        private  static Random rand = new Random();
-        internal    class Config
+        internal static List<Drone> Drones = new List<Drone>();
+        internal static List<Station> Stations = new List<Station>();
+        internal static List<Customer> Customers = new List<Customer>();
+        internal static List<Parcel> Parcels = new List<Parcel>();
+        internal static List<DroneCharge> DroneCharges = new List<DroneCharge>();
+        private static Random rand = new Random();
+        internal class Config
         {
-            private static   int parcelNum = 1000000;
-            private static   string[] names = new string[] { "Adam", "Alex", "Aaron", "Ben", "Charly", "Chase", "Che", "Chester", "Chevy", "Chi", "Chibudom", "Chidera", "Chimsom", "Chin", "Chintu", "Chiqal", "Chiron", "Chris", "Chris-Daniel", "Chrismedi", "Christian", "Christie", "Christoph", "Christopher", "Christopher-Lee", "Christy", "Chu", "Chukwuemeka", "Cian", "Ciann", "Ciar", "Ciaran", "Ciarian", "Cieran", "Cillian", "Cillin", "Cinar", "CJ", "C-Jay", "Clark", "Clarke", "Clayton", "Clement", "Clifford", "Clyde", "Cobain", "Coban", "Coben", "Cobi", "Cobie", "Coby", "Codey", "Codi", "Codie", "Cody", "Cody-Lee", "Coel", "Cohan", "Cohen", "Colby", "Cole", "Colin", "Coll", "Colm", "Colt", "Colton", "Colum", "Dan", "David", "Edward", "Fred", "Frank", "George", "Hal", "Hank", "Ike", "John", "Jack", "Joe", "Larry", "Monte", "Matthew", "Mark", "Nathan", "Otto", "Paul", "Peter", "Roger", "Roger", "Steve", "Thomas", "Tim", "Ty", "Victor", "Walter", "Wiktor", "Wilkie", "Will", "William", "William-John", "Willum", "Wilson", "Windsor", "Wojciech", "Woyenbrakemi", "Wyatt", "Wylie", "Wynn", "Xabier", "Xander", "Xavier", "Xiao", "Xida", "Xin", "Xue", "Yadgor", "Yago", "Yahya", "Yakup", "Yang", "Yanick", "Yann", "Yannick", "Yaseen", "Yasin", "Yasir", "Yassin", "Yoji", "Yong", "Yoolgeun", "Yorgos", "Youcef", "Yousif", "Youssef", "Yu", "Yuanyu", "Yuri", "Yusef", "Yusuf", "Yves", "Zaaine", "Zaak", "Zac", "Zach", "Zachariya", "Zachary", "Zachary-Marc", "Zachery", "Zack", "Zackary", "Zaid", "Zain", "Zaine", "Miguel", "Mika", "Mikael", "Mikee", "Mikey", "Mikhail", "Mikolaj", "Miles", "Millar", "Miller", "Milo", "Milos", "Milosz", "Mir", "Mirza", "Mitch", "Mitchel", "Mitchell", "Moad", "Moayd", "Mobeen", "Modoulamin", "Modu", "Mohamad", "Mohamed", "Mohammad", "Mohammad-Bilal", "Mohammed", "Mohanad", "Mohd", "Momin", "Momooreoluwa", "Montague", "Montgomery", "Monty" };
-            private static   string[] stationsNames = new string[] { "Rehavia", "Katamon", "Givat Mordechai", "Arnona", "Romema" };
-            private static   double[] latitudes = new double[] { 31.773883970410303, 31.761073049323283, 31.762682895985005, 31.747320910723996, 31.791571360711526 };
-            private static   double[] longitudes = new double[] { 35.21284491679851, 35.206849163507805, 35.19817109950662, 35.21964424530334, 35.20602291668603 };
-            internal static  void Initialize()
+            private static int parcelNum = 1000000;
+            private static string[] names = new string[] { "Adam", "Alex", "Aaron", "Ben", "Charly", "Chase", "Che", "Chester", "Chevy", "Chi", "Chibudom", "Chidera", "Chimsom", "Chin", "Chintu", "Chiqal", "Chiron", "Chris", "Chris-Daniel", "Chrismedi", "Christian", "Christie", "Christoph", "Christopher", "Christopher-Lee", "Christy", "Chu", "Chukwuemeka", "Cian", "Ciann", "Ciar", "Ciaran", "Ciarian", "Cieran", "Cillian", "Cillin", "Cinar", "CJ", "C-Jay", "Clark", "Clarke", "Clayton", "Clement", "Clifford", "Clyde", "Cobain", "Coban", "Coben", "Cobi", "Cobie", "Coby", "Codey", "Codi", "Codie", "Cody", "Cody-Lee", "Coel", "Cohan", "Cohen", "Colby", "Cole", "Colin", "Coll", "Colm", "Colt", "Colton", "Colum", "Dan", "David", "Edward", "Fred", "Frank", "George", "Hal", "Hank", "Ike", "John", "Jack", "Joe", "Larry", "Monte", "Matthew", "Mark", "Nathan", "Otto", "Paul", "Peter", "Roger", "Roger", "Steve", "Thomas", "Tim", "Ty", "Victor", "Walter", "Wiktor", "Wilkie", "Will", "William", "William-John", "Willum", "Wilson", "Windsor", "Wojciech", "Woyenbrakemi", "Wyatt", "Wylie", "Wynn", "Xabier", "Xander", "Xavier", "Xiao", "Xida", "Xin", "Xue", "Yadgor", "Yago", "Yahya", "Yakup", "Yang", "Yanick", "Yann", "Yannick", "Yaseen", "Yasin", "Yasir", "Yassin", "Yoji", "Yong", "Yoolgeun", "Yorgos", "Youcef", "Yousif", "Youssef", "Yu", "Yuanyu", "Yuri", "Yusef", "Yusuf", "Yves", "Zaaine", "Zaak", "Zac", "Zach", "Zachariya", "Zachary", "Zachary-Marc", "Zachery", "Zack", "Zackary", "Zaid", "Zain", "Zaine", "Miguel", "Mika", "Mikael", "Mikee", "Mikey", "Mikhail", "Mikolaj", "Miles", "Millar", "Miller", "Milo", "Milos", "Milosz", "Mir", "Mirza", "Mitch", "Mitchel", "Mitchell", "Moad", "Moayd", "Mobeen", "Modoulamin", "Modu", "Mohamad", "Mohamed", "Mohammad", "Mohammad-Bilal", "Mohammed", "Mohanad", "Mohd", "Momin", "Momooreoluwa", "Montague", "Montgomery", "Monty" };
+            private static string[] stationsNames = new string[] { "Rehavia", "Katamon", "Givat Mordechai", "Arnona", "Romema" };
+            private static double[] latitudes = new double[] { 31.773883970410303, 31.761073049323283, 31.762682895985005, 31.747320910723996, 31.791571360711526 };
+            private static double[] longitudes = new double[] { 35.21284491679851, 35.206849163507805, 35.19817109950662, 35.21964424530334, 35.20602291668603 };
+            internal static void Initialize()
             {
                 RandomCustomers();
                 RandomStations();
@@ -33,8 +33,8 @@ namespace DalObject
             /// <summary>
             /// Adds between 2 to 5 stations
             /// </summary>
-            private static  void RandomStations() 
-            {           
+            private static void RandomStations()
+            {
                 int size = rand.Next(2, 6);
                 for (int i = 0; i < size; i++)
                 {
@@ -42,7 +42,7 @@ namespace DalObject
                     do
                     {
                         id = rand.Next(10000, 100000);
-                    } while (!Stations.Any(st => st.Id == id));
+                    } while (Stations.Any(st => st.Id == id));
                     Stations.Add(new Station
                     {
                         Id = id,
@@ -53,11 +53,11 @@ namespace DalObject
                     });
                 }
             }
-              
+
             /// <summary>
             /// Adds between 5 to 10 drones
             /// </summary>
-            private static  void RandomDrones()
+            private static void RandomDrones()
             {
                 int size = rand.Next(5, 11);
                 for (int i = 0; i < size; i++)
@@ -66,7 +66,7 @@ namespace DalObject
                     do
                     {
                         id = rand.Next(10000, 100000);
-                    } while (!Drones.Any(dr => dr.Id == id));
+                    } while (Drones.Any(dr => dr.Id == id));
                     int intMaxWeight = rand.Next(3);
                     Drones.Add(new Drone
                     {
@@ -80,7 +80,7 @@ namespace DalObject
             /// <summary>
             /// Adds between 10 to 100 customers
             /// </summary>
-            private  static void RandomCustomers()
+            private static void RandomCustomers()
             {
                 int size = rand.Next(10, 100);
                 for (int i = 0; i < size; i++)
@@ -89,7 +89,7 @@ namespace DalObject
                     do
                     {
                         id = rand.Next(1000000000);
-                    } while (!Customers.Any(st => st.Id == id));
+                    } while (Customers.Any(st => st.Id == id));
                     Customers.Add(new Customer
                     {
                         Id = id,
@@ -104,10 +104,10 @@ namespace DalObject
             /// <summary>
             /// Adds between 10 to 1000 parcels
             /// </summary>
-            private static  void RandomParcel() 
+            private static void RandomParcel()
             {
                 int size = rand.Next(10, 1001);
-                for (int i = 0; i < size; i++) 
+                for (int i = 0; i < size; i++)
                 {
                     if (rand.Next(0, 5) != 0) // new unlinked parcel from the last week
                     {
