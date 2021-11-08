@@ -6,28 +6,28 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    public enum DroneStates
+    public enum DroneState
     {
         Available, 
         Maintenance, 
         Delivery
     }
 
-    public enum WeightCategories
+    public enum WeightCategory
     {
         Light,
         Medium,
         Heavy
     }
 
-    public enum Priorities
+    public enum Priority
     {
         Normal,
         Express,
         Emergency
     }
 
-    public enum ParcelStates
+    public enum ParcelState
     {        
         Created, 
         Associated, 

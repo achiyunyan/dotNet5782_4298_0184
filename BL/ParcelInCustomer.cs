@@ -9,9 +9,17 @@ namespace IBL.BO
     public class ParcelInCustomer
     {
         public int Id { set; get; }
-        public WeightCategories WeightCategory { set; get; }
-        public Priorities Priority { set; get; }
-        public ParcelStates State { set; get; }
+        public WeightCategory WeightCategory { set; get; }
+        public Priority Priority { set; get; }
+        public ParcelState State { set; get; }
         public CustomerInParcel Customer { set; get; }
+        public override string ToString()
+        {
+            return $" Parcel Id:        {Id}\n" +
+                   $" Weight Category:  {WeightCategory}\n" +
+                   $" Priority:         {Priority}\n" +
+                   $" State:            {State}\n" +
+                   $" Customer:\n" + Customer.ToString();
+        }
     }
 }
