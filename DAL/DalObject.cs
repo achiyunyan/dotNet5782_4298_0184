@@ -63,6 +63,43 @@ namespace DalObject
             }
             DataSource.Parcels.Add(addParcel);
         }
+        public void UpdateParcel(Parcel updateParcel)
+        {
+            int indexOfParcel = DataSource.Parcels.IndexOf(updateParcel);
+            if(indexOfParcel==-1)
+            {
+                throw new ParcelException($"id: {updateParcel.Id} not exists!!");
+            }
+            DataSource.Parcels[indexOfParcel] = updateParcel;
+        }
+        public void UpdateDrone(Drone updateDrone)
+        {
+            int indexOfDrone = DataSource.Drones.IndexOf(updateDrone);
+            if (indexOfDrone == -1)
+            {
+                throw new DroneException($"id: {updateDrone.Id} not exists!!");
+            }
+            DataSource.Drones[indexOfDrone] = updateDrone;
+        }
+        public void UpdateCustomer(Customer updateCustomer)
+        {
+            int indexOfCustomer = DataSource.Customers.IndexOf(updateCustomer);
+            if (indexOfCustomer == -1)
+            {
+                throw new CustomerException($"id: {updateCustomer.Id} not exists!!");
+            }
+            DataSource.Customers[indexOfCustomer] = updateCustomer;
+        }
+        public void UpdateStation(Station updateStation)
+        {
+            int indexOfStation = DataSource.Stations.IndexOf(updateStation);
+            if (indexOfStation == -1)
+            {
+                throw new StationException($"id: {updateStation.Id} not exists!!");
+            }
+            DataSource.Stations[indexOfStation] = updateStation;
+        }
+
         /// <summary>
         /// links a chosen parcel to a chosen drone 
         /// </summary>
@@ -74,7 +111,6 @@ namespace DalObject
             linkedParcel.DroneId = droneId;
             int indexOfParcel = DataSource.Parcels.IndexOf(linkedParcel);
             DataSource.Parcels[indexOfParcel] = linkedParcel;
-            
             // Drone linkedDrone = GetDrone(droneId);
             //  int indexOfDrone = DataSource.Drones.IndexOf(linkedDrone);
             //            linkedParcel.DroneId = linkedDrone.Id;
@@ -236,7 +272,7 @@ namespace DalObject
         /// returns a copy of he stations' list
         /// </summary>
         /// <returns></returns>
-        public List<Station> GetStationsList()
+        public IEnumerable<Station> GetStationsList()
         {
             return DataSource.Stations.ToList();
         }
@@ -244,7 +280,7 @@ namespace DalObject
         /// returns a copy of he Drones' list
         /// </summary>
         /// <returns></returns>
-        public List<Drone> GetDronesList()
+        public IEnumerable<Drone> GetDronesList()
         {
             return DataSource.Drones.ToList();
         }
@@ -252,7 +288,7 @@ namespace DalObject
         /// returns a copy of he Customers' list
         /// </summary>
         /// <returns></returns>
-        public List<Customer> GetCustomersList()
+        public IEnumerable<Customer> GetCustomersList()
         {
             return DataSource.Customers.ToList();
         }
@@ -260,7 +296,7 @@ namespace DalObject
         /// returns a copy of he Parcels' list
         /// </summary>
         /// <returns></returns>
-        public List<Parcel> GetParcelsList()
+        public IEnumerable<Parcel> GetParcelsList()
         {
             return DataSource.Parcels.ToList();
         }

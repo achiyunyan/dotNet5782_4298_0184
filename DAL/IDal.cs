@@ -18,10 +18,10 @@ namespace IDAL
         Station GetStation(int id);
         #endregion
         #region Request all from CRUD
-        List<Customer> GetCustomersList();
-        List<Drone> GetDronesList();
-        List<Parcel> GetParcelsList();
-        List<Station> GetStationsList();
+        IEnumerable<Customer> GetCustomersList();
+        IEnumerable<Drone> GetDronesList();
+        IEnumerable<Parcel> GetParcelsList();
+        IEnumerable<Station> GetStationsList();
         #endregion
         void DeliverParcel(int parcelId);
         void freeDroneFromCharge(int droneId, int stationId);
