@@ -22,6 +22,11 @@ namespace DalObject
             private static string[] stationsNames = new string[] { "Rehavia", "Katamon", "Givat Mordechai", "Arnona", "Romema" };
             private static double[] latitudes = new double[] { 31.773883970410303, 31.761073049323283, 31.762682895985005, 31.747320910723996, 31.791571360711526 };
             private static double[] longitudes = new double[] { 35.21284491679851, 35.206849163507805, 35.19817109950662, 35.21964424530334, 35.20602291668603 };
+            private static double ElectricityUsePerKmAvailable;
+            private static double ElectricityUsePerKmLight;
+            private static double ElectricityUsePerKmMedium;
+            private static double ElectricityUsePerKmHeavy;
+            private static double ElectricityChargePerHour;
             internal static void Initialize()
             {
                 RandomCustomers();

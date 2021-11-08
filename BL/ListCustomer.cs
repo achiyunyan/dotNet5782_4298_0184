@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.BO
+namespace IBL.BO
 {
-   public class CustomerDelivery
+    class ListCustomer
     {
-        public int Id { get; set; }
-        public int Name { get; set; }
     }
 }

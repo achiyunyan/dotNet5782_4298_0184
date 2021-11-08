@@ -1,9 +1,9 @@
-﻿using BL.BO;
+﻿using IBL.BO;
 using System;
 
 namespace BL
 {
-    public class BlObject : IBL
+    public class BL : IBL.IBL
     {
         static DalObject.DalObject myDal = new DalObject.DalObject();
         public void AddStation(Station blStation)
@@ -24,7 +24,7 @@ namespace BL
             {
                 //TODO
                 string str = "bl ereceive exception: " + stex.Message;
-                throw new StationBlException(str);
+                //throw new StationBlException(str);
             }
         }
 

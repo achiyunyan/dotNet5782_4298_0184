@@ -4,10 +4,9 @@ namespace ConsoleUI_BL
 {
     class Program
     {
-        static BL.IBL myBl = new BL.BlObject();
+        static IBL.IBL myBl = new BL.BL();
         static void Main(string[] args)
         {
-
             Console.WriteLine("Aruka haderech lecherut");
         }
     }
