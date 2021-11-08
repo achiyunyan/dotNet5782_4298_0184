@@ -1,13 +1,11 @@
-﻿namespace BL
+﻿namespace IBL.BO
 {
-    namespace BO
+    public class Station
     {
-        public class Station
-        {
-            public int Id { set; get; }
-            public string Name { set; get; }
-            public Location Location { get; set; }
-            public int ChargeSlots { set; get; }
-        }
+        public int Id { set; get; }
+        public string Name { set; get; }
+        public Location Location { get; set; }
+        public int ChargeSlots { set; get; }
     }
+
 }
