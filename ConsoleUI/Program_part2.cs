@@ -93,7 +93,7 @@ namespace ConsoleUI
                         SenderId = senderId,
                         TargetId = reciverId,
                         DroneId = 0,
-                        Priority = IDAL.DO.Priorities.normal,
+                        Priority = IDAL.DO.Priorities.Normal,
                         Weight = (IDAL.DO.WeightCategories)(weight - 1),
                         Requested = DateTime.Now,
                         Scheduled = DateTime.MinValue,
@@ -122,7 +122,7 @@ namespace ConsoleUI
                     Parcel parcel = new Parcel
                     {
                         Id = parcelId,
-                         Priority=Priorities.emergency
+                         Priority=Priorities.Emergency
                     };
                     dataBase.LinkParcelToDrone(parcel, droneId);
                     break;
