@@ -1,34 +1,10 @@
-﻿//                ______     _       _  __                    _     
-//               |___  /    (_)     | |/ /                   | |    
-//                  / /_   ___      | ' / ___  _ __ __ _  ___| |__  
-//                 / /\ \ / / |     |  < / _ \| '__/ _` |/ __| '_ \ 
-//                / /__\ V /| |     | . \ (_) | | | (_| | (__| | | |
-//               /_____|\_/ |_|     |_|\_\___/|_|  \__,_|\___|_| |_|
-//             
-//                 _     _               __     __                            
-//       /\       | |   (_)              \ \   / /                            
-//      /  \   ___| |__  _ _   _  __ _    \ \_/ /   _ _ __  _   _  __ _ _ __  
-//     / /\ \ / __| '_ \| | | | |/ _` |    \   / | | | '_ \| | | |/ _` | '_ \ 
-//    / ____ \ (__| | | | | |_| | (_| |     | || |_| | | | | |_| | (_| | | | |
-//   /_/    \_\___|_| |_|_|\__, |\__,_|     |_| \__,_|_| |_|\__, |\__,_|_| |_|
-//                          __/ |                            __/ |            
-//                         |___/                            |___/             
-//
-//this is a drones' delivery program
-//using IDAL.DO;
-using System;
-/*using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;*/
+﻿using System;
 
-namespace ConsoleUI
+namespace ConsoleUI_BL
 {
     partial class Program
     {
-
-        static IDAL.IDal dataBase = new DalObject.DalObject();
-
+        static BL.IBL myBl = new BL.BlObject();
         static void Main(string[] args)
         {
             int choise = new int();
@@ -40,8 +16,8 @@ namespace ConsoleUI
                 Console.WriteLine("1.Options of adding\n" +
                                     "2.Options of updating\n" +
                                     "3.Options of display\n" +
-                                    "4.options of lists' displaing\n" +
-                                    "5.Bonus:destination from point to station/customer\n" +
+                                    "4.Options of lists' displaing\n" +
+                                    "5.Destination from point to station/customer\n" +
                                    "6.exit\n");
                 choise = InputCheck(5);
                 switch (choise)
@@ -107,12 +83,15 @@ namespace ConsoleUI
         {
             int choice = new int();
             Console.WriteLine("Insert the number of the action you would like to commit:\n");
-            Console.WriteLine("1.Linking a parcel to a drone \n" +
-                              "2.Pick up a parcel with a drone\n" +
-                              "3.Suplying a parcel to the customer \n" +
-                              "4.Sending a drone to charge in a base station\n" +
-                              "5.Releasing a drone from charging in a base station\n");
-            choice = InputCheck(5);
+            Console.WriteLine("1.Update a drone:\n"+
+                              "2.Update a station:\n"+  
+                              "3.Update a customer\n"+
+                              "4.Linking a parcel to a drone \n" +
+                              "5.Pick up a parcel with a drone\n" +
+                              "6.Suplying a parcel to the customer \n" +
+                              "7.Sending a drone to charge in a base station\n" +
+                              "8.Releasing a drone from charging in a base station\n");
+            choice = InputCheck(8);
             UpdateObject(choice);
         }
         /// <summary>
@@ -144,39 +123,6 @@ namespace ConsoleUI
                               "6.List of stations where there are free charging hubs");
             choice = InputCheck(6);
             ListPrint(choice);
-        }
-        static void DistanceFromCordinate()
-        {
-            double latitude = new double();
-            double longitude = new double();
-            int choice = new int();
-            int id = new int();
-            Console.WriteLine("What would you like to measure distance from? \n" +
-                               "1)station\n" +
-                                "2)drone  \n\n\n");
-            choice = InputCheck(2);
-            Console.WriteLine("Enter cordinate latitude: (between  31.742227429597634 to 31.809648051878856 )");
-            double.TryParse(Console.ReadLine(), out latitude);
-            Console.WriteLine("Enter cordinate longitude: (between  35.16242159781234 to 35.22496332365079 )");
-            double.TryParse(Console.ReadLine(), out longitude);
-            switch (choice)
-            {
-                case 1:
-                    Console.WriteLine($"Enter the station id: ");
-                    int.TryParse(Console.ReadLine(), out id);
-                    IDAL.DO.Station dest1 = dataBase.GetStation(id);
-                    Console.WriteLine($"Distance between station {id}:  " +
-                    DistanceBetweenTwoPoints(latitude, longitude, dest1.Latitude, dest1.Longitude).ToString() + " km");
-                    break;
-                case 2:
-                    Console.WriteLine($"Enter the drone id: ");
-                    int.TryParse(Console.ReadLine(), out id);
-                    IDAL.DO.Customer dest2 = dataBase.GetCustomer(id);
-                    Console.WriteLine($"Distance between drone {id}:  " +
-                    DistanceBetweenTwoPoints(latitude, longitude, dest2.Latitude, dest2.Longitude).ToString() + " km");
-                    break;
-            }
-
         }
     }
 }
