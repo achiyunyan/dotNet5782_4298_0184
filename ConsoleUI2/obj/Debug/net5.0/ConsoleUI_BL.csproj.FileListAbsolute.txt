@@ -3,3 +3,6 @@ C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\Con
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.AssemblyInfoInputs.cache
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.AssemblyInfo.cs
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.csproj.CoreCompileInputs.cache
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.dll
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ref\ConsoleUI_BL.dll
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.pdb

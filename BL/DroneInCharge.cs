@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL
+namespace IBL.BO
 {
-    class DroneInCharge
+    public class DroneInCharge
     {
         public int Id { set; get; }
         public double Battery { set; get; }
