@@ -38,7 +38,6 @@ namespace ConsoleUI_BL
                     });
                     break;
                 case 2://add a drone
-                    Random rand = new Random();
                     Console.WriteLine("Enter drone Id: ");
                     int.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter drone Max Weight lift ability: \n1)Light \n2)Medium \n3)Heavy");
@@ -47,8 +46,11 @@ namespace ConsoleUI_BL
                     {
                         Id = id,
                         Model = "EX50" + (weight).ToString(),
-                        MaxWeight = (IDAL.DO.WeightCategories)(weight - 1),
+                        WeightCategory = (IBL.BO.WeightCategory)(weight - 1)
                     });
+                    break;
+                case 3:
+
                     break;
             }
         }

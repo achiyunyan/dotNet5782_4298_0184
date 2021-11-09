@@ -27,6 +27,43 @@ namespace BL
                 //throw new StationBlException(str);
             }
         }
+        public void AddDrone(Drone blDrone)
+        {
+            IDAL.DO.Drone dalDrone = new IDAL.DO.Drone()
+            {
+                Id = blDrone.Id,
+                Model = blDrone.Model,
+                MaxWeight = (IDAL.DO.WeightCategories)blDrone.WeightCategory,
+            };
+            try
+            {
+                myDal.AddDrone(dalDrone);
+            }
+            catch (IDAL.DO.DroneException stex)
+            {
+                //TODO
+                string str = "bl ereceive exception: " + stex.Message;
+                //throw new StationBlException(str);
+            }
+        }
+        public void AddCustomer(Customer blCustomer)
+        {
+            IDAL.DO.Customer dalCustomer = new IDAL.DO.Customer()
+            {
+                Id = blCustomer.Id,
+            };
+            try
+            {
+                myDal.AddCustomer(dalCustomer);
+            }
+            catch (IDAL.DO.CustomerException stex)
+            {
+                //TODO
+                string str = "bl ereceive exception: " + stex.Message;
+                //throw new StationBlException(str);
+            }
+        }
+
 
 
     }

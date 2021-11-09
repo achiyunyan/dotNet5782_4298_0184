@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DalObject
+namespace IDAL.DO
 {
     [Serializable]
-    internal class DroneException : Exception
+    public class DroneException : Exception
     {
         public DroneException()
         {
