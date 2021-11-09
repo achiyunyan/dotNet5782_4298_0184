@@ -4,7 +4,7 @@ namespace ConsoleUI_BL
 {
     partial class Program
     {
-        static BL.IBL myBl = new BL.BlObject();
+        static IBL.IBL myBl = new BL.BL();
         static void Main(string[] args)
         {
             int choise = new int();
