@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    class Parcel
+    public class Parcel
     {
         public int Id { set; get; }
         public CustomerInParcel Sender { set; get; }
@@ -21,11 +21,11 @@ namespace IBL.BO
         public override string ToString()
         {
             return $" Parcel Id:        {Id}\n" +
-                   $" Sender:\n" + Sender.ToString() +
-                   $" Receiver:\n" + Receiver.ToString() +
+                   $" Sender:\n {Sender}" +
+                   $" Receiver:\n {Receiver}" +
                    $" Weight Category:  {WeightCategory}\n" +
                    $" Priority:         {Priority}\n" +
-                   $" Drone:\n" + Drone.ToString() +
+                   $" Drone:\n {Drone}" +
                    $" Requested time:   {Requested}\n" +
                    ((Scheduled == DateTime.MinValue) ? "" : $" Scheduled time:   {Scheduled}\n") +
                    ((PickedUp == DateTime.MinValue)  ? "" : $" PickedUp time:    {PickedUp}\n") +
