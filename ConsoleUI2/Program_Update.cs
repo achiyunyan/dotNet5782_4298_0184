@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleUI_BL
 {
-    partial class Program
+    class Program_Update
     {
-        static private void AddObject(int choice)
-        {
-
-        }
     }
 }
