@@ -21,4 +21,3 @@ C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DAL.dll
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\ref\DAL.dll
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DAL.pdb
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DAL.csproj.AssemblyReference.cache
-C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DAL.csproj.AssemblyReference.cache
