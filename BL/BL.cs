@@ -8,6 +8,7 @@ namespace BL
 {
     public class BL : IBL.IBL
     {
+        
         static DalObject.DalObject myDal = new DalObject.DalObject();
         static List<ListDrone> Drones = new List<ListDrone>();
         public void AddStation(Station blStation)
