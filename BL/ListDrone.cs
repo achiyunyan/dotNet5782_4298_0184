@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    class ListDrone
+    public class ListDrone
     {
         public int Id { set; get; }
         public string Model { set; get; }
         public WeightCategory WeightCategory { set; get; }
-        public double Battery { set; get; }
+        public int Battery { set; get; }
         public DroneState State { set; get; }
         public Location Location { set; get; }
         public int ParcelId { set; get; } = 0;

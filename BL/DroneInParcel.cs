@@ -3,7 +3,7 @@
     public class DroneInParcel
     {
         public int Id { set; get; }
-        public double Battery { set; get; }
+        public int Battery { set; get; }
         public Location Location { set; get; }
         public override string ToString()
         {

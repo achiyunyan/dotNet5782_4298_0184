@@ -8,32 +8,49 @@ namespace BL
 {
     public class BL : IBL.IBL
     {
-        
-        static DalObject.DalObject myDal = new DalObject.DalObject();
-        static List<ListDrone> Drones = new List<ListDrone>();
+        private static Random rand=new Random();
+        private static DalObject.DalObject myDal = new DalObject.DalObject();
+        private static List<ListDrone> Drones = new List<ListDrone>();
         public void AddStation(Station blStation)
         {
-            IDAL.DO.Station dalStation = new IDAL.DO.Station()
-            {
-                Id = blStation.Id,
-                Name = blStation.Name,
-                ChargeSlots = blStation.FreeChargeSlots,
-                Latitude = blStation.Location.Latitude,
-                Longitude = blStation.Location.Longitude
-            };
             try
             {
-                myDal.AddStation(dalStation);
+                myDal.AddStation(new IDAL.DO.Station()
+                {
+                    Id = blStation.Id,
+                    Name = blStation.Name,
+                    ChargeSlots = blStation.FreeChargeSlots,
+                    Latitude = blStation.Location.Latitude,
+                    Longitude = blStation.Location.Longitude
+                });
             }
             catch (IDAL.DO.AlreadyExistsException stex)
             {
-                //TODO
                 string str = "bl ereceive exception: " + stex.Message;
-                //throw new StationBlException(str);
+                throw new BlException(str);
             }
         }
-        public void AddDrone(Drone blDrone)
+        public void AddDrone(Drone blDrone,int stationId)
         {
+            IDAL.DO.Station station=default;
+            try
+            {
+                 station = myDal.GetStation(stationId);
+            }
+            catch(IDAL.DO.NotExistsException stex)
+            {
+                string str = "bl ereceive exception: " + stex.Message;
+                throw new BlException(str);
+            }
+            Drones.Add(new ListDrone()
+            {
+                Id = blDrone.Id,
+                Model = blDrone.Model,
+                Location = new Location { Latitude = station.Latitude, Longitude = station.Longitude },
+                Battery = rand.Next(20, 41),
+                State = DroneState.Maintenance,
+                WeightCategory=blDrone.WeightCategory,
+            }) ;
             IDAL.DO.Drone dalDrone = new IDAL.DO.Drone()
             {
                 Id = blDrone.Id,
@@ -46,9 +63,8 @@ namespace BL
             }
             catch (IDAL.DO.AlreadyExistsException stex)
             {
-                //TODO
                 string str = "bl ereceive exception: " + stex.Message;
-                //throw new StationBlException(str);
+                throw new BlException(str);
             }
         }
         public void AddCustomer(Customer blCustomer)
@@ -56,6 +72,10 @@ namespace BL
             IDAL.DO.Customer dalCustomer = new IDAL.DO.Customer()
             {
                 Id = blCustomer.Id,
+                Name=blCustomer.Name,
+                Phone=blCustomer.Phone,
+                Latitude=blCustomer.Location.Latitude,
+                Longitude=blCustomer.Location.Longitude
             };
             try
             {
@@ -63,13 +83,14 @@ namespace BL
             }
             catch (IDAL.DO.AlreadyExistsException stex)
             {
-                //TODO
                 string str = "bl ereceive exception: " + stex.Message;
-                //throw new StationBlException(str);
+                throw new BlException(str);
             }
         }
 
-
-
+        public void AddParcel(Parcel parcel)
+        {
+            ;
+        }
     }
 }
