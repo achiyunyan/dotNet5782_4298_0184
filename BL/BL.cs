@@ -1,18 +1,22 @@
 ﻿using IBL.BO;
 using System;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 namespace BL
 {
     public class BL : IBL.IBL
     {
         static DalObject.DalObject myDal = new DalObject.DalObject();
+        static List<ListDrone> Drones = new List<ListDrone>();
         public void AddStation(Station blStation)
         {
             IDAL.DO.Station dalStation = new IDAL.DO.Station()
             {
                 Id = blStation.Id,
                 Name = blStation.Name,
-                ChargeSlots = blStation.ChargeSlots,
+                ChargeSlots = blStation.FreeChargeSlots,
                 Latitude = blStation.Location.Latitude,
                 Longitude = blStation.Location.Longitude
             };
@@ -20,7 +24,7 @@ namespace BL
             {
                 myDal.AddStation(dalStation);
             }
-            catch (IDAL.DO.StationException stex)
+            catch (IDAL.DO.AlreadyExistsException stex)
             {
                 //TODO
                 string str = "bl ereceive exception: " + stex.Message;
@@ -39,7 +43,7 @@ namespace BL
             {
                 myDal.AddDrone(dalDrone);
             }
-            catch (IDAL.DO.DroneException stex)
+            catch (IDAL.DO.AlreadyExistsException stex)
             {
                 //TODO
                 string str = "bl ereceive exception: " + stex.Message;
@@ -56,7 +60,7 @@ namespace BL
             {
                 myDal.AddCustomer(dalCustomer);
             }
-            catch (IDAL.DO.CustomerException stex)
+            catch (IDAL.DO.AlreadyExistsException stex)
             {
                 //TODO
                 string str = "bl ereceive exception: " + stex.Message;

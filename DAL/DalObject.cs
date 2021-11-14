@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
@@ -23,7 +24,7 @@ namespace DalObject
         {
             if(DataSource.Stations.Any(st => st.Id == addStation.Id))
             {
-                throw new StationException($"id: {addStation.Id} already exists!!");
+                throw new AlreadyExistsException($"id: {addStation.Id} already exists!!");
             }
             DataSource.Stations.Add(addStation);
         }
@@ -35,7 +36,7 @@ namespace DalObject
         {
             if (DataSource.Drones.Any(st => st.Id == addDrone.Id))
             {
-                throw new DroneException($"id: {addDrone.Id} already exists!!");
+                throw new AlreadyExistsException($"id: {addDrone.Id} already exists!!");
             }
             DataSource.Drones.Add(addDrone);
         }
@@ -47,7 +48,7 @@ namespace DalObject
         {
             if (DataSource.Customers.Any(st => st.Id == addCustomer.Id))
             {
-                throw new CustomerException($"id: {addCustomer.Id} already exists!!");
+                throw new AlreadyExistsException($"id: {addCustomer.Id} already exists!!");
             }
             DataSource.Customers.Add(addCustomer);
         }
@@ -59,7 +60,7 @@ namespace DalObject
         {
             if (DataSource.Parcels.Any(st => st.Id == addParcel.Id))
             {
-                throw new ParcelException($"id: {addParcel.Id} already exists!!");
+                throw new AlreadyExistsException($"id: {addParcel.Id} already exists!!");
             }
             DataSource.Parcels.Add(addParcel);
         }
@@ -68,7 +69,7 @@ namespace DalObject
             int indexOfParcel = DataSource.Parcels.IndexOf(updateParcel);
             if(indexOfParcel==-1)
             {
-                throw new ParcelException($"id: {updateParcel.Id} not exists!!");
+                throw new NotExistsException($"id: {updateParcel.Id} not exists!!");
             }
             DataSource.Parcels[indexOfParcel] = updateParcel;
         }
@@ -77,7 +78,7 @@ namespace DalObject
             int indexOfDrone = DataSource.Drones.IndexOf(updateDrone);
             if (indexOfDrone == -1)
             {
-                throw new DroneException($"id: {updateDrone.Id} not exists!!");
+                throw new NotExistsException($"id: {updateDrone.Id} not exists!!");
             }
             DataSource.Drones[indexOfDrone] = updateDrone;
         }
@@ -86,7 +87,7 @@ namespace DalObject
             int indexOfCustomer = DataSource.Customers.IndexOf(updateCustomer);
             if (indexOfCustomer == -1)
             {
-                throw new CustomerException($"id: {updateCustomer.Id} not exists!!");
+                throw new NotExistsException($"id: {updateCustomer.Id} not exists!!");
             }
             DataSource.Customers[indexOfCustomer] = updateCustomer;
         }
@@ -95,7 +96,7 @@ namespace DalObject
             int indexOfStation = DataSource.Stations.IndexOf(updateStation);
             if (indexOfStation == -1)
             {
-                throw new StationException($"id: {updateStation.Id} not exists!!");
+                throw new NotExistsException($"id: {updateStation.Id} not exists!!");
             }
             DataSource.Stations[indexOfStation] = updateStation;
         }
