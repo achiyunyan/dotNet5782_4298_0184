@@ -44,7 +44,7 @@ namespace ConsoleUI
                 case 2://add a drone
                     Random rand = new Random();
                     Console.WriteLine("Enter drone Id: ");
-                    int.TryParse(Console.ReadLine(), out id);
+                    int.TryParse(Console.ReadLine(), out id);                    
                     Console.WriteLine("Enter drone Max Weight lift ability: \n1)Light \n2)Medium \n3)Heavy");
                     int.TryParse(Console.ReadLine(), out weight);
                     dataBase.AddDrone(new IDAL.DO.Drone
