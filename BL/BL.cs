@@ -5,6 +5,7 @@ namespace BL
 {
     public class BL : IBL.IBL
     {
+        
         static DalObject.DalObject myDal = new DalObject.DalObject();
         public void AddStation(Station blStation)
         {
@@ -12,7 +13,7 @@ namespace BL
             {
                 Id = blStation.Id,
                 Name = blStation.Name,
-                ChargeSlots = blStation.ChargeSlots,
+                ChargeSlots = blStation.FreeChargeSlots,
                 Latitude = blStation.Location.Latitude,
                 Longitude = blStation.Location.Longitude
             };
