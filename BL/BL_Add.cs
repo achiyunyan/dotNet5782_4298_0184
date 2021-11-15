@@ -9,8 +9,26 @@ namespace BL
     public partial class BL : IBL.IBL
     {
         private static Random rand = new Random();
-        private static DalObject.DalObject myDal = new DalObject.DalObject();
+        private DalObject.DalObject myDal;
         private static List<ListDrone> Drones = new List<ListDrone>();
+        private double ElectricityUsePerKmAvailable;
+        private double ElectricityUsePerKmLight;
+        private double ElectricityUsePerKmMedium;
+        private double ElectricityUsePerKmHeavy;
+        private double ElectricityChargePerHour;
+
+        public BL()
+        {
+            myDal = new DalObject.DalObject();
+            //ElectricityUsePerKmAvailable = ;
+            //ElectricityUsePerKmLight = ;
+            //ElectricityUsePerKmMedium = ;
+            //ElectricityUsePerKmHeavy = ;
+            //ElectricityChargePerHour = ;
+            List<IDAL.DO.Drone> dalDrones = (List<IDAL.DO.Drone>)myDal.GetDronesList();
+            
+        }
+
         public void AddStation(Station blStation)
         {
             try
