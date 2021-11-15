@@ -58,10 +58,7 @@ namespace DalObject
         /// <param name="AddParcel"></param>
         public void AddParcel(Parcel addParcel)
         {
-            if (DataSource.Parcels.Any(st => st.Id == addParcel.Id))
-            {
-                throw new AlreadyExistsException($"id: {addParcel.Id} already exists!!");
-            }
+            addParcel.Id = ++DataSource.Config.parcelNum;
             DataSource.Parcels.Add(addParcel);
         }
         public void UpdateParcel(Parcel updateParcel)

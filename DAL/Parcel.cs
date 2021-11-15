@@ -8,7 +8,7 @@ namespace IDAL
         {
             public int Id { set; get; }
             public int SenderId { set; get; }
-            public int TargetId { set; get; }
+            public int ReciverId { set; get; }
             public WeightCategories Weight { set; get; }
             public Priorities Priority { set; get; }
             public DateTime Requested { set; get; }
@@ -20,7 +20,7 @@ namespace IDAL
             {
                 return $" Parcel Id:        {Id}\n" +
                        $" Sender Id:        {SenderId}\n" +
-                       $" Target Id:        {TargetId}\n" +
+                       $" Reciver Id:       {ReciverId}\n" +
                        $" Weight category:  {Weight}\n" +
                        $" Priority:         {Priority}\n" +
                        $" Drone Id:         {DroneId}\n" +

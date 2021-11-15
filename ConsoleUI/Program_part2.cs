@@ -78,9 +78,7 @@ namespace ConsoleUI
                     break;
                 case 4://add a parcel
                     int senderId = new int();
-                    int reciverId = new int();
-                    Console.WriteLine("Enter Parcel Id: ");
-                    int.TryParse(Console.ReadLine(), out id);
+                    int reciverId = new int();                    
                     Console.WriteLine("Enter sender Id: ");
                     int.TryParse(Console.ReadLine(), out senderId);
                     Console.WriteLine("Enter reciver Id: ");
@@ -89,9 +87,8 @@ namespace ConsoleUI
                     int.TryParse(Console.ReadLine(), out weight);
                     dataBase.AddParcel(new IDAL.DO.Parcel
                     {
-                        Id = id,
                         SenderId = senderId,
-                        TargetId = reciverId,
+                        ReciverId = reciverId,
                         DroneId = 0,
                         Priority = IDAL.DO.Priorities.Normal,
                         Weight = (IDAL.DO.WeightCategories)(weight - 1),

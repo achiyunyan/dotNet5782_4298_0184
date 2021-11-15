@@ -17,7 +17,7 @@ namespace DalObject
         private static Random rand = new Random();
         internal class Config
         {
-            private static int parcelNum = 1000000;
+            internal static int parcelNum = 1000000;
             private static string[] names = new string[] { "Adam", "Alex", "Aaron", "Ben", "Charly", "Chase", "Che", "Chester", "Chevy", "Chi", "Chibudom", "Chidera", "Chimsom", "Chin", "Chintu", "Chiqal", "Chiron", "Chris", "Chris-Daniel", "Chrismedi", "Christian", "Christie", "Christoph", "Christopher", "Christopher-Lee", "Christy", "Chu", "Chukwuemeka", "Cian", "Ciann", "Ciar", "Ciaran", "Ciarian", "Cieran", "Cillian", "Cillin", "Cinar", "CJ", "C-Jay", "Clark", "Clarke", "Clayton", "Clement", "Clifford", "Clyde", "Cobain", "Coban", "Coben", "Cobi", "Cobie", "Coby", "Codey", "Codi", "Codie", "Cody", "Cody-Lee", "Coel", "Cohan", "Cohen", "Colby", "Cole", "Colin", "Coll", "Colm", "Colt", "Colton", "Colum", "Dan", "David", "Edward", "Fred", "Frank", "George", "Hal", "Hank", "Ike", "John", "Jack", "Joe", "Larry", "Monte", "Matthew", "Mark", "Nathan", "Otto", "Paul", "Peter", "Roger", "Roger", "Steve", "Thomas", "Tim", "Ty", "Victor", "Walter", "Wiktor", "Wilkie", "Will", "William", "William-John", "Willum", "Wilson", "Windsor", "Wojciech", "Woyenbrakemi", "Wyatt", "Wylie", "Wynn", "Xabier", "Xander", "Xavier", "Xiao", "Xida", "Xin", "Xue", "Yadgor", "Yago", "Yahya", "Yakup", "Yang", "Yanick", "Yann", "Yannick", "Yaseen", "Yasin", "Yasir", "Yassin", "Yoji", "Yong", "Yoolgeun", "Yorgos", "Youcef", "Yousif", "Youssef", "Yu", "Yuanyu", "Yuri", "Yusef", "Yusuf", "Yves", "Zaaine", "Zaak", "Zac", "Zach", "Zachariya", "Zachary", "Zachary-Marc", "Zachery", "Zack", "Zackary", "Zaid", "Zain", "Zaine", "Miguel", "Mika", "Mikael", "Mikee", "Mikey", "Mikhail", "Mikolaj", "Miles", "Millar", "Miller", "Milo", "Milos", "Milosz", "Mir", "Mirza", "Mitch", "Mitchel", "Mitchell", "Moad", "Moayd", "Mobeen", "Modoulamin", "Modu", "Mohamad", "Mohamed", "Mohammad", "Mohammad-Bilal", "Mohammed", "Mohanad", "Mohd", "Momin", "Momooreoluwa", "Montague", "Montgomery", "Monty" };
             private static string[] stationsNames = new string[] { "Rehavia", "Katamon", "Givat Mordechai", "Arnona", "Romema" };
             private static double[] latitudes = new double[] { 31.773883970410303, 31.761073049323283, 31.762682895985005, 31.747320910723996, 31.791571360711526 };
@@ -121,7 +121,7 @@ namespace DalObject
                         {
                             Id = parcelNum++,
                             SenderId = Customers[rand.Next(Customers.Count)].Id,
-                            TargetId = Customers[rand.Next(Customers.Count)].Id,
+                            ReciverId = Customers[rand.Next(Customers.Count)].Id,
                             Weight = (WeightCategories)rand.Next(3),
                             Priority = (Priorities)rand.Next(3),
                             DroneId = 0,
@@ -142,7 +142,7 @@ namespace DalObject
                         {
                             Id = parcelNum++,
                             SenderId = Customers[rand.Next(Customers.Count)].Id,
-                            TargetId = Customers[rand.Next(Customers.Count)].Id,
+                            ReciverId = Customers[rand.Next(Customers.Count)].Id,
                             Weight = (WeightCategories)rand.Next(3),
                             Priority = (Priorities)rand.Next(3),
                             DroneId = Drones[rand.Next(Drones.Count)].Id,

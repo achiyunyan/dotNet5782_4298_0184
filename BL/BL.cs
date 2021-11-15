@@ -8,7 +8,7 @@ namespace BL
 {
     public class BL : IBL.IBL
     {
-        private static Random rand=new Random();
+        private static Random rand = new Random();
         private static DalObject.DalObject myDal = new DalObject.DalObject();
         private static List<ListDrone> Drones = new List<ListDrone>();
         public void AddStation(Station blStation)
@@ -30,14 +30,14 @@ namespace BL
                 throw new BlException(str);
             }
         }
-        public void AddDrone(Drone blDrone,int stationId)
+        public void AddDrone(Drone blDrone, int stationId)
         {
-            IDAL.DO.Station station=default;
+            IDAL.DO.Station station = default;
             try
             {
-                 station = myDal.GetStation(stationId);
+                station = myDal.GetStation(stationId);
             }
-            catch(IDAL.DO.NotExistsException stex)
+            catch (IDAL.DO.NotExistsException stex)
             {
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
@@ -49,8 +49,8 @@ namespace BL
                 Location = new Location { Latitude = station.Latitude, Longitude = station.Longitude },
                 Battery = rand.Next(20, 41),
                 State = DroneState.Maintenance,
-                WeightCategory=blDrone.WeightCategory,
-            }) ;
+                WeightCategory = blDrone.WeightCategory,
+            });
             IDAL.DO.Drone dalDrone = new IDAL.DO.Drone()
             {
                 Id = blDrone.Id,
@@ -72,10 +72,10 @@ namespace BL
             IDAL.DO.Customer dalCustomer = new IDAL.DO.Customer()
             {
                 Id = blCustomer.Id,
-                Name=blCustomer.Name,
-                Phone=blCustomer.Phone,
-                Latitude=blCustomer.Location.Latitude,
-                Longitude=blCustomer.Location.Longitude
+                Name = blCustomer.Name,
+                Phone = blCustomer.Phone,
+                Latitude = blCustomer.Location.Latitude,
+                Longitude = blCustomer.Location.Longitude
             };
             try
             {
@@ -88,9 +88,29 @@ namespace BL
             }
         }
 
-        public void AddParcel(Parcel parcel)
+        public void AddParcel(int senderId, int reciverId, int weight, int priority)
         {
-            ;
+            IDAL.DO.Parcel dalParcel = new IDAL.DO.Parcel()
+            {
+                SenderId = senderId,
+                ReciverId = reciverId,
+                Weight = (IDAL.DO.WeightCategories)weight,
+                Priority = (IDAL.DO.Priorities)priority,
+                Requested = DateTime.Now,
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
+                DroneId = 0
+            };
+            try
+            {
+                myDal.AddParcel(dalParcel);
+            }
+            catch (IDAL.DO.AlreadyExistsException stex)
+            {
+                string str = "bl ereceive exception: " + stex.Message;
+                throw new BlException(str);
+            }
         }
     }
 }
