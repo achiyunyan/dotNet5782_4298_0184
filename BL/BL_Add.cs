@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace BL
 {
-    public class BL : IBL.IBL
+    public partial class BL : IBL.IBL
     {
         private static Random rand = new Random();
         private static DalObject.DalObject myDal = new DalObject.DalObject();
@@ -111,16 +111,6 @@ namespace BL
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
             }
-        }
-
-        public void AddParcel(int senderId, int reciverId, int weight, int priority)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateDrone(Drone drone)
-        {
-            throw new NotImplementedException();
         }
     }
 }
