@@ -8,5 +8,6 @@ namespace IBL
         void AddStation(Station blStation);
         void AddCustomer(Customer customer);
         void AddParcel(int senderId, int reciverId, int weight, int priority);
+        void UpdateDrone(Drone drone);
     }
 }

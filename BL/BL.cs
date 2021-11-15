@@ -112,5 +112,15 @@ namespace BL
                 throw new BlException(str);
             }
         }
+
+        public void AddParcel(int senderId, int reciverId, int weight, int priority)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateDrone(Drone drone)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
