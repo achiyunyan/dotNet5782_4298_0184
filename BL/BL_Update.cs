@@ -64,11 +64,11 @@ namespace BL
         }
 
         public void SendDroneToCharge(int id)
-        {
-            IDAL.DO.Drone dalDrone;
+        {//אפשר לסכם שלא הבנתי...מחר יהיה בסדר:)
+            ListDrone drone;
             try
             {
-                dalDrone = myDal.GetDrone(id);
+                drone = Drones.Find(dr => dr.Id==id);
             }
             catch(IDAL.DO.NotExistsException exec)
             {
@@ -77,10 +77,14 @@ namespace BL
             if(myDal.GetStationsList().Any(st=>st.ChargeSlots>0))
             {
                 List<IDAL.DO.Station> dalStationList = (List<IDAL.DO.Station>)myDal.GetStationsList();
-                IDAL.DO.Station closestDalStation = dalStationList[0];
-                for (int i=1;i<dalStationList.Count;i++)
-                    if (dalStationList[i].)
-                        
+                IDAL.DO.Station closestDalStation = dalStationList.First(st => st.ChargeSlots>0);
+                for (int i = 1; i < dalStationList.Count; i++)
+                    if (dalStationList[i].&& dalStationList[i].ChargeSlots>0)
+                    closestDalStation = dalStationList[i];
+                drone.Location = new Location { Latitude = closestDalStation.Latitude, Longitude = closestDalStation.Longitude };
+                drone.State = DroneState.Maintenance;
+                drone.Battery-=drone.
+                
             }
             else
             {
