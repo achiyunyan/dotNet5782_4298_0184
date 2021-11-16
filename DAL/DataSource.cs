@@ -112,45 +112,113 @@ namespace DalObject
             private static void RandomParcel()
             {
                 int size = rand.Next(10, 1001);
+                int choice;
+                bool NotCreated;
                 for (int i = 0; i < size; i++)
                 {
-                    if (rand.Next(0, 5) != 0) // new unlinked parcel from the last week
+                    NotCreated = true;
+                    while(NotCreated)
                     {
-                        TimeSpan timeSpan = new TimeSpan(rand.Next(7), rand.Next(24), rand.Next(60), rand.Next(60));
-                        Parcels.Add(new Parcel
+                        choice = rand.Next(0, 5);
+                        if (choice > 2) // new unlinked parcel from the last week
                         {
-                            Id = parcelNum++,
-                            SenderId = Customers[rand.Next(Customers.Count)].Id,
-                            ReciverId = Customers[rand.Next(Customers.Count)].Id,
-                            Weight = (WeightCategories)rand.Next(3),
-                            Priority = (Priorities)rand.Next(3),
-                            DroneId = 0,
-                            Requested = DateTime.Now - timeSpan,
-                            Scheduled = DateTime.MinValue,
-                            Delivered = DateTime.MinValue,
-                            PickedUp = DateTime.MinValue
-                        });
-                    }
-                    else // new deliverd parcel from two weeks ago up to a week ago
-                    {
-                        DateTime now = DateTime.Now;
-                        TimeSpan timeSpan1 = new TimeSpan(rand.Next(7, 14), rand.Next(24), rand.Next(60), rand.Next(60));
-                        TimeSpan timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
-                        TimeSpan timeSpan3 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
-                        TimeSpan timeSpan4 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
-                        Parcels.Add(new Parcel
+                            TimeSpan timeSpan = new TimeSpan(rand.Next(2), rand.Next(24), rand.Next(60), rand.Next(60));
+                            Parcels.Add(new Parcel
+                            {
+                                Id = parcelNum++,
+                                SenderId = Customers[rand.Next(Customers.Count)].Id,
+                                ReciverId = Customers[rand.Next(Customers.Count)].Id,
+                                Weight = (WeightCategories)rand.Next(3),
+                                Priority = (Priorities)rand.Next(3),
+                                DroneId = 0,
+                                Requested = DateTime.Now - timeSpan,
+                                Scheduled = DateTime.MinValue,
+                                PickedUp = DateTime.MinValue,
+                                Delivered = DateTime.MinValue
+                            });
+                            NotCreated = false;
+                        }
+
+                        if (choice == 2) // adds Scheduled parcel
                         {
-                            Id = parcelNum++,
-                            SenderId = Customers[rand.Next(Customers.Count)].Id,
-                            ReciverId = Customers[rand.Next(Customers.Count)].Id,
-                            Weight = (WeightCategories)rand.Next(3),
-                            Priority = (Priorities)rand.Next(3),
-                            DroneId = Drones[rand.Next(Drones.Count)].Id,
-                            Requested = now - timeSpan1,
-                            Scheduled = now - timeSpan1 + timeSpan2,
-                            Delivered = now - timeSpan1 + timeSpan2 + timeSpan3,
-                            PickedUp = now - timeSpan1 + timeSpan2 + timeSpan3 + timeSpan4
-                        });
+                            DateTime now = DateTime.Now;
+                            TimeSpan timeSpan1 = new TimeSpan(rand.Next(2, 7), rand.Next(24), rand.Next(60), rand.Next(60));
+                            TimeSpan timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
+                            int droneId = Drones[rand.Next(Drones.Count)].Id;
+                            int intWeight = rand.Next(3);
+                            if (!Parcels.Any(st => st.Delivered == DateTime.MinValue && st.DroneId == droneId) && (int)Drones.First(st => st.Id == droneId).MaxWeight >= intWeight)
+                            {
+                                Parcels.Add(new Parcel
+                                {
+                                    Id = parcelNum++,
+                                    SenderId = Customers[rand.Next(Customers.Count)].Id,
+                                    ReciverId = Customers[rand.Next(Customers.Count)].Id,
+                                    Weight = (WeightCategories)intWeight,
+                                    Priority = (Priorities)rand.Next(3),
+                                    DroneId = droneId,
+                                    Requested = now - timeSpan1,
+                                    Scheduled = now - timeSpan1 + timeSpan2,
+                                    PickedUp = DateTime.MinValue,
+                                    Delivered = DateTime.MinValue
+                                });
+                                NotCreated = false;
+                            }
+                        }
+
+                        if (choice == 1)
+                        {
+                            DateTime now = DateTime.Now;
+                            TimeSpan timeSpan1 = new TimeSpan(rand.Next(2, 7), rand.Next(24), rand.Next(60), rand.Next(60));
+                            TimeSpan timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
+                            TimeSpan timeSpan3 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
+                            int droneId = Drones[rand.Next(Drones.Count)].Id;
+                            int intWeight = rand.Next(3);
+                            if (!Parcels.Any(st => st.Delivered == DateTime.MinValue && st.DroneId == droneId) && (int)Drones.First(st => st.Id == droneId).MaxWeight >= intWeight)
+                            {
+                                Parcels.Add(new Parcel
+                                {
+                                    Id = parcelNum++,
+                                    SenderId = Customers[rand.Next(Customers.Count)].Id,
+                                    ReciverId = Customers[rand.Next(Customers.Count)].Id,
+                                    Weight = (WeightCategories)intWeight,
+                                    Priority = (Priorities)rand.Next(3),
+                                    DroneId = droneId,
+                                    Requested = now - timeSpan1,
+                                    Scheduled = now - timeSpan1 + timeSpan2,
+                                    PickedUp = now - timeSpan1 + timeSpan2 + timeSpan3,
+                                    Delivered = DateTime.MinValue
+                                });
+                                NotCreated = false;
+                            }
+                        }
+
+                        else // new deliverd parcel from two weeks ago up to a week ago
+                        {
+                            DateTime now = DateTime.Now;
+                            TimeSpan timeSpan1 = new TimeSpan(rand.Next(7, 14), rand.Next(24), rand.Next(60), rand.Next(60));
+                            TimeSpan timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
+                            TimeSpan timeSpan3 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
+                            TimeSpan timeSpan4 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
+                            int droneId = Drones[rand.Next(Drones.Count)].Id;
+                            int intWeight = rand.Next(3);
+                            if ((int)Drones.First(st => st.Id == droneId).MaxWeight >= intWeight)
+                            {
+                                Parcels.Add(new Parcel
+                                {
+                                    Id = parcelNum++,
+                                    SenderId = Customers[rand.Next(Customers.Count)].Id,
+                                    ReciverId = Customers[rand.Next(Customers.Count)].Id,
+                                    Weight = (WeightCategories)intWeight,
+                                    Priority = (Priorities)rand.Next(3),
+                                    DroneId = droneId,
+                                    Requested = now - timeSpan1,
+                                    Scheduled = now - timeSpan1 + timeSpan2,
+                                    PickedUp = now - timeSpan1 + timeSpan2 + timeSpan3,
+                                    Delivered = now - timeSpan1 + timeSpan2 + timeSpan3 + timeSpan4
+                                });
+                                NotCreated = false;
+                            }
+                        }
                     }
                 }
             }

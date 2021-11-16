@@ -12,10 +12,10 @@ namespace BL
         {
             IDAL.DO.Drone dalDrone = new IDAL.DO.Drone()
             {
-                Id=drone.Id,
-                MaxWeight=(IDAL.DO.WeightCategories)drone.WeightCategory,
-                Model=drone.Model
-            }
+                Id = drone.Id,
+                MaxWeight = (IDAL.DO.WeightCategories)drone.WeightCategory,
+                Model = drone.Model
+            };
         }
     }
 }

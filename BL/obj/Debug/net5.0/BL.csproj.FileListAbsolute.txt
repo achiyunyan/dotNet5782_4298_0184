@@ -27,4 +27,3 @@ C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\BL\bin\Debug\net5.0\ref\BL.dll
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\BL\bin\Debug\net5.0\BL.pdb
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\BL\bin\Debug\net5.0\DAL.dll
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\BL\bin\Debug\net5.0\DAL.pdb
-C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\BL\obj\Debug\net5.0\BL.csproj.CopyComplete

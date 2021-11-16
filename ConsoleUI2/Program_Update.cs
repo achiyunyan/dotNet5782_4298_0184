@@ -44,13 +44,13 @@ namespace ConsoleUI_BL
             Console.WriteLine("Enter Drone Id:");
             int.TryParse(Console.ReadLine(), out id);
             Console.WriteLine("Enter Drone new Model:");
-            try
-            {
-                myBl.UpdateDrone(new Drone()
-                {
+            //try
+            //{
+            //    myBl.UpdateDrone(new Drone()
+            //    {
 
-                });
-            }
+            //    });
+            //}
         }
     }
 }

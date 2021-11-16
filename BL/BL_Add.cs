@@ -20,13 +20,129 @@ namespace BL
         public BL()
         {
             myDal = new DalObject.DalObject();
-            //ElectricityUsePerKmAvailable = ;
-            //ElectricityUsePerKmLight = ;
-            //ElectricityUsePerKmMedium = ;
-            //ElectricityUsePerKmHeavy = ;
-            //ElectricityChargePerHour = ;
+            ElectricityUsePerKmAvailable = myDal.GetElectricityUsePerKmAvailable();
+            ElectricityUsePerKmLight = myDal.GetElectricityUsePerKmLight();
+            ElectricityUsePerKmMedium = myDal.GetElectricityUsePerKmMedium();
+            ElectricityUsePerKmHeavy = myDal.GetElectricityUsePerKmHeavy();
+            ElectricityChargePerHour = myDal.GetElectricityChargePerHour();
             List<IDAL.DO.Drone> dalDrones = (List<IDAL.DO.Drone>)myDal.GetDronesList();
-            
+            List<IDAL.DO.Parcel> dalParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();            
+            int battery;
+            DroneState state;
+            int parcelId = 0;            
+            Location location; 
+            foreach(var drone in dalDrones)
+            {                
+                if(dalParcels.Any(st => st.DroneId == drone.Id && st.Delivered == DateTime.MinValue)) // in delivery
+                {
+                    IDAL.DO.Parcel dalParcel = dalParcels.First(st => st.DroneId == drone.Id && st.Delivered == DateTime.MinValue);
+                    state = DroneState.Delivery;
+                    IDAL.DO.Customer sender = myDal.GetCustomer(dalParcel.SenderId);
+                    IDAL.DO.Customer reciver = myDal.GetCustomer(dalParcel.ReciverId);
+                    double dis = myDal.DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude);
+                    
+                    if (dalParcel.PickedUp == DateTime.MinValue)
+                    {
+                        location = ClosestStationLocation(sender.Latitude, sender.Longitude);                        
+                    }
+                    else
+                    {
+                        location = new Location
+                        {
+                            Latitude = myDal.GetCustomer(dalParcel.SenderId).Latitude,
+                            Longitude = myDal.GetCustomer(dalParcel.SenderId).Longitude
+                        };
+                    }
+                    double ElectricityUsePerKm = 0;
+                    switch (dalParcel.Weight)
+                    {
+                        case IDAL.DO.WeightCategories.Light:
+                            ElectricityUsePerKm = ElectricityUsePerKmLight;
+                            break;
+                        case IDAL.DO.WeightCategories.Medium:
+                            ElectricityUsePerKm = ElectricityUsePerKmMedium;
+                            break;
+                        case IDAL.DO.WeightCategories.Heavy:
+                            ElectricityUsePerKm = ElectricityUsePerKmHeavy;
+                            break;
+                    }
+                    battery = rand.Next((int)(ElectricityUsePerKm * dis), 101);
+                }
+                else
+                {
+                    if(rand.Next(0,2) == 0)// in charge
+                    {
+                        state = DroneState.Maintenance;
+                        battery = rand.Next(0, 21);
+                        List<IDAL.DO.Station> dalStations = (List<IDAL.DO.Station>)myDal.GetStationsList();
+                        int index = rand.Next(0, dalStations.Count);
+                        location = new Location { Latitude = dalStations[index].Latitude, Longitude = dalStations[index].Longitude };
+                    }
+
+                    else // available
+                    {
+                        state = DroneState.Available;
+                        List<IDAL.DO.Parcel> dalDeliveredParcels = dalParcels.FindAll(par => par.Delivered != DateTime.MinValue);
+                        IDAL.DO.Customer customer = myDal.GetCustomer(dalDeliveredParcels[rand.Next(0, dalDeliveredParcels.Count)].ReciverId);
+                        location = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };
+                        double ElectricityUsePerKm = 0;
+                        switch (drone.MaxWeight)
+                        {
+                            case IDAL.DO.WeightCategories.Light:
+                                ElectricityUsePerKm = ElectricityUsePerKmLight;
+                                break;
+                            case IDAL.DO.WeightCategories.Medium:
+                                ElectricityUsePerKm = ElectricityUsePerKmMedium;
+                                break;
+                            case IDAL.DO.WeightCategories.Heavy:
+                                ElectricityUsePerKm = ElectricityUsePerKmHeavy;
+                                break;
+                        }
+                        battery = rand.Next((int)(DistanceFromClosestStation(customer.Latitude, customer.Longitude) * ElectricityUsePerKm), 101);
+                    }
+                }
+                Drones.Add(new ListDrone
+                {
+                    Id = drone.Id,
+                    Battery = battery,
+                    Model = drone.Model,
+                    Location = location,
+                    ParcelId = parcelId,
+                    State = state,
+                    WeightCategory = (WeightCategory)(int)drone.MaxWeight
+                });
+            }
+        }
+
+        private Location ClosestStationLocation(double lat, double lon)
+        {
+            List<IDAL.DO.Station> dalStations = (List<IDAL.DO.Station>)myDal.GetStationsList();
+            double dis = double.MaxValue;
+            Location location = new Location();
+            foreach(var station in dalStations)
+            {
+                if (dis >= myDal.DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0)
+                {
+                    location.Latitude = station.Latitude;
+                    location.Longitude = station.Longitude;
+                    dis = myDal.DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
+                }
+            }
+            return location;
+        }
+
+        private double DistanceFromClosestStation(double lat, double lon)
+        {
+            List<IDAL.DO.Station> dalStations = (List<IDAL.DO.Station>)myDal.GetStationsList();
+            double dis = double.MaxValue;
+            foreach (var station in dalStations)
+            {
+                if (dis >= myDal.DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0)
+                {
+                    dis = myDal.DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
+                }
+            }
+            return dis;
         }
 
         public void AddStation(Station blStation)
