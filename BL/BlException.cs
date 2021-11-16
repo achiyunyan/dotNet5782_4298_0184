@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace BL
 {
     [Serializable]
-    internal class BlException : Exception
+    public class BlException : Exception
     {
         public BlException()
         {

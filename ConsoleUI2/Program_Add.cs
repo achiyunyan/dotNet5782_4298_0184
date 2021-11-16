@@ -11,53 +11,60 @@ namespace ConsoleUI_BL
     {
         static private void AddObject(int choice)
         {
-            int id;
-            int weight;
-            string name;
-            double latitude;
-            double longitude;
-            string phone;
-            switch (choice)
+            try
             {
-                case 1://add a station
-                    int freeSlots;
-                    InputStation(out id, out name, out latitude, out longitude, out freeSlots);
-                    myBl.AddStation(new Station()
-                    {
-                        Id = id,
-                        Name = name,
-                        FreeChargeSlots = freeSlots,
-                        Location = new Location { Latitude = latitude, Longitude = longitude }
-                    });
-                    break;
-                case 2://add a drone
-                    string model;
-                    int stationId;
-                    InputDrone(out id, out weight, out model, out stationId);
-                    myBl.AddDrone(new Drone()
-                    {
-                        Id = id,
-                        Model = model,
-                        WeightCategory = (IBL.BO.WeightCategory)(weight - 1),
-                    }, stationId); ;
-                    break;
-                case 3://add customer
-                    InputCustomer(out id, out name, out phone, out longitude, out latitude);
-                    myBl.AddCustomer(new Customer()
-                    {
-                        Id = id,
-                        Name = name,
-                        Phone = phone,
-                        Location = new Location { Latitude = latitude, Longitude = longitude }
-                    });
-                    break;
-                case 4://add parcel 
-                    int senderId;
-                    int reciverId;
-                    int priority;
-                    InputParcel(out senderId, out reciverId, out weight, out priority);
-                    myBl.AddParcel(senderId, reciverId, weight, priority);
-                    break;
+                int id;
+                int weight;
+                string name;
+                double latitude;
+                double longitude;
+                string phone;
+                switch (choice)
+                {
+                    case 1://add a station
+                        int freeSlots;
+                        InputStation(out id, out name, out latitude, out longitude, out freeSlots);
+                        myBl.AddStation(new Station()
+                        {
+                            Id = id,
+                            Name = name,
+                            FreeChargeSlots = freeSlots,
+                            Location = new Location { Latitude = latitude, Longitude = longitude }
+                        });
+                        break;
+                    case 2://add a drone
+                        string model;
+                        int stationId;
+                        InputDrone(out id, out weight, out model, out stationId);
+                        myBl.AddDrone(new Drone()
+                        {
+                            Id = id,
+                            Model = model,
+                            WeightCategory = (IBL.BO.WeightCategory)(weight - 1),
+                        }, stationId); ;
+                        break;
+                    case 3://add customer
+                        InputCustomer(out id, out name, out phone, out longitude, out latitude);
+                        myBl.AddCustomer(new Customer()
+                        {
+                            Id = id,
+                            Name = name,
+                            Phone = phone,
+                            Location = new Location { Latitude = latitude, Longitude = longitude }
+                        });
+                        break;
+                    case 4://add parcel 
+                        int senderId;
+                        int reciverId;
+                        int priority;
+                        InputParcel(out senderId, out reciverId, out weight, out priority);
+                        myBl.AddParcel(senderId, reciverId, weight, priority);
+                        break;
+                }
+            }
+            catch(BL.BlException exem)
+            {
+                Console.WriteLine(exem.Message);
             }
         }
               

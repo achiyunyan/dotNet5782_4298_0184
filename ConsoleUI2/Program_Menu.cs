@@ -35,7 +35,7 @@ namespace ConsoleUI_BL
                         ListsView();
                         break;
                     case 5:
-                        DistanceFromCordinate();
+                        //DistanceFromCordinate();
                         break;
                     case 6:
                         return;
@@ -106,7 +106,7 @@ namespace ConsoleUI_BL
                               "3.Displaying a customer\n" +
                               "4.Displaying a parcel\n");
             choice = InputCheck(4);
-            ObjectPrint(choice);
+            //ObjectPrint(choice);
         }
         /// <summary>
         /// manages the lists displaying menu
@@ -122,7 +122,7 @@ namespace ConsoleUI_BL
                               "5.List of non linked parcels\n" +
                               "6.List of stations where there are free charging hubs");
             choice = InputCheck(6);
-            ListPrint(choice);
+            //ListPrint(choice);
         }
     }
 }

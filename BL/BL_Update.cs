@@ -8,14 +8,85 @@ namespace BL
 {
     public partial class BL : IBL.IBL
     {
-        public void UpdateDrone(Drone drone)
+        public void UpdateDrone(int id, string model)
         {
-            IDAL.DO.Drone dalDrone = new IDAL.DO.Drone()
+            IDAL.DO.Drone dalDrone;
+            try//I can assume that every drone exists in both lists of drones
             {
-                Id=drone.Id,
-                MaxWeight=(IDAL.DO.WeightCategories)drone.WeightCategory,
-                Model=drone.Model
+                dalDrone = myDal.GetDrone(id);
             }
+            catch(IDAL.DO.NotExistsException exec)
+            {
+                throw new BlException(exec.Message);
+            }
+            ListDrone dr=Drones.Find(st => st.Id == id);
+            dalDrone.Model = model;
+            myDal.UpdateDrone(dalDrone);//if we got so far so ther is is no concern of exeptions
+            Drones.Remove(dr);
+            dr.Model = model;
+            Drones.Add(dr);
+        }
+
+        public void UpdateStation(int id, string name, int chargingSlots)
+        {
+            IDAL.DO.Station dalStation;
+            try//I can assume that every drone exists in both lists of drones
+            {
+                dalStation = myDal.GetStation(id);
+            }
+            catch (IDAL.DO.NotExistsException exec)
+            {
+                throw new BlException(exec.Message);
+            }
+            if (name != "")
+                dalStation.Name = name;
+            if (chargingSlots != 0)
+                dalStation.ChargeSlots = chargingSlots;
+            myDal.UpdateStation(dalStation);//if we got so far so ther is is no concern of exeptions
+        }
+
+        public void UpdateCustomer(int id, string name, string phone)
+        {
+            IDAL.DO.Customer dalCustomer;
+            try//I can assume that every drone exists in both lists of drones
+            {
+                dalCustomer = myDal.GetCustomer(id);
+            }
+            catch (IDAL.DO.NotExistsException exec)
+            {
+                throw new BlException(exec.Message);
+            }
+            if (name != "")
+                dalCustomer.Name = name;
+            if (phone != "")
+                dalCustomer.Phone = phone;
+            myDal.UpdateCustomer(dalCustomer);//if we got so far so ther is is no concern of exeptions
+        }
+
+        public void SendDroneToCharge(int id)
+        {
+            IDAL.DO.Drone dalDrone;
+            try
+            {
+                dalDrone = myDal.GetDrone(id);
+            }
+            catch(IDAL.DO.NotExistsException exec)
+            {
+                throw new BlException(exec.Message);
+            }
+            if(myDal.GetStationsList().Any(st=>st.ChargeSlots>0))
+            {
+                List<IDAL.DO.Station> dalStationList = (List<IDAL.DO.Station>)myDal.GetStationsList();
+                IDAL.DO.Station closestDalStation = dalStationList[0];
+                for (int i=1;i<dalStationList.Count;i++)
+                    if (dalStationList[i].)
+                        
+            }
+            else
+            {
+                throw new BlException("NoFreeChargingSlots"); 
+            }
+
         }
     }
 }

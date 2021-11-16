@@ -61,18 +61,9 @@ namespace DalObject
             addParcel.Id = ++DataSource.Config.parcelNum;
             DataSource.Parcels.Add(addParcel);
         }
-        public void UpdateParcel(Parcel updateParcel)
-        {
-            int indexOfParcel = DataSource.Parcels.IndexOf(updateParcel);
-            if(indexOfParcel==-1)
-            {
-                throw new NotExistsException($"id: {updateParcel.Id} not exists!!");
-            }
-            DataSource.Parcels[indexOfParcel] = updateParcel;
-        }
         public void UpdateDrone(Drone updateDrone)
         {
-            int indexOfDrone = DataSource.Drones.IndexOf(updateDrone);
+            int indexOfDrone = DataSource.Drones.IndexOf(DataSource.Drones.Find(dr => dr.Id == updateDrone.Id));
             if (indexOfDrone == -1)
             {
                 throw new NotExistsException($"id: {updateDrone.Id} not exists!!");
@@ -81,7 +72,7 @@ namespace DalObject
         }
         public void UpdateCustomer(Customer updateCustomer)
         {
-            int indexOfCustomer = DataSource.Customers.IndexOf(updateCustomer);
+            int indexOfCustomer = DataSource.Customers.IndexOf(DataSource.Customers.Find(cu => cu.Id == updateCustomer.Id));
             if (indexOfCustomer == -1)
             {
                 throw new NotExistsException($"id: {updateCustomer.Id} not exists!!");
@@ -90,12 +81,53 @@ namespace DalObject
         }
         public void UpdateStation(Station updateStation)
         {
-            int indexOfStation = DataSource.Stations.IndexOf(updateStation);
+            int indexOfStation = DataSource.Stations.IndexOf(DataSource.Stations.Find(st => st.Id == updateStation.Id));
             if (indexOfStation == -1)
             {
                 throw new NotExistsException($"id: {updateStation.Id} not exists!!");
             }
             DataSource.Stations[indexOfStation] = updateStation;
+        }
+
+        public void UpdateParcel(Parcel updateParcel)
+        {
+            int indexOfParcel = DataSource.Parcels.IndexOf(DataSource.Parcels.Find(pr => pr.Id == updateParcel.Id));
+            if (indexOfParcel == -1)
+            {
+                throw new NotExistsException($"id: {updateParcel.Id} not exists!!");
+            }
+            DataSource.Parcels[indexOfParcel]= updateParcel;
+        }
+        public void DeleteStation(Station deleteStation)
+        {
+            if (!DataSource.Stations.Remove(deleteStation))
+            {
+                throw new NotExistsException($"id: {deleteStation.Id} not exists!!");
+            }
+        }
+
+        public void DeleteDrone(Drone deleteDrone)
+        {
+            if (!DataSource.Drones.Remove(deleteDrone))
+            {
+                throw new NotExistsException($"id: {deleteDrone.Id} not exists!!");
+            }
+        }
+
+        public void DeleteCustomer(Customer deleteCustomer)
+        {
+            if (!DataSource.Customers.Remove(deleteCustomer))
+            {
+                throw new NotExistsException($"id: {deleteCustomer.Id} not exists!!");
+            }
+        }
+
+        public void DeleteParcel(Parcel deleteParcel)
+        {
+            if (!DataSource.Parcels.Remove(deleteParcel))
+            {
+                throw new NotExistsException($"id: {deleteParcel.Id} not exists!!");
+            }
         }
 
         /// <summary>
@@ -210,7 +242,7 @@ namespace DalObject
                     return targ;
                 }
             }
-            return new Station();
+            throw new NotExistsException($"id: {id} not exists!!");
         }
         /// <summary>
         /// returns a drone by chosen id 
@@ -228,7 +260,7 @@ namespace DalObject
                     return targ;
                 }
             }
-            return new Drone();
+            throw new IDAL.DO.NotExistsException($"id: {id} not exists!!");
         }
         /// <summary>
         /// returns a customer by chosen id 
@@ -246,7 +278,7 @@ namespace DalObject
                     return targ;
                 }
             }
-            return new Customer();
+            throw new NotExistsException($"id: {id} not exists!!");
         }
         /// <summary>
         /// returns a parcel by chosen id 
@@ -264,7 +296,7 @@ namespace DalObject
                     return targ;
                 }
             }
-            return new Parcel();
+            throw new NotExistsException($"id: {id} not exists!!");
         }
         /// <summary>
         /// returns a copy of he stations' list
