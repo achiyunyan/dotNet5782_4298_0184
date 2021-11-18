@@ -12,5 +12,6 @@ namespace IBL
         void UpdateStation(int id, string name, int chargingSlots);
         void UpdateCustomer(int id, string name, string phone);
         void SendDroneToCharge(int id);
+        Station GetStation(int id);
     }
 }

@@ -22,7 +22,7 @@ namespace IBL.BO
                    $" Weight Category:  {WeightCategory}\n" +
                    $" Battery:          {Battery}%\n" +
                    $" State:            {State}\n" +
-                   $" Parcel:\n         {Parcel}\n" +
+                   ((Parcel != default) ? $" Parcel:\n         {Parcel}\n" : "") +
                    $" Location:         {Location}\n";
         }
     }

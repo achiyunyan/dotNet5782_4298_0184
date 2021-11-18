@@ -28,26 +28,26 @@ namespace BL
             ElectricityChargePerHour = myDal.GetElectricityChargePerHour();
 
             List<IDAL.DO.Drone> dalDrones = (List<IDAL.DO.Drone>)myDal.GetDronesList();
-            List<IDAL.DO.Parcel> dalParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();            
+            List<IDAL.DO.Parcel> dalParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();
             int battery = default;
-            DroneState state= default;
-            int parcelId = 0;            
-            Location location= default;
-            bool isAvaliable=default;
+            DroneState state = default;
+            int parcelId = 0;
+            Location location = default;
+            bool isAvaliable = default;
 
             foreach (var drone in dalDrones)
-            {                
-                if(dalParcels.Any(st => st.DroneId == drone.Id && st.Delivered == DateTime.MinValue)) // in delivery
+            {
+                if (dalParcels.Any(st => st.DroneId == drone.Id && st.Delivered == DateTime.MinValue)) // in delivery
                 {
                     IDAL.DO.Parcel dalParcel = dalParcels.First(st => st.DroneId == drone.Id && st.Delivered == DateTime.MinValue);
                     state = DroneState.Delivery;
                     IDAL.DO.Customer sender = myDal.GetCustomer(dalParcel.SenderId);
                     IDAL.DO.Customer reciver = myDal.GetCustomer(dalParcel.ReciverId);
                     double dis = myDal.DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude);
-                    
+
                     if (dalParcel.PickedUp == DateTime.MinValue)
                     {
-                        location = ClosestStationLocation(sender.Latitude, sender.Longitude);                        
+                        location = ClosestStationLocation(sender.Latitude, sender.Longitude);
                     }
                     else
                     {
@@ -57,26 +57,13 @@ namespace BL
                             Longitude = myDal.GetCustomer(dalParcel.SenderId).Longitude
                         };
                     }
-                    double ElectricityUsePerKm = 0;
-                    switch (dalParcel.Weight)
-                    {
-                        case IDAL.DO.WeightCategories.Light:
-                            ElectricityUsePerKm = ElectricityUsePerKmLight;
-                            break;
-                        case IDAL.DO.WeightCategories.Medium:
-                            ElectricityUsePerKm = ElectricityUsePerKmMedium;
-                            break;
-                        case IDAL.DO.WeightCategories.Heavy:
-                            ElectricityUsePerKm = ElectricityUsePerKmHeavy;
-                            break;
-                    }
-                    battery = rand.Next((int)(ElectricityUsePerKm * dis), 101);
+                    battery = rand.Next((int)(ElecriciryUsePerWeight(dalParcel.Weight) * dis), 101);
                 }
                 else // not in delivery
                 {
                     isAvaliable = true;
-                    if(rand.Next(0,2) == 0)// in charge
-                    {                      
+                    if (rand.Next(0, 2) == 0)// in charge
+                    {
                         List<IDAL.DO.Station> dalStationsWithSlots = ((List<IDAL.DO.Station>)myDal.GetStationsList()).FindAll(st => st.ChargeSlots > 0);
                         if (dalStationsWithSlots.Count != 0)
                         {
@@ -85,16 +72,16 @@ namespace BL
                             battery = rand.Next(0, 21);
                             int index = rand.Next(0, dalStationsWithSlots.Count);
                             location = new Location { Latitude = dalStationsWithSlots[index].Latitude, Longitude = dalStationsWithSlots[index].Longitude };
-                            myDal.SendDroneToCharge(drone.Id,dalStationsWithSlots[index].Id );
+                            myDal.SendDroneToCharge(drone.Id, dalStationsWithSlots[index].Id);
                         }
                     }
 
-                    if(isAvaliable) // available
+                    if (isAvaliable) // available
                     {
                         state = DroneState.Available;
                         List<IDAL.DO.Parcel> dalDeliveredParcels = dalParcels.FindAll(par => par.Delivered != DateTime.MinValue);
                         IDAL.DO.Customer customer = myDal.GetCustomer(dalDeliveredParcels[rand.Next(0, dalDeliveredParcels.Count)].ReciverId);
-                        location = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };                    
+                        location = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };
                         battery = rand.Next((int)(DistanceFromClosestStation(customer.Latitude, customer.Longitude) * ElectricityUsePerKmAvailable), 101);
                     }
                 }
@@ -111,12 +98,26 @@ namespace BL
             }
         }
 
+        private double ElecriciryUsePerWeight(IDAL.DO.WeightCategories weight)
+        {
+            switch (weight)
+            {
+                case IDAL.DO.WeightCategories.Light:
+                    return ElectricityUsePerKmLight;
+                case IDAL.DO.WeightCategories.Medium:
+                    return ElectricityUsePerKmMedium;
+                case IDAL.DO.WeightCategories.Heavy:
+                    return ElectricityUsePerKmHeavy;
+            }
+            return default;
+        }
+
         private Location ClosestStationLocation(double lat, double lon)
         {
             List<IDAL.DO.Station> dalStations = (List<IDAL.DO.Station>)myDal.GetStationsList();
             double dis = double.MaxValue;
             Location location = new Location();
-            foreach(var station in dalStations)
+            foreach (var station in dalStations)
             {
                 if (dis >= myDal.DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0)
                 {
