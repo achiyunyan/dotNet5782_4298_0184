@@ -76,14 +76,19 @@ namespace BL
             }
             if(myDal.GetStationsList().Any(st=>st.ChargeSlots>0))
             {
+                double distanceToClose=default,tempDis;
                 List<IDAL.DO.Station> dalStationList = (List<IDAL.DO.Station>)myDal.GetStationsList();
                 IDAL.DO.Station closestDalStation = dalStationList.First(st => st.ChargeSlots>0);
                 for (int i = 1; i < dalStationList.Count; i++)
-                    if (dalStationList[i].&& dalStationList[i].ChargeSlots>0)
-                    closestDalStation = dalStationList[i];
+                {
+                    distanceToClose = myDal.DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, closestDalStation.Latitude, closestDalStation.Longitude);
+                    tempDis = myDal.DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, dalStationList[i].Latitude, dalStationList[i].Longitude);
+                    if (distanceToClose > tempDis && dalStationList[i].ChargeSlots > 0)
+                        closestDalStation = dalStationList[i];
+                }
                 drone.Location = new Location { Latitude = closestDalStation.Latitude, Longitude = closestDalStation.Longitude };
                 drone.State = DroneState.Maintenance;
-                drone.Battery-=drone.
+                drone.Battery -= (int)(ElectricityUsePerKmAvailable * distanceToClose);
                 
             }
             else
