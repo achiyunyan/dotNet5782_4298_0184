@@ -61,6 +61,10 @@ namespace DalObject
             addParcel.Id = ++DataSource.Config.parcelNum;
             DataSource.Parcels.Add(addParcel);
         }
+        public void AddDroneCharge(DroneCharge addDroneCharge)
+        {
+            DataSource.DroneCharges.Add(addDroneCharge);
+        }
         public void UpdateDrone(Drone updateDrone)
         {
             int indexOfDrone = DataSource.Drones.IndexOf(DataSource.Drones.Find(dr => dr.Id == updateDrone.Id));
