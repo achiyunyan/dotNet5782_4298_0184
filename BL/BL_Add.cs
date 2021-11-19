@@ -29,21 +29,23 @@ namespace BL
 
             List<IDAL.DO.Drone> dalDrones = (List<IDAL.DO.Drone>)myDal.GetDronesList();
             List<IDAL.DO.Parcel> dalParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();
-            int battery = default;
+            double battery = default;
             DroneState state = default;
-            int parcelId = 0;
+            int parcelId;
             Location location = default;
             bool isAvaliable = default;
 
             foreach (var drone in dalDrones)
             {
-                if (dalParcels.Any(st => st.DroneId == drone.Id && st.Delivered == DateTime.MinValue)) // in delivery
+                parcelId = 0;
+                if (dalParcels.Any(pr => pr.DroneId == drone.Id && pr.Delivered == DateTime.MinValue)) // in delivery
                 {
-                    IDAL.DO.Parcel dalParcel = dalParcels.First(st => st.DroneId == drone.Id && st.Delivered == DateTime.MinValue);
+                    IDAL.DO.Parcel dalParcel = dalParcels.First(pr => pr.DroneId == drone.Id && pr.Delivered == DateTime.MinValue);
                     state = DroneState.Delivery;
                     IDAL.DO.Customer sender = myDal.GetCustomer(dalParcel.SenderId);
                     IDAL.DO.Customer reciver = myDal.GetCustomer(dalParcel.ReciverId);
                     double dis = myDal.DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude);
+                    parcelId = dalParcel.Id;
 
                     if (dalParcel.PickedUp == DateTime.MinValue)
                     {
@@ -76,7 +78,7 @@ namespace BL
                         }
                     }
 
-                    if (isAvaliable) // available
+                    if(isAvaliable) // available
                     {
                         state = DroneState.Available;
                         List<IDAL.DO.Parcel> dalDeliveredParcels = dalParcels.FindAll(par => par.Delivered != DateTime.MinValue);

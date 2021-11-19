@@ -1,5 +1,9 @@
 ﻿using IBL.BO;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 namespace IBL
 {
     public interface IBL
@@ -13,5 +17,12 @@ namespace IBL
         void UpdateCustomer(int id, string name, string phone);
         void SendDroneToCharge(int id);
         Station GetStation(int id);
+        Drone GetDrone(int id);
+        Customer GetCustomer(int id);
+        Parcel GetParcel(int id);
+        IEnumerable<ListStation> GetStationsList();
+        IEnumerable<ListDrone> GetDronesList();        
+        IEnumerable<ListCustomer> GetCustomersList();        
+        IEnumerable<ListParcel> GetParcelsList();        
     }
 }

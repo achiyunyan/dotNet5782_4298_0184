@@ -44,5 +44,40 @@ namespace ConsoleUI_BL
                 Console.WriteLine(exem.Message);
             }
         }
+
+        static private void ListPrint(int choice)
+        {
+            switch(choice)
+            {
+                case 1: // stations
+                    Console.WriteLine("Stations:\n\n");
+                    foreach(var station in myBl.GetStationsList())
+                    {
+                        Console.WriteLine(station.ToString() + '\n');
+                    }
+                    break;
+                case 2: // drones
+                    Console.WriteLine("Drones:\n\n");
+                    foreach (var drone in myBl.GetDronesList())
+                    {
+                        Console.WriteLine(drone.ToString() + '\n');
+                    }
+                    break;
+                case 3: // customers
+                    Console.WriteLine("Customers:\n\n");
+                    foreach (var customer in myBl.GetCustomersList())
+                    {
+                        Console.WriteLine(customer.ToString() + '\n');
+                    }
+                    break;
+                case 4: // parcels
+                    Console.WriteLine("Parcels:\n\n");
+                    foreach (var parcel in myBl.GetParcelsList())
+                    {
+                        Console.WriteLine(parcel.ToString() + '\n');
+                    }
+                    break;
+            }
+        }
     }
 }

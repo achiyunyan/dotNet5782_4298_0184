@@ -88,7 +88,7 @@ namespace BL
                 }
                 drone.Location = new Location { Latitude = closestDalStation.Latitude, Longitude = closestDalStation.Longitude };
                 drone.State = DroneState.Maintenance;
-                drone.Battery -= (int)(ElectricityUsePerKmAvailable * distanceToClose);
+                drone.Battery -= ElectricityUsePerKmAvailable * distanceToClose;
                 
             }
             else

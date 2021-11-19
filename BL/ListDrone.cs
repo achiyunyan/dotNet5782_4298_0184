@@ -11,7 +11,7 @@ namespace IBL.BO
         public int Id { set; get; }
         public string Model { set; get; }
         public WeightCategory WeightCategory { set; get; }
-        public int Battery { set; get; }
+        public double Battery { set; get; }
         public DroneState State { set; get; }
         public Location Location { set; get; }
         public int ParcelId { set; get; } = 0;
@@ -20,7 +20,7 @@ namespace IBL.BO
             return $" Drone Id:         {Id}\n" +
                    $" Model:            {Model}\n" +
                    $" Weight Category:  {WeightCategory}\n" +
-                   $" Battery:          {Battery}%\n" +
+                   $" Battery:          {Math.Round(Battery)}%\n" +
                    $" State:            {State}\n" +
                    $" Location:         {Location}\n" +
                    ((ParcelId == 0) ? " " : $" Parcel Id:        {ParcelId}\n");

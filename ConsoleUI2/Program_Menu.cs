@@ -19,7 +19,7 @@ namespace ConsoleUI_BL
                                     "4.Options of lists' displaing\n" +
                                     "5.Destination from point to station/customer\n" +
                                    "6.exit\n");
-                choise = InputCheck(5);
+                choise = InputCheck(6);
                 switch (choise)
                 {
                     case 1:
@@ -122,7 +122,7 @@ namespace ConsoleUI_BL
                               "5.List of non linked parcels\n" +
                               "6.List of stations where there are free charging hubs");
             choice = InputCheck(6);
-            //ListPrint(choice);
+            ListPrint(choice);
         }
     }
 }
