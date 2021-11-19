@@ -64,7 +64,7 @@ namespace BL
         }
 
         public void SendDroneToCharge(int id)
-        {//אפשר לסכם שלא הבנתי...מחר יהיה בסדר:)
+        {
             ListDrone drone;
             try
             {
@@ -89,13 +89,34 @@ namespace BL
                 drone.Location = new Location { Latitude = closestDalStation.Latitude, Longitude = closestDalStation.Longitude };
                 drone.State = DroneState.Maintenance;
                 drone.Battery -= (int)(ElectricityUsePerKmAvailable * distanceToClose);
-                
+                //update the station, which is a struct
+                closestDalStation.ChargeSlots -= 1;
+                myDal.UpdateStation(closestDalStation);
+                myDal.AddDroneCharge(new IDAL.DO.DroneCharge
+                {
+                    DroneId = id,
+                    StationId=closestDalStation.Id
+                });
             }
             else
             {
                 throw new BlException("NoFreeChargingSlots"); 
             }
 
+        }
+        public void DroneRelease(int id,int chargingTime)
+        {
+            ListDrone BlDrone= Drones.Find(st => st.Id == id);
+            if (!Drones.Any(st => st.Id == id))
+            {
+                throw new BlException($"id: {id} not exists!!");
+            }
+            else 
+            {
+                BlDrone.Battery += (int)(chargingTime * ElectricityChargePerHour);
+                
+            }
+           //to finish...
         }
     }
 }

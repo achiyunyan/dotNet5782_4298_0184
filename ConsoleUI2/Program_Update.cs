@@ -25,17 +25,34 @@ namespace ConsoleUI_BL
                 case 4://send drone to charge
                     SendDroneToChargeConsole();
                     break;
-                    /*case 5://relaese drone from charging
+                    case 5://relaese drone from charging
                         DroneReleaseConsole();
                         break;
-                    case 6://Link a parcel to a drone
-                        LinkParcelToDroneConsole();
-                    case 7://pick a prcel
-                        PickParcelConsole();
-                        break;
-                    case 8://deliver a parcel
-                        DeliverParcelConsole();*/
+                    /* case 6://Link a parcel to a drone
+                         LinkParcelToDroneConsole();
+                     case 7://pick a prcel
+                         PickParcelConsole();
+                         break;
+                     case 8://deliver a parcel
+                         DeliverParcelConsole();*/
 
+            }
+        }
+
+        private static void DroneReleaseConsole()
+        {
+            int id,chargingTime ;
+            Console.WriteLine("Enter drone id");
+            int.TryParse(Console.ReadLine(), out id);
+            Console.WriteLine("Enter time in charge(hours) :");
+            int.TryParse(Console.ReadLine(), out chargingTime);
+            try
+            {
+                myBl.DroneRelease(id,chargingTime);
+            }
+            catch (BL.BlException exec)
+            {
+                Console.WriteLine(exec.Message);
             }
         }
 
