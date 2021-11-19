@@ -22,11 +22,11 @@ namespace DalObject
             private static string[] stationsNames = new string[] { "Rehavia", "Katamon", "Givat Mordechai", "Arnona", "Romema" };
             private static double[] latitudes = new double[] { 31.773883970410303, 31.761073049323283, 31.762682895985005, 31.747320910723996, 31.791571360711526 };
             private static double[] longitudes = new double[] { 35.21284491679851, 35.206849163507805, 35.19817109950662, 35.21964424530334, 35.20602291668603 };
-            internal static double ElectricityUsePerKmAvailable;
-            internal static double ElectricityUsePerKmLight;
-            internal static double ElectricityUsePerKmMedium;
-            internal static double ElectricityUsePerKmHeavy;
-            internal static double ElectricityChargePerHour;
+            internal static double ElectricityUsePerKmAvailable = 7;
+            internal static double ElectricityUsePerKmLight = 8;
+            internal static double ElectricityUsePerKmMedium = 9;
+            internal static double ElectricityUsePerKmHeavy = 10;
+            internal static double ElectricityChargePerHour = 25;
             internal static void Initialize()
             {
                 RandomCustomers();
@@ -111,6 +111,7 @@ namespace DalObject
             /// </summary>
             private static void RandomParcel()
             {
+                int maxDronesInDelivery = rand.Next(Drones.Count - 4, Drones.Count - 2);
                 int size = rand.Next(10, 1001);
                 int choice;
                 bool NotCreated;
@@ -119,8 +120,8 @@ namespace DalObject
                     NotCreated = true;
                     while(NotCreated)
                     {
-                        choice = rand.Next(0, 5);
-                        if (choice > 2) // new unlinked parcel from the last week
+                        choice = rand.Next(0, 4);
+                        if (choice == 3) // new unlinked parcel from the last week
                         {
                             TimeSpan timeSpan = new TimeSpan(rand.Next(2), rand.Next(24), rand.Next(60), rand.Next(60));
                             Parcels.Add(new Parcel
@@ -136,10 +137,10 @@ namespace DalObject
                                 PickedUp = DateTime.MinValue,
                                 Delivered = DateTime.MinValue
                             });
-                            NotCreated = false;
+                            NotCreated = false;                            
                         }
 
-                        if (choice == 2) // adds Scheduled parcel
+                        if (choice == 2 && maxDronesInDelivery > 0) // adds Scheduled parcel
                         {
                             DateTime now = DateTime.Now;
                             TimeSpan timeSpan1 = new TimeSpan(rand.Next(2, 7), rand.Next(24), rand.Next(60), rand.Next(60));
@@ -161,11 +162,12 @@ namespace DalObject
                                     PickedUp = DateTime.MinValue,
                                     Delivered = DateTime.MinValue
                                 });
+                                maxDronesInDelivery--;
                                 NotCreated = false;
                             }
                         }
 
-                        if (choice == 1)
+                        if (choice == 1 && maxDronesInDelivery > 0)
                         {
                             DateTime now = DateTime.Now;
                             TimeSpan timeSpan1 = new TimeSpan(rand.Next(2, 7), rand.Next(24), rand.Next(60), rand.Next(60));
@@ -188,11 +190,12 @@ namespace DalObject
                                     PickedUp = now - timeSpan1 + timeSpan2 + timeSpan3,
                                     Delivered = DateTime.MinValue
                                 });
+                                maxDronesInDelivery--;
                                 NotCreated = false;
                             }
                         }
 
-                        else // new deliverd parcel from two weeks ago up to a week ago
+                        if (choice == 0) // new deliverd parcel from two weeks ago up to a week ago
                         {
                             DateTime now = DateTime.Now;
                             TimeSpan timeSpan1 = new TimeSpan(rand.Next(7, 14), rand.Next(24), rand.Next(60), rand.Next(60));

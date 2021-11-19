@@ -15,11 +15,11 @@ namespace IBL.BO
         public CustomerInParcel Customer { set; get; }
         public override string ToString()
         {
-            return $" Parcel Id:        {Id}\n" +
-                   $" Weight Category:  {WeightCategory}\n" +
-                   $" Priority:         {Priority}\n" +
-                   $" State:            {State}\n" +
-                   $" Customer:\n" + Customer.ToString();
+            return $"    Parcel Id:        {Id}\n" +
+                   $"    Weight Category:  {WeightCategory}\n" +
+                   $"    Priority:         {Priority}\n" +
+                   $"    State:            {State}\n" +
+                   $"    Customer:\n" + Customer.ToString();
         }
     }
 }

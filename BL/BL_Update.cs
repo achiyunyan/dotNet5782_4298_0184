@@ -88,7 +88,7 @@ namespace BL
                 }
                 drone.Location = new Location { Latitude = closestDalStation.Latitude, Longitude = closestDalStation.Longitude };
                 drone.State = DroneState.Maintenance;
-                drone.Battery -= (int)(ElectricityUsePerKmAvailable * distanceToClose);
+                drone.Battery -= ElectricityUsePerKmAvailable * distanceToClose;
                 //update the station, which is a struct
                 closestDalStation.ChargeSlots -= 1;
                 myDal.UpdateStation(closestDalStation);
@@ -113,7 +113,7 @@ namespace BL
             }
             else 
             {
-                BlDrone.Battery += (int)(chargingTime * ElectricityChargePerHour);
+                BlDrone.Battery += chargingTime * ElectricityChargePerHour;
                 
             }
            //to finish...
