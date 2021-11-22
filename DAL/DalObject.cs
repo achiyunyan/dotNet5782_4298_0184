@@ -145,27 +145,6 @@ namespace DalObject
             linkedParcel.DroneId = droneId;
             int indexOfParcel = DataSource.Parcels.IndexOf(linkedParcel);
             DataSource.Parcels[indexOfParcel] = linkedParcel;
-            // Drone linkedDrone = GetDrone(droneId);
-            //  int indexOfDrone = DataSource.Drones.IndexOf(linkedDrone);
-            //            linkedParcel.DroneId = linkedDrone.Id;
-            //linkedParcel.Scheduled = DateTime.Now;
-            //Drones[indexOfDrone] = linkedDrone;
-
-            /* Parcel linkedParcel = GetParcel(parcelId);
-             int indexOfLinked = DataSource.Parcels.IndexOf(linkedParcel);
-             int sizeOfLIst = Drones.Count();
-             for (int i = 0; i < sizeOfLIst; i++)
-             {
-                 if (Drones[i].Status == DroneStatus.available && Drones[i].MaxWeight >= linkedParcel.Weight)
-                 {
-                     Drone temp = Drones[i];
-                     temp.Status = DroneStatus.delivery;//not necessarily works,requires further tests
-                     Drones[i] = temp;
-                     linkedParcel.DroneId = Drones[i].Id;
-                     linkedParcel.Scheduled = DateTime.Now;
-                     Parcels[indexOfLinked] = linkedParcel;
-                 }
-             }*/
         }
         /// <summary>
         /// updates the pickup time of a liked parcel to the current time,which means that the drone starts flying
@@ -359,6 +338,11 @@ namespace DalObject
         public double GetElectricityChargePerHour()
         {
             return DataSource.Config.ElectricityChargePerHour;
+        }
+
+        public List<DroneCharge> GetDroneCharges()
+        {
+            return DataSource.DroneCharges.ToList();
         }
 
         public double DistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2)

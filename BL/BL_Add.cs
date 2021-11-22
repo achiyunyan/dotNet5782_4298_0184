@@ -176,15 +176,6 @@ namespace BL
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
             }
-            Drones.Add(new ListDrone()
-            {
-                Id = blDrone.Id,
-                Model = blDrone.Model,
-                Location = new Location { Latitude = station.Latitude, Longitude = station.Longitude },
-                Battery = rand.Next(20, 41),
-                State = DroneState.Maintenance,
-                WeightCategory = blDrone.WeightCategory,
-            });
             IDAL.DO.Drone dalDrone = new IDAL.DO.Drone()
             {
                 Id = blDrone.Id,
@@ -200,6 +191,15 @@ namespace BL
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
             }
+            Drones.Add(new ListDrone()
+            {
+                Id = blDrone.Id,
+                Model = blDrone.Model,
+                Location = new Location { Latitude = station.Latitude, Longitude = station.Longitude },
+                Battery = rand.Next(20, 41),
+                State = DroneState.Maintenance,
+                WeightCategory = blDrone.WeightCategory,
+            });
         }
         public void AddCustomer(Customer blCustomer)
         {

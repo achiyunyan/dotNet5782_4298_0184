@@ -86,11 +86,11 @@ namespace ConsoleUI_BL
             Console.WriteLine("1.Update a drone:\n"+
                               "2.Update a station:\n"+  
                               "3.Update a customer\n"+
-                              "4.Linking a parcel to a drone \n" +
-                              "5.Pick up a parcel with a drone\n" +
-                              "6.Suplying a parcel to the customer \n" +
-                              "7.Sending a drone to charge in a base station\n" +
-                              "8.Releasing a drone from charging in a base station\n");
+                              "4.Send a drone to charge in a base station\n" +
+                              "5.Release a drone from charging in a base station\n"+
+                              "6.Link a parcel to a drone \n" +
+                              "7.Pick up a parcel with a drone\n" +
+                              "8.Suply a parcel to the customer \n" );
             choice = InputCheck(8);
             UpdateObject(choice);
         }
