@@ -273,7 +273,7 @@ namespace DalObject
 
         public IEnumerable<DroneCharge> GetDroneCharges()
         {
-            return DataSource.DroneCharges;
+            return DataSource.DroneCharges.ToList();
         }
     }
 }
