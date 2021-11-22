@@ -16,12 +16,6 @@ namespace IDAL
         IEnumerable<Customer> GetCustomersList();
         IEnumerable<Drone> GetDronesList();
         IEnumerable<Parcel> GetParcelsList();
-        IEnumerable<Station> GetStationsList();
-        void DeliverParcel(int parcelId);
-        void freeDroneFromCharge(int droneId, int stationId);
-        void LinkParcelToDrone(Parcel parcel, int droneId);
-        void PickUpParcel(int parcelId);
-        void SendDroneToCharge(int droneId, int stationId);
-        public double DistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2);
+        IEnumerable<Station> GetStationsList();        
     }
 }

@@ -133,103 +133,7 @@ namespace DalObject
                 throw new NotExistsException($"id: {deleteParcel.Id} not exists!!");
             }
         }
-
-        /// <summary>
-        /// links a chosen parcel to a chosen drone 
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <param name="droneId"></param>
-        public void LinkParcelToDrone(Parcel parcel, int droneId)
-        {
-            Parcel linkedParcel = GetParcel(parcel.Id);
-            linkedParcel.DroneId = droneId;
-            int indexOfParcel = DataSource.Parcels.IndexOf(linkedParcel);
-            DataSource.Parcels[indexOfParcel] = linkedParcel;
-            // Drone linkedDrone = GetDrone(droneId);
-            //  int indexOfDrone = DataSource.Drones.IndexOf(linkedDrone);
-            //            linkedParcel.DroneId = linkedDrone.Id;
-            //linkedParcel.Scheduled = DateTime.Now;
-            //Drones[indexOfDrone] = linkedDrone;
-
-            /* Parcel linkedParcel = GetParcel(parcelId);
-             int indexOfLinked = DataSource.Parcels.IndexOf(linkedParcel);
-             int sizeOfLIst = Drones.Count();
-             for (int i = 0; i < sizeOfLIst; i++)
-             {
-                 if (Drones[i].Status == DroneStatus.available && Drones[i].MaxWeight >= linkedParcel.Weight)
-                 {
-                     Drone temp = Drones[i];
-                     temp.Status = DroneStatus.delivery;//not necessarily works,requires further tests
-                     Drones[i] = temp;
-                     linkedParcel.DroneId = Drones[i].Id;
-                     linkedParcel.Scheduled = DateTime.Now;
-                     Parcels[indexOfLinked] = linkedParcel;
-                 }
-             }*/
-        }
-        /// <summary>
-        /// updates the pickup time of a liked parcel to the current time,which means that the drone starts flying
-        /// </summary>
-        /// <param name="parcelId"></param>
-        public void PickUpParcel(int parcelId)
-        {
-            Parcel pickedParcel = GetParcel(parcelId);
-            int indexOfLinked = DataSource.Parcels.IndexOf(pickedParcel);
-            pickedParcel.PickedUp = DateTime.Now;
-            DataSource.Parcels[indexOfLinked] = pickedParcel;
-        }
-        /// <summary>
-        /// delivers a chosen parcel to the customer and free the drone
-        /// </summary>
-        /// <param name="parcelId"></param>
-        public void DeliverParcel(int parcelId)
-        {
-            Parcel pickedParcel = GetParcel(parcelId);
-            Drone deliveryDrone = GetDrone(pickedParcel.DroneId);
-            int indexOfPicked = DataSource.Parcels.IndexOf(pickedParcel);
-            int indexOfDrone = DataSource.Drones.IndexOf(deliveryDrone);
-            pickedParcel.Delivered = DateTime.Now;
-            DataSource.Parcels[indexOfPicked] = pickedParcel;
-            DataSource.Drones[indexOfDrone] = deliveryDrone;
-
-        }
-        /// <summary>
-        /// sends chosen drone to charge in a chosen station 
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <param name="stationId"></param>
-        public void SendDroneToCharge(int droneId, int stationId)
-        {
-            Drone ToCharge = GetDrone(droneId);
-            Station ChargeStation = GetStation(stationId);
-            int indexOfChargedDrone = DataSource.Drones.IndexOf(ToCharge);
-            int indexOfChargeStation = DataSource.Stations.IndexOf(ChargeStation);
-            ChargeStation.ChargeSlots -= 1;
-            DataSource.DroneCharges.Add(new DroneCharge
-            {
-                DroneId = droneId,
-                StationId = stationId
-            });
-            DataSource.Drones[indexOfChargedDrone] = ToCharge;
-            DataSource.Stations[indexOfChargeStation] = ChargeStation;
-        }
-        /// <summary>
-        /// free a chosen drone from a chosen station , and fill its battery
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <param name="stationId"></param>
-        public void freeDroneFromCharge(int droneId, int stationId)
-        {
-            Drone freeDrone = GetDrone(droneId);
-            Station ChargeStation = GetStation(stationId);
-            int indexOfFree = DataSource.Drones.IndexOf(freeDrone);
-            int indexOfChargeStation = DataSource.Stations.IndexOf(ChargeStation);
-            ChargeStation.ChargeSlots += 1;
-            DataSource.DroneCharges.Remove(new DroneCharge { DroneId = droneId, StationId = stationId });
-            DataSource.Drones[indexOfFree] = freeDrone;
-            DataSource.Stations[indexOfChargeStation] = ChargeStation;
-
-        }
+                
         /// <summary>
         /// returns a station by chosen id 
         /// </summary>
@@ -360,19 +264,6 @@ namespace DalObject
             return DataSource.Config.ElectricityChargePerHour;
         }
 
-        public double DistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2)
-        {
-            double rlat1 = Math.PI * lat1 / 180;
-            double rlat2 = Math.PI * lat2 / 180;
-            double theta = lon1 - lon2;
-            double rtheta = Math.PI * theta / 180;
-            double dist =
-                Math.Sin(rlat1) * Math.Sin(rlat2) + Math.Cos(rlat1) *
-                Math.Cos(rlat2) * Math.Cos(rtheta);
-            dist = Math.Acos(dist);
-            dist = dist * 180 / Math.PI;
-            dist = dist * 60 * 1.1515;
-            return dist * 1.609344;
-        }
+        
     }
 }
