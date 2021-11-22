@@ -133,7 +133,14 @@ namespace DalObject
                 throw new NotExistsException($"id: {deleteParcel.Id} not exists!!");
             }
         }
-                
+        
+        public void DeleteDroneCharge(DroneCharge deleteDroneCharge)
+        {
+            if (!DataSource.DroneCharges.Remove(deleteDroneCharge))
+            {
+                throw new NotExistsException($"id: {deleteDroneCharge.DroneId} not exists!!");
+            }
+        }
         /// <summary>
         /// returns a station by chosen id 
         /// </summary>
@@ -264,6 +271,9 @@ namespace DalObject
             return DataSource.Config.ElectricityChargePerHour;
         }
 
-        
+        public IEnumerable<DroneCharge> GetDroneCharges()
+        {
+            return DataSource.DroneCharges;
+        }
     }
 }
