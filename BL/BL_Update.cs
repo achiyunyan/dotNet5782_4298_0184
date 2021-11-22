@@ -189,6 +189,35 @@ namespace BL
             
         }
 
+        public void PickParcel(int droneId)
+        {
+            GetDrone(droneId);
+            ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
+            IDAL.DO.Parcel pickedParcel = myDal.GetParcel(BlDrone.ParcelId);
+            if (BlDrone.State != DroneState.Delivery || pickedParcel.PickedUp != DateTime.MinValue)
+                throw new BlException($"Drone {droneId} can't pick the parcel!");
+
+            Customer sender = GetCustomer(pickedParcel.SenderId);
+            BlDrone.Battery -= ElecriciryUsePerWeight(pickedParcel.Weight) * DistanceBetweenTwoPoints(BlDrone.Location, sender.Location);
+            BlDrone.Location.Latitude = sender.Location.Latitude;
+            BlDrone.Location.Longitude = sender.Location.Longitude;
+            pickedParcel.PickedUp = DateTime.Now;
+        }
+
+        public void DeliverParcel(int droneId)
+        {
+            GetDrone(droneId);
+            ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
+            IDAL.DO.Parcel deliveredParcel = myDal.GetParcel(BlDrone.ParcelId);
+            if (BlDrone.State!=DroneState.Delivery||deliveredParcel.Delivered!=DateTime.MinValue)
+                throw new BlException($"Drone {droneId} can't deliver the parcel!");
+            Customer reciver = GetCustomer(deliveredParcel.ReciverId);
+            BlDrone.Battery -= ElecriciryUsePerWeight(deliveredParcel.Weight) * DistanceBetweenTwoPoints(BlDrone.Location, reciver.Location);
+            BlDrone.Location.Latitude = reciver.Location.Latitude;
+            BlDrone.Location.Longitude = reciver.Location.Longitude;
+            BlDrone.State = DroneState.Available;
+            deliveredParcel.Delivered = DateTime.Now;
+        }
 
         private IDAL.DO.Parcel BestParcel(List<IDAL.DO.Parcel> parlist,int droneId)
         {
