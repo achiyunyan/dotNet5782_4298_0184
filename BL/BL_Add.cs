@@ -44,7 +44,7 @@ namespace BL
                     state = DroneState.Delivery;
                     IDAL.DO.Customer sender = myDal.GetCustomer(dalParcel.SenderId);
                     IDAL.DO.Customer reciver = myDal.GetCustomer(dalParcel.ReciverId);
-                    double dis = myDal.DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude);
+                    double dis = DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude);
                     parcelId = dalParcel.Id;
 
                     if (dalParcel.PickedUp == DateTime.MinValue)
@@ -74,7 +74,7 @@ namespace BL
                             battery = rand.Next(0, 21);
                             int index = rand.Next(0, dalStationsWithSlots.Count);
                             location = new Location { Latitude = dalStationsWithSlots[index].Latitude, Longitude = dalStationsWithSlots[index].Longitude };
-                            myDal.SendDroneToCharge(drone.Id, dalStationsWithSlots[index].Id);
+                            myDal.AddDroneCharge(new IDAL.DO.DroneCharge { DroneId = drone.Id, StationId = dalStationsWithSlots[index].Id });
                         }
                     }
 
@@ -121,11 +121,11 @@ namespace BL
             Location location = new Location();
             foreach (var station in dalStations)
             {
-                if (dis >= myDal.DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0)
+                if (dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0)
                 {
                     location.Latitude = station.Latitude;
                     location.Longitude = station.Longitude;
-                    dis = myDal.DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
+                    dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
                 }
             }
             return location;
@@ -137,9 +137,9 @@ namespace BL
             double dis = double.MaxValue;
             foreach (var station in dalStations)
             {
-                if (dis >= myDal.DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0)
+                if (dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0)
                 {
-                    dis = myDal.DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
+                    dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
                 }
             }
             return dis;
@@ -245,6 +245,21 @@ namespace BL
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
             }
+        }
+
+        private double DistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2)
+        {
+            double rlat1 = Math.PI * lat1 / 180;
+            double rlat2 = Math.PI * lat2 / 180;
+            double theta = lon1 - lon2;
+            double rtheta = Math.PI * theta / 180;
+            double dist =
+                Math.Sin(rlat1) * Math.Sin(rlat2) + Math.Cos(rlat1) *
+                Math.Cos(rlat2) * Math.Cos(rtheta);
+            dist = Math.Acos(dist);
+            dist = dist * 180 / Math.PI;
+            dist = dist * 60 * 1.1515;
+            return dist * 1.609344;
         }
     }
 }

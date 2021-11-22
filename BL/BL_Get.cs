@@ -41,7 +41,7 @@ namespace BL
             listDrone = Drones.Find(dr => dr.Id == id);            
             if (listDrone == default)
             {
-                throw new BlException("Drone not exist!\n");
+                throw new BlException($"id: {id} not exists!!");
             }
             Drone drone = new Drone
             {
