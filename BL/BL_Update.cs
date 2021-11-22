@@ -97,8 +97,8 @@ namespace BL
                 IDAL.DO.Station closestDalStation = dalStationList.First(st => st.ChargeSlots>0);
                 for (int i = 1; i < dalStationList.Count; i++)
                 {
-                    distanceToClose = myDal.DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, closestDalStation.Latitude, closestDalStation.Longitude);
-                    tempDis = myDal.DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, dalStationList[i].Latitude, dalStationList[i].Longitude);
+                    distanceToClose = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, closestDalStation.Latitude, closestDalStation.Longitude);
+                    tempDis = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, dalStationList[i].Latitude, dalStationList[i].Longitude);
                     if (distanceToClose > tempDis && dalStationList[i].ChargeSlots > 0)
                         closestDalStation = dalStationList[i];
                 }
@@ -145,6 +145,7 @@ namespace BL
                         {
                             stationOfDrone = myDal.GetStation(dalDroneCharge.StationId);
                             stationOfDrone.ChargeSlots += 1;
+                            myDal.DeleteDroneCharge(dalDroneCharge);
                             return;
                         }
                     }
@@ -157,53 +158,81 @@ namespace BL
             }
         }
 
-        public void LinkParcelToDroneBL(int id)
+        public void LinkParcelToDroneBL(int droneId)
         {
-            if(Drones.Any(dr => dr.Id==id))
+            if(Drones.Any(dr => dr.Id== droneId))
             {
-                Drone BlDrone = GetDrone(id);
+                ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
                 if (BlDrone.State != DroneState.Available)
-                    throw new BlException($"Drone: {id} not exists!");
+                    throw new BlException($"Drone: {droneId} not exists!");
 
                 List<IDAL.DO.Parcel> parcels = ((List<IDAL.DO.Parcel>)myDal.GetParcelsList()).FindAll(par => par.Scheduled == DateTime.MinValue);
                 if (parcels.Count == 0)
                     throw new BlException("No availalable parcel!");
                 parcels = parcels.FindAll(par => (int)par.Weight <= (int)BlDrone.WeightCategory);
                 if (parcels.Count == 0)
-                    throw new BlException($"Drone {id} can't carry any parcel!");
-                parcels=parcels.FindAll()
-                parcels.Sort(CompareParcels);
-
-
+                    throw new BlException($"Drone {droneId} cannot carry any parcel!");
+                parcels = parcels.FindAll(par => PossibleFly(droneId, par.Id));
+                if (parcels.Count == 0)
+                    throw new BlException($"Drone {droneId} cannot fulfill the fly(not enough battery)");
+                IDAL.DO.Parcel bestParcel = BestParcel(parcels, droneId);
+                BlDrone.State = DroneState.Delivery;
+                BlDrone.ParcelId = bestParcel.Id;
+                bestParcel.Scheduled = DateTime.Now;
+                bestParcel.DroneId = droneId;
+                myDal.UpdateParcel(bestParcel);
             }
             else
             {
-                throw new BlException($"Drone: {id} not exists!");
+                throw new BlException($"Drone: {droneId} not exists!");
             }
             
         }
-        private bool PossibleFly(int droneId,int parcelId)
+
+
+        private IDAL.DO.Parcel BestParcel(List<IDAL.DO.Parcel> parlist,int droneId)
         {
+            IDAL.DO.Parcel temp;
+            Drone BlDrone = GetDrone(droneId);
+
+                int max = 0;
+            for (int i = 1; i < parlist.Count; i++)
+            {
+                if (CompareParcels(parlist[i], parlist[max]) < 0)//parlist[i]<parlist[max]
+                    max = i;
+                else if (CompareParcels(parlist[i], parlist[max]) == 0)
+                {
+                    Location parcel1Location = GetCustomer(parlist[i].SenderId).Location;
+                    Location parcel2Location = GetCustomer(parlist[max].SenderId).Location;
+                    double disFromDroneToParcel1 = DistanceBetweenTwoPoints(BlDrone.Location, parcel1Location);
+                    double disFromDroneToParcel2 = DistanceBetweenTwoPoints(BlDrone.Location, parcel2Location);
+                    if (disFromDroneToParcel1 < disFromDroneToParcel2)
+                        max = i;
+                }
+            }
+            return parlist[max];
             
+       
         }
         private int CompareParcels(IDAL.DO.Parcel p1, IDAL.DO.Parcel p2)
         {
             if(p1.Priority.CompareTo(p2.Priority)!=0)
                 return -1*p1.Priority.CompareTo(p2.Priority);
-            else if(p1.Weight.CompareTo(p2.Weight)!=0)
+            else 
                 return -1*p1.Weight.CompareTo(p2.Weight);
-            else
-            {
-                Customer c1 = new Customer();
-                foreach (ListCustomer lp in GetCustomersList())
-                {
-                    Customer tempCustomer = GetCustomer(lp.Id);
-                    if (tempCustomer.OutDeliveries.Any(par => par.Id == p1.Id))
-                        c1 = GetCustomer(lp.Id);
-                    if(tempCustomer.OutDeliveries.)
-                }//to finish... :(
-                return -1*p1.
-            }
+        }
+        
+        private bool PossibleFly(int droneId,int parcelId)
+        {
+            Drone BlDrone = GetDrone(droneId);
+            Parcel BlParcel = GetParcel(parcelId);
+            Location parcelLocation = GetCustomer(BlParcel.Sender.Id).Location;
+            Location parcelDestination = GetCustomer(BlParcel.Receiver.Id).Location;
+            double disFromDroneToParcel =DistanceBetweenTwoPoints(BlDrone.Location,parcelLocation);
+            double disFromtSenderToReciver = DistanceBetweenTwoPoints(parcelLocation, parcelDestination);
+            double disFromReciverTosStation = DistanceBetweenTwoPoints(parcelDestination, ClosestStationLocation(BlDrone.Location));
+            double electricityNeeded = (disFromDroneToParcel + disFromReciverTosStation) * ElectricityUsePerKmAvailable + disFromtSenderToReciver * ElecriciryUsePerWeight(myDal.GetParcel(parcelId).Weight);
+            return BlDrone.Battery >= electricityNeeded;
         }
     }
 }

@@ -114,6 +114,11 @@ namespace BL
             return default;
         }
 
+        private Location ClosestStationLocation(Location loc)
+        {
+            return ClosestStationLocation(loc.Latitude, loc.Longitude);
+        }
+
         private Location ClosestStationLocation(double lat, double lon)
         {
             List<IDAL.DO.Station> dalStations = (List<IDAL.DO.Station>)myDal.GetStationsList();
@@ -245,6 +250,11 @@ namespace BL
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
             }
+        }
+
+        private double DistanceBetweenTwoPoints(Location loc1, Location loc2)
+        {
+           return DistanceBetweenTwoPoints(loc1.Latitude, loc1.Longitude, loc2.Latitude, loc2.Longitude);
         }
 
         private double DistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2)
