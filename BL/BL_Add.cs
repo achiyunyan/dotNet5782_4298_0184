@@ -74,7 +74,7 @@ namespace BL
                             battery = rand.Next(0, 21);
                             int index = rand.Next(0, dalStationsWithSlots.Count);
                             location = new Location { Latitude = dalStationsWithSlots[index].Latitude, Longitude = dalStationsWithSlots[index].Longitude };
-                            myDal.SendDroneToCharge(drone.Id, dalStationsWithSlots[index].Id);
+                            myDal.AddDroneCharge(new IDAL.DO.DroneCharge { DroneId = drone.Id, StationId = dalStationsWithSlots[index].Id });
                         }
                     }
 

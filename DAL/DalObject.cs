@@ -301,7 +301,6 @@ namespace DalObject
                 }
             }
             throw new NotExistsException($"id: {id} not exists!!");
-            return default;
         }
         /// <summary>
         /// returns a copy of he stations' list

@@ -91,7 +91,6 @@ namespace BL
                 drone.Battery -= ElectricityUsePerKmAvailable * distanceToClose;
                 //update the station, which is a struct
                 closestDalStation.ChargeSlots -= 1;
-                myDal.UpdateStation(closestDalStation);
                 myDal.AddDroneCharge(new IDAL.DO.DroneCharge
                 {
                     DroneId = id,
