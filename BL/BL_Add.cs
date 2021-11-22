@@ -59,7 +59,9 @@ namespace BL
                             Longitude = myDal.GetCustomer(dalParcel.SenderId).Longitude
                         };
                     }
-                    battery = rand.Next((int)(ElecriciryUsePerWeight(dalParcel.Weight) * dis), 101);
+                    Location reciverLocation = new Location { Latitude = reciver.Latitude, Longitude = reciver.Longitude };
+                    double disToClosesrStation = DistanceBetweenTwoPoints(reciverLocation, ClosestStationLocation(reciverLocation));
+                    battery = rand.Next((int)(ElecriciryUsePerWeight(dalParcel.Weight) * dis + ElectricityUsePerKmAvailable * disToClosesrStation), 101); ;
                 }
                 else // not in delivery
                 {

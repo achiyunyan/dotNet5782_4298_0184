@@ -120,9 +120,9 @@ namespace ConsoleUI_BL
                               "3.List of the customers \n" +
                               "4.List of parcels \n" +
                               "5.List of non linked parcels\n" +
-                              "6.List of stations where there are free charging hubs");
+                              "6.List of stations where there are free charging slots");
             choice = InputCheck(6);
             ListPrint(choice);
-        }
+        }        
     }
 }

@@ -192,6 +192,16 @@ namespace BL
             return parcels;
         }
 
+        public IEnumerable<ListParcel> GetNonLinkedParcelsList()
+        {
+            return ((List<ListParcel>)GetParcelsList()).FindAll(pr => pr.State == ParcelState.Created);
+        }
+
+        public IEnumerable<ListStation> GetStationsWithFreeSlotsList()
+        {
+            return ((List<ListStation>)GetStationsList()).FindAll(st => st.FreeChargeSlots > 0);
+        }
+
         private ParcelState GetParcelStateByDalParcel(IDAL.DO.Parcel parcel)
         {
             if (parcel.Scheduled == DateTime.MinValue)
@@ -231,7 +241,7 @@ namespace BL
             {
                 Id = dalParcel.Id,
                 WeightCategory = (WeightCategory)(int)dalParcel.Weight,
-                Distance = myDal.DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude),
+                Distance = DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude),
                 PickUp = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude },
                 Destination = new Location { Latitude = reciver.Latitude, Longitude = reciver.Longitude },
                 Priority = (Priority)(int)dalParcel.Priority,

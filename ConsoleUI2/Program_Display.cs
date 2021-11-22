@@ -77,6 +77,21 @@ namespace ConsoleUI_BL
                         Console.WriteLine(parcel.ToString() + '\n');
                     }
                     break;
+                case 5: // non linked parcels
+                    Console.WriteLine("Non linked parcels:\n\n");
+                    foreach (var parcel in myBl.GetNonLinkedParcelsList())
+                    {
+                        Console.WriteLine(parcel.ToString() + '\n');
+                    }
+                    break;
+                case 6: // station with free slots
+                    Console.WriteLine("Stations where there are free charging slots:\n\n");
+                    foreach (var parcel in myBl.GetStationsWithFreeSlotsList())
+                    {
+                        Console.WriteLine(parcel.ToString() + '\n');
+                    }
+                    break;
+
             }
         }
     }

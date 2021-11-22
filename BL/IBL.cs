@@ -26,5 +26,7 @@ namespace IBL
         IEnumerable<ListDrone> GetDronesList();        
         IEnumerable<ListCustomer> GetCustomersList();        
         IEnumerable<ListParcel> GetParcelsList();
+        IEnumerable<ListParcel> GetNonLinkedParcelsList();
+        IEnumerable<ListStation> GetStationsWithFreeSlotsList();
     }
 }

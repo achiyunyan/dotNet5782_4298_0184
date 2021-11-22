@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "YG5UZCTSr4KsBfG8eKfRpP90v9baNjIGDE7tas0EpIZUkDMwFtCKSW9DGza0+tuP9psOLDBKo3w6OO+74ppl3Q==",
+  "dgSpecHash": "bRlLOBnktGR2MaJCJZEjpbjiLcgsPuublHRkAQ0Bll4vziEfXD5awURSGt13wzM7MLhbPeFED9StYvf7aHQzHQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\ConsoleUI2\\ConsoleUI_BL.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\ConsoleUI2\\ConsoleUI_BL.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\zviko\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.1\\microsoft.netcore.platforms.1.1.1.nupkg.sha512",
+    "C:\\Users\\zviko\\.nuget\\packages\\microsoft.netcore.targets\\1.1.3\\microsoft.netcore.targets.1.1.3.nupkg.sha512",
+    "C:\\Users\\zviko\\.nuget\\packages\\system.runtime\\4.3.1\\system.runtime.4.3.1.nupkg.sha512"
+  ],
   "logs": []
 }
