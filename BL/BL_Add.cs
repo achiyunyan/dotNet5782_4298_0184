@@ -78,7 +78,7 @@ namespace BL
                         }
                     }
 
-                    if(isAvaliable) // available
+                    if (isAvaliable) // available
                     {
                         state = DroneState.Available;
                         List<IDAL.DO.Parcel> dalDeliveredParcels = dalParcels.FindAll(par => par.Delivered != DateTime.MinValue);

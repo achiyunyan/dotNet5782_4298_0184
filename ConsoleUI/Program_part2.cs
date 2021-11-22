@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;*/
 
 
-namespace ConsoleUI
+/*namespace ConsoleUI
 {
     partial class Program
     {
@@ -258,4 +258,4 @@ namespace ConsoleUI
         }
 
     }
-}
+}*/
