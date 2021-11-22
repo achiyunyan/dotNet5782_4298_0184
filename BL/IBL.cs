@@ -15,9 +15,11 @@ namespace IBL
         void UpdateDrone(int id, string model);
         void UpdateStation(int id, string name, int chargingSlots);
         void UpdateCustomer(int id, string name, string phone);
-        void SendDroneToCharge(int id);
+        void SendDroneToCharge(int droneId);
         void DroneRelease(int id, int chargingTimes);  
-        void LinkParcelToDroneBL(int id);
+        void LinkParcelToDroneBL(int droneId);
+        void PickParcel(int droneId);
+        void DeliverParcel(int droneId);
         Station GetStation(int id);
         Drone GetDrone(int id);
         Customer GetCustomer(int id);
@@ -26,5 +28,6 @@ namespace IBL
         IEnumerable<ListDrone> GetDronesList();        
         IEnumerable<ListCustomer> GetCustomersList();        
         IEnumerable<ListParcel> GetParcelsList();
+       
     }
 }

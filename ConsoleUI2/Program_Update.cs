@@ -31,12 +31,43 @@ namespace ConsoleUI_BL
                 case 6://Link a parcel to a drone
                     LinkParcelToDroneConsole();
                     break;
-                    /* case 7://pick a prcel
-                        PickParcelConsole();
-                        break;
-                    case 8://deliver a parcel
-                        DeliverParcelConsole();*/
+                case 7://pick a prcel
+                    PickParcelConsole();
+                    break;
+                case 8://deliver a parcel
+                    DeliverParcelConsole();
+                    break;
 
+            }
+        }
+
+        private static void DeliverParcelConsole()
+        {
+            int id;
+            Console.WriteLine("Enter drone id:");
+            int.TryParse(Console.ReadLine(), out id);
+            try
+            {
+                myBl.DeliverParcel(id);
+            }
+            catch (BL.BlException exec)
+            {
+                Console.WriteLine(exec.Message);
+            }
+        }
+
+        private static void PickParcelConsole()
+        {
+            int id;
+            Console.WriteLine("Enter drone id:");
+            int.TryParse(Console.ReadLine(), out id);
+            try
+            {
+                myBl.PickParcel(id);
+            }
+            catch (BL.BlException exec)
+            {
+                Console.WriteLine(exec.Message);
             }
         }
 

@@ -231,7 +231,7 @@ namespace BL
             {
                 Id = dalParcel.Id,
                 WeightCategory = (WeightCategory)(int)dalParcel.Weight,
-                Distance = myDal.DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude),
+                Distance = DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude),
                 PickUp = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude },
                 Destination = new Location { Latitude = reciver.Latitude, Longitude = reciver.Longitude },
                 Priority = (Priority)(int)dalParcel.Priority,
