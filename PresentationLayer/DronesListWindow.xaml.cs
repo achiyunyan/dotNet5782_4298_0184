@@ -27,8 +27,8 @@ namespace PresentationLayer
 
             InitializeComponent();
 
+            this.comboStatus.ToolTip = "Choose status:";
             this.comboStatus.ItemsSource = Enum.GetValues(typeof(DroneState));
-            this.comboStatus.Text = "Choose status:";
         }
 
         private void comboStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
