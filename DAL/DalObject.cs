@@ -217,33 +217,41 @@ namespace DalObject
         /// returns a copy of he stations' list
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Station> GetStationsList()
+        public IEnumerable<Station> GetStationsList(Func<Station, bool> predicate = null)
         {
-            return DataSource.Stations.ToList();
+            if (predicate == null)
+                return DataSource.Stations.ToList();
+            return DataSource.Stations.ToList().Where(predicate);
         }
         /// <summary>
         /// returns a copy of he Drones' list
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Drone> GetDronesList()
+        public IEnumerable<Drone> GetDronesList(Func<Drone, bool> predicate = null)
         {
-            return DataSource.Drones.ToList();
+            if (predicate == null)
+                return DataSource.Drones.ToList();
+            return DataSource.Drones.ToList().Where(predicate);
         }
         /// <summary>
         /// returns a copy of he Customers' list
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Customer> GetCustomersList()
+        public IEnumerable<Customer> GetCustomersList(Func<Customer, bool> predicate = null)
         {
-            return DataSource.Customers.ToList();
+            if (predicate == null)
+                return DataSource.Customers.ToList();
+            return DataSource.Customers.ToList().Where(predicate);
         }
         /// <summary>
         /// returns a copy of he Parcels' list
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Parcel> GetParcelsList()
+        public IEnumerable<Parcel> GetParcelsList(Func<Parcel, bool> predicate = null)
         {
-            return DataSource.Parcels.ToList();
+            if (predicate == null)
+                return DataSource.Parcels.ToList();
+            return DataSource.Parcels.ToList().Where(predicate);
         }
          
         public double GetElectricityUsePerKmAvailable()

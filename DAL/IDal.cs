@@ -1,6 +1,9 @@
 ﻿using IDAL.DO;
+using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 namespace IDAL
 {
     public interface IDal
@@ -13,10 +16,10 @@ namespace IDAL
         Drone GetDrone(int id);
         Parcel GetParcel(int id);
         Station GetStation(int id);
-        IEnumerable<Customer> GetCustomersList();
-        IEnumerable<Drone> GetDronesList();
-        IEnumerable<Parcel> GetParcelsList();
-        IEnumerable<Station> GetStationsList();
+        IEnumerable<Customer> GetCustomersList(Func<Customer, bool> predicate = null);
+        IEnumerable<Drone> GetDronesList(Func<Drone, bool> predicate = null);
+        IEnumerable<Parcel> GetParcelsList(Func<Parcel, bool> predicate = null);
+        IEnumerable<Station> GetStationsList(Func<Station, bool> predicate = null);
         IEnumerable<DroneCharge> GetDroneCharges();
     }
 }

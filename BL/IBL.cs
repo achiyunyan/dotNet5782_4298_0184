@@ -24,10 +24,10 @@ namespace IBL
         Drone GetDrone(int id);
         Customer GetCustomer(int id);
         Parcel GetParcel(int id);
-        IEnumerable<ListStation> GetStationsList();
+        IEnumerable<ListStation> GetStationsList(Func<IDAL.DO.Station, bool> predicate = null);
         IEnumerable<ListDrone> GetDronesList(Func<ListDrone, bool> predicate = null);        
-        IEnumerable<ListCustomer> GetCustomersList();        
-        IEnumerable<ListParcel> GetParcelsList();
+        IEnumerable<ListCustomer> GetCustomersList(Func<IDAL.DO.Customer, bool> predicate = null);        
+        IEnumerable<ListParcel> GetParcelsList(Func<IDAL.DO.Parcel, bool> predicate = null);
         IEnumerable<ListParcel> GetNonLinkedParcelsList();
         IEnumerable<ListStation> GetStationsWithFreeSlotsList();
     }

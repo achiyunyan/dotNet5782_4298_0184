@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{8BCA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI_BL", "ConsoleUI2\ConsoleUI_BL.csproj", "{4F03AACF-42C4-4F65-A665-823B3C1C9470}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationLayer", "PresentationLayer\PresentationLayer.csproj", "{7FE4BA86-C0B7-4A22-8D66-ED1F95A705A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PresentationLayer\PL.csproj", "{7FE4BA86-C0B7-4A22-8D66-ED1F95A705A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

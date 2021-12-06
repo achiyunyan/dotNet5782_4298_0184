@@ -1,13 +1,13 @@
-﻿<Window x:Class="PresentationLayer.MainWindow"
+﻿<Window x:Class="PL.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PresentationLayer"
+        xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="200" Width="300">
+        Title="MainWindow" Height="400" Width="600">
     <StackPanel>
-      <Button  x:Name="btnShowDrones" Content="show drones" Height="50" Width="200" Click="btnShowDrones_Click"/>
-        <Button x:Name="btnAddDrones"  Height="50" Width="200" Margin="20"/>  
+      <Button  x:Name="btnShowDrones" Content="show drones" FontSize="20" Height="100" Width="400" Margin="40" Click="btnShowDrones_Click"/>
+        <Button x:Name="btnAddDrones"  Height="100" Width="400" Margin="40"/>  
     </StackPanel>
 </Window>

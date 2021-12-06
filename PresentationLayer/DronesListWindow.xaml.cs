@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using IBL.BO;
 
-namespace PresentationLayer
+namespace PL
 {
     /// <summary>
     /// Interaction logic for DisplaydronesWindow.xaml
@@ -35,6 +35,10 @@ namespace PresentationLayer
         {
             DroneState state = (DroneState) comboStatus.SelectedItem;
             this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => drone.State == state);
+        }
+        private void btnAddDrone_Click(object sender, RoutedEventArgs e)
+        {
+            new AddDroneWindow(ibl).Show();
         }
     }
 }

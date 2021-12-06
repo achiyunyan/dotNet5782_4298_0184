@@ -133,9 +133,9 @@ namespace DalObject
                                 Priority = (Priorities)rand.Next(3),
                                 DroneId = 0,
                                 Requested = DateTime.Now - timeSpan,
-                                Scheduled = DateTime.MinValue,
-                                PickedUp = DateTime.MinValue,
-                                Delivered = DateTime.MinValue
+                                Scheduled = null,
+                                PickedUp = null,
+                                Delivered = null
                             });
                             NotCreated = false;                            
                         }
@@ -147,7 +147,7 @@ namespace DalObject
                             TimeSpan timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
                             int droneId = Drones[rand.Next(Drones.Count)].Id;
                             int intWeight = rand.Next(3);
-                            if (!Parcels.Any(st => st.Delivered == DateTime.MinValue && st.DroneId == droneId) && (int)Drones.First(st => st.Id == droneId).MaxWeight >= intWeight)
+                            if (!Parcels.Any(st => st.Delivered == null && st.DroneId == droneId) && (int)Drones.First(st => st.Id == droneId).MaxWeight >= intWeight)
                             {
                                 Parcels.Add(new Parcel
                                 {
@@ -159,8 +159,8 @@ namespace DalObject
                                     DroneId = droneId,
                                     Requested = now - timeSpan1,
                                     Scheduled = now - timeSpan1 + timeSpan2,
-                                    PickedUp = DateTime.MinValue,
-                                    Delivered = DateTime.MinValue
+                                    PickedUp = null,
+                                    Delivered = null
                                 });
                                 maxDronesInDelivery--;
                                 NotCreated = false;
@@ -175,7 +175,7 @@ namespace DalObject
                             TimeSpan timeSpan3 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
                             int droneId = Drones[rand.Next(Drones.Count)].Id;
                             int intWeight = rand.Next(3);
-                            if (!Parcels.Any(st => st.Delivered == DateTime.MinValue && st.DroneId == droneId) && (int)Drones.First(st => st.Id == droneId).MaxWeight >= intWeight)
+                            if (!Parcels.Any(st => st.Delivered == null && st.DroneId == droneId) && (int)Drones.First(st => st.Id == droneId).MaxWeight >= intWeight)
                             {
                                 Parcels.Add(new Parcel
                                 {
@@ -188,7 +188,7 @@ namespace DalObject
                                     Requested = now - timeSpan1,
                                     Scheduled = now - timeSpan1 + timeSpan2,
                                     PickedUp = now - timeSpan1 + timeSpan2 + timeSpan3,
-                                    Delivered = DateTime.MinValue
+                                    Delivered = null
                                 });
                                 maxDronesInDelivery--;
                                 NotCreated = false;

@@ -117,7 +117,7 @@ namespace BL
                 PickedUp = dalParcel.PickedUp,
                 Delivered = dalParcel.Delivered
             };
-            if (parcel.Scheduled != DateTime.MinValue)
+            if (parcel.Scheduled != null)
             {
                 ListDrone drone = Drones.Find(dr => dr.Id == dalParcel.DroneId);
                 parcel.Drone = new DroneInParcel
@@ -130,9 +130,9 @@ namespace BL
             return parcel;
         }
 
-        public IEnumerable<ListStation> GetStationsList()
+        public IEnumerable<ListStation> GetStationsList(Func<IDAL.DO.Station, bool> predicate = null)
         {
-            List<IDAL.DO.Station> dalStations = (List<IDAL.DO.Station>)myDal.GetStationsList();
+            List<IDAL.DO.Station> dalStations = (List<IDAL.DO.Station>)myDal.GetStationsList(predicate);
             List<ListStation> stations = new List<ListStation>();
             foreach(var dalStation in dalStations)
             {
@@ -154,9 +154,9 @@ namespace BL
             return Drones.Where(predicate);
         }
 
-        public IEnumerable<ListCustomer> GetCustomersList()
+        public IEnumerable<ListCustomer> GetCustomersList(Func<IDAL.DO.Customer, bool> predicate = null)
         {
-            List<IDAL.DO.Customer> dalCustomers = (List<IDAL.DO.Customer>)myDal.GetCustomersList();
+            List<IDAL.DO.Customer> dalCustomers = (List<IDAL.DO.Customer>)myDal.GetCustomersList(predicate);
             List<IDAL.DO.Parcel> dalParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();
             List<ListCustomer> customers = new List<ListCustomer>();
             foreach(var dalCustomer in dalCustomers)
@@ -166,18 +166,18 @@ namespace BL
                     Id = dalCustomer.Id,
                     Name = dalCustomer.Name,
                     Phone = dalCustomer.Phone,
-                    OnTheWayParcels = dalParcels.Count(par => par.ReciverId == dalCustomer.Id && par.Delivered == DateTime.MinValue),
-                    ReceivedParcels = dalParcels.Count(par => par.ReciverId == dalCustomer.Id && par.Delivered != DateTime.MinValue),
-                    SentNotSuppliedParcels = dalParcels.Count(par => par.SenderId == dalCustomer.Id && par.Delivered == DateTime.MinValue),
-                    SentSuppliedParcels = dalParcels.Count(par => par.SenderId == dalCustomer.Id && par.Delivered != DateTime.MinValue)
+                    OnTheWayParcels = dalParcels.Count(par => par.ReciverId == dalCustomer.Id && par.Delivered == null),
+                    ReceivedParcels = dalParcels.Count(par => par.ReciverId == dalCustomer.Id && par.Delivered != null),
+                    SentNotSuppliedParcels = dalParcels.Count(par => par.SenderId == dalCustomer.Id && par.Delivered == null),
+                    SentSuppliedParcels = dalParcels.Count(par => par.SenderId == dalCustomer.Id && par.Delivered != null)
                 });
             }
             return customers;
         }
 
-        public IEnumerable<ListParcel> GetParcelsList()
+        public IEnumerable<ListParcel> GetParcelsList(Func<IDAL.DO.Parcel, bool> predicate = null)
         {
-            List<IDAL.DO.Parcel> dalParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();
+            List<IDAL.DO.Parcel> dalParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList(predicate);
             List<ListParcel> parcels = new List<ListParcel>();
             foreach(var dalParcel in dalParcels)
             {
@@ -196,21 +196,20 @@ namespace BL
 
         public IEnumerable<ListParcel> GetNonLinkedParcelsList()
         {
-            return ((List<ListParcel>)GetParcelsList()).FindAll(pr => pr.State == ParcelState.Created);
+            return GetParcelsList(pr => pr.Scheduled ==null);
         }
 
         public IEnumerable<ListStation> GetStationsWithFreeSlotsList()
         {
-            return ((List<ListStation>)GetStationsList()).FindAll(st => st.FreeChargeSlots > 0);
+            return GetStationsList(st => st.ChargeSlots > 0);
         }
-
         private ParcelState GetParcelStateByDalParcel(IDAL.DO.Parcel parcel)
         {
-            if (parcel.Scheduled == DateTime.MinValue)
+            if (parcel.Scheduled == null)
                 return ParcelState.Created;
-            if (parcel.PickedUp == DateTime.MinValue)
+            if (parcel.PickedUp == null)
                 return ParcelState.Associated;
-            if (parcel.Delivered == DateTime.MinValue)
+            if (parcel.Delivered == null)
                 return ParcelState.Collected;
             else
                 return ParcelState.Provided;
@@ -247,7 +246,7 @@ namespace BL
                 PickUp = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude },
                 Destination = new Location { Latitude = reciver.Latitude, Longitude = reciver.Longitude },
                 Priority = (Priority)(int)dalParcel.Priority,
-                State = dalParcel.PickedUp == DateTime.MinValue,
+                State = dalParcel.PickedUp == null,
                 Sender = new CustomerInParcel { Id = sender.Id, Name = sender.Name },
                 Receiver = new CustomerInParcel { Id = reciver.Id, Name = reciver.Name }
             };

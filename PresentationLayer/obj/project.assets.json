@@ -50,9 +50,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\PresentationLayer.csproj",
-      "projectName": "PresentationLayer",
-      "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\PresentationLayer.csproj",
+      "projectUniqueName": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\PL.csproj",
+      "projectName": "PL",
+      "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\PL.csproj",
       "packagesPath": "C:\\Users\\yunia\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\obj\\",
       "projectStyle": "PackageReference",

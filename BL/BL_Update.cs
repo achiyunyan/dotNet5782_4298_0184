@@ -166,7 +166,7 @@ namespace BL
                 if (BlDrone.State != DroneState.Available)
                     throw new BlException($"Drone: {droneId} not exists!");
 
-                List<IDAL.DO.Parcel> parcels = ((List<IDAL.DO.Parcel>)myDal.GetParcelsList()).FindAll(par => par.Scheduled == DateTime.MinValue);
+                List<IDAL.DO.Parcel> parcels = ((List<IDAL.DO.Parcel>)myDal.GetParcelsList()).FindAll(par => par.Scheduled == null);
                 if (parcels.Count == 0)
                     throw new BlException("No availalable parcel!");
                 parcels = parcels.FindAll(par => (int)par.Weight <= (int)BlDrone.WeightCategory);
@@ -194,7 +194,7 @@ namespace BL
             GetDrone(droneId);
             ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
             IDAL.DO.Parcel pickedParcel = myDal.GetParcel(BlDrone.ParcelId);
-            if (BlDrone.State != DroneState.Delivery || pickedParcel.PickedUp != DateTime.MinValue)
+            if (BlDrone.State != DroneState.Delivery || pickedParcel.PickedUp != null)
                 throw new BlException($"Drone {droneId} can't pick the parcel!");
 
             Customer sender = GetCustomer(pickedParcel.SenderId);
@@ -209,7 +209,7 @@ namespace BL
             GetDrone(droneId);
             ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
             IDAL.DO.Parcel deliveredParcel = myDal.GetParcel(BlDrone.ParcelId);
-            if (BlDrone.State!=DroneState.Delivery||deliveredParcel.Delivered!=DateTime.MinValue)
+            if (BlDrone.State!=DroneState.Delivery||deliveredParcel.Delivered!=null)
                 throw new BlException($"Drone {droneId} can't deliver the parcel!");
             Customer reciver = GetCustomer(deliveredParcel.ReciverId);
             BlDrone.Battery -= ElecriciryUsePerWeight(deliveredParcel.Weight) * DistanceBetweenTwoPoints(BlDrone.Location, reciver.Location);
