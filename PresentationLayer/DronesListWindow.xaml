@@ -20,11 +20,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <ComboBox x:Name="comboStatus" Grid.Column="1" Margin="5" 
-                      Text="Choose Status:" IsEditable="true"  IsReadOnly="true"  
+                      IsEditable="true"  IsReadOnly="true"  
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                       SelectionChanged="comboStatus_SelectionChanged" />
-            <TextBox x:Name="txtTemp"  Margin="5" Text="TBD" TextWrapping="Wrap" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch"/>
-            <Button x:Name="btnAddDrone" Content="Add Drone" Grid.Column="2" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Margin="5" Click="btnAddDrone_Click"/>
+            <TextBox x:Name="txtTemp"  Margin="5" Text="Drone Status:" TextWrapping="Wrap" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" IsReadOnly="True"/>
+            <TextBox x:Name="btnAddDrone" Text="Drone max weight:" Grid.Column="2" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Margin="5" IsReadOnly="True"/>
+            <ComboBox x:Name="comboMaxWeight" Grid.Column="3" Margin="5" 
+                IsEditable="true"  IsReadOnly="true"
+                SelectionChanged="comboMaxWeight_SelectionChanged" />
         </Grid>
         <ListView x:Name="lstvDrones" Grid.Row="1" Margin="5" />
     </Grid>
