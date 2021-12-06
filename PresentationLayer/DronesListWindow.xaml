@@ -26,6 +26,6 @@
             <TextBox x:Name="txtTemp"  Margin="5" Text="TBD" TextWrapping="Wrap" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch"/>
             <Button x:Name="btnAddDrone" Content="Add Drone" Grid.Column="2" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Margin="5" Click="btnAddDrone_Click"/>
         </Grid>
-        <ListView x:Name="lstvDrones" Grid.Row="1" Margin="5" />
+        <ListView x:Name="lstvDrones" Grid.Row="1" Margin="5" MouseDoubleClick="openActionsWindow" />
     </Grid>
 </Window>
