@@ -41,9 +41,5 @@ namespace PL
             WeightCategory maxWeight = (WeightCategory)comboMaxWeight.SelectedItem;
             this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => drone.WeightCategory == maxWeight);
         }
-        private void btnAddDrone_Click(object sender, RoutedEventArgs e)
-        {
-            new AddDroneWindow(ibl).Show();
-        }
     }
 }
