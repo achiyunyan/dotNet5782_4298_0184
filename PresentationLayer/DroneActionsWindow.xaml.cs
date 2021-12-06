@@ -26,7 +26,7 @@ namespace PL
             bl = myBl;
             drone = myDrone;
             InitializeComponent();
-            DroneProperies.Text = bl.GetDrone(drone.Id).ToString();            
+            DroneProperies.Text = bl.GetDrone(drone.Id).ToString();
         }
     }
 }
