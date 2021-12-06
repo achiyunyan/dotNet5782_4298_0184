@@ -26,15 +26,20 @@ namespace PL
             ibl = myBl;
 
             InitializeComponent();
-
-            this.comboStatus.ToolTip = "Choose status:";
+            this.comboMaxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategory));
             this.comboStatus.ItemsSource = Enum.GetValues(typeof(DroneState));
+            this.lstvDrones.ItemsSource = ibl.GetDronesList();
         }
 
         private void comboStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DroneState state = (DroneState) comboStatus.SelectedItem;
             this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => drone.State == state);
+        }
+        private void comboMaxWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            WeightCategory maxWeight = (WeightCategory)comboMaxWeight.SelectedItem;
+            this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => drone.WeightCategory == maxWeight);
         }
         private void btnAddDrone_Click(object sender, RoutedEventArgs e)
         {
