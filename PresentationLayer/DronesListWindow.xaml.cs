@@ -49,5 +49,5 @@ namespace PL
         {
             new DroneActionsWindow((ListDrone)lstvDrones.SelectedItem, ibl).Show();
         }
-    }
+    } 
 }
