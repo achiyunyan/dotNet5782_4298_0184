@@ -196,19 +196,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Eliezer\\.nuget\\packages\\": {}
+    "C:\\Users\\yunia\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eliezer\\Source\\Repos\\achiyunyan\\dotNet5782_4298_0184\\ConsoleUI2\\ConsoleUI_BL.csproj",
+      "projectUniqueName": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\ConsoleUI2\\ConsoleUI_BL.csproj",
       "projectName": "ConsoleUI_BL",
-      "projectPath": "C:\\Users\\Eliezer\\Source\\Repos\\achiyunyan\\dotNet5782_4298_0184\\ConsoleUI2\\ConsoleUI_BL.csproj",
-      "packagesPath": "C:\\Users\\Eliezer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Eliezer\\Source\\Repos\\achiyunyan\\dotNet5782_4298_0184\\ConsoleUI2\\obj\\",
+      "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\ConsoleUI2\\ConsoleUI_BL.csproj",
+      "packagesPath": "C:\\Users\\yunia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\ConsoleUI2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Eliezer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\yunia\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -222,8 +222,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Eliezer\\Source\\Repos\\achiyunyan\\dotNet5782_4298_0184\\BL\\BL.csproj": {
-              "projectPath": "C:\\Users\\Eliezer\\Source\\Repos\\achiyunyan\\dotNet5782_4298_0184\\BL\\BL.csproj"
+            "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\BL\\BL.csproj": {
+              "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\BL\\BL.csproj"
             }
           }
         }

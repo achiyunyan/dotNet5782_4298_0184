@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\
 PresentationLayer
 none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
-C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\PresentationLayer\App.xaml
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\App.xaml
 3-1911024355
 
 72050311885
-195-1407885144
+195-1785642285
 AddDroneWindow.xaml;DronesListWindow.xaml;MainWindow.xaml;
 
-True
+False
 
