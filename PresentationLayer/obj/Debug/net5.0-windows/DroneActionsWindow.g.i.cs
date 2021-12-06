@@ -61,7 +61,7 @@ namespace PL {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/PL;component/droneactionswindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/PL;V1.0.0.0;component/droneactionswindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\DroneActionsWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
