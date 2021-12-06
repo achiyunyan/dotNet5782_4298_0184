@@ -147,9 +147,11 @@ namespace BL
             return stations;
         }
 
-        public IEnumerable<ListDrone> GetDronesList()
+        public IEnumerable<ListDrone> GetDronesList(Func<ListDrone,bool> predicate = null)
         {
-            return Drones.ToList();
+            if(predicate== null)
+                return Drones.ToList();
+            return Drones.Where(predicate);
         }
 
         public IEnumerable<ListCustomer> GetCustomersList()
