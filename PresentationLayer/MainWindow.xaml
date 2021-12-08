@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel>
-        <Button  x:Name="btnShowDrones" Content="show drones" Height="50" Width="200" Click="btnShowDrones_Click"/>
-        <Button x:Name="btnAddDrones"  Height="50" Width="200" Margin="20"/>  
+        <Button  x:Name="btnShowDrones" Content="show drones" Height="100" Width="400" Margin="20" Click="btnShowDrones_Click"/>
     </StackPanel>
 </Window>
