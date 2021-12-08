@@ -19,15 +19,15 @@ namespace IBL.BO
         public double Distance { set; get; }
         public override string ToString()
         {
-            return $"   Parcel Id:        {Id}\n" +
-                   $"   State:            {State}\n" +
-                   $"   Priority:         {Priority}\n" +
-                   $"   Weight Category:  {WeightCategory}\n" +
-                   $"   Sender:\n{Sender}" +
-                   $"   Receiver:\n{Receiver}" +
-                   $"   PickUp Location:  {PickUp}\n" +
-                   $"   Destination Location: {Destination}\n" +
-                   $"   Distance:         {Distance}\n";
+            return $"Parcel Id:        {Id}\n" +
+                    "State:            " + (State ? "Collected" : "Associated") + "\n" +
+                   $"Priority:         {Priority}\n" +
+                   $"Weight Category:  {WeightCategory}\n" +
+                   $"Distance:         {Math.Round(Distance,2)}km\n" +
+                   $"Sender:\n{Sender}" +
+                   $"Receiver:\n{Receiver}" +
+                   $"PickUp Location:      {PickUp}\n" +
+                   $"Destination Location: {Destination}\n";
         }
     }
 }
