@@ -1,4 +1,4 @@
-﻿<Window x:Class="PL.DroneActionsWindow"
+﻿<Window x:Class="PL.DroneWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,9 +11,23 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Margin="10,10,10,10">
-            <TextBox x:Name="DroneProperies" Text="TextBox" TextWrapping="Wrap" Width="368" Height="401"/>
-
+        <StackPanel Margin="10,10,200,10">
+            <TextBox Text="Id: " TextWrapping="Wrap" Width="190" Height="40" IsReadOnly="True"/>
+            <TextBox Text="Model: " TextWrapping="Wrap" Width="190" Height="40" IsReadOnly="True"/>
+            <TextBox Text="Maximum weight: " TextWrapping="Wrap" Width="190" Height="40" IsReadOnly="True"/>
+            <TextBox Text="Battery: " TextWrapping="Wrap" Width="190" Height="40" IsReadOnly="True"/>
+            <TextBox Text="State: " TextWrapping="Wrap" Width="190" Height="40" IsReadOnly="True"/>
+            <TextBox Text="Location: " TextWrapping="Wrap" Width="190" Height="40" IsReadOnly="True"/>
+            <TextBox TextWrapping="Wrap" Width="190" Height="174" IsReadOnly="True"/>
+        </StackPanel>
+        <StackPanel Margin="200,10,10,10">
+            <TextBox x:Name="DroneId" TextWrapping="Wrap" Width="190" Height="40" IsReadOnly="True"/>
+            <TextBox x:Name="Model" TextWrapping="Wrap" Width="190" Height="40" />
+            <TextBox x:Name="MaxWeight" TextWrapping="Wrap" Width="190" Height="40" IsReadOnly="True"/>
+            <TextBox x:Name="Battery" TextWrapping="Wrap" Width="190" Height="40" IsReadOnly="True"/>
+            <TextBox x:Name="State" TextWrapping="Wrap" Width="190" Height="40" IsReadOnly="True"/>
+            <TextBox x:Name="Location"  TextWrapping="Wrap" Width="190" Height="40" IsReadOnly="True"/>
+            <TextBox x:Name="Parcel" TextWrapping="Wrap" Width="190" Height="174" IsReadOnly="True"/>
         </StackPanel>
     </Grid>
 </Window>
