@@ -57,9 +57,9 @@ namespace PL
         }
 
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
+        {    
             new DronesListWindow(bl).Show();
+            this.Close();
         }
 
 
