@@ -50,11 +50,10 @@ namespace PL
 
                     idExeption.Text = exem.Message;
                 }
-                //btnBackToList_Click(sender,e);
-                new MessageWindow("succesfuly added!").Show();
-                
+                MessageBox.Show("successfuly added!");
+                btnBackToList_Click(sender,e);
             }
-            
+
         }
 
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
