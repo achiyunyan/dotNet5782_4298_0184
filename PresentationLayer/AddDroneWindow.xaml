@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="AddDroneWindow" Height="450" Width="800"
-        Background="Aquamarine">
+        Background="Aquamarine"
+        Closing="Window_Closing">
 
     <Grid>
         <TextBox Background="Aqua" Text="Enter drone id:" FontSize="15" HorizontalAlignment="Left" Margin="210,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175" Height="30" IsReadOnly="True"/>
@@ -17,9 +18,9 @@
         <ComboBox Background="Aquamarine" x:Name="comboMaxWeight" HorizontalAlignment="Right" Margin="0,153,210,0"  VerticalAlignment="Top" Width="150" Height="25" SelectionChanged="comboMaxWeight_SelectionChanged" />
         <TextBox  Background="Beige"  Text="Enter drone maxWeight:" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,211,0,0" TextWrapping="Wrap"  Width="175" Height="30" IsReadOnly="True"/>
         <ComboBox Background="Beige" x:Name="comboInitialStation" HorizontalAlignment="Right" Margin="0,212,210,0"  VerticalAlignment="Top" Width="150" Height="25" SelectionChanged="comboInitialStation_SelectionChanged"/>
-        <Button x:Name="btnSaveCanges" Content="SaveChanges" Background="Yellow"  HorizontalAlignment="Left" Margin="210,281,0,0" VerticalAlignment="Top" Height="55" Width="175" Click="btnSaveCanges_Click"/>
-        <Button x:Name="btnBackToList" Content="Back to drones list" Background="Blue" HorizontalAlignment="Left" Margin="440,281,210,0" VerticalAlignment="Top" Height="55" Width="150" Click="btnBackToList_Click"/>
-        <TextBox x:Name="idExeption" Background="Aquamarine" HorizontalAlignment="Left" Margin="595,52,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="18" RenderTransformOrigin="0.425,0.641" IsReadOnly="True"/>
+        <Button x:Name="btnSaveCanges" Content="SaveChanges" Background="Yellow"  HorizontalAlignment="Center" Margin="0,292,0,0" VerticalAlignment="Top" Height="55" Width="176" Click="btnSaveCanges_Click"/>
+        <Button x:Name="btnBackToList" Content="Close" Background="Blue" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Height="34" Width="119" Click="btnBackToList_Click"/>
+        <TextBox x:Name="idExeption" Background="Aquamarine" HorizontalAlignment="Left" Margin="595,52,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="18" RenderTransformOrigin="0.425,0.641" IsReadOnly="True" BorderThickness="0"/>
 
     </Grid>
 </Window>
