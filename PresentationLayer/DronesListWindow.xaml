@@ -29,6 +29,7 @@
                 IsEditable="true"  IsReadOnly="true"
                 SelectionChanged="comboMaxWeight_SelectionChanged" />
         </Grid>
-        <ListView x:Name="lstvDrones" Grid.Row="1" Margin="5" MouseDoubleClick="openActionsWindow" />
+        <ListView x:Name="lstvDrones" Margin="5,48,5,72" MouseDoubleClick="openActionsWindow" SelectionChanged="lstvDrones_SelectionChanged" Grid.RowSpan="2" />
+        <Button x:Name="btnAddDrones" Content="add Drone" HorizontalAlignment="Left" Margin="520,314,0,0" Grid.Row="1" VerticalAlignment="Top" Height="36" Width="142" Click="btnAddDrones_Click"/>
     </Grid>
 </Window>
