@@ -17,16 +17,16 @@ namespace PL
     /// <summary>
     /// Interaction logic for DroneActionsWindow.xaml
     /// </summary>
-    public partial class DroneActionsWindow : Window
+    public partial class DroneWindow : Window
     {
         IBL.IBL bl;
         IBL.BO.ListDrone drone;
-        public DroneActionsWindow(IBL.BO.ListDrone myDrone, IBL.IBL myBl)
+        public DroneWindow(IBL.BO.ListDrone myDrone, IBL.IBL myBl)
         {
             bl = myBl;
             drone = myDrone;
             InitializeComponent();
-            DroneProperies.Text = bl.GetDrone(drone.Id).ToString();
+            IBL.BO.Drone blDrone = bl.GetDrone(drone.Id);
         }
     }
 }
