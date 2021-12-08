@@ -19,7 +19,6 @@ namespace PL
     /// </summary>
     public partial class MessageWindow : Window
     {
-
         public MessageWindow(string mes)
         {
             InitializeComponent();

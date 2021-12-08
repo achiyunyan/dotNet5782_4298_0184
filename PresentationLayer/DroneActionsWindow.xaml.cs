@@ -81,6 +81,7 @@ namespace PL
             {
                 str = exem.Message;
             }
+            new MessageWindow(str).Show();
         }
 
         private void FreeFromCharge_Click(object sender, RoutedEventArgs e)
@@ -94,6 +95,7 @@ namespace PL
             {
                 str = exem.Message;
             }
+            new MessageWindow(str).Show();
         }
 
         private void SendToDelivery_Click(object sender, RoutedEventArgs e)
@@ -107,6 +109,7 @@ namespace PL
             {
                 str = exem.Message;
             }
+            new MessageWindow(str).Show();
         }
 
         private void CollectParcel_Click(object sender, RoutedEventArgs e)
@@ -120,6 +123,7 @@ namespace PL
             {
                 str = exem.Message;
             }
+            new MessageWindow(str).Show();
         }
 
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
@@ -133,6 +137,7 @@ namespace PL
             {
                 str = exem.Message;
             }
+            new MessageWindow(str).Show();
         }
     }
 }
