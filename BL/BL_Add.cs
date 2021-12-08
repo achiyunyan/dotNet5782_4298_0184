@@ -82,9 +82,12 @@ namespace BL
 
                     if (isAvaliable) // available
                     {
-                        state = DroneState.Available;
                         List<IDAL.DO.Parcel> dalDeliveredParcels = dalParcels.FindAll(par => par.Delivered != null);
-                        IDAL.DO.Customer customer = myDal.GetCustomer(dalDeliveredParcels[rand.Next(0, dalDeliveredParcels.Count)].ReciverId);
+                        IDAL.DO.Customer customer;
+                        do {
+                            customer = myDal.GetCustomer(dalDeliveredParcels[rand.Next(0, dalDeliveredParcels.Count)].ReciverId);
+                        } while ((int)DistanceFromClosestStation(customer.Latitude, customer.Longitude) > 100);             
+                        state = DroneState.Available;                        
                         location = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };
                         battery = rand.Next((int)(DistanceFromClosestStation(customer.Latitude, customer.Longitude) * ElectricityUsePerKmAvailable), 101);
                     }

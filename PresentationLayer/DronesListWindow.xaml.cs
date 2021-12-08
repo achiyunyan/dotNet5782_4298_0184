@@ -53,7 +53,7 @@ namespace PL
         private void lstvDrones_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             new DroneWindow((ListDrone)lstvDrones.SelectedItem, ibl).Show();
-
+            Close();
         }
     }
 }
