@@ -34,7 +34,7 @@ namespace PL
 
         private void btnSaveCanges_Click(object sender, RoutedEventArgs e)
         {
-            if (well.All(pl => pl=true))
+            if (well.All(pl => pl==true))
             {
                 drone = new IBL.BO.Drone();
                 drone.Id = int.Parse(Id.Text);
@@ -50,7 +50,9 @@ namespace PL
 
                     idExeption.Text = exem.Message;
                 }
-                btnBackToList_Click(sender,e);
+                //btnBackToList_Click(sender,e);
+                new MessageWindow("succesfuly added!").Show();
+                
             }
             
         }
@@ -66,10 +68,6 @@ namespace PL
         {
             int id;
             bool success = int.TryParse(Id.Text, out id); 
-            if(bl.GetDronesList(dr => dr.Id==id).Count()>0)//==1
-            {
-                    idExeption.Text = "Already exists!";
-            }
             if (!success || id < 10000)
             {
 
@@ -78,8 +76,19 @@ namespace PL
             }
             else
             {
-                Id.Background = Brushes.Aqua;
-                well[1] = true;
+                if (bl.GetDronesList(dr => dr.Id == id).Count() > 0)//==1
+                {
+                    idExeption.Text = "Already exists!";
+                    idExeption.Background = Brushes.Red;
+                }
+                else
+                {
+                    idExeption.Text = "";
+                    idExeption.Background = Brushes.Aquamarine;
+                    Id.Background = Brushes.Aqua;
+                    well[0] = true;
+                }
+
             }
 
         }
@@ -107,6 +116,11 @@ namespace PL
         private void comboInitialStation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             well[3] = true;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+              //  e.Cancel = true;
         }
     }
 }

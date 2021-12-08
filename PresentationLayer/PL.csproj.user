@@ -16,6 +16,9 @@
     <Compile Update="DroneActionsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="MessageWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="AddDroneWindow.xaml">
@@ -28,6 +31,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="DroneActionsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MessageWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

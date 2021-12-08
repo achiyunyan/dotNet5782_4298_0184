@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\App.xaml
-4-2008051908
+5449253082
 
-6-1008614944
+7-1481861933
 195-1785642285
-AddDroneWindow.xaml;DroneActionsWindow.xaml;DronesListWindow.xaml;MainWindow.xaml;
+AddDroneWindow.xaml;DroneActionsWindow.xaml;DronesListWindow.xaml;MainWindow.xaml;MessageWindow.xaml;
 
 False
 
