@@ -26,6 +26,11 @@ namespace PL
             bl = myBl;
             drone = myDrone;
             InitializeComponent();
+            UpdateWindow();
+        }
+
+        private void UpdateWindow()
+        {
             IBL.BO.Drone blDrone = bl.GetDrone(drone.Id);
             DroneId.Text = blDrone.Id.ToString();
             Model.Text = blDrone.Model;
@@ -33,24 +38,47 @@ namespace PL
             Battery.Text = Math.Round(blDrone.Battery).ToString() + '%';
             State.Text = blDrone.State.ToString();
             Location.Text = blDrone.Location.ToString();
-            if(blDrone.Parcel != default)
+            if (blDrone.Parcel != default)
             {
                 ParcelTag.Text = "Parcel:";
                 ParcelTag.BorderThickness = new Thickness(1);
                 Parcel.Text = blDrone.Parcel.ToString();
                 Parcel.BorderThickness = new Thickness(1);
             }
+            else
+            {
+                ParcelTag.Text = "";
+                ParcelTag.BorderThickness = new Thickness(0);
+                Parcel.Text = "";
+                Parcel.BorderThickness = new Thickness(0);
+            }
+
             Update.Visibility = Visibility.Collapsed;
+
             if (drone.State != IBL.BO.DroneState.Available)
                 SendToCharge.Visibility = Visibility.Collapsed;
+            else
+                SendToCharge.Visibility = Visibility.Visible;
+
             if (drone.State != IBL.BO.DroneState.Maintenance)
                 FreeFromCharge.Visibility = Visibility.Collapsed;
+            else
+                FreeFromCharge.Visibility = Visibility.Visible;
+
             if (drone.State != IBL.BO.DroneState.Available)
                 SendToDelivery.Visibility = Visibility.Collapsed;
-            if (blDrone.State != IBL.BO.DroneState.Delivery || !blDrone.Parcel.State)
-                CollectParcel.Visibility = Visibility.Collapsed;
+            else
+                SendToDelivery.Visibility = Visibility.Visible;
+
             if (blDrone.State != IBL.BO.DroneState.Delivery || blDrone.Parcel.State)
+                CollectParcel.Visibility = Visibility.Collapsed;
+            else
+                CollectParcel.Visibility = Visibility.Visible;
+
+            if (blDrone.State != IBL.BO.DroneState.Delivery || !blDrone.Parcel.State)
                 DeliverParcel.Visibility = Visibility.Collapsed;
+            else
+                DeliverParcel.Visibility = Visibility.Visible;
         }
 
         private void Model_TextChanged(object sender, TextChangedEventArgs e)
@@ -58,16 +86,17 @@ namespace PL
             Update.Visibility = Visibility.Visible;
         }
 
-        private void Update_Click(object sender, RoutedEventArgs e)
-        {
-            bl.UpdateDrone(drone.Id, Model.Text);
-            Update.Visibility = Visibility.Collapsed;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+private void CloseWindow_Click(object sender, RoutedEventArgs e)
         {
             new DronesListWindow(bl).Show();
             Close();
+        }
+
+        private void Update_Click(object sender, RoutedEventArgs e)
+        {
+            bl.UpdateDrone(drone.Id, Model.Text);
+            MessageBox.Show("Model updated successfully!");
+            UpdateWindow();
         }
 
         private void SendToCharge_Click(object sender, RoutedEventArgs e)
@@ -81,7 +110,8 @@ namespace PL
             {
                 str = exem.Message;
             }
-            new MessageWindow(str).Show();
+            MessageBox.Show(str);
+            UpdateWindow();
         }
 
         private void FreeFromCharge_Click(object sender, RoutedEventArgs e)
@@ -95,7 +125,8 @@ namespace PL
             {
                 str = exem.Message;
             }
-            new MessageWindow(str).Show();
+            MessageBox.Show(str);
+            UpdateWindow();
         }
 
         private void SendToDelivery_Click(object sender, RoutedEventArgs e)
@@ -109,7 +140,8 @@ namespace PL
             {
                 str = exem.Message;
             }
-            new MessageWindow(str).Show();
+            MessageBox.Show(str);
+            UpdateWindow();
         }
 
         private void CollectParcel_Click(object sender, RoutedEventArgs e)
@@ -123,7 +155,8 @@ namespace PL
             {
                 str = exem.Message;
             }
-            new MessageWindow(str).Show();
+            MessageBox.Show(str);
+            UpdateWindow();
         }
 
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
@@ -137,7 +170,8 @@ namespace PL
             {
                 str = exem.Message;
             }
-            new MessageWindow(str).Show();
+            MessageBox.Show(str);
+            UpdateWindow();
         }
     }
 }

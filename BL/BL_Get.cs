@@ -246,7 +246,7 @@ namespace BL
                 PickUp = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude },
                 Destination = new Location { Latitude = reciver.Latitude, Longitude = reciver.Longitude },
                 Priority = (Priority)(int)dalParcel.Priority,
-                State = dalParcel.PickedUp == null,
+                State = dalParcel.PickedUp != null,
                 Sender = new CustomerInParcel { Id = sender.Id, Name = sender.Name },
                 Receiver = new CustomerInParcel { Id = reciver.Id, Name = reciver.Name }
             };
