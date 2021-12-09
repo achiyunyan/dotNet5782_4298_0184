@@ -21,24 +21,74 @@ namespace PL
     public partial class DronesListWindow : Window
     {
         IBL.IBL ibl;
+        bool exit = false;
         public DronesListWindow(IBL.IBL myBl)
         {
             ibl = myBl;
-            InitializeComponent();           
-            this.comboMaxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategory));
-            this.comboStatus.ItemsSource = Enum.GetValues(typeof(DroneState));
+
+            InitializeComponent();
+            //this.comboMaxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategory));
+            this.comboMaxWeight.Items.Add("");
+            foreach (var x in Enum.GetValues(typeof(WeightCategory)))
+            {
+                this.comboMaxWeight.Items.Add(x);
+            }
+            this.comboStatus.Items.Add("");
+            foreach (var x in Enum.GetValues(typeof(DroneState)))
+            {
+                this.comboStatus.Items.Add(x);
+            }
             this.lstvDrones.ItemsSource = ibl.GetDronesList();
         }
 
         private void comboStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DroneState state = (DroneState) comboStatus.SelectedItem;
-            this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => drone.State == state);
+            if (comboStatus.SelectedItem.ToString()=="")
+            {
+                if (comboMaxWeight.SelectedItem == null|| comboMaxWeight.SelectedItem.ToString() == "")
+                    this.lstvDrones.ItemsSource = ibl.GetDronesList();
+                else
+                {
+                    WeightCategory? maxWeight = (WeightCategory)comboMaxWeight.SelectedItem;
+                    this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => (drone.WeightCategory == maxWeight));
+                }
+            }
+            else
+            {
+                DroneState state = (DroneState)comboStatus.SelectedItem;
+                if (comboMaxWeight.SelectedItem == null||comboMaxWeight.SelectedItem.ToString()=="")
+                    this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => drone.State == state);
+                else
+                {
+                    WeightCategory? maxWeight = (WeightCategory)comboMaxWeight.SelectedItem;
+                    this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => (drone.WeightCategory == maxWeight) && (drone.State == state));
+                }
+            }
         }
         private void comboMaxWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            WeightCategory maxWeight = (WeightCategory)comboMaxWeight.SelectedItem;
-            this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => drone.WeightCategory == maxWeight);
+            if (comboMaxWeight.SelectedItem.ToString() == "")
+            {
+                if (comboStatus.SelectedItem == null || comboStatus.SelectedItem.ToString() == "")
+                    this.lstvDrones.ItemsSource = ibl.GetDronesList();
+                else
+                {
+                    DroneState? status = (DroneState)comboStatus.SelectedItem;
+                    this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => (drone.State == status));
+                }
+            }
+            else
+            {
+                WeightCategory maxWeight = (WeightCategory)comboMaxWeight.SelectedItem;
+                if (comboStatus.SelectedItem == null||comboStatus.SelectedItem.ToString()=="")
+                    this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => drone.WeightCategory == maxWeight);
+                else
+                {
+                    DroneState? state = (DroneState)comboStatus.SelectedItem;
+                    this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => (drone.WeightCategory == maxWeight) && (drone.State == state));
+                }
+            }
+
         }
         private void openActionsWindow(object sender, MouseButtonEventArgs e)
         {
@@ -47,6 +97,7 @@ namespace PL
         private void btnAddDrones_Click(object sender, RoutedEventArgs e)
         {
             new AddDroneWindow(ibl).Show();
+            exit = true;
             this.Close();
         }
         private void lstvDrones_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -58,7 +109,14 @@ namespace PL
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();
+            exit = true;
             Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (exit == false)
+                e.Cancel = true;
         }
     }
 }

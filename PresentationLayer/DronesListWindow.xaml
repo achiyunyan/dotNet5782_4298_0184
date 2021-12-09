@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"        
         Title="DisplaydronesWindow" Height="450" Width="800"
+        Closing="Window_Closing"
         Background="MintCream"  
-        Icon="DroneIcon.png">
-
+        Icon="DroneIcon.png">        
+        
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="80*"/>

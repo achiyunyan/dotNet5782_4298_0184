@@ -23,9 +23,10 @@ namespace PL
         IBL.BO.Drone drone;
         IBL.IBL bl;
         bool[] well = {false,false,false,false };
+        bool exit = false;
         //TODO later
         public AddDroneWindow(IBL.IBL myBl)
-        {
+        { 
             bl = myBl;
             InitializeComponent();
             this.comboInitialStation.ItemsSource = myBl.GetStationsList();
@@ -59,6 +60,7 @@ namespace PL
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
         {
             new DronesListWindow(bl).Show();
+            exit = true;
             this.Close();
         }
 
@@ -118,8 +120,7 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var x = sender.GetType();
-            if (sender.GetType().Name == "AddDroneWindow")
+            if (exit==false)
                 e.Cancel = true;
         }
     }

@@ -144,18 +144,26 @@ namespace PL {
             switch (connectionId)
             {
             case 1:
-            this.mainGrid = ((System.Windows.Controls.Grid)(target));
+            
+            #line 10 "..\..\..\DronesListWindow.xaml"
+            ((PL.DronesListWindow)(target)).Closing += new System.ComponentModel.CancelEventHandler(this.Window_Closing);
+            
+            #line default
+            #line hidden
             return;
             case 2:
-            this.UpGrid = ((System.Windows.Controls.Grid)(target));
+            this.mainGrid = ((System.Windows.Controls.Grid)(target));
             return;
             case 3:
-            this.txtTemp = ((System.Windows.Controls.TextBox)(target));
+            this.UpGrid = ((System.Windows.Controls.Grid)(target));
             return;
             case 4:
-            this.btnAddDrone = ((System.Windows.Controls.TextBox)(target));
+            this.txtTemp = ((System.Windows.Controls.TextBox)(target));
             return;
             case 5:
+            this.btnAddDrone = ((System.Windows.Controls.TextBox)(target));
+            return;
+            case 6:
             this.comboStatus = ((System.Windows.Controls.ComboBox)(target));
             
             #line 38 "..\..\..\DronesListWindow.xaml"
@@ -164,7 +172,7 @@ namespace PL {
             #line default
             #line hidden
             return;
-            case 6:
+            case 7:
             this.comboMaxWeight = ((System.Windows.Controls.ComboBox)(target));
             
             #line 41 "..\..\..\DronesListWindow.xaml"
@@ -173,7 +181,7 @@ namespace PL {
             #line default
             #line hidden
             return;
-            case 7:
+            case 8:
             this.btnClose = ((System.Windows.Controls.Button)(target));
             
             #line 45 "..\..\..\DronesListWindow.xaml"
@@ -182,7 +190,7 @@ namespace PL {
             #line default
             #line hidden
             return;
-            case 8:
+            case 9:
             this.btnAddDrones = ((System.Windows.Controls.Button)(target));
             
             #line 46 "..\..\..\DronesListWindow.xaml"
@@ -191,7 +199,7 @@ namespace PL {
             #line default
             #line hidden
             return;
-            case 9:
+            case 10:
             this.lstvDrones = ((System.Windows.Controls.ListView)(target));
             
             #line 48 "..\..\..\DronesListWindow.xaml"
