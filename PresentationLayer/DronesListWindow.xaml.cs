@@ -55,5 +55,11 @@ namespace PL
             new DroneWindow((ListDrone)lstvDrones.SelectedItem, ibl).Show();
             Close();
         }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            Close();
+        }
     }
 }
