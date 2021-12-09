@@ -42,15 +42,19 @@ namespace PL
             {
                 ParcelTag.Text = "Parcel:";
                 ParcelTag.BorderThickness = new Thickness(1);
-                Parcel.Text = blDrone.Parcel.ToString();
+                ParcelTag.Background = Brushes.White;
+                Parcel.Text = blDrone.Parcel.ToString();                
                 Parcel.BorderThickness = new Thickness(1);
+                Parcel.Background = Brushes.White;                
             }
             else
             {
                 ParcelTag.Text = "";
                 ParcelTag.BorderThickness = new Thickness(0);
+                ParcelTag.Background = Brushes.MintCream;
                 Parcel.Text = "";
                 Parcel.BorderThickness = new Thickness(0);
+                Parcel.Background = Brushes.MintCream;
             }
 
             Update.Visibility = Visibility.Collapsed;

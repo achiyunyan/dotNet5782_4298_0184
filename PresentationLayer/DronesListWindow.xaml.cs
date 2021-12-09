@@ -24,7 +24,7 @@ namespace PL
         public DronesListWindow(IBL.IBL myBl)
         {
             ibl = myBl;
-            InitializeComponent();            
+            InitializeComponent();           
             this.comboMaxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategory));
             this.comboStatus.ItemsSource = Enum.GetValues(typeof(DroneState));
             this.lstvDrones.ItemsSource = ibl.GetDronesList();
