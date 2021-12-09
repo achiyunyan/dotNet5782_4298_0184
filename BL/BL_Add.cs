@@ -60,8 +60,10 @@ namespace BL
                         };
                     }
                     Location reciverLocation = new Location { Latitude = reciver.Latitude, Longitude = reciver.Longitude };
+                    Location senderLocation = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude };
                     double disToClosesrStation = DistanceBetweenTwoPoints(reciverLocation, ClosestStationLocation(reciverLocation));
-                    battery = rand.Next((int)(ElecriciryUsePerWeight(dalParcel.Weight) * dis + ElectricityUsePerKmAvailable * disToClosesrStation), 101); 
+                    double disToSender = DistanceBetweenTwoPoints(location, senderLocation);                    
+                    battery = rand.Next((int)(ElecriciryUsePerWeight(dalParcel.Weight) * dis + ElectricityUsePerKmAvailable * (disToClosesrStation + disToSender)), 101); 
                 }
                 else // not in delivery
                 {
@@ -129,12 +131,14 @@ namespace BL
             List<IDAL.DO.Station> dalStations = (List<IDAL.DO.Station>)myDal.GetStationsList();
             double dis = double.MaxValue;
             Location location = new Location();
+            string name = "";
             foreach (var station in dalStations)
             {
                 if (dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0)
                 {
                     location.Latitude = station.Latitude;
                     location.Longitude = station.Longitude;
+                    name = station.Name;
                     dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
                 }
             }

@@ -42,4 +42,3 @@ C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\BL\obj\Debug\net5.
 C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\BL\obj\Debug\net5.0\ref\BL.dll
 C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\BL\obj\Debug\net5.0\BL.pdb
 C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\BL\obj\Debug\net5.0\BL.csproj.CopyComplete
-C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\BL\obj\Debug\net5.0\BL.csproj.CopyComplete
