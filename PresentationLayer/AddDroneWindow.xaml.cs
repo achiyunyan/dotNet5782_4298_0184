@@ -25,7 +25,7 @@ namespace PL
         bool[] well = {false,false,false,false };
         //TODO later
         public AddDroneWindow(IBL.IBL myBl)
-        {
+        { 
             bl = myBl;
             InitializeComponent();
             this.comboInitialStation.ItemsSource = myBl.GetStationsList();
