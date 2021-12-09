@@ -19,7 +19,7 @@
             <TextBox Text="Battery: " FontSize="16" TextWrapping="Wrap" Width="190" Height="25" IsReadOnly="True"/>
             <TextBox Text="State: " FontSize="16" TextWrapping="Wrap" Width="190" Height="25" IsReadOnly="True"/>
             <TextBox Text="Location: " FontSize="16" TextWrapping="Wrap" Width="190" Height="25" IsReadOnly="True"/>
-            <TextBox x:Name="ParcelTag" TextWrapping="Wrap" FontSize="16" Width="190" Height="240" IsReadOnly="True" BorderThickness="0"/>
+            <TextBox x:Name="ParcelTag" TextWrapping="Wrap" FontSize="16" Width="190" Height="222" IsReadOnly="True" BorderThickness="0"/>
         </StackPanel>
         <StackPanel Margin="200,30,10,10">
             <TextBox x:Name="DroneId" FontSize="16" TextWrapping="Wrap" Width="390" Height="25" IsReadOnly="True"/>
@@ -28,7 +28,7 @@
             <TextBox x:Name="Battery" FontSize="16" TextWrapping="Wrap" Width="390" Height="25" IsReadOnly="True"/>
             <TextBox x:Name="State" FontSize="16" TextWrapping="Wrap" Width="390" Height="25" IsReadOnly="True"/>
             <TextBox x:Name="Location" FontSize="16"  TextWrapping="Wrap" Width="390" Height="25" IsReadOnly="True"/>
-            <TextBox x:Name="Parcel" FontSize="12" TextWrapping="Wrap" Width="390" Height="240" IsReadOnly="True" BorderThickness="0"/>
+            <TextBox x:Name="Parcel" FontSize="12" TextWrapping="Wrap" Width="390" Height="222" IsReadOnly="True" BorderThickness="0"/>
         </StackPanel>
         <StackPanel Grid.Column="1">
             <Button Content="Close Window" Click="CloseWindow_Click" FontSize="16" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,30,0,0"/>            
