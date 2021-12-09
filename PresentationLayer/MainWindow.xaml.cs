@@ -33,5 +33,6 @@ namespace PL
             new DronesListWindow(myBl).Show();
             Close();
         }
+
     }
 }

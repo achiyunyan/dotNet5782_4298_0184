@@ -42,7 +42,7 @@ namespace PL {
     public partial class DronesListWindow : System.Windows.Window, System.Windows.Markup.IComponentConnector {
         
         
-        #line 9 "..\..\..\DronesListWindow.xaml"
+        #line 10 "..\..\..\DronesListWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Grid mainGrid;
         
@@ -50,7 +50,7 @@ namespace PL {
         #line hidden
         
         
-        #line 14 "..\..\..\DronesListWindow.xaml"
+        #line 15 "..\..\..\DronesListWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Grid UpGrid;
         
@@ -66,7 +66,7 @@ namespace PL {
         #line hidden
         
         
-        #line 26 "..\..\..\DronesListWindow.xaml"
+        #line 27 "..\..\..\DronesListWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.TextBox btnAddDrone;
         
