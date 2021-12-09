@@ -63,4 +63,3 @@ C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\DroneActionsWindow.baml
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\DroneActionsWindow.g.cs
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\DroneActionsWindow.baml
-C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\PL.csproj.CopyComplete
