@@ -50,11 +50,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\PL.csproj",
+      "projectUniqueName": "C:\\Users\\yunia\\source\\repos\\dotNet5782_4298_0184\\PresentationLayer\\PL.csproj",
       "projectName": "PL",
-      "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\PL.csproj",
+      "projectPath": "C:\\Users\\yunia\\source\\repos\\dotNet5782_4298_0184\\PresentationLayer\\PL.csproj",
       "packagesPath": "C:\\Users\\yunia\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\obj\\",
+      "outputPath": "C:\\Users\\yunia\\source\\repos\\dotNet5782_4298_0184\\PresentationLayer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\yunia\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -71,8 +71,8 @@
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
           "projectReferences": {
-            "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\BL\\BL.csproj": {
-              "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\BL\\BL.csproj"
+            "C:\\Users\\yunia\\source\\repos\\dotNet5782_4298_0184\\BL\\BL.csproj": {
+              "projectPath": "C:\\Users\\yunia\\source\\repos\\dotNet5782_4298_0184\\BL\\BL.csproj"
             }
           }
         }

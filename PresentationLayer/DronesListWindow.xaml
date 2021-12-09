@@ -6,31 +6,40 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DisplaydronesWindow" Height="450" Width="800"
-        Icon="DroneIcon.png">
+        Icon="DroneIcon.png"
+        Closing="Window_Closing">
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="400*"/>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="370*"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch"
-               Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+        <Grid Name="UpGrid"
+            Height="auto" Grid.Row="0" Width="auto">            
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2.2*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox x:Name="comboStatus" Grid.Column="1" Margin="5" 
-                      IsEditable="true"  IsReadOnly="true"  
-                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                      SelectionChanged="comboStatus_SelectionChanged" />
-            <TextBox x:Name="txtTemp"  Margin="5" Text="Drone Status:" TextWrapping="Wrap" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" IsReadOnly="True"/>
-            <TextBox x:Name="btnAddDrone" Text="Drone max weight:" Grid.Column="2" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Margin="5" IsReadOnly="True"/>
-            <ComboBox x:Name="comboMaxWeight" Grid.Column="3" Margin="5" 
-                IsEditable="true"  IsReadOnly="true"
+            <StackPanel Grid.Column="2">
+                <TextBox x:Name="txtTemp" FontSize="16" BorderThickness="0" Text="Drone Status:" TextWrapping="Wrap" IsReadOnly="True" Width="150" Height="35" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="btnAddDrone" FontSize="16" BorderThickness="0" Text="Drone max weight:" Width="150" Height="35" IsReadOnly="True" HorizontalAlignment="Right" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <StackPanel Grid.Column="3">
+                <ComboBox x:Name="comboStatus" Width="170" HorizontalAlignment="Left" VerticalContentAlignment="Center"
+                IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35"
+                SelectionChanged="comboStatus_SelectionChanged" />
+                <ComboBox x:Name="comboMaxWeight" Width="170" HorizontalAlignment="Left" VerticalContentAlignment="Center"
+                IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35"
                 SelectionChanged="comboMaxWeight_SelectionChanged" />
+            </StackPanel>
+            <TextBox Text="Filter" Grid.Column="1" HorizontalAlignment="Center"  FontSize="20"  BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
+            <TextBox Text="Drones" Grid.Column="0" HorizontalAlignment="Center"  FontSize="50" FontFamily="Arial Rounded MT" BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
+            <Button x:Name="btnClose" Content="Close" Click="btnClose_Click" Grid.Column="5" Height="50" Width="50"/>
+            <Button x:Name="btnAddDrones" Content=" add&#xa;Drone" Click="btnAddDrones_Click" Grid.Column="4" Height="50" Width="50"/>
         </Grid>
-        <ListView x:Name="lstvDrones" Margin="5,48,5,72" MouseDoubleClick="openActionsWindow" SelectionChanged="lstvDrones_SelectionChanged" Grid.RowSpan="2" />
-        <Button x:Name="btnAddDrones" Content="add Drone" HorizontalAlignment="Left" Margin="520,314,0,0" Grid.Row="1" VerticalAlignment="Top" Height="36" Width="142" Click="btnAddDrones_Click"/>
+        <ListView x:Name="lstvDrones"  MouseDoubleClick="openActionsWindow" SelectionChanged="lstvDrones_SelectionChanged" Grid.Row="2" />
     </Grid>
 </Window>
