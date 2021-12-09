@@ -40,14 +40,14 @@
             <TextBox x:Name="Location" FontSize="16"  TextWrapping="Wrap" Height="25" IsReadOnly="True"/>
             <TextBox x:Name="Parcel" Background="MintCream"  FontSize="12" TextWrapping="Wrap" Height="222" IsReadOnly="True" BorderThickness="0"/>
         </StackPanel>
-        <StackPanel Grid.Column="2" Grid.Row="1" Margin="0,15,0,0">
-            <Button Content="Close Window" Click="CloseWindow_Click" FontSize="16" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150"/>
-            <Button x:Name="Update" Content="Update" Click="Update_Click" Visibility="Collapsed" FontSize="16" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,7,0,0"/>
-            <Button x:Name="SendToCharge" Content="Send to charge" Click="SendToCharge_Click" FontSize="16" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,7,0,0"/>
-            <Button x:Name="FreeFromCharge" Content="Free from charge" Click="FreeFromCharge_Click" FontSize="16" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,7,0,0"/>
-            <Button x:Name="SendToDelivery" Content="Send to delivery" Click="SendToDelivery_Click" FontSize="16" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,7,0,0"/>
-            <Button x:Name="CollectParcel" Content="Collect parcel" Click="CollectParcel_Click" FontSize="16" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,7,0,0"/>
-            <Button x:Name="DeliverParcel" Content="Deliver parcel" Click="DeliverParcel_Click"  FontSize="16" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,7,0,10"/>
+        <StackPanel Grid.Column="2" Grid.Row="1" Margin="0,15,0,0" >
+            <Button Content="Close Window" Click="CloseWindow_Click" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150"/>
+            <Button x:Name="Update" Content="Update" Click="Update_Click" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" Visibility="Collapsed" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,7,0,0"/>
+            <Button x:Name="SendToCharge" Content="Send to charge" Click="SendToCharge_Click" FontSize="18" Foreground="DarkSlateGray" FontWeight="Bold" Background="Aquamarine" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,7,0,0"/>
+            <Button x:Name="FreeFromCharge" Content="Free from charge" Click="FreeFromCharge_Click" Foreground="DarkSlateGray" FontWeight="Bold" Background="Aquamarine" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,7,0,0"/>
+            <Button x:Name="SendToDelivery" Content="Send to delivery" Click="SendToDelivery_Click" Foreground="DarkSlateGray" FontWeight="Bold" Background="Aquamarine" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,7,0,0"/>
+            <Button x:Name="CollectParcel" Content="Collect parcel" Click="CollectParcel_Click" Foreground="DarkSlateGray" FontWeight="Bold" Background="Aquamarine" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,7,0,0"/>
+            <Button x:Name="DeliverParcel" Content="Deliver parcel" Click="DeliverParcel_Click" Foreground="DarkSlateGray" FontWeight="Bold" Background="Aquamarine"  FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,7,0,10"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -43,8 +43,8 @@
             </StackPanel>
             <TextBox Text="Filter" Grid.Column="1" Background="Teal" IsReadOnly="True" Foreground="White"  HorizontalContentAlignment="Center" FontWeight="Bold"  FontSize="20"  BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
             <TextBox Text="Drones" Background="Teal" Foreground="White" IsReadOnly="True" Grid.Column="0" HorizontalContentAlignment="Center"  FontSize="50" FontWeight="Bold" BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
-            <Button x:Name="btnClose" Content="Close" Background="Aquamarine" FontWeight="Bold" FontSize="16" Click="btnClose_Click" Grid.Column="5" Height="50" Width="50"/>
-            <Button x:Name="btnAddDrones" Content=" add&#xa;Drone" Background="Aquamarine" FontWeight="Bold" FontSize="15" Click="btnAddDrones_Click" Grid.Column="4" Height="50" Width="50"/>
+            <Button x:Name="btnClose" Content="Close" Background="Aquamarine" Foreground="DarkSlateGray" FontWeight="Bold" FontSize="16" Click="btnClose_Click" Grid.Column="5" Height="50" Width="50"/>
+            <Button x:Name="btnAddDrones" Content=" add&#xa;Drone" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="15" Click="btnAddDrones_Click" Grid.Column="4" Height="50" Width="50"/>
         </Grid>
         <ListView x:Name="lstvDrones" Background="MintCream"  MouseDoubleClick="openActionsWindow" SelectionChanged="lstvDrones_SelectionChanged" Grid.Row="2" />
     </Grid>
