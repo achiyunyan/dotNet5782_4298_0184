@@ -8,8 +8,8 @@
         Title="MainWindow" Height="450" Width="800"
         Background="Aquamarine">
     <StackPanel>
-        <TextBox Background="Bisque" Text="Welcome to our drones managing program!" TextWrapping="Wrap" Margin="50" Width="328" Height="30"/>
-        <Image   Source="Drone.jpg" Height="150" Width="388" />
+        <TextBox Background="Bisque" Text="Welcome to our drones managing program!" TextWrapping="Wrap" TextAlignment="Center" Margin="50" Width="328" Height="30"/>
+        <Image   x:Name="imageDrone" Visibility="Visible" Source="Drone.jpg" Height="151" Width="389" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
         <Button  x:Name="btnShowDrones" FontSize="30" Background="AliceBlue" Content="show drones" Height="100" Width="400" Click="btnShowDrones_Click"/>
     </StackPanel>
 </Window>
