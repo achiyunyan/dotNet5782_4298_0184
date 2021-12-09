@@ -199,7 +199,7 @@ namespace BL
                 throw new BlException($"Drone {droneId} can't pick the parcel!");
 
             Customer sender = GetCustomer(pickedParcel.SenderId);
-            BlDrone.Battery -= ElecriciryUsePerWeight(pickedParcel.Weight) * DistanceBetweenTwoPoints(BlDrone.Location, sender.Location);
+            BlDrone.Battery -= ElectricityUsePerKmAvailable * DistanceBetweenTwoPoints(BlDrone.Location, sender.Location);
             BlDrone.Location.Latitude = sender.Location.Latitude;
             BlDrone.Location.Longitude = sender.Location.Longitude;
             pickedParcel.PickedUp = DateTime.Now;
