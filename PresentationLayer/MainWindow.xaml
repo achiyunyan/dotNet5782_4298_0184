@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        Background="Aquamarine">
     <StackPanel>
-        <Button  x:Name="btnShowDrones" Content="show drones" Height="100" Width="400" Margin="20" Click="btnShowDrones_Click"/>
+        <TextBox Background="Bisque" Text="Welcome to our drones managing program!" TextWrapping="Wrap" Margin="50" Width="328" Height="30"/>
+        <Image   x:Name="imageDrone" Visibility="Visible" Source="Drone.jpg" Height="151" Width="389" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
+        <Button  x:Name="btnShowDrones" FontSize="30" Background="AliceBlue" Content="show drones" Height="100" Width="400" Click="btnShowDrones_Click"/>
     </StackPanel>
 </Window>
