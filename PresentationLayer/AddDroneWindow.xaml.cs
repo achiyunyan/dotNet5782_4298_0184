@@ -57,7 +57,7 @@ namespace PL
         }
 
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
-        {    
+        {
             new DronesListWindow(bl).Show();
             this.Close();
         }
@@ -94,7 +94,6 @@ namespace PL
 
         private void Model_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string model;
             if (Model.Text == "")
             {
                 Model.Background = Brushes.Red;
@@ -119,7 +118,9 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-              //  e.Cancel = true;
+            var x = sender.GetType();
+            if (sender.GetType().Name == "AddDroneWindow")
+                e.Cancel = true;
         }
     }
 }

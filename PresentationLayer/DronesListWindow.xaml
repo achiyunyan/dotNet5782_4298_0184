@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DisplaydronesWindow" Height="450" Width="800">
+        Title="DisplaydronesWindow" Height="450" Width="800"
+        Icon="DroneIcon.png">
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
