@@ -1,4 +1,4 @@
-﻿<Window x:Class="PL.AddDroneWindow"
+﻿<Window x:Class="PL.AddDroneWindow" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,22 +6,39 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="AddDroneWindow" Height="450" Width="800"
-        Background="Aquamarine"
+        Background="MintCream"  
         Closing="Window_Closing"
         Icon="DroneIcon.png">
 
     <Grid>
-        <TextBox Background="Aqua" Text="Enter drone id:" FontSize="15" HorizontalAlignment="Left" Margin="210,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175" Height="30" IsReadOnly="True"/>
-        <TextBox Background="Aqua" x:Name="Id" HorizontalAlignment="Right" Margin="0,46,210,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="30" TextChanged="Id_TextChanged"/>
-        <TextBox  Background="AliceBlue" Text="Enter drone model:" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,94,0,0" TextWrapping="Wrap"  Width="175" Height="30" IsReadOnly="True"/>
-        <TextBox Background="AliceBlue" x:Name="Model" HorizontalAlignment="Right" Margin="0,94,210,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="30" TextChanged="Model_TextChanged"/>
-        <TextBox  Background="Aquamarine" Text="Enter drone maxWeight:" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,154,0,0" TextWrapping="Wrap"  Width="175" Height="30" IsReadOnly="True"/>
-        <ComboBox Background="Aquamarine" x:Name="comboMaxWeight" HorizontalAlignment="Right" Margin="0,153,210,0"  VerticalAlignment="Top" Width="150" Height="25" SelectionChanged="comboMaxWeight_SelectionChanged" />
-        <TextBox  Background="Beige"  Text="Enter drone maxWeight:" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,211,0,0" TextWrapping="Wrap"  Width="175" Height="30" IsReadOnly="True"/>
-        <ComboBox Background="Beige" x:Name="comboInitialStation" HorizontalAlignment="Right" Margin="0,212,210,0"  VerticalAlignment="Top" Width="150" Height="25" SelectionChanged="comboInitialStation_SelectionChanged"/>
-        <Button x:Name="btnSaveCanges" Content="SaveChanges" Background="Yellow"  HorizontalAlignment="Center" Margin="0,292,0,0" VerticalAlignment="Top" Height="55" Width="176" Click="btnSaveCanges_Click"/>
-        <Button x:Name="btnBackToList" Content="Close" Background="Blue" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Height="34" Width="119" Click="btnBackToList_Click"/>
-        <TextBox x:Name="idExeption" Background="Aquamarine" HorizontalAlignment="Left" Margin="595,52,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="18" RenderTransformOrigin="0.425,0.641" IsReadOnly="True" BorderThickness="0"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox IsReadOnly="True" Background="Teal" BorderThickness="0"/>
+        <TextBox Grid.Column="2" IsReadOnly="True" Background="Teal" BorderThickness="0"/>
+        <TextBox Grid.Column="1" FontSize="32" FontWeight="Bold"  BorderThickness="0" TextWrapping="Wrap" Background="Teal" Foreground="White" IsReadOnly="True" Text="Enter drone properties" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBox Text="Id:" FontSize="18" Background="MintCream" FontWeight="Bold" TextWrapping="Wrap" Height="40" IsReadOnly="True" BorderThickness="0"/>
+            <TextBox Text="Model:" FontSize="18" Background="MintCream" FontWeight="Bold" Margin="0,40,0,0"  TextWrapping="Wrap" Height="40" IsReadOnly="True" BorderThickness="0"/>
+            <TextBox Text="Maximum Weight:" FontSize="18" Background="MintCream" FontWeight="Bold" Margin="0,40,0,0"  TextWrapping="Wrap" Height="40" IsReadOnly="True" BorderThickness="0"/>
+            <TextBox Text="Initial station:" FontSize="18" Background="MintCream" FontWeight="Bold" Margin="0,40,0,0"   TextWrapping="Wrap"  Height="40" IsReadOnly="True" BorderThickness="0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+            <TextBox x:Name="Id" TextWrapping="Wrap" Height="40" FontSize="18"  TextChanged="Id_TextChanged"/>
+            <TextBox x:Name="idExeption" TextWrapping="Wrap" Height="30" FontSize="18" FontWeight="DemiBold" Background="MintCream" Foreground="Red" BorderThickness="0" IsReadOnly="True"/>
+            <TextBox x:Name="ModelAdd" TextWrapping="Wrap" Height="40" Margin="0,10,0,0" FontSize="18"  TextChanged="ModelAdd_TextChanged"/>
+            <ComboBox x:Name="comboMaxWeight" Height="40" Margin="0,40,0,0" SelectionChanged="comboMaxWeight_SelectionChanged" />
+            <ComboBox x:Name="comboInitialStation" Height="40" Margin="0,40,0,0" SelectionChanged="comboInitialStation_SelectionChanged"/>
+        </StackPanel>
+        <Button x:Name="btnSaveCanges" Grid.Row="1" Grid.Column="2" Content="Add Drone" VerticalAlignment="Top" Margin="0,20,0,0" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="18" Height="55" Width="150" Click="btnSaveCanges_Click" BorderThickness="0"/>
+        <Button x:Name="btnBackToList" Grid.Column="2" Content="Close"  Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="18" Height="35" Width="100" Click="btnBackToList_Click" BorderThickness="0"/>
 
     </Grid>
 </Window>

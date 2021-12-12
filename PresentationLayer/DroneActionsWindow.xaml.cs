@@ -20,18 +20,18 @@ namespace PL
     public partial class DroneWindow : Window
     {
         IBL.IBL bl;
-        IBL.BO.ListDrone drone;
+        IBL.BO.ListDrone ListDrone;
         public DroneWindow(IBL.BO.ListDrone myDrone, IBL.IBL myBl)
         {            
             bl = myBl;
-            drone = myDrone;
+            ListDrone = myDrone;
             InitializeComponent();
             UpdateWindow();
         }
 
         private void UpdateWindow()
         {
-            IBL.BO.Drone blDrone = bl.GetDrone(drone.Id);
+            IBL.BO.Drone blDrone = bl.GetDrone(ListDrone.Id);
             DroneId.Text = blDrone.Id.ToString();
             Model.Text = blDrone.Model;
             MaxWeight.Text = blDrone.WeightCategory.ToString();
@@ -59,17 +59,17 @@ namespace PL
 
             Update.Visibility = Visibility.Collapsed;
 
-            if (drone.State != IBL.BO.DroneState.Available)
+            if (ListDrone.State != IBL.BO.DroneState.Available)
                 SendToCharge.Visibility = Visibility.Collapsed;
             else
                 SendToCharge.Visibility = Visibility.Visible;
 
-            if (drone.State != IBL.BO.DroneState.Maintenance)
+            if (ListDrone.State != IBL.BO.DroneState.Maintenance)
                 FreeFromCharge.Visibility = Visibility.Collapsed;
             else
                 FreeFromCharge.Visibility = Visibility.Visible;
 
-            if (drone.State != IBL.BO.DroneState.Available)
+            if (ListDrone.State != IBL.BO.DroneState.Available)
                 SendToDelivery.Visibility = Visibility.Collapsed;
             else
                 SendToDelivery.Visibility = Visibility.Visible;
@@ -98,7 +98,7 @@ private void CloseWindow_Click(object sender, RoutedEventArgs e)
 
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-            bl.UpdateDrone(drone.Id, Model.Text);
+            bl.UpdateDrone(ListDrone.Id, Model.Text);
             MessageBox.Show("Model updated successfully!");
             UpdateWindow();
         }
@@ -108,7 +108,7 @@ private void CloseWindow_Click(object sender, RoutedEventArgs e)
             string str = "Drone sent to charge successfully!";
             try 
             {
-                bl.SendDroneToCharge(drone.Id);
+                bl.SendDroneToCharge(ListDrone.Id);
             }
             catch (BL.BlException exem)
             {
@@ -123,7 +123,7 @@ private void CloseWindow_Click(object sender, RoutedEventArgs e)
             string str = "Drone freed from charge successfully!";
             try
             {
-                bl.DroneRelease(drone.Id,3);
+                bl.DroneRelease(ListDrone.Id,3);
             }
             catch (BL.BlException exem)
             {
@@ -138,7 +138,7 @@ private void CloseWindow_Click(object sender, RoutedEventArgs e)
             string str = "Drone sent to delivery successfully!";
             try
             {
-                bl.LinkParcelToDroneBL(drone.Id);
+                bl.LinkParcelToDroneBL(ListDrone.Id);
             }
             catch (BL.BlException exem)
             {
@@ -153,7 +153,7 @@ private void CloseWindow_Click(object sender, RoutedEventArgs e)
             string str = "Parcel collected successfully!";
             try
             {
-                bl.PickParcel(drone.Id);
+                bl.PickParcel(ListDrone.Id);
             }
             catch (BL.BlException exem)
             {
@@ -168,7 +168,7 @@ private void CloseWindow_Click(object sender, RoutedEventArgs e)
             string str = "Parcel Delivered successfully!";
             try
             {
-                bl.DeliverParcel(drone.Id);
+                bl.DeliverParcel(ListDrone.Id);
             }
             catch (BL.BlException exem)
             {

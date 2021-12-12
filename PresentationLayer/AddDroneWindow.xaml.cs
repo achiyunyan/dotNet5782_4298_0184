@@ -40,26 +40,31 @@ namespace PL
                 drone = new IBL.BO.Drone();
                 drone.Id = int.Parse(Id.Text);
                 ListStation x = (ListStation)comboInitialStation.SelectedItem;
-                drone.Model = Model.Text;
+                drone.Model = ModelAdd.Text;
                 drone.WeightCategory = (WeightCategory)comboMaxWeight.SelectedItem;
+                string str = "Drone successfuly added!";
+                bool error = false;
                 try
                 {
                     bl.AddDrone(drone, x.Id);
                 }
-                catch(BL.BlException exem)
+                catch (BL.BlException exem)
                 {
-
-                    idExeption.Text = exem.Message;
+                    str = exem.Message;
+                    error = true;
                 }
-                MessageBox.Show("successfuly added!");
-                btnBackToList_Click(sender,e);
+                MessageBox.Show(str);
+                if (!error)
+                {
+                    btnBackToList_Click(sender, e);
+                }
             }
 
         }
 
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
         {
-            new DronesListWindow(bl).Show();
+            //TO DO - update drone list
             exit = true;
             this.Close();
         }
@@ -71,21 +76,19 @@ namespace PL
             bool success = int.TryParse(Id.Text, out id); 
             if (!success || id < 10000)
             {
-
-                Id.Background = Brushes.Red;
+                idExeption.Text = "Id not valid!";
+                Id.Background = Brushes.Tomato;
                 well[0] = false;
             }
             else
             {
                 if (bl.GetDronesList(dr => dr.Id == id).Count() > 0)//==1
                 {
-                    idExeption.Text = "Already exists!";
-                    idExeption.Background = Brushes.Red;
+                    idExeption.Text = "Id already exists!";
                 }
                 else
                 {
                     idExeption.Text = "";
-                    idExeption.Background = Brushes.Aquamarine;
                     Id.Background = Brushes.Aqua;
                     well[0] = true;
                 }
@@ -94,16 +97,16 @@ namespace PL
 
         }
 
-        private void Model_TextChanged(object sender, TextChangedEventArgs e)
+        private void ModelAdd_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (Model.Text == "")
+            if (ModelAdd.Text == "")
             {
-                Model.Background = Brushes.Red;
+                ModelAdd.Background = Brushes.Red;
                 well[1] = false;
             }
             else
             {
-                Model.Background = Brushes.AliceBlue;
+                ModelAdd.Background = Brushes.AliceBlue;
                 well[1] = true;
             }
         }

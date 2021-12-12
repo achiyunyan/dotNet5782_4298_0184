@@ -98,7 +98,6 @@ namespace PL
         {
             new AddDroneWindow(ibl).Show();
             exit = true;
-            this.Close();
         }
         private void lstvDrones_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
