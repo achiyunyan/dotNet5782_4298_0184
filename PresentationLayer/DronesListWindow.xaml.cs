@@ -112,10 +112,10 @@ namespace PL
             if (exit == false)
                 e.Cancel = true;
         }
-        public void refresh()
+        public void Refresh()
         {
 
-            if (comboStatus.SelectedItem.ToString() == ""||comboStatus.SelectedItem==null)
+            if (comboStatus.SelectedItem==null||comboStatus.SelectedItem.ToString() == "")
             {
                 if (comboMaxWeight.SelectedItem == null || comboMaxWeight.SelectedItem.ToString() == "")
                     this.lstvDrones.ItemsSource = ibl.GetDronesList();
