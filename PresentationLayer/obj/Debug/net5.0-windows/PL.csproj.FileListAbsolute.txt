@@ -10,13 +10,11 @@ C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\bin\Debug\net
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\bin\Debug\net5.0-windows\BL.pdb
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\bin\Debug\net5.0-windows\DAL.pdb
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\PL.csproj.AssemblyReference.cache
-C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\AddDroneWindow.g.cs
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\DronesListWindow.g.cs
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\MainWindow.g.cs
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\App.g.cs
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\PL_MarkupCompile.cache
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\PL_MarkupCompile.lref
-C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\AddDroneWindow.baml
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\DronesListWindow.baml
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\MainWindow.baml
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\PL.g.resources
@@ -57,7 +55,7 @@ C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\ref\PL.dll
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\PL.pdb
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\PL.genruntimeconfig.cache
-C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\DroneActionsWindow.g.cs
-C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\DroneActionsWindow.baml
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\DroneWindow.g.cs
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\DroneWindow.baml
+C:\Users\yunia\source\repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\DroneWindow.g.cs
+C:\Users\yunia\source\repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\DroneWindow.baml

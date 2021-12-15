@@ -188,9 +188,10 @@ namespace PL
         /// Add drone functions
         /// </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        public DroneWindow(IBL.IBL myBl)
+        DronesListWindow dlw;
+        public DroneWindow(IBL.IBL myBl,DronesListWindow dronesListWindow)
         {
+            dlw = dronesListWindow;
             bl = myBl;
             InitializeComponent();
             DroneActions.Visibility = Visibility.Hidden;
@@ -231,6 +232,7 @@ namespace PL
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
         {
             //TO DO - update drone list
+            dlw.refresh();
             exit = true;
             this.Close();
         }

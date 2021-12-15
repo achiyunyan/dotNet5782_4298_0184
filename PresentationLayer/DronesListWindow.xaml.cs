@@ -96,7 +96,7 @@ namespace PL
         }
         private void btnAddDrones_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(ibl).Show();
+            new DroneWindow(ibl,this).Show();
             exit = true;
         }
 
@@ -111,6 +111,31 @@ namespace PL
         {
             if (exit == false)
                 e.Cancel = true;
+        }
+        public void refresh()
+        {
+
+            if (comboStatus.SelectedItem.ToString() == ""||comboStatus.SelectedItem==null)
+            {
+                if (comboMaxWeight.SelectedItem == null || comboMaxWeight.SelectedItem.ToString() == "")
+                    this.lstvDrones.ItemsSource = ibl.GetDronesList();
+                else
+                {
+                    WeightCategory? maxWeight = (WeightCategory)comboMaxWeight.SelectedItem;
+                    this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => (drone.WeightCategory == maxWeight));
+                }
+            }
+            else
+            {
+                DroneState state = (DroneState)comboStatus.SelectedItem;
+                if (comboMaxWeight.SelectedItem == null || comboMaxWeight.SelectedItem.ToString() == "")
+                    this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => drone.State == state);
+                else
+                {
+                    WeightCategory? maxWeight = (WeightCategory)comboMaxWeight.SelectedItem;
+                    this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => (drone.WeightCategory == maxWeight) && (drone.State == state));
+                }
+            }
         }
     }
 }
