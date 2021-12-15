@@ -38,7 +38,6 @@ C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\bin\Debug\net5.0\DAL
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\bin\Debug\net5.0\BL.pdb
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\bin\Debug\net5.0\DAL.pdb
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.genruntimeconfig.cache
-C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.csproj.CopyComplete
 C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.csproj.CopyComplete
 C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.csproj.AssemblyReference.cache
 C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.GeneratedMSBuildEditorConfig.editorconfig
@@ -61,3 +60,4 @@ C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\ConsoleUI2\bin\Deb
 C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\ConsoleUI2\bin\Debug\net5.0\DAL.pdb
 C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.csproj.CopyComplete
 C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.genruntimeconfig.cache
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.csproj.CopyComplete

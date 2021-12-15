@@ -96,13 +96,8 @@ namespace PL
         }
         private void btnAddDrones_Click(object sender, RoutedEventArgs e)
         {
-            new AddDroneWindow(ibl).Show();
+            new DroneWindow(ibl).Show();
             exit = true;
-        }
-        private void lstvDrones_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            new DroneWindow((ListDrone)lstvDrones.SelectedItem, ibl).Show();
-            Close();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
