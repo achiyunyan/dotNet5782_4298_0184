@@ -161,7 +161,7 @@ namespace BL
         public void LinkParcelToDroneBL(int droneId)
         {
             if (Drones.Any(dr => dr.Id == droneId))
-            {
+            {  
                 ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
                 if (BlDrone.State != DroneState.Available)
                     throw new BlException($"Drone: {droneId} not exists!");

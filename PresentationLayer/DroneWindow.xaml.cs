@@ -232,7 +232,7 @@ namespace PL
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
         {
             //TO DO - update drone list
-            dlw.refresh();
+            dlw.Refresh();
             exit = true;
             this.Close();
         }

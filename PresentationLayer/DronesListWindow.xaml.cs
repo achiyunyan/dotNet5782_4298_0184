@@ -112,7 +112,7 @@ namespace PL
             if (exit == false)
                 e.Cancel = true;
         }
-        public void refresh()
+        public void Refresh()
         {
 
             if (comboStatus.SelectedItem == null || comboStatus.SelectedItem.ToString() == "")
