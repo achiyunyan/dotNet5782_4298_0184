@@ -1,0 +1,87 @@
+﻿<Window x:Class="PL.DroneWindow" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="Drone Window" Height="450" Width="800"
+        Background="MintCream"  
+        Icon="DroneIcon.png">
+    <Grid>
+        <!-- Drone Actions -->
+        <Grid x:Name="DroneActions">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+     
+            <TextBox Grid.Column="1" IsReadOnly="True" Background="Teal" BorderThickness="0"/>
+            <TextBox Grid.Column="2" IsReadOnly="True" Background="Teal" BorderThickness="0"/>
+            <TextBox Text="Properties" FontSize="20" Background="Teal" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="White" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" />
+            <Button Content="Close" Grid.Column="2" Click="CloseWindow_Click" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" BorderThickness="0" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="35" Width="100"/>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" >
+                <TextBox Text="Id: " FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" IsReadOnly="True"/>
+                <TextBox Text="Model: " FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" IsReadOnly="True"/>
+                <TextBox Text="Maximum weight: " FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap"  Height="25" IsReadOnly="True"/>
+                <TextBox Text="Battery: " FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" IsReadOnly="True"/>
+                <TextBox Text="State: " FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" IsReadOnly="True"/>
+                <TextBox Text="Location: " FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" IsReadOnly="True"/>
+                <TextBox x:Name="ParcelTag" Foreground="Teal" FontWeight="Bold" Background="MintCream" TextWrapping="Wrap" FontSize="16" Height="222" IsReadOnly="True" BorderThickness="0"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="1">
+                <TextBox x:Name="DroneId" FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" IsReadOnly="True"/>
+                <TextBox x:Name="Model" FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" TextChanged="Model_TextChanged"/>
+                <TextBox x:Name="MaxWeight" FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" IsReadOnly="True"/>
+                <TextBox x:Name="Battery" FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" IsReadOnly="True"/>
+                <TextBox x:Name="State" FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" IsReadOnly="True"/>
+                <TextBox x:Name="Location" FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" IsReadOnly="True"/>
+                <TextBox x:Name="Parcel" Foreground="Teal" FontWeight="Bold" Background="MintCream"  FontSize="12" TextWrapping="Wrap" Height="222" IsReadOnly="True" BorderThickness="0"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Grid.Row="1" >
+                <Button x:Name="Update" Content="Update" Click="Update_Click" BorderThickness="0" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" Visibility="Collapsed" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,20,0,0"/>
+                <Button x:Name="SendToCharge" Content="Send to charge" Click="SendToCharge_Click" BorderThickness="0" FontSize="18" Foreground="DarkSlateGray" FontWeight="Bold" Background="Aquamarine" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,20,0,0"/>
+                <Button x:Name="FreeFromCharge" Content="Free from charge" Click="FreeFromCharge_Click" BorderThickness="0" Foreground="DarkSlateGray" FontWeight="Bold" Background="Aquamarine" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,20,0,0"/>
+                <Button x:Name="SendToDelivery" Content="Send to delivery" Click="SendToDelivery_Click" BorderThickness="0" Foreground="DarkSlateGray" FontWeight="Bold" Background="Aquamarine" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,20,0,0"/>
+                <Button x:Name="CollectParcel" Content="Collect parcel" Click="CollectParcel_Click" BorderThickness="0" Foreground="DarkSlateGray" FontWeight="Bold" Background="Aquamarine" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,20,0,0"/>
+                <Button x:Name="DeliverParcel" Content="Deliver parcel" Click="DeliverParcel_Click" BorderThickness="0" Foreground="DarkSlateGray" FontWeight="Bold" Background="Aquamarine"  FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="50" Width="150" Margin="0,20,0,10"/>
+            </StackPanel>
+        </Grid>
+        <!-- Add Drone -->
+        <Grid x:Name="AddDrone" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+            <TextBox IsReadOnly="True" Background="Teal" BorderThickness="0"/>
+            <TextBox Grid.Column="2" IsReadOnly="True" Background="Teal" BorderThickness="0"/>
+            <TextBox Grid.Column="1" FontSize="32" FontWeight="Bold"  BorderThickness="0" TextWrapping="Wrap" Background="Teal" Foreground="White" IsReadOnly="True" Text="Enter drone properties" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBox Text="Id:" FontSize="18" Background="MintCream" FontWeight="Bold" TextWrapping="Wrap" Height="40" IsReadOnly="True" BorderThickness="0"/>
+                <TextBox Text="Model:" FontSize="18" Background="MintCream" FontWeight="Bold" Margin="0,40,0,0"  TextWrapping="Wrap" Height="40" IsReadOnly="True" BorderThickness="0"/>
+                <TextBox Text="Maximum Weight:" FontSize="18" Background="MintCream" FontWeight="Bold" Margin="0,40,0,0"  TextWrapping="Wrap" Height="40" IsReadOnly="True" BorderThickness="0"/>
+                <TextBox Text="Initial station:" FontSize="18" Background="MintCream" FontWeight="Bold" Margin="0,40,0,0"   TextWrapping="Wrap"  Height="40" IsReadOnly="True" BorderThickness="0"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                <TextBox x:Name="Id" TextWrapping="Wrap" Height="40" FontSize="18"  TextChanged="Id_TextChanged"/>
+                <TextBox x:Name="idExeption" TextWrapping="Wrap" Height="30" FontSize="18" FontWeight="DemiBold" Background="MintCream" Foreground="Red" BorderThickness="0" IsReadOnly="True"/>
+                <TextBox x:Name="ModelAdd" TextWrapping="Wrap" Height="40" Margin="0,10,0,0" FontSize="18"  TextChanged="ModelAdd_TextChanged"/>
+                <ComboBox x:Name="comboMaxWeight" Height="40" Margin="0,40,0,0" SelectionChanged="comboMaxWeight_SelectionChanged" />
+                <ComboBox x:Name="comboInitialStation" Height="40" Margin="0,40,0,0" SelectionChanged="comboInitialStation_SelectionChanged"/>
+            </StackPanel>
+            <Button Grid.Row="1" Grid.Column="2" Content="Add Drone" VerticalAlignment="Top" Margin="0,20,0,0" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="18" Height="55" Width="150" Click="btnSaveCanges_Click" BorderThickness="0"/>
+            <Button Grid.Column="2" Content="Close"  Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="18" Height="35" Width="100" Click="btnBackToList_Click" BorderThickness="0"/>
+        </Grid>
+    </Grid>
+</Window>

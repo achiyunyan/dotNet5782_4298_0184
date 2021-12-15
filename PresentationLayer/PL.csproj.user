@@ -7,27 +7,21 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="AddDroneWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="DronesListWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="DroneActionsWindow.xaml.cs">
+    <Compile Update="DroneWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="AddDroneWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="DronesListWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MainWindow.xaml">
+    <Page Update="DroneWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="DroneActionsWindow.xaml">
+    <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
