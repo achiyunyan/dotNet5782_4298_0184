@@ -166,17 +166,36 @@ namespace BL
                 if (BlDrone.State != DroneState.Available)
                     throw new BlException($"Drone: {droneId} not exists!");
 
-                List<IDAL.DO.Parcel> parcels = ((List<IDAL.DO.Parcel>)myDal.GetParcelsList()).FindAll(par => par.Scheduled == null);
-                if (parcels.Count == 0)
+                List<IDAL.DO.Parcel> allParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();
+                
+                List<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>();
+                bool noAvailalableParcel = true;
+                bool cannotCarryAnyParcel = true;
+                bool cannotFulfill = true;
+                foreach(var par in allParcels)
+                {
+                    if (par.Scheduled == null)
+                    {
+                        noAvailalableParcel = false;
+                        if((int)par.Weight <= (int)BlDrone.WeightCategory)
+                        {
+                            cannotCarryAnyParcel = false;
+                            if(PossibleFly(ListDroneToDrone(BlDrone), par))
+                            {
+                                cannotFulfill = false;
+                                parcels.Add(par);
+                            }
+                        }
+                    }
+                }
+                if (noAvailalableParcel)
                     throw new BlException("No availalable parcel!");
-                parcels = parcels.FindAll(par => (int)par.Weight <= (int)BlDrone.WeightCategory);
-                if (parcels.Count == 0)
+                if (cannotCarryAnyParcel)
                     throw new BlException($"Drone {droneId} cannot carry any parcel!");
-                parcels = parcels.FindAll(par => PossibleFly(droneId, par.Id));
-                if (parcels.Count == 0)
+                if (cannotFulfill)
                     throw new BlException($"Drone {droneId} cannot fulfill the fly(not enough battery)");
                 IDAL.DO.Parcel bestParcel = BestParcel(parcels, droneId);
-                PossibleFly(droneId, bestParcel.Id);
+                PossibleFly(ListDroneToDrone(BlDrone), bestParcel);
                 BlDrone.State = DroneState.Delivery;
                 BlDrone.ParcelId = bestParcel.Id;
                 bestParcel.Scheduled = DateTime.Now;
@@ -255,16 +274,15 @@ namespace BL
                 return -1 * p1.Weight.CompareTo(p2.Weight);
         }
 
-        private bool PossibleFly(int droneId, int parcelId)
+        private bool PossibleFly(Drone BlDrone, IDAL.DO.Parcel dalParcel)
         {
-            Drone BlDrone = GetDrone(droneId);
-            Parcel BlParcel = GetParcel(parcelId);
+            Parcel BlParcel = DALParcelToBL(dalParcel);
             Location parcelLocation = GetCustomer(BlParcel.Sender.Id).Location;
             Location parcelDestination = GetCustomer(BlParcel.Receiver.Id).Location;
             double disFromDroneToParcel = DistanceBetweenTwoPoints(BlDrone.Location, parcelLocation);
             double disFromtSenderToReciver = DistanceBetweenTwoPoints(parcelLocation, parcelDestination);
             double disFromReciverTosStation = DistanceBetweenTwoPoints(parcelDestination, ClosestStationLocation(BlDrone.Location));
-            double electricityNeeded = (disFromDroneToParcel + disFromReciverTosStation) * ElectricityUsePerKmAvailable + disFromtSenderToReciver * ElecriciryUsePerWeight(myDal.GetParcel(parcelId).Weight);
+            double electricityNeeded = (disFromDroneToParcel + disFromReciverTosStation) * ElectricityUsePerKmAvailable + disFromtSenderToReciver * ElecriciryUsePerWeight(dalParcel.Weight);
             return BlDrone.Battery >= electricityNeeded;
         }
     }
