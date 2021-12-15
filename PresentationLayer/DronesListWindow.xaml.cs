@@ -43,9 +43,9 @@ namespace PL
 
         private void comboStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (comboStatus.SelectedItem.ToString()=="")
+            if (comboStatus.SelectedItem.ToString() == "")
             {
-                if (comboMaxWeight.SelectedItem == null|| comboMaxWeight.SelectedItem.ToString() == "")
+                if (comboMaxWeight.SelectedItem == null || comboMaxWeight.SelectedItem.ToString() == "")
                     this.lstvDrones.ItemsSource = ibl.GetDronesList();
                 else
                 {
@@ -56,7 +56,7 @@ namespace PL
             else
             {
                 DroneState state = (DroneState)comboStatus.SelectedItem;
-                if (comboMaxWeight.SelectedItem == null||comboMaxWeight.SelectedItem.ToString()=="")
+                if (comboMaxWeight.SelectedItem == null || comboMaxWeight.SelectedItem.ToString() == "")
                     this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => drone.State == state);
                 else
                 {
@@ -80,7 +80,7 @@ namespace PL
             else
             {
                 WeightCategory maxWeight = (WeightCategory)comboMaxWeight.SelectedItem;
-                if (comboStatus.SelectedItem == null||comboStatus.SelectedItem.ToString()=="")
+                if (comboStatus.SelectedItem == null || comboStatus.SelectedItem.ToString() == "")
                     this.lstvDrones.ItemsSource = ibl.GetDronesList(drone => drone.WeightCategory == maxWeight);
                 else
                 {
@@ -96,7 +96,7 @@ namespace PL
         }
         private void btnAddDrones_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(ibl,this).Show();
+            new DroneWindow(ibl, this).Show();
             exit = true;
         }
 
@@ -115,7 +115,7 @@ namespace PL
         public void refresh()
         {
 
-            if (comboStatus.SelectedItem.ToString() == ""||comboStatus.SelectedItem==null)
+            if (comboStatus.SelectedItem == null || comboStatus.SelectedItem.ToString() == "")
             {
                 if (comboMaxWeight.SelectedItem == null || comboMaxWeight.SelectedItem.ToString() == "")
                     this.lstvDrones.ItemsSource = ibl.GetDronesList();
