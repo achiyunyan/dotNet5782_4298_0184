@@ -104,7 +104,21 @@ namespace BL
 
         public Parcel GetParcel(int id)
         {
-            IDAL.DO.Parcel dalParcel = myDal.GetParcel(id);
+            IDAL.DO.Parcel dalParcel;
+            try
+            {
+                dalParcel = myDal.GetParcel(id);
+            }
+            catch (IDAL.DO.NotExistsException stex)
+            {
+                string str = "bl ereceive exception: " + stex.Message;
+                throw new BlException(str);
+            }
+            return DALParcelToBL(dalParcel);
+        }
+
+        private Parcel DALParcelToBL(IDAL.DO.Parcel dalParcel)
+        {
             Parcel parcel = new Parcel
             {
                 Id = dalParcel.Id,
