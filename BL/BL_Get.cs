@@ -38,12 +38,17 @@ namespace BL
         public Drone GetDrone(int id)
         {
             ListDrone listDrone;
-            listDrone = Drones.Find(dr => dr.Id == id);            
+            listDrone = Drones.Find(dr => dr.Id == id);
             if (listDrone == default)
             {
                 throw new BlException($"id: {id} not exists!!");
             }
-            Drone drone = new Drone
+            return ListDroneToDrone(listDrone);           
+        }
+
+        private Drone ListDroneToDrone(ListDrone listDrone)
+        {
+            return new Drone
             {
                 Id = listDrone.Id,
                 State = listDrone.State,
@@ -53,7 +58,6 @@ namespace BL
                 WeightCategory = listDrone.WeightCategory,
                 Parcel = GetParcelInTransit(listDrone.ParcelId)
             };
-            return drone;
         }
 
         public Customer GetCustomer(int id)

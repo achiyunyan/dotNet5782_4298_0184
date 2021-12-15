@@ -166,12 +166,13 @@ namespace BL
                 if (BlDrone.State != DroneState.Available)
                     throw new BlException($"Drone: {droneId} not exists!");
 
-                List<IDAL.DO.Parcel> Allparcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();
+                List<IDAL.DO.Parcel> allParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();
+                
                 List<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>();
                 bool noAvailalableParcel = true;
                 bool cannotCarryAnyParcel = true;
                 bool cannotFulfill = true;
-                foreach(var par in Allparcels)
+                foreach(var par in allParcels)
                 {
                     if (par.Scheduled == null)
                     {
@@ -179,7 +180,7 @@ namespace BL
                         if((int)par.Weight <= (int)BlDrone.WeightCategory)
                         {
                             cannotCarryAnyParcel = false;
-                            if(PossibleFly(droneId, par))
+                            if(PossibleFly(ListDroneToDrone(BlDrone), par))
                             {
                                 cannotFulfill = false;
                                 parcels.Add(par);
@@ -194,7 +195,7 @@ namespace BL
                 if (cannotFulfill)
                     throw new BlException($"Drone {droneId} cannot fulfill the fly(not enough battery)");
                 IDAL.DO.Parcel bestParcel = BestParcel(parcels, droneId);
-                PossibleFly(droneId, bestParcel);
+                PossibleFly(ListDroneToDrone(BlDrone), bestParcel);
                 BlDrone.State = DroneState.Delivery;
                 BlDrone.ParcelId = bestParcel.Id;
                 bestParcel.Scheduled = DateTime.Now;
@@ -273,9 +274,8 @@ namespace BL
                 return -1 * p1.Weight.CompareTo(p2.Weight);
         }
 
-        private bool PossibleFly(int droneId, IDAL.DO.Parcel dalParcel)
+        private bool PossibleFly(Drone BlDrone, IDAL.DO.Parcel dalParcel)
         {
-            Drone BlDrone = GetDrone(droneId);
             Parcel BlParcel = DALParcelToBL(dalParcel);
             Location parcelLocation = GetCustomer(BlParcel.Sender.Id).Location;
             Location parcelDestination = GetCustomer(BlParcel.Receiver.Id).Location;
