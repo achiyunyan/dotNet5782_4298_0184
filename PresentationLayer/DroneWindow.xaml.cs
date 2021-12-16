@@ -89,10 +89,6 @@ namespace PL
             Update.Visibility = Visibility.Visible;
         }
 
-        private void CloseWindow_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
 
         private void Update_Click(object sender, RoutedEventArgs e)
         {
