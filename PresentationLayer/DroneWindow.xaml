@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Drone Window" Height="450" Width="800"
         Background="MintCream"  
-        Icon="DroneIcon.png">
+        Icon="DroneIcon.png"
+        Closing="Window_Closing">
     <Grid>
         <!-- Drone Actions -->
         <Grid x:Name="DroneActions">
@@ -24,7 +25,7 @@
             <TextBox Grid.Column="1" IsReadOnly="True" Background="Teal" BorderThickness="0"/>
             <TextBox Grid.Column="2" IsReadOnly="True" Background="Teal" BorderThickness="0"/>
             <TextBox Text="Properties" FontSize="20" Background="Teal" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="White" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" />
-            <Button Content="Close" Grid.Column="2" Click="CloseWindow_Click" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" BorderThickness="0" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="35" Width="100"/>
+            <Button Content="Close" Grid.Column="2" Click="btnBackToList_Click" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" BorderThickness="0" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="35" Width="100"/>
             <StackPanel Grid.Row="1" HorizontalAlignment="Center" >
                 <TextBox Text="Id: " FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" IsReadOnly="True"/>
                 <TextBox Text="Model: " FontSize="16" Foreground="Teal" FontWeight="Bold" BorderThickness="0" Background="MintCream" TextWrapping="Wrap" Height="25" IsReadOnly="True"/>

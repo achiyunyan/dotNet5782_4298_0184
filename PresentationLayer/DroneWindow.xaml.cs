@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using IBL.BO;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using IBL.BO;
 
 namespace PL
 {
@@ -23,14 +15,15 @@ namespace PL
     /// Drone actions functions
     /// </summary>
     public partial class DroneWindow : Window
-    {        
+    {
         IBL.IBL bl;
         IBL.BO.ListDrone ListDrone;
         IBL.BO.Drone drone;
         bool[] well = { false, false, false, false };
         bool exit = false;
-        public DroneWindow(IBL.BO.ListDrone myDrone, IBL.IBL myBl)
+        public DroneWindow(IBL.BO.ListDrone myDrone, IBL.IBL myBl,DronesListWindow dronesListWindow)
         {
+            dlw = dronesListWindow;
             bl = myBl;
             ListDrone = myDrone;
             InitializeComponent();
@@ -96,15 +89,12 @@ namespace PL
             Update.Visibility = Visibility.Visible;
         }
 
-        private void CloseWindow_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
 
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             bl.UpdateDrone(ListDrone.Id, Model.Text);
             MessageBox.Show("Model updated successfully!");
+            dlw.Refresh();
             UpdateWindow();
         }
 
@@ -120,6 +110,7 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
+            dlw.Refresh();
             UpdateWindow();
         }
 
@@ -135,6 +126,7 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
+            dlw.Refresh();
             UpdateWindow();
         }
 
@@ -150,6 +142,7 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
+            dlw.Refresh();
             UpdateWindow();
         }
 
@@ -165,6 +158,7 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
+            dlw.Refresh();
             UpdateWindow();
         }
 
@@ -180,6 +174,7 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
+            dlw.Refresh();
             UpdateWindow();
         }
 
@@ -189,7 +184,7 @@ namespace PL
         /// </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         DronesListWindow dlw;
-        public DroneWindow(IBL.IBL myBl,DronesListWindow dronesListWindow)
+        public DroneWindow(IBL.IBL myBl, DronesListWindow dronesListWindow)
         {
             dlw = dronesListWindow;
             bl = myBl;
@@ -293,7 +288,7 @@ namespace PL
         {
             if (exit == false)
                 e.Cancel = true;
-        }        
+        }
     }
 
 }
