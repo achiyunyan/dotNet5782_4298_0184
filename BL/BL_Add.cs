@@ -27,8 +27,8 @@ namespace BL
             ElectricityUsePerKmHeavy = myDal.GetElectricityUsePerKmHeavy();
             ElectricityChargePerHour = myDal.GetElectricityChargePerHour();
 
-            List<IDAL.DO.Drone> dalDrones = (List<IDAL.DO.Drone>)myDal.GetDronesList();
-            List<IDAL.DO.Parcel> dalParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();
+            IEnumerable<IDAL.DO.Drone> dalDrones = myDal.GetDronesList();
+            IEnumerable<IDAL.DO.Parcel> dalParcels = myDal.GetParcelsList();
             double battery = default;
             DroneState state = default;
             int parcelId;
@@ -62,34 +62,35 @@ namespace BL
                     Location reciverLocation = new Location { Latitude = reciver.Latitude, Longitude = reciver.Longitude };
                     Location senderLocation = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude };
                     double disToClosesrStation = DistanceBetweenTwoPoints(reciverLocation, ClosestStationLocation(reciverLocation));
-                    double disToSender = DistanceBetweenTwoPoints(location, senderLocation);                    
-                    battery = rand.Next((int)(ElecriciryUsePerWeight(dalParcel.Weight) * dis + ElectricityUsePerKmAvailable * (disToClosesrStation + disToSender)), 101); 
+                    double disToSender = DistanceBetweenTwoPoints(location, senderLocation);
+                    battery = rand.Next((int)(ElecriciryUsePerWeight(dalParcel.Weight) * dis + ElectricityUsePerKmAvailable * (disToClosesrStation + disToSender)), 101);
                 }
                 else // not in delivery
                 {
                     isAvaliable = true;
                     if (rand.Next(0, 2) == 0)// in charge
                     {
-                        List<IDAL.DO.Station> dalStationsWithSlots = ((List<IDAL.DO.Station>)myDal.GetStationsList()).FindAll(st => st.ChargeSlots > 0);
-                        if (dalStationsWithSlots.Count != 0)
+                        IEnumerable<IDAL.DO.Station> dalStationsWithSlots = myDal.GetStationsList().Where(st => st.ChargeSlots > 0);
+                        if (dalStationsWithSlots.Count() != 0)
                         {
                             isAvaliable = false;
                             state = DroneState.Maintenance;
                             battery = rand.Next(0, 21);
-                            int index = rand.Next(0, dalStationsWithSlots.Count);
-                            location = new Location { Latitude = dalStationsWithSlots[index].Latitude, Longitude = dalStationsWithSlots[index].Longitude };
-                            myDal.AddDroneCharge(new IDAL.DO.DroneCharge { DroneId = drone.Id, StationId = dalStationsWithSlots[index].Id });
+                            int index = rand.Next(0, dalStationsWithSlots.Count());
+                            location = new Location { Latitude = dalStationsWithSlots.ElementAt(index).Latitude, Longitude = dalStationsWithSlots.ElementAt(index).Longitude };
+                            myDal.AddDroneCharge(new IDAL.DO.DroneCharge { DroneId = drone.Id, StationId = dalStationsWithSlots.ElementAt(index).Id });
                         }
                     }
 
                     if (isAvaliable) // available
                     {
-                        List<IDAL.DO.Parcel> dalDeliveredParcels = dalParcels.FindAll(par => par.Delivered != null);
+                        IEnumerable<IDAL.DO.Parcel> dalDeliveredParcels = dalParcels.Where(par => par.Delivered != null);
                         IDAL.DO.Customer customer;
-                        do {
-                            customer = myDal.GetCustomer(dalDeliveredParcels[rand.Next(0, dalDeliveredParcels.Count)].ReciverId);
-                        } while ((int)DistanceFromClosestStation(customer.Latitude, customer.Longitude) > 100);             
-                        state = DroneState.Available;                        
+                        do
+                        {
+                            customer = myDal.GetCustomer(dalDeliveredParcels.ElementAt(rand.Next(0, dalDeliveredParcels.Count())).ReciverId);
+                        } while ((int)DistanceFromClosestStation(customer.Latitude, customer.Longitude) > 100);
+                        state = DroneState.Available;
                         location = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };
                         battery = rand.Next((int)(DistanceFromClosestStation(customer.Latitude, customer.Longitude) * ElectricityUsePerKmAvailable), 101);
                     }
@@ -128,7 +129,7 @@ namespace BL
 
         private Location ClosestStationLocation(double lat, double lon)
         {
-            List<IDAL.DO.Station> dalStations = (List<IDAL.DO.Station>)myDal.GetStationsList();
+            IEnumerable<IDAL.DO.Station> dalStations = myDal.GetStationsList();
             double dis = double.MaxValue;
             Location location = new Location();
             string name = "";
@@ -145,7 +146,7 @@ namespace BL
 
         private double DistanceFromClosestStation(double lat, double lon)
         {
-            List<IDAL.DO.Station> dalStations = (List<IDAL.DO.Station>)myDal.GetStationsList();
+            IEnumerable<IDAL.DO.Station> dalStations = myDal.GetStationsList();
             double dis = double.MaxValue;
             foreach (var station in dalStations.Where(station => dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0))
             {
@@ -259,7 +260,7 @@ namespace BL
 
         private double DistanceBetweenTwoPoints(Location loc1, Location loc2)
         {
-           return DistanceBetweenTwoPoints(loc1.Latitude, loc1.Longitude, loc2.Latitude, loc2.Longitude);
+            return DistanceBetweenTwoPoints(loc1.Latitude, loc1.Longitude, loc2.Latitude, loc2.Longitude);
         }
 
         private double DistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2)

@@ -79,8 +79,8 @@ namespace BL
                 Phone = dalCustomer.Phone,
                 Location = new Location { Latitude = dalCustomer.Latitude, Longitude = dalCustomer.Longitude }         
             };
-            List<IDAL.DO.Parcel> inParcels = ((List<IDAL.DO.Parcel>)myDal.GetParcelsList()).FindAll(pr => pr.ReciverId == dalCustomer.Id);
-            List<IDAL.DO.Parcel> outParcels = ((List<IDAL.DO.Parcel>)myDal.GetParcelsList()).FindAll(pr => pr.SenderId == dalCustomer.Id);
+            IEnumerable<IDAL.DO.Parcel> inParcels = myDal.GetParcelsList().Where(pr => pr.ReciverId == dalCustomer.Id);
+            IEnumerable<IDAL.DO.Parcel> outParcels = myDal.GetParcelsList().Where(pr => pr.SenderId == dalCustomer.Id);
             foreach(var parcel in inParcels)
             {
                 customer.InDeliveries.Add(new ParcelInCustomer
@@ -150,11 +150,11 @@ namespace BL
 
         public IEnumerable<ListStation> GetStationsList(Func<IDAL.DO.Station, bool> predicate = null)
         {
-            List<IDAL.DO.Station> dalStations = (List<IDAL.DO.Station>)myDal.GetStationsList(predicate);
-            List<ListStation> stations = new List<ListStation>();
+            IEnumerable<IDAL.DO.Station> dalStations = myDal.GetStationsList(predicate);
+            IEnumerable<ListStation> stations = new List<ListStation>();
             foreach(var dalStation in dalStations)
             {
-                stations.Add(new ListStation
+                stations.Append(new ListStation
                 {
                     Id = dalStation.Id,
                     Name = dalStation.Name,
@@ -174,12 +174,12 @@ namespace BL
 
         public IEnumerable<ListCustomer> GetCustomersList(Func<IDAL.DO.Customer, bool> predicate = null)
         {
-            List<IDAL.DO.Customer> dalCustomers = (List<IDAL.DO.Customer>)myDal.GetCustomersList(predicate);
-            List<IDAL.DO.Parcel> dalParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();
-            List<ListCustomer> customers = new List<ListCustomer>();
+            IEnumerable<IDAL.DO.Customer> dalCustomers = myDal.GetCustomersList(predicate);
+            IEnumerable<IDAL.DO.Parcel> dalParcels = myDal.GetParcelsList();
+            IEnumerable<ListCustomer> customers = new List<ListCustomer>();
             foreach(var dalCustomer in dalCustomers)
             {
-                customers.Add(new ListCustomer
+                customers.Append(new ListCustomer
                 {
                     Id = dalCustomer.Id,
                     Name = dalCustomer.Name,
@@ -195,11 +195,11 @@ namespace BL
 
         public IEnumerable<ListParcel> GetParcelsList(Func<IDAL.DO.Parcel, bool> predicate = null)
         {
-            List<IDAL.DO.Parcel> dalParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList(predicate);
-            List<ListParcel> parcels = new List<ListParcel>();
+            IEnumerable<IDAL.DO.Parcel> dalParcels = myDal.GetParcelsList(predicate);
+            IEnumerable<ListParcel> parcels = new List<ListParcel>();
             foreach(var dalParcel in dalParcels)
             {
-                parcels.Add(new ListParcel
+                parcels.Append(new ListParcel
                 {
                     Id = dalParcel.Id,
                     Priority = (Priority)(int)dalParcel.Priority,
