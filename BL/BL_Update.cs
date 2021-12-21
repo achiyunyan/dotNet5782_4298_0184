@@ -181,7 +181,7 @@ namespace BL
                             if (PossibleFly(ListDroneToDrone(BlDrone), par))
                             {
                                 cannotFulfill = false;
-                                parcels = parcels.  (par);
+                                parcels = parcels.Append(par);
                             }
                         }
                     }
@@ -245,45 +245,13 @@ namespace BL
         private IDAL.DO.Parcel BestParcel(IEnumerable<IDAL.DO.Parcel> parlist, int droneId)
         {
             Drone BlDrone = GetDrone(droneId);
-
-            
-
-            int max = 0;
-            /*for (int i = 1; i < parlist.Count(); i++)
-            {
-                if (CompareParcels(parlist.ElementAt(i), parlist.ElementAt(i)) < 0)//parlist[i]<parlist[max]\
-                {
-                    max = i;
-                }
-                else if (CompareParcels(parlist.ElementAt(i), parlist.ElementAt(max)) == 0)
-                {
-                    Location parcel1Location = GetCustomer(parlist.ElementAt(i).SenderId).Location;
-                    Location parcel2Location = GetCustomer(parlist.ElementAt(max).SenderId).Location;
-                    double disFromDroneToParcel1 = DistanceBetweenTwoPoints(BlDrone.Location, parcel1Location);
-                    double disFromDroneToParcel2 = DistanceBetweenTwoPoints(BlDrone.Location, parcel2Location);
-                    if (disFromDroneToParcel1 < disFromDroneToParcel2)
-                    {
-                        max = i;
-                    }
-                }
-            }
-           IDAL.DO.Parcel y= parlist.ElementAt(max);*/
-           return(from parcel in parlist
-                                orderby parcel.Priority
-                                orderby parcel.Weight
-                                orderby -DistanceBetweenTwoPoints(BlDrone.Location, GetCustomer(parcel.SenderId).Location)
-                                select parcel).ElementAt(parlist.Count()-1);
-            
-
+            return (from parcel in parlist
+                    orderby parcel.Priority
+                    orderby parcel.Weight
+                    orderby DistanceBetweenTwoPoints(BlDrone.Location, GetCustomer(parcel.SenderId).Location)
+                    select parcel).ElementAt(parlist.Count() - 1);
         }
-        private int CompareParcels(IDAL.DO.Parcel p1, IDAL.DO.Parcel p2)
-        {
-            if (p1.Priority.CompareTo(p2.Priority) != 0)
-                return -1 * p1.Priority.CompareTo(p2.Priority);
-            else
-                return -1 * p1.Weight.CompareTo(p2.Weight);
-        }
-
+        
         private bool PossibleFly(Drone BlDrone, IDAL.DO.Parcel dalParcel)
         {
             Parcel BlParcel = DALParcelToBL(dalParcel);
