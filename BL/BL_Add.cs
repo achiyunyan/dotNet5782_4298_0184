@@ -132,16 +132,14 @@ namespace BL
             double dis = double.MaxValue;
             Location location = new Location();
             string name = "";
-            foreach (var station in dalStations)
+            foreach (var station in dalStations.Where(station => dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0))
             {
-                if (dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0)
-                {
-                    location.Latitude = station.Latitude;
-                    location.Longitude = station.Longitude;
-                    name = station.Name;
-                    dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
-                }
+                location.Latitude = station.Latitude;
+                location.Longitude = station.Longitude;
+                name = station.Name;
+                dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
             }
+
             return location;
         }
 
@@ -149,13 +147,11 @@ namespace BL
         {
             List<IDAL.DO.Station> dalStations = (List<IDAL.DO.Station>)myDal.GetStationsList();
             double dis = double.MaxValue;
-            foreach (var station in dalStations)
+            foreach (var station in dalStations.Where(station => dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0))
             {
-                if (dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0)
-                {
-                    dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
-                }
+                dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
             }
+
             return dis;
         }
 

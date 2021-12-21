@@ -161,26 +161,26 @@ namespace BL
         public void LinkParcelToDroneBL(int droneId)
         {
             if (Drones.Any(dr => dr.Id == droneId))
-            {  
+            {
                 ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
                 if (BlDrone.State != DroneState.Available)
-                    throw new BlException($"Drone: {droneId} not exists!");
+                    throw new BlException($"Drone: {droneId} not available!");
 
                 List<IDAL.DO.Parcel> allParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();
-                
+
                 List<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>();
                 bool noAvailalableParcel = true;
                 bool cannotCarryAnyParcel = true;
                 bool cannotFulfill = true;
-                foreach(var par in allParcels)
+                foreach (var par in allParcels)
                 {
                     if (par.Scheduled == null)
                     {
                         noAvailalableParcel = false;
-                        if((int)par.Weight <= (int)BlDrone.WeightCategory)
+                        if ((int)par.Weight <= (int)BlDrone.WeightCategory)
                         {
                             cannotCarryAnyParcel = false;
-                            if(PossibleFly(ListDroneToDrone(BlDrone), par))
+                            if (PossibleFly(ListDroneToDrone(BlDrone), par))
                             {
                                 cannotFulfill = false;
                                 parcels.Add(par);
@@ -194,8 +194,8 @@ namespace BL
                     throw new BlException($"Drone {droneId} cannot carry any parcel!");
                 if (cannotFulfill)
                     throw new BlException($"Drone {droneId} cannot fulfill the fly(not enough battery)");
+
                 IDAL.DO.Parcel bestParcel = BestParcel(parcels, droneId);
-                PossibleFly(ListDroneToDrone(BlDrone), bestParcel);
                 BlDrone.State = DroneState.Delivery;
                 BlDrone.ParcelId = bestParcel.Id;
                 bestParcel.Scheduled = DateTime.Now;
@@ -244,7 +244,8 @@ namespace BL
 
         private IDAL.DO.Parcel BestParcel(List<IDAL.DO.Parcel> parlist, int droneId)
         {
-            IDAL.DO.Parcel temp;
+            Location parcel1Location, parcel2Location;
+            double disFromDroneToParcel1, disFromDroneToParcel2;
             Drone BlDrone = GetDrone(droneId);
 
             int max = 0;
@@ -254,10 +255,10 @@ namespace BL
                     max = i;
                 else if (CompareParcels(parlist[i], parlist[max]) == 0)
                 {
-                    Location parcel1Location = GetCustomer(parlist[i].SenderId).Location;
-                    Location parcel2Location = GetCustomer(parlist[max].SenderId).Location;
-                    double disFromDroneToParcel1 = DistanceBetweenTwoPoints(BlDrone.Location, parcel1Location);
-                    double disFromDroneToParcel2 = DistanceBetweenTwoPoints(BlDrone.Location, parcel2Location);
+                    parcel1Location = GetCustomer(parlist[i].SenderId).Location;
+                    parcel2Location = GetCustomer(parlist[max].SenderId).Location;
+                    disFromDroneToParcel1 = DistanceBetweenTwoPoints(BlDrone.Location, parcel1Location);
+                    disFromDroneToParcel2 = DistanceBetweenTwoPoints(BlDrone.Location, parcel2Location);
                     if (disFromDroneToParcel1 < disFromDroneToParcel2)
                         max = i;
                 }
