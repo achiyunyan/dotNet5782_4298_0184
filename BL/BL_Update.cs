@@ -183,7 +183,7 @@ namespace BL
                             if(PossibleFly(ListDroneToDrone(BlDrone), par))
                             {
                                 cannotFulfill = false;
-                                parcels.Append(par);
+                                parcels = parcels.  (par);
                             }
                         }
                     }
@@ -249,7 +249,7 @@ namespace BL
             Drone BlDrone = GetDrone(droneId);
 
             int max = 0;
-            for (int i = 1; i < parlist.Count(); i++)
+            /*for (int i = 1; i < parlist.Count(); i++)
             {
                 if (CompareParcels(parlist.ElementAt(i), parlist.ElementAt(i)) < 0)//parlist[i]<parlist[max]\
                 {
@@ -267,8 +267,13 @@ namespace BL
                     }
                 }
             }
-            return parlist.ElementAt(max);
-
+           IDAL.DO.Parcel y= parlist.ElementAt(max);*/
+           return(from parcel in parlist
+                                orderby parcel.Priority
+                                orderby parcel.Weight
+                                orderby -DistanceBetweenTwoPoints(BlDrone.Location, GetCustomer(parcel.SenderId).Location)
+                                select parcel).ElementAt(parlist.Count()-1);
+            
 
         }
         private int CompareParcels(IDAL.DO.Parcel p1, IDAL.DO.Parcel p2)
