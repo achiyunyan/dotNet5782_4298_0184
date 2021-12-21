@@ -71,7 +71,7 @@ namespace BL
                     if (rand.Next(0, 2) == 0)// in charge
                     {
                         IEnumerable<IDAL.DO.Station> dalStationsWithSlots = myDal.GetStationsList().Where(st => st.ChargeSlots > 0);
-                        if (dalStationsWithSlots.Count() != 0)
+                        if (dalStationsWithSlots.Any())
                         {
                             isAvaliable = false;
                             state = DroneState.Maintenance;

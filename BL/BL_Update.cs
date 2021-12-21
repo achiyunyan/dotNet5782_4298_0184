@@ -161,7 +161,7 @@ namespace BL
         public void LinkParcelToDroneBL(int droneId)
         {
             if (Drones.Any(dr => dr.Id == droneId))
-            {  
+            {
                 ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
                 if (BlDrone.State != DroneState.Available)
                     throw new BlException($"Drone: {droneId} not exists!");
@@ -231,7 +231,9 @@ namespace BL
             ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
             IDAL.DO.Parcel deliveredParcel = myDal.GetParcel(BlDrone.ParcelId);
             if (BlDrone.State != DroneState.Delivery || deliveredParcel.Delivered != null)
+            {
                 throw new BlException($"Drone {droneId} can't deliver the parcel!");
+            }
             Customer reciver = GetCustomer(deliveredParcel.ReciverId);
             BlDrone.Battery -= ElecriciryUsePerWeight(deliveredParcel.Weight) * DistanceBetweenTwoPoints(BlDrone.Location, reciver.Location);
             BlDrone.Location.Latitude = reciver.Location.Latitude;
@@ -244,14 +246,15 @@ namespace BL
 
         private IDAL.DO.Parcel BestParcel(IEnumerable<IDAL.DO.Parcel> parlist, int droneId)
         {
-            IDAL.DO.Parcel temp;
             Drone BlDrone = GetDrone(droneId);
 
             int max = 0;
             for (int i = 1; i < parlist.Count(); i++)
             {
-                if (CompareParcels(parlist.ElementAt(i), parlist.ElementAt(i)) < 0)//parlist[i]<parlist[max]
+                if (CompareParcels(parlist.ElementAt(i), parlist.ElementAt(i)) < 0)//parlist[i]<parlist[max]\
+                {
                     max = i;
+                }
                 else if (CompareParcels(parlist.ElementAt(i), parlist.ElementAt(max)) == 0)
                 {
                     Location parcel1Location = GetCustomer(parlist.ElementAt(i).SenderId).Location;
@@ -259,7 +262,9 @@ namespace BL
                     double disFromDroneToParcel1 = DistanceBetweenTwoPoints(BlDrone.Location, parcel1Location);
                     double disFromDroneToParcel2 = DistanceBetweenTwoPoints(BlDrone.Location, parcel2Location);
                     if (disFromDroneToParcel1 < disFromDroneToParcel2)
+                    {
                         max = i;
+                    }
                 }
             }
             return parlist.ElementAt(max);
