@@ -92,15 +92,15 @@ namespace BL
             {
 
                 double distanceToClose = default, tempDis;
-                List<IDAL.DO.Station> dalStationList = (List<IDAL.DO.Station>)myDal.GetStationsList();
+                IEnumerable<IDAL.DO.Station> dalStationList = myDal.GetStationsList();
 
                 IDAL.DO.Station closestDalStation = dalStationList.First(st => st.ChargeSlots > 0);
-                for (int i = 1; i < dalStationList.Count; i++)
+                for (int i = 1; i < dalStationList.Count(); i++)
                 {
                     distanceToClose = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, closestDalStation.Latitude, closestDalStation.Longitude);
-                    tempDis = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, dalStationList[i].Latitude, dalStationList[i].Longitude);
-                    if (distanceToClose > tempDis && dalStationList[i].ChargeSlots > 0)
-                        closestDalStation = dalStationList[i];
+                    tempDis = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, dalStationList.ElementAt(i).Latitude, dalStationList.ElementAt(i).Longitude);
+                    if (distanceToClose > tempDis && dalStationList.ElementAt(i).ChargeSlots > 0)
+                        closestDalStation = dalStationList.ElementAt(i);
                 }
 
                 if (drone.Battery - ElectricityUsePerKmAvailable * distanceToClose < 0)
@@ -166,9 +166,9 @@ namespace BL
                 if (BlDrone.State != DroneState.Available)
                     throw new BlException($"Drone: {droneId} not exists!");
 
-                List<IDAL.DO.Parcel> allParcels = (List<IDAL.DO.Parcel>)myDal.GetParcelsList();
+                IEnumerable<IDAL.DO.Parcel> allParcels = myDal.GetParcelsList();
                 
-                List<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>();
+                IEnumerable<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>();
                 bool noAvailalableParcel = true;
                 bool cannotCarryAnyParcel = true;
                 bool cannotFulfill = true;
@@ -183,7 +183,7 @@ namespace BL
                             if(PossibleFly(ListDroneToDrone(BlDrone), par))
                             {
                                 cannotFulfill = false;
-                                parcels.Add(par);
+                                parcels.Append(par);
                             }
                         }
                     }
@@ -242,27 +242,27 @@ namespace BL
             myDal.UpdateParcel(deliveredParcel);
         }
 
-        private IDAL.DO.Parcel BestParcel(List<IDAL.DO.Parcel> parlist, int droneId)
+        private IDAL.DO.Parcel BestParcel(IEnumerable<IDAL.DO.Parcel> parlist, int droneId)
         {
             IDAL.DO.Parcel temp;
             Drone BlDrone = GetDrone(droneId);
 
             int max = 0;
-            for (int i = 1; i < parlist.Count; i++)
+            for (int i = 1; i < parlist.Count(); i++)
             {
-                if (CompareParcels(parlist[i], parlist[max]) < 0)//parlist[i]<parlist[max]
+                if (CompareParcels(parlist.ElementAt(i), parlist.ElementAt(i)) < 0)//parlist[i]<parlist[max]
                     max = i;
-                else if (CompareParcels(parlist[i], parlist[max]) == 0)
+                else if (CompareParcels(parlist.ElementAt(i), parlist.ElementAt(max)) == 0)
                 {
-                    Location parcel1Location = GetCustomer(parlist[i].SenderId).Location;
-                    Location parcel2Location = GetCustomer(parlist[max].SenderId).Location;
+                    Location parcel1Location = GetCustomer(parlist.ElementAt(i).SenderId).Location;
+                    Location parcel2Location = GetCustomer(parlist.ElementAt(max).SenderId).Location;
                     double disFromDroneToParcel1 = DistanceBetweenTwoPoints(BlDrone.Location, parcel1Location);
                     double disFromDroneToParcel2 = DistanceBetweenTwoPoints(BlDrone.Location, parcel2Location);
                     if (disFromDroneToParcel1 < disFromDroneToParcel2)
                         max = i;
                 }
             }
-            return parlist[max];
+            return parlist.ElementAt(max);
 
 
         }
