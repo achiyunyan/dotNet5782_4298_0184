@@ -27,7 +27,7 @@ namespace BL
                 FreeChargeSlots = dalStation.ChargeSlots,
                 Location = new Location { Latitude = dalStation.Latitude, Longitude = dalStation.Longitude }
             };
-            foreach(var drone in Drones)
+            foreach (var drone in Drones)
             {
                 if (drone.State == DroneState.Maintenance && drone.Location.Latitude == station.Location.Latitude && drone.Location.Longitude == station.Location.Longitude)
                     station.DroneList.Add(new DroneInCharge { Id = drone.Id, Battery = drone.Battery });
@@ -43,7 +43,7 @@ namespace BL
             {
                 throw new BlException($"id: {id} not exists!!");
             }
-            return ListDroneToDrone(listDrone);           
+            return ListDroneToDrone(listDrone);
         }
 
         private Drone ListDroneToDrone(ListDrone listDrone)
@@ -77,11 +77,11 @@ namespace BL
                 Id = dalCustomer.Id,
                 Name = dalCustomer.Name,
                 Phone = dalCustomer.Phone,
-                Location = new Location { Latitude = dalCustomer.Latitude, Longitude = dalCustomer.Longitude }         
+                Location = new Location { Latitude = dalCustomer.Latitude, Longitude = dalCustomer.Longitude }
             };
             IEnumerable<IDAL.DO.Parcel> inParcels = myDal.GetParcelsList().Where(pr => pr.ReciverId == dalCustomer.Id);
             IEnumerable<IDAL.DO.Parcel> outParcels = myDal.GetParcelsList().Where(pr => pr.SenderId == dalCustomer.Id);
-            foreach(var parcel in inParcels)
+            foreach (var parcel in inParcels)
             {
                 customer.InDeliveries.Add(new ParcelInCustomer
                 {
@@ -150,26 +150,21 @@ namespace BL
 
         public IEnumerable<ListStation> GetStationsList(Func<IDAL.DO.Station, bool> predicate = null)
         {
-            IEnumerable<IDAL.DO.Station> dalStations = myDal.GetStationsList(predicate);
-            IEnumerable<ListStation> stations = new List<ListStation>();
-            foreach(var dalStation in dalStations)
-            {
-                stations.Append(new ListStation
-                {
-                    Id = dalStation.Id,
-                    Name = dalStation.Name,
-                    FreeChargeSlots = dalStation.ChargeSlots,
-                    BusyChargeSlots = Drones.Count(dr => dr.State == DroneState.Maintenance && dr.Location.Latitude == dalStation.Latitude && dr.Location.Longitude == dalStation.Longitude)
-                });
-            }
-            return stations;
+            return from dalStation in myDal.GetStationsList(predicate)
+                   select new ListStation
+                   {
+                       Id = dalStation.Id,
+                       Name = dalStation.Name,
+                       FreeChargeSlots = dalStation.ChargeSlots,
+                       BusyChargeSlots = Drones.Count(dr => dr.State == DroneState.Maintenance && dr.Location.Latitude == dalStation.Latitude && dr.Location.Longitude == dalStation.Longitude)
+                   };
         }
 
-        public IEnumerable<ListDrone> GetDronesList(Func<ListDrone,bool> predicate = null)
+        public IEnumerable<ListDrone> GetDronesList(Func<ListDrone, bool> predicate = null)
         {
-            if(predicate== null)
+            if (predicate == null)
                 return Drones.ToList();
-            return Drones.Where(predicate);
+            return Drones.Where(predicate).ToList();
         }
 
         public IEnumerable<ListCustomer> GetCustomersList(Func<IDAL.DO.Customer, bool> predicate = null)
@@ -177,7 +172,7 @@ namespace BL
             IEnumerable<IDAL.DO.Customer> dalCustomers = myDal.GetCustomersList(predicate);
             IEnumerable<IDAL.DO.Parcel> dalParcels = myDal.GetParcelsList();
             IEnumerable<ListCustomer> customers = new List<ListCustomer>();
-            foreach(var dalCustomer in dalCustomers)
+            foreach (var dalCustomer in dalCustomers)
             {
                 customers.Append(new ListCustomer
                 {
@@ -197,7 +192,7 @@ namespace BL
         {
             IEnumerable<IDAL.DO.Parcel> dalParcels = myDal.GetParcelsList(predicate);
             IEnumerable<ListParcel> parcels = new List<ListParcel>();
-            foreach(var dalParcel in dalParcels)
+            foreach (var dalParcel in dalParcels)
             {
                 parcels.Append(new ListParcel
                 {
@@ -214,7 +209,7 @@ namespace BL
 
         public IEnumerable<ListParcel> GetNonLinkedParcelsList()
         {
-            return GetParcelsList(pr => pr.Scheduled ==null);
+            return GetParcelsList(pr => pr.Scheduled == null);
         }
 
         public IEnumerable<ListStation> GetStationsWithFreeSlotsList()
@@ -236,10 +231,10 @@ namespace BL
         private CustomerInParcel GetCustomerInParcel(int id)
         {
             IDAL.DO.Customer dalCustomer = myDal.GetCustomer(id);
-            return new CustomerInParcel 
-            { 
-                Id = dalCustomer.Id, 
-                Name = dalCustomer.Name 
+            return new CustomerInParcel
+            {
+                Id = dalCustomer.Id,
+                Name = dalCustomer.Name
             };
         }
 
@@ -270,7 +265,7 @@ namespace BL
             };
             return parcelInTransit;
         }
-        
-        
+
+
     }
 }

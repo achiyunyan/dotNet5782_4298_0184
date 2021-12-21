@@ -264,7 +264,7 @@ namespace PL
         {
             if (ModelAdd.Text == "")
             {
-                ModelAdd.Background = Brushes.Red;
+                ModelAdd.Background = Brushes.Tomato;
                 well[1] = false;
             }
             else
