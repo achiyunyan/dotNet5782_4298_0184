@@ -164,26 +164,24 @@ namespace BL
             {  
                 ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
                 if (BlDrone.State != DroneState.Available)
-                    throw new BlException($"Drone: {droneId} not exists!");
-
+                    throw new BlException($"Drone: {droneId} not available!");
                 IEnumerable<IDAL.DO.Parcel> allParcels = myDal.GetParcelsList();
-                
                 IEnumerable<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>();
                 bool noAvailalableParcel = true;
                 bool cannotCarryAnyParcel = true;
                 bool cannotFulfill = true;
-                foreach(var par in allParcels)
+                foreach (var par in allParcels)
                 {
                     if (par.Scheduled == null)
                     {
                         noAvailalableParcel = false;
-                        if((int)par.Weight <= (int)BlDrone.WeightCategory)
+                        if ((int)par.Weight <= (int)BlDrone.WeightCategory)
                         {
                             cannotCarryAnyParcel = false;
-                            if(PossibleFly(ListDroneToDrone(BlDrone), par))
+                            if (PossibleFly(ListDroneToDrone(BlDrone), par))
                             {
                                 cannotFulfill = false;
-                                parcels.Append(par);
+                                parcels.Append(par);//APPEND DOESN'T WORK
                             }
                         }
                     }
@@ -247,6 +245,8 @@ namespace BL
             IDAL.DO.Parcel temp;
             Drone BlDrone = GetDrone(droneId);
 
+            
+
             int max = 0;
             for (int i = 1; i < parlist.Count(); i++)
             {
@@ -263,8 +263,6 @@ namespace BL
                 }
             }
             return parlist.ElementAt(max);
-
-
         }
         private int CompareParcels(IDAL.DO.Parcel p1, IDAL.DO.Parcel p2)
         {

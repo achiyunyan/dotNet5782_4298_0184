@@ -60,3 +60,4 @@ C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\ConsoleUI2\bin\Deb
 C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.csproj.CopyComplete
 C:\Users\Eliezer\Source\Repos\achiyunyan\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.genruntimeconfig.cache
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.csproj.CopyComplete
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\obj\Debug\net5.0\ConsoleUI_BL.csproj.AssemblyReference.cache
