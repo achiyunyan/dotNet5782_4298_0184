@@ -42,7 +42,7 @@ namespace BL
                 dalStation.Name = name;
             if (chargingSlots != 0)
             {
-                int freeSlots = chargingSlots - GetStation(id).DroneList.Count;
+                int freeSlots = chargingSlots - GetStation(id).DronesList.Count;
                 if (freeSlots >= 0)
                 {
                     dalStation.ChargeSlots = freeSlots;

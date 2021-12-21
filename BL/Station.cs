@@ -8,13 +8,13 @@ namespace IBL.BO
 {
     public class Station
     {
-        private List<DroneInCharge> droneList = new List<DroneInCharge>();
+        private List<DroneInCharge> dronesList = new List<DroneInCharge>();
 
         public int Id { set; get; }
         public string Name { set; get; }
         public Location Location { get; set; }
         public int FreeChargeSlots { set; get; }
-        public List<DroneInCharge> DroneList { get { return droneList; } }
+        public List<DroneInCharge> DronesList { get { return dronesList; } }
         public override string ToString()
         {
             string str;
@@ -22,10 +22,10 @@ namespace IBL.BO
                   $" Name:             {Name}\n" +
                   $" Free Charge slots:{FreeChargeSlots}\n" +
                   $" Location:         {Location}\n";
-            if(droneList.Any())
+            if(dronesList.Any())
             {
                 str += "Drones in charge:\n\n";
-                foreach (var dr in droneList)
+                foreach (var dr in dronesList)
                     str += dr.ToString() + '\n';
             }
             return str;

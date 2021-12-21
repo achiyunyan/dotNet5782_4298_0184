@@ -30,7 +30,7 @@ namespace BL
             foreach (var drone in Drones)
             {
                 if (drone.State == DroneState.Maintenance && drone.Location.Latitude == station.Location.Latitude && drone.Location.Longitude == station.Location.Longitude)
-                    station.DroneList.Add(new DroneInCharge { Id = drone.Id, Battery = drone.Battery });
+                    station.DronesList.Add(new DroneInCharge { Id = drone.Id, Battery = drone.Battery });
             }
             return station;
         }
@@ -171,40 +171,32 @@ namespace BL
         {
             IEnumerable<IDAL.DO.Customer> dalCustomers = myDal.GetCustomersList(predicate);
             IEnumerable<IDAL.DO.Parcel> dalParcels = myDal.GetParcelsList();
-            IEnumerable<ListCustomer> customers = new List<ListCustomer>();
-            foreach (var dalCustomer in dalCustomers)
-            {
-                customers.Append(new ListCustomer
-                {
-                    Id = dalCustomer.Id,
-                    Name = dalCustomer.Name,
-                    Phone = dalCustomer.Phone,
-                    OnTheWayParcels = dalParcels.Count(par => par.ReciverId == dalCustomer.Id && par.Delivered == null),
-                    ReceivedParcels = dalParcels.Count(par => par.ReciverId == dalCustomer.Id && par.Delivered != null),
-                    SentNotSuppliedParcels = dalParcels.Count(par => par.SenderId == dalCustomer.Id && par.Delivered == null),
-                    SentSuppliedParcels = dalParcels.Count(par => par.SenderId == dalCustomer.Id && par.Delivered != null)
-                });
-            }
-            return customers;
+            return from dalCustomer in dalCustomers
+                   select (new ListCustomer
+                   {
+                       Id = dalCustomer.Id,
+                       Name = dalCustomer.Name,
+                       Phone = dalCustomer.Phone,
+                       OnTheWayParcels = dalParcels.Count(par => par.ReciverId == dalCustomer.Id && par.Delivered == null),
+                       ReceivedParcels = dalParcels.Count(par => par.ReciverId == dalCustomer.Id && par.Delivered != null),
+                       SentNotSuppliedParcels = dalParcels.Count(par => par.SenderId == dalCustomer.Id && par.Delivered == null),
+                       SentSuppliedParcels = dalParcels.Count(par => par.SenderId == dalCustomer.Id && par.Delivered != null)
+                   });
         }
 
         public IEnumerable<ListParcel> GetParcelsList(Func<IDAL.DO.Parcel, bool> predicate = null)
         {
             IEnumerable<IDAL.DO.Parcel> dalParcels = myDal.GetParcelsList(predicate);
-            IEnumerable<ListParcel> parcels = new List<ListParcel>();
-            foreach (var dalParcel in dalParcels)
-            {
-                parcels.Append(new ListParcel
-                {
-                    Id = dalParcel.Id,
-                    Priority = (Priority)(int)dalParcel.Priority,
-                    WeightCategory = (WeightCategory)(int)dalParcel.Weight,
-                    State = GetParcelStateByDalParcel(dalParcel),
-                    SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
-                    ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
-                });
-            }
-            return parcels;
+            return from dalParcel in dalParcels
+                   select new ListParcel
+                   {
+                       Id = dalParcel.Id,
+                       Priority = (Priority)(int)dalParcel.Priority,
+                       WeightCategory = (WeightCategory)(int)dalParcel.Weight,
+                       State = GetParcelStateByDalParcel(dalParcel),
+                       SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
+                       ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
+                   };
         }
 
         public IEnumerable<ListParcel> GetNonLinkedParcelsList()
