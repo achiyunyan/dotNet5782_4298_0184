@@ -166,7 +166,7 @@ namespace BL
                 if (BlDrone.State != DroneState.Available)
                     throw new BlException($"Drone: {droneId} not available!");
                 IEnumerable<IDAL.DO.Parcel> allParcels = myDal.GetParcelsList();
-                IEnumerable<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>();
+                List<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>();
                 bool noAvailalableParcel = true;
                 bool cannotCarryAnyParcel = true;
                 bool cannotFulfill = true;
@@ -181,7 +181,7 @@ namespace BL
                             if (PossibleFly(ListDroneToDrone(BlDrone), par))
                             {
                                 cannotFulfill = false;
-                                parcels = parcels.Append(par);
+                                parcels.Add(par);
                             }
                         }
                     }
@@ -193,7 +193,6 @@ namespace BL
                 if (cannotFulfill)
                     throw new BlException($"Drone {droneId} cannot fulfill the fly(not enough battery)");
                 IDAL.DO.Parcel bestParcel = BestParcel(parcels, droneId);
-                PossibleFly(ListDroneToDrone(BlDrone), bestParcel);
                 BlDrone.State = DroneState.Delivery;
                 BlDrone.ParcelId = bestParcel.Id;
                 bestParcel.Scheduled = DateTime.Now;
@@ -246,10 +245,10 @@ namespace BL
         {
             Drone BlDrone = GetDrone(droneId);
             return (from parcel in parlist
-                    orderby parcel.Priority
-                    orderby parcel.Weight
+                    orderby parcel.Priority descending
+                    orderby parcel.Weight descending
                     orderby DistanceBetweenTwoPoints(BlDrone.Location, GetCustomer(parcel.SenderId).Location)
-                    select parcel).ElementAt(parlist.Count() - 1);
+                    select parcel).ElementAt(0);
         }
         
         private bool PossibleFly(Drone BlDrone, IDAL.DO.Parcel dalParcel)
