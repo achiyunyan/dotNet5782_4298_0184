@@ -1,4 +1,4 @@
-﻿using IBL.BO;
+﻿using BO;
 using System;
 using System.Linq;
 using System.Windows;
@@ -16,12 +16,12 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        IBL.IBL bl;
-        IBL.BO.ListDrone ListDrone;
-        IBL.BO.Drone drone;
+        BlApi.IBL bl;
+        BO.ListDrone ListDrone;
+        BO.Drone drone;
         bool[] well = { false, false, false, false };
         bool exit = false;
-        public DroneWindow(IBL.BO.ListDrone myDrone, IBL.IBL myBl,DronesListWindow dronesListWindow)
+        public DroneWindow(BO.ListDrone myDrone, BlApi.IBL myBl,DronesListWindow dronesListWindow)
         {
             dlw = dronesListWindow;
             bl = myBl;
@@ -34,7 +34,7 @@ namespace PL
 
         private void UpdateWindow()
         {
-            IBL.BO.Drone blDrone = bl.GetDrone(ListDrone.Id);
+            BO.Drone blDrone = bl.GetDrone(ListDrone.Id);
             DroneId.Text = blDrone.Id.ToString();
             Model.Text = blDrone.Model;
             MaxWeight.Text = blDrone.WeightCategory.ToString();
@@ -58,27 +58,27 @@ namespace PL
 
             Update.Visibility = Visibility.Collapsed;
 
-            if (ListDrone.State != IBL.BO.DroneState.Available)
+            if (ListDrone.State != BO.DroneState.Available)
                 SendToCharge.Visibility = Visibility.Collapsed;
             else
                 SendToCharge.Visibility = Visibility.Visible;
 
-            if (ListDrone.State != IBL.BO.DroneState.Maintenance)
+            if (ListDrone.State != BO.DroneState.Maintenance)
                 FreeFromCharge.Visibility = Visibility.Collapsed;
             else
                 FreeFromCharge.Visibility = Visibility.Visible;
 
-            if (ListDrone.State != IBL.BO.DroneState.Available)
+            if (ListDrone.State != BO.DroneState.Available)
                 SendToDelivery.Visibility = Visibility.Collapsed;
             else
                 SendToDelivery.Visibility = Visibility.Visible;
 
-            if (blDrone.State != IBL.BO.DroneState.Delivery || blDrone.Parcel.State)
+            if (blDrone.State != BO.DroneState.Delivery || blDrone.Parcel.State)
                 CollectParcel.Visibility = Visibility.Collapsed;
             else
                 CollectParcel.Visibility = Visibility.Visible;
 
-            if (blDrone.State != IBL.BO.DroneState.Delivery || !blDrone.Parcel.State)
+            if (blDrone.State != BO.DroneState.Delivery || !blDrone.Parcel.State)
                 DeliverParcel.Visibility = Visibility.Collapsed;
             else
                 DeliverParcel.Visibility = Visibility.Visible;
@@ -184,7 +184,7 @@ namespace PL
         /// </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         DronesListWindow dlw;
-        public DroneWindow(IBL.IBL myBl, DronesListWindow dronesListWindow)
+        public DroneWindow(BlApi.IBL myBl, DronesListWindow dronesListWindow)
         {
             dlw = dronesListWindow;
             bl = myBl;
@@ -199,7 +199,7 @@ namespace PL
         {
             if (well.All(pl => pl == true))
             {
-                drone = new IBL.BO.Drone();
+                drone = new BO.Drone();
                 drone.Id = int.Parse(Id.Text);
                 ListStation x = (ListStation)comboInitialStation.SelectedItem;
                 drone.Model = ModelAdd.Text;

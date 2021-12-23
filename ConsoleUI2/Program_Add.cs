@@ -1,4 +1,4 @@
-﻿using IBL.BO;
+﻿using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +40,7 @@ namespace ConsoleUI_BL
                         {
                             Id = id,
                             Model = model,
-                            WeightCategory = (IBL.BO.WeightCategory)(weight - 1),
+                            WeightCategory = (BO.WeightCategory)(weight - 1),
                         }, stationId); ;
                         break;
                     case 3://add customer

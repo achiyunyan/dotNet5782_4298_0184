@@ -4,8 +4,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
-using IDAL.DalApi;
+using DO;
+using DalApi;
 using DS;
 
 
@@ -184,7 +184,7 @@ namespace Dal
                     return targ;
                 }
             }
-            throw new IDAL.DO.NotExistsException($"id: {id} not exists!!");
+            throw new DO.NotExistsException($"id: {id} not exists!!");
         }
         /// <summary>
         /// returns a customer by chosen id 

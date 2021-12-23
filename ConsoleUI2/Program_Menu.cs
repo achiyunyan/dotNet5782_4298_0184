@@ -1,10 +1,11 @@
 ﻿using System;
+using BlApi;
 
 namespace ConsoleUI_BL
 {
     partial class Program
     {
-        static IBL.IBL myBl = new BL.BL();
+        static BlApi.IBL myBl = BlFactory.GetBl();
         static void Main(string[] args)
         {
             int choise = new int();

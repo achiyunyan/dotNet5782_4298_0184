@@ -1,10 +1,10 @@
-﻿using IBL.BO;
+﻿using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace IBL
+namespace BlApi
 {
     public interface IBL
     {
@@ -24,10 +24,10 @@ namespace IBL
         Drone GetDrone(int id);
         Customer GetCustomer(int id);
         Parcel GetParcel(int id);
-        IEnumerable<ListStation> GetStationsList(Func<IDAL.DO.Station, bool> predicate = null);
+        IEnumerable<ListStation> GetStationsList(Func<DO.Station, bool> predicate = null);
         IEnumerable<ListDrone> GetDronesList(Func<ListDrone, bool> predicate = null);        
-        IEnumerable<ListCustomer> GetCustomersList(Func<IDAL.DO.Customer, bool> predicate = null);        
-        IEnumerable<ListParcel> GetParcelsList(Func<IDAL.DO.Parcel, bool> predicate = null);
+        IEnumerable<ListCustomer> GetCustomersList(Func<DO.Customer, bool> predicate = null);        
+        IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null);
         IEnumerable<ListParcel> GetNonLinkedParcelsList();
         IEnumerable<ListStation> GetStationsWithFreeSlotsList();
     }

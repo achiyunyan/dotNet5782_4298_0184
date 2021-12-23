@@ -1,4 +1,4 @@
-﻿using IDAL.DalApi;
+﻿using DalApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +6,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IDAL.DalApi
+namespace DalApi
 {
     public class FactoryDal
     {
-        //public IDAL.DalApi.IDal GetDal(string option)
+        //public DalApi.IDal GetDal(string option)
         //{
         //    switch (option)
         //    {

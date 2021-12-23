@@ -1,25 +1,30 @@
-﻿using IBL.BO;
+﻿using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DalApi;
+using DalApi;
+using BlApi;
 
 namespace BL
 {
-    public partial class BL : IBL.IBL
+    public partial class BL : IBL
     {
+
         private static Random rand = new Random();
-        private IDal myDal;
+        private static IDal myDal;
         private static List<ListDrone> Drones = new List<ListDrone>();
         private double ElectricityUsePerKmAvailable;
         private double ElectricityUsePerKmLight;
         private double ElectricityUsePerKmMedium;
         private double ElectricityUsePerKmHeavy;
         private double ElectricityChargePerHour;
-
-        public BL()
+        #region singleton
+        private static readonly IBL instance = new BL();
+        public static IBL Instance { get { return instance; } }
+        #endregion
+        private BL()
         {
             //myDal = new Dal.DalObject();
             myDal = FactoryDal.GetDal();
@@ -29,8 +34,8 @@ namespace BL
             ElectricityUsePerKmHeavy = myDal.GetElectricityUsePerKmHeavy();
             ElectricityChargePerHour = myDal.GetElectricityChargePerHour();
 
-            IEnumerable<IDAL.DO.Drone> dalDrones = myDal.GetDronesList();
-            IEnumerable<IDAL.DO.Parcel> dalParcels = myDal.GetParcelsList();
+            IEnumerable<DO.Drone> dalDrones = myDal.GetDronesList();
+            IEnumerable<DO.Parcel> dalParcels = myDal.GetParcelsList();
             double battery = default;
             DroneState state = default;
             int parcelId;
@@ -42,10 +47,10 @@ namespace BL
                 parcelId = 0;
                 if (dalParcels.Any(pr => pr.DroneId == drone.Id && pr.Delivered == null)) // in delivery
                 {
-                    IDAL.DO.Parcel dalParcel = dalParcels.First(pr => pr.DroneId == drone.Id && pr.Delivered == null);
+                    DO.Parcel dalParcel = dalParcels.First(pr => pr.DroneId == drone.Id && pr.Delivered == null);
                     state = DroneState.Delivery;
-                    IDAL.DO.Customer sender = myDal.GetCustomer(dalParcel.SenderId);
-                    IDAL.DO.Customer reciver = myDal.GetCustomer(dalParcel.ReciverId);
+                    DO.Customer sender = myDal.GetCustomer(dalParcel.SenderId);
+                    DO.Customer reciver = myDal.GetCustomer(dalParcel.ReciverId);
                     double dis = DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude);
                     parcelId = dalParcel.Id;
 
@@ -72,7 +77,7 @@ namespace BL
                     isAvaliable = true;
                     if (rand.Next(0, 2) == 0)// in charge
                     {
-                        IEnumerable<IDAL.DO.Station> dalStationsWithSlots = myDal.GetStationsList().Where(st => st.ChargeSlots > 0);
+                        IEnumerable<DO.Station> dalStationsWithSlots = myDal.GetStationsList().Where(st => st.ChargeSlots > 0);
                         if (dalStationsWithSlots.Any())
                         {
                             isAvaliable = false;
@@ -80,14 +85,14 @@ namespace BL
                             battery = rand.Next(0, 21);
                             int index = rand.Next(0, dalStationsWithSlots.Count());
                             location = new Location { Latitude = dalStationsWithSlots.ElementAt(index).Latitude, Longitude = dalStationsWithSlots.ElementAt(index).Longitude };
-                            myDal.AddDroneCharge(new IDAL.DO.DroneCharge { DroneId = drone.Id, StationId = dalStationsWithSlots.ElementAt(index).Id });
+                            myDal.AddDroneCharge(new DO.DroneCharge { DroneId = drone.Id, StationId = dalStationsWithSlots.ElementAt(index).Id });
                         }
                     }
 
                     if (isAvaliable) // available
                     {
-                        IEnumerable<IDAL.DO.Parcel> dalDeliveredParcels = dalParcels.Where(par => par.Delivered != null);
-                        IDAL.DO.Customer customer;
+                        IEnumerable<DO.Parcel> dalDeliveredParcels = dalParcels.Where(par => par.Delivered != null);
+                        DO.Customer customer;
                         do
                         {
                             customer = myDal.GetCustomer(dalDeliveredParcels.ElementAt(rand.Next(0, dalDeliveredParcels.Count())).ReciverId);
@@ -110,15 +115,15 @@ namespace BL
             }
         }
 
-        private double ElecriciryUsePerWeight(IDAL.DO.WeightCategories weight)
+        private double ElecriciryUsePerWeight(DO.WeightCategories weight)
         {
             switch (weight)
             {
-                case IDAL.DO.WeightCategories.Light:
+                case DO.WeightCategories.Light:
                     return ElectricityUsePerKmLight;
-                case IDAL.DO.WeightCategories.Medium:
+                case DO.WeightCategories.Medium:
                     return ElectricityUsePerKmMedium;
-                case IDAL.DO.WeightCategories.Heavy:
+                case DO.WeightCategories.Heavy:
                     return ElectricityUsePerKmHeavy;
             }
             return default;
@@ -131,7 +136,7 @@ namespace BL
 
         private Location ClosestStationLocation(double lat, double lon)
         {
-            IEnumerable<IDAL.DO.Station> dalStations = myDal.GetStationsList();
+            IEnumerable<DO.Station> dalStations = myDal.GetStationsList();
             double dis = double.MaxValue;
             Location location = new Location();
             string name = "";
@@ -148,7 +153,7 @@ namespace BL
 
         private double DistanceFromClosestStation(double lat, double lon)
         {
-            IEnumerable<IDAL.DO.Station> dalStations = myDal.GetStationsList();
+            IEnumerable<DO.Station> dalStations = myDal.GetStationsList();
             double dis = double.MaxValue;
             foreach (var station in dalStations.Where(station => dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0))
             {
@@ -162,7 +167,7 @@ namespace BL
         {
             try
             {
-                myDal.AddStation(new IDAL.DO.Station()
+                myDal.AddStation(new DO.Station()
                 {
                     Id = blStation.Id,
                     Name = blStation.Name,
@@ -171,7 +176,7 @@ namespace BL
                     Longitude = blStation.Location.Longitude
                 });
             }
-            catch (IDAL.DO.AlreadyExistsException stex)
+            catch (DO.AlreadyExistsException stex)
             {
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
@@ -179,27 +184,27 @@ namespace BL
         }
         public void AddDrone(Drone blDrone, int stationId)
         {
-            IDAL.DO.Station station = default;
+            DO.Station station = default;
             try
             {
                 station = myDal.GetStation(stationId);
             }
-            catch (IDAL.DO.NotExistsException stex)
+            catch (DO.NotExistsException stex)
             {
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
             }
-            IDAL.DO.Drone dalDrone = new IDAL.DO.Drone()
+            DO.Drone dalDrone = new DO.Drone()
             {
                 Id = blDrone.Id,
                 Model = blDrone.Model,
-                MaxWeight = (IDAL.DO.WeightCategories)blDrone.WeightCategory,
+                MaxWeight = (DO.WeightCategories)blDrone.WeightCategory,
             };
             try
             {
                 myDal.AddDrone(dalDrone);
             }
-            catch (IDAL.DO.AlreadyExistsException stex)
+            catch (DO.AlreadyExistsException stex)
             {
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
@@ -216,7 +221,7 @@ namespace BL
         }
         public void AddCustomer(Customer blCustomer)
         {
-            IDAL.DO.Customer dalCustomer = new IDAL.DO.Customer()
+            DO.Customer dalCustomer = new DO.Customer()
             {
                 Id = blCustomer.Id,
                 Name = blCustomer.Name,
@@ -228,7 +233,7 @@ namespace BL
             {
                 myDal.AddCustomer(dalCustomer);
             }
-            catch (IDAL.DO.AlreadyExistsException stex)
+            catch (DO.AlreadyExistsException stex)
             {
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
@@ -237,12 +242,12 @@ namespace BL
 
         public void AddParcel(int senderId, int reciverId, int weight, int priority)
         {
-            IDAL.DO.Parcel dalParcel = new IDAL.DO.Parcel()
+            DO.Parcel dalParcel = new DO.Parcel()
             {
                 SenderId = senderId,
                 ReciverId = reciverId,
-                Weight = (IDAL.DO.WeightCategories)weight,
-                Priority = (IDAL.DO.Priorities)priority,
+                Weight = (DO.WeightCategories)weight,
+                Priority = (DO.Priorities)priority,
                 Requested = DateTime.Now,
                 Scheduled = null,
                 PickedUp = null,
@@ -253,7 +258,7 @@ namespace BL
             {
                 myDal.AddParcel(dalParcel);
             }
-            catch (IDAL.DO.AlreadyExistsException stex)
+            catch (DO.AlreadyExistsException stex)
             {
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
