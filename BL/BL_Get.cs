@@ -1,4 +1,4 @@
-﻿using IBL.BO;
+﻿using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,16 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 namespace BL
 {
-    public partial class BL : IBL.IBL
+    public partial class BL : BlApi.IBL
     {
         public Station GetStation(int id)
         {
-            IDAL.DO.Station dalStation;
+            DO.Station dalStation;
             try
             {
                 dalStation = myDal.GetStation(id);
             }
-            catch (IDAL.DO.NotExistsException stex)
+            catch (DO.NotExistsException stex)
             {
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
@@ -62,12 +62,12 @@ namespace BL
 
         public Customer GetCustomer(int id)
         {
-            IDAL.DO.Customer dalCustomer;
+            DO.Customer dalCustomer;
             try
             {
                 dalCustomer = myDal.GetCustomer(id);
             }
-            catch (IDAL.DO.NotExistsException stex)
+            catch (DO.NotExistsException stex)
             {
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
@@ -79,8 +79,8 @@ namespace BL
                 Phone = dalCustomer.Phone,
                 Location = new Location { Latitude = dalCustomer.Latitude, Longitude = dalCustomer.Longitude }
             };
-            IEnumerable<IDAL.DO.Parcel> inParcels = myDal.GetParcelsList().Where(pr => pr.ReciverId == dalCustomer.Id);
-            IEnumerable<IDAL.DO.Parcel> outParcels = myDal.GetParcelsList().Where(pr => pr.SenderId == dalCustomer.Id);
+            IEnumerable<DO.Parcel> inParcels = myDal.GetParcelsList().Where(pr => pr.ReciverId == dalCustomer.Id);
+            IEnumerable<DO.Parcel> outParcels = myDal.GetParcelsList().Where(pr => pr.SenderId == dalCustomer.Id);
             foreach (var parcel in inParcels)
             {
                 customer.InDeliveries.Add(new ParcelInCustomer
@@ -108,12 +108,12 @@ namespace BL
 
         public Parcel GetParcel(int id)
         {
-            IDAL.DO.Parcel dalParcel;
+            DO.Parcel dalParcel;
             try
             {
                 dalParcel = myDal.GetParcel(id);
             }
-            catch (IDAL.DO.NotExistsException stex)
+            catch (DO.NotExistsException stex)
             {
                 string str = "bl ereceive exception: " + stex.Message;
                 throw new BlException(str);
@@ -121,7 +121,7 @@ namespace BL
             return DALParcelToBL(dalParcel);
         }
 
-        private Parcel DALParcelToBL(IDAL.DO.Parcel dalParcel)
+        private Parcel DALParcelToBL(DO.Parcel dalParcel)
         {
             Parcel parcel = new Parcel
             {
@@ -148,7 +148,7 @@ namespace BL
             return parcel;
         }
 
-        public IEnumerable<ListStation> GetStationsList(Func<IDAL.DO.Station, bool> predicate = null)
+        public IEnumerable<ListStation> GetStationsList(Func<DO.Station, bool> predicate = null)
         {
             return from dalStation in myDal.GetStationsList(predicate)
                    select new ListStation
@@ -167,10 +167,10 @@ namespace BL
             return Drones.Where(predicate).ToList();
         }
 
-        public IEnumerable<ListCustomer> GetCustomersList(Func<IDAL.DO.Customer, bool> predicate = null)
+        public IEnumerable<ListCustomer> GetCustomersList(Func<DO.Customer, bool> predicate = null)
         {
-            IEnumerable<IDAL.DO.Customer> dalCustomers = myDal.GetCustomersList(predicate);
-            IEnumerable<IDAL.DO.Parcel> dalParcels = myDal.GetParcelsList();
+            IEnumerable<DO.Customer> dalCustomers = myDal.GetCustomersList(predicate);
+            IEnumerable<DO.Parcel> dalParcels = myDal.GetParcelsList();
             return from dalCustomer in dalCustomers
                    select (new ListCustomer
                    {
@@ -184,9 +184,9 @@ namespace BL
                    });
         }
 
-        public IEnumerable<ListParcel> GetParcelsList(Func<IDAL.DO.Parcel, bool> predicate = null)
+        public IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null)
         {
-            IEnumerable<IDAL.DO.Parcel> dalParcels = myDal.GetParcelsList(predicate);
+            IEnumerable<DO.Parcel> dalParcels = myDal.GetParcelsList(predicate);
             return from dalParcel in dalParcels
                    select new ListParcel
                    {
@@ -208,7 +208,7 @@ namespace BL
         {
             return GetStationsList(st => st.ChargeSlots > 0);
         }
-        private ParcelState GetParcelStateByDalParcel(IDAL.DO.Parcel parcel)
+        private ParcelState GetParcelStateByDalParcel(DO.Parcel parcel)
         {
             if (parcel.Scheduled == null)
                 return ParcelState.Created;
@@ -222,7 +222,7 @@ namespace BL
 
         private CustomerInParcel GetCustomerInParcel(int id)
         {
-            IDAL.DO.Customer dalCustomer = myDal.GetCustomer(id);
+            DO.Customer dalCustomer = myDal.GetCustomer(id);
             return new CustomerInParcel
             {
                 Id = dalCustomer.Id,
@@ -232,17 +232,17 @@ namespace BL
 
         private ParcelInTransit GetParcelInTransit(int id)
         {
-            IDAL.DO.Parcel dalParcel;
+            DO.Parcel dalParcel;
             try
             {
                 dalParcel = myDal.GetParcel(id);
             }
-            catch (IDAL.DO.NotExistsException)
+            catch (DO.NotExistsException)
             {
                 return default;
             }
-            IDAL.DO.Customer reciver = myDal.GetCustomer(dalParcel.ReciverId);
-            IDAL.DO.Customer sender = myDal.GetCustomer(dalParcel.SenderId);
+            DO.Customer reciver = myDal.GetCustomer(dalParcel.ReciverId);
+            DO.Customer sender = myDal.GetCustomer(dalParcel.SenderId);
             ParcelInTransit parcelInTransit = new ParcelInTransit
             {
                 Id = dalParcel.Id,

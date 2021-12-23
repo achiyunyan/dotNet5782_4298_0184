@@ -1,4 +1,4 @@
-﻿using IBL.BO;
+﻿using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,16 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 namespace BL
 {
-    public partial class BL : IBL.IBL
+    public partial class BL : BlApi.IBL
     {
         public void UpdateDrone(int id, string model)
         {
-            IDAL.DO.Drone dalDrone;
+            DO.Drone dalDrone;
             try//I can assume that every drone exists in both lists of drones
             {
                 dalDrone = myDal.GetDrone(id);
             }
-            catch (IDAL.DO.NotExistsException exec)
+            catch (DO.NotExistsException exec)
             {
                 throw new BlException(exec.Message);
             }
@@ -29,12 +29,12 @@ namespace BL
 
         public void UpdateStation(int id, string name, int chargingSlots)
         {
-            IDAL.DO.Station dalStation;
+            DO.Station dalStation;
             try//I can assume that every drone exists in both lists of drones
             {
                 dalStation = myDal.GetStation(id);
             }
-            catch (IDAL.DO.NotExistsException exec)
+            catch (DO.NotExistsException exec)
             {
                 throw new BlException(exec.Message);
             }
@@ -58,12 +58,12 @@ namespace BL
 
         public void UpdateCustomer(int id, string name, string phone)
         {
-            IDAL.DO.Customer dalCustomer;
+            DO.Customer dalCustomer;
             try//I can assume that every drone exists in both lists of drones
             {
                 dalCustomer = myDal.GetCustomer(id);
             }
-            catch (IDAL.DO.NotExistsException exec)
+            catch (DO.NotExistsException exec)
             {
                 throw new BlException(exec.Message);
             }
@@ -81,7 +81,7 @@ namespace BL
             {
                 drone = Drones.Find(dr => dr.Id == id);
             }
-            catch (IDAL.DO.NotExistsException exec)
+            catch (DO.NotExistsException exec)
             {
                 throw new BlException(exec.Message);
             }
@@ -92,9 +92,9 @@ namespace BL
             {
 
                 double distanceToClose = default, tempDis;
-                IEnumerable<IDAL.DO.Station> dalStationList = myDal.GetStationsList();
+                IEnumerable<DO.Station> dalStationList = myDal.GetStationsList();
 
-                IDAL.DO.Station closestDalStation = dalStationList.First(st => st.ChargeSlots > 0);
+                DO.Station closestDalStation = dalStationList.First(st => st.ChargeSlots > 0);
                 for (int i = 1; i < dalStationList.Count(); i++)
                 {
                     distanceToClose = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, closestDalStation.Latitude, closestDalStation.Longitude);
@@ -111,7 +111,7 @@ namespace BL
                 drone.Battery -= ElectricityUsePerKmAvailable * distanceToClose;
                 //update the station, which is a struct
                 closestDalStation.ChargeSlots -= 1;
-                myDal.AddDroneCharge(new IDAL.DO.DroneCharge
+                myDal.AddDroneCharge(new DO.DroneCharge
                 {
                     DroneId = id,
                     StationId = closestDalStation.Id
@@ -134,12 +134,12 @@ namespace BL
             {
                 if (BlDrone.State == DroneState.Maintenance)
                 {
-                    IDAL.DO.Station stationOfDrone = new IDAL.DO.Station();
+                    DO.Station stationOfDrone = new DO.Station();
                     BlDrone.Battery += chargingTime * ElectricityChargePerHour;
                     if (BlDrone.Battery > 100)
                         BlDrone.Battery = 100;
                     BlDrone.State = DroneState.Available;
-                    foreach (IDAL.DO.DroneCharge dalDroneCharge in myDal.GetDroneCharges())
+                    foreach (DO.DroneCharge dalDroneCharge in myDal.GetDroneCharges())
                     {
                         if (dalDroneCharge.DroneId == id)
                         {
@@ -165,8 +165,8 @@ namespace BL
                 ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
                 if (BlDrone.State != DroneState.Available)
                     throw new BlException($"Drone: {droneId} not available!");
-                IEnumerable<IDAL.DO.Parcel> allParcels = myDal.GetParcelsList();
-                List<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>();
+                IEnumerable<DO.Parcel> allParcels = myDal.GetParcelsList();
+                List<DO.Parcel> parcels = new List<DO.Parcel>();
                 bool noAvailalableParcel = true;
                 bool cannotCarryAnyParcel = true;
                 bool cannotFulfill = true;
@@ -192,7 +192,7 @@ namespace BL
                     throw new BlException($"Drone {droneId} cannot carry any parcel!");
                 if (cannotFulfill)
                     throw new BlException($"Drone {droneId} cannot fulfill the fly(not enough battery)");
-                IDAL.DO.Parcel bestParcel = BestParcel(parcels, droneId);
+                DO.Parcel bestParcel = BestParcel(parcels, droneId);
                 BlDrone.State = DroneState.Delivery;
                 BlDrone.ParcelId = bestParcel.Id;
                 bestParcel.Scheduled = DateTime.Now;
@@ -210,7 +210,7 @@ namespace BL
         {
             GetDrone(droneId);
             ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
-            IDAL.DO.Parcel pickedParcel = myDal.GetParcel(BlDrone.ParcelId);
+            DO.Parcel pickedParcel = myDal.GetParcel(BlDrone.ParcelId);
             if (BlDrone.State != DroneState.Delivery || pickedParcel.PickedUp != null)
                 throw new BlException($"Drone {droneId} can't pick the parcel!");
 
@@ -226,7 +226,7 @@ namespace BL
         {
             GetDrone(droneId);
             ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
-            IDAL.DO.Parcel deliveredParcel = myDal.GetParcel(BlDrone.ParcelId);
+            DO.Parcel deliveredParcel = myDal.GetParcel(BlDrone.ParcelId);
             if (BlDrone.State != DroneState.Delivery || deliveredParcel.Delivered != null)
             {
                 throw new BlException($"Drone {droneId} can't deliver the parcel!");
@@ -241,7 +241,7 @@ namespace BL
             myDal.UpdateParcel(deliveredParcel);
         }
 
-        private IDAL.DO.Parcel BestParcel(IEnumerable<IDAL.DO.Parcel> parlist, int droneId)
+        private DO.Parcel BestParcel(IEnumerable<DO.Parcel> parlist, int droneId)
         {
             Drone BlDrone = GetDrone(droneId);
             return (from parcel in parlist
@@ -251,7 +251,7 @@ namespace BL
                     select parcel).ElementAt(0);
         }
         
-        private bool PossibleFly(Drone BlDrone, IDAL.DO.Parcel dalParcel)
+        private bool PossibleFly(Drone BlDrone, DO.Parcel dalParcel)
         {
             Parcel BlParcel = DALParcelToBL(dalParcel);
             Location parcelLocation = GetCustomer(BlParcel.Sender.Id).Location;

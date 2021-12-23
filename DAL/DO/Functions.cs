@@ -1,5 +1,5 @@
 ﻿using System;
-namespace IDAL.DO
+namespace DO
 {
     internal static class Functions
     {

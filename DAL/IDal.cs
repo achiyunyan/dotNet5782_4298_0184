@@ -1,10 +1,10 @@
-﻿using IDAL.DO;
+﻿using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace IDAL.DalApi
+namespace DalApi
 {
     //TODO lesader et habalagan
     public interface IDal

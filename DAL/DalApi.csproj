@@ -4,4 +4,12 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="dal-config.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="dal-config.xml" />
+  </ItemGroup>
+
 </Project>
