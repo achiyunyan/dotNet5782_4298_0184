@@ -12,40 +12,80 @@
         
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="80*"/>
-            <RowDefinition Height="370*"/>
+            <RowDefinition Height="120*"/>
+            <RowDefinition Height="330*"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid"
-            Height="auto" Grid.Row="0" Width="auto">            
+        <TextBox Background="Teal" BorderThickness="0"/>
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2.2*"/>
-                <ColumnDefinition Width="0.8*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4.2*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
-            <TextBox Grid.Column="2" Background="Teal" BorderThickness="0"/>
-            <TextBox Grid.Column="3" Background="Teal" BorderThickness="0"/>
-            <TextBox Grid.Column="4" Background="Teal" BorderThickness="0"/>
-            <TextBox Grid.Column="5" Background="Teal" BorderThickness="0"/>
-            <StackPanel Grid.Column="2" VerticalAlignment="Center">                
-                <TextBox x:Name="txtTemp" FontSize="16" Background="Teal" FontWeight="Bold" Foreground="White" BorderThickness="0" Text="Drone Status:" TextWrapping="Wrap" IsReadOnly="True" Width="150" Height="35" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="btnAddDrone" FontSize="16" Background="Teal" FontWeight="Bold" Foreground="White" BorderThickness="0" Text="Drone max weight:" Width="150" Height="35" IsReadOnly="True" HorizontalAlignment="Right" VerticalContentAlignment="Center" />
-            </StackPanel>
-            <StackPanel Grid.Column="3" VerticalAlignment="Center">
-                <ComboBox x:Name="comboStatus" Width="170" HorizontalAlignment="Left"
+            </Grid.ColumnDefinitions>
+            <TextBox Text="Drones" Background="Teal" Foreground="White" IsReadOnly="True" Grid.Column="0" HorizontalContentAlignment="Center"  FontSize="50" FontWeight="Bold" BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
+            <Grid Name="ActionsGrid" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBox x:Name="statusTxt" FontSize="16" Background="Teal" FontWeight="Bold" Foreground="White" BorderThickness="0" Text="Drone Status:" TextWrapping="Wrap" IsReadOnly="True" Width="150" Height="35" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="maxWeightTxt" FontSize="16" Background="Teal" FontWeight="Bold" Foreground="White" BorderThickness="0" Text="Drone max weight:" Width="150" Height="35" IsReadOnly="True" HorizontalAlignment="Right" VerticalContentAlignment="Center" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                    <ComboBox x:Name="comboStatus" Width="170" HorizontalAlignment="Left"
                 IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream"
                 SelectionChanged="comboStatus_SelectionChanged" />
-                <ComboBox x:Name="comboMaxWeight" Width="170" HorizontalAlignment="Left"
+                    <ComboBox x:Name="comboMaxWeight" Width="170" HorizontalAlignment="Left"
                 IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream" 
-                SelectionChanged="comboMaxWeight_SelectionChanged" />
-            </StackPanel>
-            <TextBox Text="Filter" Grid.Column="1" Background="Teal" IsReadOnly="True" Foreground="White"  HorizontalContentAlignment="Center" FontWeight="Bold"  FontSize="20"  BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
-            <TextBox Text="Drones" Background="Teal" Foreground="White" IsReadOnly="True" Grid.Column="0" HorizontalContentAlignment="Center"  FontSize="50" FontWeight="Bold" BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
-            <Button x:Name="btnClose" Content="Close" BorderThickness="0" Background="Aquamarine" Foreground="DarkSlateGray" FontWeight="Bold" FontSize="16" Click="btnClose_Click" Grid.Column="5" Height="50" Width="50"/>
-            <Button x:Name="btnAddDrones" BorderThickness="0" Content=" add&#xa;Drone" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="15" Click="btnAddDrones_Click" Grid.Column="4" Height="50" Width="50"/>
+                SelectionChanged="comboMaxWeight_SelectionChanged"/>
+                </StackPanel>
+                <TextBox Text="Filter" Background="Teal" IsReadOnly="True" Foreground="White"  HorizontalContentAlignment="Center" FontWeight="Bold"  FontSize="20"  BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>                
+                <TextBox Text="Group" Grid.Row="1"  Background="Teal" IsReadOnly="True" Foreground="White"  HorizontalContentAlignment="Center" FontWeight="Bold"  FontSize="20"  BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="statusGroupTxt" Text="Drone Status:"  Grid.Row="1" Grid.Column="1" FontSize="16" Background="Teal" FontWeight="Bold" Foreground="White" BorderThickness="0" TextWrapping="Wrap" IsReadOnly="True" Width="150" Height="35" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
+                <ComboBox x:Name="comboStatusGroup" Grid.Column="2" Grid.Row="1" Width="170" HorizontalAlignment="Left"
+                IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream"
+                SelectionChanged="comboStatus_SelectionChanged" />
+            </Grid>
+            <Button x:Name="btnClose" Content="Close" BorderThickness="0" Background="Aquamarine" Foreground="DarkSlateGray" FontWeight="Bold" FontSize="16" Click="btnClose_Click" Grid.Column="4" Height="50" Width="50"/>
+            <Button x:Name="btnAddDrones" BorderThickness="0" Content=" add&#xa;Drone" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="15" Click="btnAddDrones_Click" Grid.Column="2" Height="50" Width="50"/>
         </Grid>
-        <ListView x:Name="lstvDrones" Background="MintCream"  MouseDoubleClick="openActionsWindow" Grid.Row="2" />
+        <ListBox x:Name="lstvDrones" Background="MintCream"  MouseDoubleClick="openActionsWindow" Grid.Row="2">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:Name="DroneTempalte" DataType="local:ListDrone">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>                        
+                        <StackPanel>
+                            <TextBlock Text="Id:"/>
+                            <TextBlock Text="Model:"/>
+                            <TextBlock Text="Weight category:      "/>
+                            <TextBlock Text="Battery:"/>
+                            <TextBlock Text="State:"/>
+                            <TextBlock Text="Location:"/>
+                            <TextBlock Text="Parcel Id:"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="{Binding Path=Id}"/>
+                            <TextBlock Text="{Binding Path=Model}"/>
+                            <TextBlock Text="{Binding Path=WeightCategory}"/>
+                            <TextBlock Text="{Binding Path=Battery}"/>
+                            <TextBlock Text="{Binding Path=State}"/>
+                            <TextBlock Text="{Binding Path=Location}"/>
+                            <TextBlock Text="{Binding Path=ParcelId}" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

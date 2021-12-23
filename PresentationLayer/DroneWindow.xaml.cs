@@ -195,7 +195,7 @@ namespace PL
             this.comboMaxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategory));
         }
 
-        private void btnSaveCanges_Click(object sender, RoutedEventArgs e)
+        private void addDroneBtn_Click(object sender, RoutedEventArgs e)
         {
             if (well.All(pl => pl == true))
             {
@@ -289,6 +289,7 @@ namespace PL
             if (exit == false)
                 e.Cancel = true;
         }
+
     }
 
 }

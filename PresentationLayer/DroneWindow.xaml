@@ -116,7 +116,7 @@
                 <ComboBox x:Name="comboMaxWeight" Height="40" Margin="0,40,0,0" SelectionChanged="comboMaxWeight_SelectionChanged" />
                 <ComboBox x:Name="comboInitialStation" Height="40" Margin="0,40,0,0" SelectionChanged="comboInitialStation_SelectionChanged"/>
             </StackPanel>
-            <Button Grid.Row="1" Grid.Column="2" Content="Add Drone" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="addDroneBtn" Grid.Row="1" Grid.Column="2" Content="Add Drone" Style="{StaticResource ButtonStyle}" Click="addDroneBtn_Click"/>
             <Button Grid.Column="2" Content="Close"  Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="18" Height="35" Width="100" Click="btnBackToList_Click" BorderThickness="0"/>
         </Grid>
     </Grid>    
