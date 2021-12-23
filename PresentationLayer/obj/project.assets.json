@@ -6,7 +6,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
-          "DAL": "1.0.0"
+          "DalApi": "1.0.0",
+          "DalObject": "1.0.0"
         },
         "compile": {
           "bin/placeholder/BL.dll": {}
@@ -15,14 +16,27 @@
           "bin/placeholder/BL.dll": {}
         }
       },
-      "DAL/1.0.0": {
+      "DalApi/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "compile": {
-          "bin/placeholder/DAL.dll": {}
+          "bin/placeholder/DalApi.dll": {}
         },
         "runtime": {
-          "bin/placeholder/DAL.dll": {}
+          "bin/placeholder/DalApi.dll": {}
+        }
+      },
+      "DalObject/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "DalApi": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DalObject.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DalObject.dll": {}
         }
       }
     }
@@ -33,10 +47,15 @@
       "path": "../BL/BL.csproj",
       "msbuildProject": "../BL/BL.csproj"
     },
-    "DAL/1.0.0": {
+    "DalApi/1.0.0": {
       "type": "project",
-      "path": "../DAL/DAL.csproj",
-      "msbuildProject": "../DAL/DAL.csproj"
+      "path": "../DAL/DalApi.csproj",
+      "msbuildProject": "../DAL/DalApi.csproj"
+    },
+    "DalObject/1.0.0": {
+      "type": "project",
+      "path": "../DalObject/DalObject.csproj",
+      "msbuildProject": "../DalObject/DalObject.csproj"
     }
   },
   "projectFileDependencyGroups": {

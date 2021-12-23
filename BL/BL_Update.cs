@@ -183,7 +183,7 @@ namespace BL
                             if(PossibleFly(ListDroneToDrone(BlDrone), par))
                             {
                                 cannotFulfill = false;
-                                parcels = parcels.  (par);
+                                parcels = parcels.Append(par);
                             }
                         }
                     }

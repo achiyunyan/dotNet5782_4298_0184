@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DAL.csproj",
-      "projectName": "DAL",
-      "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DAL.csproj",
+      "projectUniqueName": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj",
+      "projectName": "DalApi",
+      "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj",
       "packagesPath": "C:\\Users\\yunia\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\obj\\",
       "projectStyle": "PackageReference",

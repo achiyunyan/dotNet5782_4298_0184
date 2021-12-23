@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IDAL.DalApi;
+
 namespace BL
 {
     public partial class BL : IBL.IBL
     {
         private static Random rand = new Random();
-        private DalObject.DalObject myDal;
+        private IDal myDal;
         private static List<ListDrone> Drones = new List<ListDrone>();
         private double ElectricityUsePerKmAvailable;
         private double ElectricityUsePerKmLight;
@@ -19,8 +21,8 @@ namespace BL
 
         public BL()
         {
-            myDal = new DalObject.DalObject();
-
+            //myDal = new Dal.DalObject();
+            myDal = FactoryDal.GetDal();
             ElectricityUsePerKmAvailable = myDal.GetElectricityUsePerKmAvailable();
             ElectricityUsePerKmLight = myDal.GetElectricityUsePerKmLight();
             ElectricityUsePerKmMedium = myDal.GetElectricityUsePerKmMedium();
