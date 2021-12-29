@@ -1,8 +1,10 @@
 ﻿using BO;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace PL
@@ -11,9 +13,21 @@ namespace PL
     /// Interaction logic for DroneWindow.xaml
     /// </summary>
 
-    /// <summary>
-    /// Drone actions functions
-    /// </summary>
+    public class BoolStateToStringConverter : IValueConverter
+    {
+        //convert from source property type to target property type
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool State = (bool)value;
+            return State ? "Collected" : "Associated";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public partial class DroneWindow : Window
     {
         BlApi.IBL bl;
@@ -21,6 +35,12 @@ namespace PL
         BO.Drone drone;
         bool[] well = { false, false, false, false };
         bool exit = false;
+        bool first = true;
+
+        /// <summary>
+        /// Drone actions functions
+        /// </summary>
+        /// 
         public DroneWindow(BO.ListDrone myDrone, BlApi.IBL myBl,DronesListWindow dronesListWindow)
         {
             dlw = dronesListWindow;
@@ -28,31 +48,26 @@ namespace PL
             ListDrone = myDrone;
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;
-            Title = "DroneActionsWindow";
+            Title = "DroneActionsWindow";            
             UpdateWindow();
         }
 
         private void UpdateWindow()
         {
-            BO.Drone blDrone = bl.GetDrone(ListDrone.Id);
-            DroneId.Text = blDrone.Id.ToString();
-            Model.Text = blDrone.Model;
-            MaxWeight.Text = blDrone.WeightCategory.ToString();
-            Battery.Text = Math.Round(blDrone.Battery).ToString() + '%';
-            State.Text = blDrone.State.ToString();
-            Location.Text = blDrone.Location.ToString();
-            if (blDrone.Parcel != default)
+            drone = bl.GetDrone(ListDrone.Id);
+            DroneActions.DataContext = drone;
+
+            if (drone.Parcel != default)
             {
-                ParcelTag.Visibility = Visibility.Visible;
-                Parcel.Text = blDrone.Parcel.ToString();
+                ParcelTag.Visibility = Visibility.Visible; 
+                Parcel.Visibility = Visibility.Visible;
+                //Parcel.DataContext = blDrone.Parcel;
             }
             else
             {
                 ParcelTag.Visibility = Visibility.Hidden;
-                Parcel.Text = "";
-            }
-
-            Update.Visibility = Visibility.Collapsed;
+                Parcel.Visibility = Visibility.Hidden;
+            }            
 
             if (ListDrone.State != BO.DroneState.Available)
                 SendToCharge.Visibility = Visibility.Collapsed;
@@ -69,12 +84,12 @@ namespace PL
             else
                 SendToDelivery.Visibility = Visibility.Visible;
 
-            if (blDrone.State != BO.DroneState.Delivery || blDrone.Parcel.State)
+            if (drone.State != BO.DroneState.Delivery || drone.Parcel.State)
                 CollectParcel.Visibility = Visibility.Collapsed;
             else
                 CollectParcel.Visibility = Visibility.Visible;
 
-            if (blDrone.State != BO.DroneState.Delivery || !blDrone.Parcel.State)
+            if (drone.State != BO.DroneState.Delivery || !drone.Parcel.State)
                 DeliverParcel.Visibility = Visibility.Collapsed;
             else
                 DeliverParcel.Visibility = Visibility.Visible;
@@ -82,7 +97,10 @@ namespace PL
 
         private void Model_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Update.Visibility = Visibility.Visible;
+            if (!first)
+                Update.Visibility = Visibility.Visible;
+            else
+                first = false;
         }
 
 
@@ -91,7 +109,7 @@ namespace PL
             bl.UpdateDrone(ListDrone.Id, Model.Text);
             MessageBox.Show("Model updated successfully!");
             dlw.Refresh();
-            UpdateWindow();
+            Update.Visibility = Visibility.Collapsed;
         }
 
         private void SendToCharge_Click(object sender, RoutedEventArgs e)
@@ -172,7 +190,7 @@ namespace PL
             MessageBox.Show(str);
             dlw.Refresh();
             UpdateWindow();
-        }
+        }        
 
         private void Nothing(object sender, DependencyPropertyChangedEventArgs e) { }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -287,7 +305,9 @@ namespace PL
                 e.Cancel = true;
         }
 
-       
-    }
+        private void OpenParcel_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
+    }    
 }

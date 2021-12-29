@@ -70,13 +70,11 @@
                                 <TextBlock Text="{Binding Path=Location}" FontWeight="DemiBold"/>
                                 <TextBlock x:Name="parcelId" Text="{Binding Path=ParcelId}" FontWeight="DemiBold"/>
                             </StackPanel>
-                            <Button x:Name="openParcelBtn" Click="openParcelBtn_Click" FontSize="16" Content="Open&#xa;Parcel" FontWeight="DemiBold" Background="Aquamarine" Foreground="DarkSlateGray" Grid.Column="3" Margin="15" BorderThickness="0" />
                         </Grid>
                     </Border>
                     <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding Path=ParcelId}" Value="0">
                             <DataTrigger.Setters>
-                                <Setter Property="Visibility" Value="Collapsed" TargetName="openParcelBtn"/>
                                 <Setter Property="Visibility" Value="Collapsed" TargetName="parcelIdTag"/>
                                 <Setter Property="Visibility" Value="Collapsed" TargetName="parcelId"/>
                             </DataTrigger.Setters>
