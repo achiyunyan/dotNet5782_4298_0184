@@ -1,0 +1,45 @@
+﻿<Window x:Class="PL.StationListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"        
+        Title="DisplaydronesWindow" Height="450" Width="800"
+        Closing="Window_Closing"
+        Background="MintCream"  
+        Icon="DroneIcon.png">
+
+    <Grid x:Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="370*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="UpGrid"
+            Height="auto" Grid.Row="0" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2.2*"/>
+                <ColumnDefinition Width="2.8*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <TextBox Grid.Column="1" Background="Teal" BorderThickness="0"/>
+            <TextBox Grid.Column="2" Background="Teal" BorderThickness="0"/>
+            <TextBox Grid.Column="3" Background="Teal" BorderThickness="0"/>
+            <TextBox Grid.Column="4" Background="Teal" BorderThickness="0"/>
+            <Button x:Name="btnShowCharge" Grid.Column="1" FontSize="14" Background="Aquamarine" FontWeight="Bold" Foreground="Teal" BorderThickness="0" Content="Show Stations with&#xa; free charging slots" VerticalContentAlignment="Center" Margin="10"/>
+            <StackPanel Grid.Column="3" VerticalAlignment="Center"/>
+            <TextBox Text="Stations" Background="Teal" Foreground="White" IsReadOnly="True" Grid.Column="0" HorizontalContentAlignment="Center"  FontSize="50" FontWeight="Bold" BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
+
+
+            <Button x:Name="btnClose" Content="Close" BorderThickness="0" Background="Aquamarine" Foreground="DarkSlateGray" FontWeight="Bold" FontSize="16" Click="btnClose_Click" Grid.Column="5" Height="50" Width="50"/>
+            <Button x:Name="btnAddStation" BorderThickness="0" Content=" add&#xa;Station"  Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="15" Click="btnAddStation_Click" Grid.Column="3" Height="50" Margin="10,14,19,13"/>
+            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                <TextBox Text="Group by number of free slots:" Background="Aquamarine" FontWeight="Bold" Foreground="DarkSlateGray"  IsReadOnly="True" Height="33"  />
+                <ComboBox x:Name="comboNumberSlots" Height="28" Background="MintCream" SelectionChanged="comboNumberSlots_SelectionChanged" />
+            </StackPanel>
+        </Grid>
+        <ListView x:Name="lstvStations" Background="MintCream"  MouseDoubleClick="lstvStations_MouseDoubleClick" Grid.Row="2" />
+    </Grid>
+</Window>
