@@ -9,41 +9,6 @@
         Background="MintCream"  
         Icon="DroneIcon.png"
         Closing="Window_Closing">
-    <Window.Resources>
-        <Style x:Key="SimpleTextStyle" TargetType="TextBox">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Foreground" Value="Teal"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background" Value="MintCream"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="Height" Value="25"/>
-        </Style>
-        <Style x:Key="ButtonStyle" TargetType="Button">
-            <Setter Property="Foreground" Value="DarkSlateGray"/>
-            <Setter Property="Background" Value="Aquamarine"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="Width" Value="150"/>
-            <Setter Property="Margin" Value="0,20,0,0"/>
-        </Style>
-        <Style x:Key="AddPropertiesTags" TargetType="TextBox">
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="Background" Value="MintCream"/>
-            <Setter Property="Foreground" Value="Teal"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Margin" Value="0,40,0,0"/>
-        </Style>
-    </Window.Resources>
     <Grid>
         <!-- Drone Actions -->
         <Grid x:Name="DroneActions">
@@ -81,15 +46,15 @@
             </StackPanel>
             <StackPanel Grid.Column="2" Grid.Row="1" >
                 <Button x:Name="Update" Content="Update" Click="Update_Click"  Style="{StaticResource ButtonStyle}" Visibility="Collapsed"/>
-                <Button x:Name="SendToCharge" Content="Send to charge" Click="SendToCharge_Click" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="FreeFromCharge" Content="Free from charge" Click="FreeFromCharge_Click" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="SendToDelivery" Content="Send to delivery" Click="SendToDelivery_Click" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="CollectParcel" Content="Collect parcel" Click="CollectParcel_Click" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="DeliverParcel" Content="Deliver parcel" Click="DeliverParcel_Click" Style="{StaticResource ButtonStyle}"/>
+                <Button x:Name="SendToCharge" Content="Send to charge" Click="SendToCharge_Click" Style="{StaticResource StackPanelButtonStyle}"/>
+                <Button x:Name="FreeFromCharge" Content="Free from charge" Click="FreeFromCharge_Click" Style="{StaticResource StackPanelButtonStyle}"/>
+                <Button x:Name="SendToDelivery" Content="Send to delivery" Click="SendToDelivery_Click" Style="{StaticResource StackPanelButtonStyle}"/>
+                <Button x:Name="CollectParcel" Content="Collect parcel" Click="CollectParcel_Click" Style="{StaticResource StackPanelButtonStyle}"/>
+                <Button x:Name="DeliverParcel" Content="Deliver parcel" Click="DeliverParcel_Click" Style="{StaticResource StackPanelButtonStyle}"/>
             </StackPanel>
         </Grid>        
         <!-- Add Drone -->
-        <Grid x:Name="AddDrone" Visibility="Hidden">
+        <Grid x:Name="AddDrone">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
@@ -116,8 +81,8 @@
                 <ComboBox x:Name="comboMaxWeight" Height="40" Margin="0,40,0,0" SelectionChanged="comboMaxWeight_SelectionChanged" />
                 <ComboBox x:Name="comboInitialStation" Height="40" Margin="0,40,0,0" SelectionChanged="comboInitialStation_SelectionChanged"/>
             </StackPanel>
-            <Button x:Name="addDroneBtn" Grid.Row="1" Grid.Column="2" Content="Add Drone" Style="{StaticResource ButtonStyle}" Click="addDroneBtn_Click"/>
-            <Button Grid.Column="2" Content="Close"  Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="18" Height="35" Width="100" Click="btnBackToList_Click" BorderThickness="0"/>
+            <Button x:Name="addDroneBtn" Grid.Row="1" Grid.Column="2" Content="Add Drone" Style="{StaticResource StackPanelButtonStyle}" Click="addDroneBtn_Click"/>
+            <Button Grid.Column="2" Content="Close"  Style="{StaticResource ButtonStyle}" VerticalAlignment="Center" Margin="0" Height="35" Width="100" Click="btnBackToList_Click"/>
         </Grid>
     </Grid>    
 </Window>

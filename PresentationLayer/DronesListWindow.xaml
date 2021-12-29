@@ -25,21 +25,21 @@
                 <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Text="Drones" Background="Teal" Foreground="White" IsReadOnly="True" Grid.Column="0" HorizontalContentAlignment="Center"  FontSize="50" FontWeight="Bold" BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
+            <TextBox Text="Drones" Style="{StaticResource Title}" FontSize="50"/>
             <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                <TextBox x:Name="statusTxt" FontSize="12" Background="Teal" FontWeight="Bold" Foreground="White" BorderThickness="0" Text="Drone status:" TextWrapping="Wrap" IsReadOnly="True"/>
+                <TextBox x:Name="statusTxt" FontSize="12"  Text="Drone status:" Style="{StaticResource Title}" HorizontalAlignment="Left"/>
                 <ComboBox x:Name="comboStatus"  HorizontalAlignment="Stretch"
                 IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream"
                 SelectionChanged="comboStatus_SelectionChanged" />
-                <TextBox x:Name="maxWeightTxt" FontSize="12" Background="Teal" FontWeight="Bold" Foreground="White" BorderThickness="0" Text="Drone max weight:" IsReadOnly="True"/>
+                <TextBox x:Name="maxWeightTxt" FontSize="12" Text="Drone max weight:" Style="{StaticResource Title}" HorizontalAlignment="Left" />
                 <ComboBox x:Name="comboMaxWeight"  HorizontalAlignment="Stretch"
                 IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream" 
                 SelectionChanged="comboMaxWeight_SelectionChanged"/>
             </StackPanel>
-            <TextBox Text="Filter" Grid.Column="1" Background="Teal" IsReadOnly="True" Foreground="White"  HorizontalAlignment="Center" FontWeight="Bold"  FontSize="20"  BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
-            <Button x:Name="btnClose" Content="Close" BorderThickness="0" Background="Aquamarine" Foreground="DarkSlateGray" FontWeight="Bold" FontSize="16" Click="btnClose_Click" Grid.Column="5" Margin="22"/>
-            <Button x:Name="btnGroupByState" Content=" Group&#xa;by state" BorderThickness="0" Background="Aquamarine" Foreground="DarkSlateGray" FontWeight="Bold" FontSize="16" Click="btnGroupByState_Click"  Grid.Column="3" Margin="22"/>
-            <Button x:Name="btnAddDrones" BorderThickness="0" Content=" Add&#xa;drone" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="15" Click="btnAddDrones_Click" Grid.Column="4" Margin="22"/>
+            <TextBox Text="Filter" Grid.Column="1" Style="{StaticResource Title}" FontSize="24" />
+            <Button x:Name="btnClose" Content="Close" Click="btnClose_Click" Style="{StaticResource ButtonStyle}" Grid.Column="5" Margin="22"/>
+            <Button x:Name="btnGroupByState" Content=" Group&#xa;by state" Style="{StaticResource ButtonStyle}" Click="btnGroupByState_Click"  Grid.Column="3" Margin="22"/>
+            <Button x:Name="btnAddDrones" Content=" Add&#xa;drone" Style="{StaticResource ButtonStyle}" Click="btnAddDrones_Click" Grid.Column="4" Margin="22"/>
         </Grid>
         <ListBox x:Name="lstvDrones" ScrollViewer.CanContentScroll="False" Background="MintCream" MouseDoubleClick="openActionsWindow" Grid.Row="2" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>

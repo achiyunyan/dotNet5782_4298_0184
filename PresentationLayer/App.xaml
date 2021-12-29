@@ -4,6 +4,54 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="SimpleTextStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="Teal"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="MintCream"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style x:Key="Title" TargetType="TextBox">
+            <Setter Property="Background" Value="Teal"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>            
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="DarkSlateGray"/>
+            <Setter Property="Background" Value="Aquamarine"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style x:Key="StackPanelButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Margin" Value="0,20,0,0"/>
+        </Style>
+        <Style x:Key="AddPropertiesTags" TargetType="TextBox" BasedOn="{StaticResource SimpleTextStyle}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="0,40,0,0"/>
+        </Style>
+        <Style x:Key="mainWindowButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Teal"/>
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="19"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
     </Application.Resources>
 </Application>

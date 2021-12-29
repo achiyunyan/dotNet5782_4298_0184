@@ -8,17 +8,6 @@
         Title="MainWindow" Height="450" Width="800"
         Background="MintCream"        
         Icon="DroneIcon.png">
-    <Window.Resources>
-        <Style x:Key="buttonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Teal"/>
-            <Setter Property="Margin" Value="15"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="19"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="BorderThickness" Value="0"/>
-        </Style>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -26,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBox Background="Aquamarine" Height="80" BorderThickness="0" IsReadOnly="True" />
-        <TextBox Background="Teal" Text="Welcome to our drones managing program!" Foreground="White" FontWeight="Black" FontSize="30" IsReadOnly="True" TextWrapping="Wrap" TextAlignment="Center" Height="50" BorderThickness="0"/>
+        <TextBox Text="Welcome to our drones managing program!" Style="{StaticResource Title}" HorizontalAlignment="Stretch" FontWeight="Black" FontSize="30" Height="50" />
         <Image   x:Name="imageDrone" Visibility="Visible" Source="DroneLogo.png" Height="151" Width="388"  HorizontalAlignment="Stretch" Grid.Row="1"/>
         <TextBox Background="Aquamarine" Grid.Row="2" Height="80" BorderThickness="0" IsReadOnly="True" />
         <Grid Grid.Row="2">
@@ -36,10 +25,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button  x:Name="btnShowDrones" Content="Show drones" Click="btnShowDrones_Click" Style="{StaticResource buttonStyle}"/>
-            <Button  x:Name="btnShowStations" Content="Show stations" Grid.Column="1" Style="{StaticResource buttonStyle}" Click="btnShowStations_Click" />
-            <Button  x:Name="btnShowCustomers" Content="Show customers" Grid.Column="2" Style="{StaticResource buttonStyle}" Click="btnShowCustomers_Click" />
-            <Button  x:Name="btnShowParcels" Content="Show parcels" Grid.Column="3" Style="{StaticResource buttonStyle}" Click="btnShowParcels_Click" />
+            <Button  x:Name="btnShowDrones" Content="Show drones" Click="btnShowDrones_Click" Style="{StaticResource mainWindowButtonStyle}"/>
+            <Button  x:Name="btnShowStations" Content="Show stations" Grid.Column="1" Style="{StaticResource mainWindowButtonStyle}" Click="btnShowStations_Click" />
+            <Button  x:Name="btnShowCustomers" Content="Show customers" Grid.Column="2" Style="{StaticResource mainWindowButtonStyle}" Click="btnShowCustomers_Click" />
+            <Button  x:Name="btnShowParcels" Content="Show parcels" Grid.Column="3" Style="{StaticResource mainWindowButtonStyle}" Click="btnShowParcels_Click" />
         </Grid>
     </Grid>
 </Window>
