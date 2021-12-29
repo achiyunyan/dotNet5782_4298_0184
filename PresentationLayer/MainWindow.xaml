@@ -36,10 +36,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button  x:Name="btnShowDrones" Content="show drones" Click="btnShowDrones_Click" Style="{StaticResource buttonStyle}"/>
-            <Button  x:Name="btnShowStations" Content="show stations" Grid.Column="1" Style="{StaticResource buttonStyle}" Click="btnShowStations_Click" />
-            <Button  x:Name="btnShowCustomers" Content="show customers" Grid.Column="2" Style="{StaticResource buttonStyle}" Click="btnShowCustomers_Click" />
-            <Button  x:Name="btnShowParcels" Content="show parcels" Grid.Column="3" Style="{StaticResource buttonStyle}" Click="btnShowParcels_Click" />
+            <Button  x:Name="btnShowDrones" Content="Show drones" Click="btnShowDrones_Click" Style="{StaticResource buttonStyle}"/>
+            <Button  x:Name="btnShowStations" Content="Show stations" Grid.Column="1" Style="{StaticResource buttonStyle}" Click="btnShowStations_Click" />
+            <Button  x:Name="btnShowCustomers" Content="Show customers" Grid.Column="2" Style="{StaticResource buttonStyle}" Click="btnShowCustomers_Click" />
+            <Button  x:Name="btnShowParcels" Content="Show parcels" Grid.Column="3" Style="{StaticResource buttonStyle}" Click="btnShowParcels_Click" />
         </Grid>
     </Grid>
 </Window>
