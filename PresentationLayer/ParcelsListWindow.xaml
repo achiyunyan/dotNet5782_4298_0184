@@ -1,0 +1,103 @@
+﻿<Window x:Class="PL.ParcelsListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"        
+        Title="DisplaydronesWindow" Height="450" Width="800"
+        Closing="Window_Closing"
+        Background="MintCream"  
+        Icon="DroneIcon.png">
+
+    <Grid x:Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120*"/>
+            <RowDefinition Height="330*"/>
+        </Grid.RowDefinitions>
+        <TextBox Background="Teal" BorderThickness="0"/>
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="18*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="0.6*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="0.6*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="10.8*"/>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="9*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Text="Parcels" Style="{StaticResource Title}" FontSize="50"/>
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBox Text="Filter" Grid.Column="1" Style="{StaticResource Title}" Height="51" FontSize="24" />
+                <TextBox x:Name="stateTxt" FontSize="12"  Text="State:" Style="{StaticResource Title}" HorizontalAlignment="Left"/>
+                <ComboBox x:Name="comboState"  HorizontalAlignment="Stretch"
+                IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream"
+                SelectionChanged="comboState_SelectionChanged" />
+            </StackPanel>
+            
+            <StackPanel Grid.Column="3" VerticalAlignment="Center">
+                <TextBox x:Name="senderNameTxt" FontSize="12"  Text="Sender Name:" Style="{StaticResource Title}" HorizontalAlignment="Left"/>
+                <ComboBox x:Name="comboSender" IsTextSearchEnabled="True" HorizontalAlignment="Stretch"
+                IsEditable="true" FontSize="16" Height="35" Background="MintCream"
+                SelectionChanged="comboSender_SelectionChanged" />
+                <TextBox x:Name="ReceiverTxt" FontSize="12" Text="Receiver Name:" Style="{StaticResource Title}" HorizontalAlignment="Left" />
+                <ComboBox x:Name="comboReceiver" IsTextSearchEnabled="True" HorizontalAlignment="Stretch"
+                IsEditable="true" FontSize="16" Height="35" Background="MintCream" 
+                SelectionChanged="comboReceiver_SelectionChanged"/>
+            </StackPanel>
+            <StackPanel Grid.Column="5" VerticalAlignment="Center">
+                <TextBox x:Name="weightTxt" FontSize="12"  Text="Weight Category:" Style="{StaticResource Title}" HorizontalAlignment="Left"/>
+                <ComboBox x:Name="comboWeight"  HorizontalAlignment="Stretch"
+                IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream"
+                SelectionChanged="comboWeight_SelectionChanged" />
+                <TextBox x:Name="priorityTxt" FontSize="12" Text="Priority:" Style="{StaticResource Title}" HorizontalAlignment="Left" />
+                <ComboBox x:Name="comboPriority"  HorizontalAlignment="Stretch"
+                IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream" 
+                SelectionChanged="comboPriority_SelectionChanged"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="6" VerticalAlignment="Center" Margin="6,0,0,0">
+                <TextBox Text="Group by" Grid.Column="1" Style="{StaticResource Title}" FontSize="18" />
+                <Button x:Name="btnGroupBySenderName" Content="Sender Name" FontSize="12" Height="24" Style="{StaticResource ButtonStyle}" Margin="0,10,0,0" Click="btnGroupBySenderName_Click"/>
+                <Button x:Name="btnGroupByReceiverName" Content="Receiver Name"  FontSize="12" Height="24" Style="{StaticResource ButtonStyle}" Margin="0,10,0,0" Click="btnGroupByReceiverName_Click"/>
+            </StackPanel>
+
+            <Button x:Name="btnClose" Content="Close" Click="btnClose_Click" Style="{StaticResource ButtonStyle}" Grid.Column="8" Margin="9,12,12,12" Height="70"/>
+            <Button x:Name="btnAddParcel" Content=" Add&#xa;parcel" Style="{StaticResource ButtonStyle}" Click="btnAddParcel_Click" Grid.Column="7" Margin="12,12,9,12" Height="70"/>
+        </Grid>
+        <ListBox x:Name="parcelsList" ScrollViewer.CanContentScroll="False" Background="MintCream" Grid.Row="2" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:Name="ParcelTempalte" DataType="local:ListParcel">
+                    <Border BorderBrush="LightSeaGreen" BorderThickness="1" Padding="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Id:" FontWeight="DemiBold"/>
+                                <TextBlock Text="Sender Name:" FontWeight="DemiBold"/>
+                                <TextBlock Text="Receiver Name:" FontWeight="DemiBold"/>
+                                <TextBlock Text="Weight Category:" FontWeight="DemiBold"/>
+                                <TextBlock Text="Priority:" FontWeight="DemiBold"/>
+                                <TextBlock Text="State:" FontWeight="DemiBold"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding Path=Id}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Path=SenderName}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Path=ReceiverName}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Path=WeightCategory}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Path=Priority}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Path=State}" FontWeight="DemiBold"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>

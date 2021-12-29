@@ -46,7 +46,8 @@ namespace PL
 
         private void btnShowParcels_Click(object sender, RoutedEventArgs e)
         {
-
+            new ParcelsListWindow(myBl).Show();
+            Close();
         }
     }
 }

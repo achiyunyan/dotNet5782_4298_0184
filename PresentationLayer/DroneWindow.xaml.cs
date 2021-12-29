@@ -61,13 +61,14 @@ namespace PL
             {
                 ParcelTag.Visibility = Visibility.Visible; 
                 Parcel.Visibility = Visibility.Visible;
-                //Parcel.DataContext = blDrone.Parcel;
+                OpenParcel.Visibility = Visibility.Visible;               
             }
             else
             {
                 ParcelTag.Visibility = Visibility.Hidden;
                 Parcel.Visibility = Visibility.Hidden;
-            }            
+                OpenParcel.Visibility = Visibility.Collapsed;
+            }
 
             if (ListDrone.State != BO.DroneState.Available)
                 SendToCharge.Visibility = Visibility.Collapsed;

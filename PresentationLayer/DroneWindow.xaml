@@ -89,7 +89,7 @@
             </StackPanel>
         </Grid>        
         <!-- Add Drone -->
-        <Grid x:Name="AddDrone" Visibility="Hidden">
+        <Grid x:Name="AddDrone">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
