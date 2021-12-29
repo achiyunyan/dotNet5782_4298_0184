@@ -14,10 +14,21 @@
             <RowDefinition Height="1.5*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox Background="Aquamarine" Height="80" BorderThickness="0" />
-        <TextBox Background="Teal" Text="Welcome to our drones managing program!" Foreground="White" FontWeight="Black" FontSize="30" TextWrapping="Wrap" TextAlignment="Center" Height="50" BorderThickness="0"/>
-        <Image   x:Name="imageDrone" Visibility="Visible" Source="DroneLogo.png" Height="151" Width="388" HorizontalAlignment="Stretch" Grid.Row="1"/>
-        <TextBox Background="Aquamarine" Grid.Row="2" Height="80" BorderThickness="0" />
-        <Button  x:Name="btnShowDrones" Grid.Row="2" Background="Teal" Foreground="White" FontWeight="Black" FontSize="30" Content="show drones" Height="50" Width="284" Click="btnShowDrones_Click" BorderThickness="0"/>
+        <TextBox Background="Aquamarine" Height="80" BorderThickness="0" IsReadOnly="True" />
+        <TextBox Text="Welcome to our drones managing program!" Style="{StaticResource Title}" HorizontalAlignment="Stretch" FontWeight="Black" FontSize="30" Height="50" />
+        <Image   x:Name="imageDrone" Visibility="Visible" Source="DroneLogo.png" Height="151" Width="388"  HorizontalAlignment="Stretch" Grid.Row="1"/>
+        <TextBox Background="Aquamarine" Grid.Row="2" Height="80" BorderThickness="0" IsReadOnly="True" />
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button  x:Name="btnShowDrones" Content="Show drones" Click="btnShowDrones_Click" Style="{StaticResource mainWindowButtonStyle}"/>
+            <Button  x:Name="btnShowStations" Content="Show stations" Grid.Column="1" Style="{StaticResource mainWindowButtonStyle}" Click="btnShowStations_Click" />
+            <Button  x:Name="btnShowCustomers" Content="Show customers" Grid.Column="2" Style="{StaticResource mainWindowButtonStyle}" Click="btnShowCustomers_Click" />
+            <Button  x:Name="btnShowParcels" Content="Show parcels" Grid.Column="3" Style="{StaticResource mainWindowButtonStyle}" Click="btnShowParcels_Click" />
+        </Grid>
     </Grid>
 </Window>

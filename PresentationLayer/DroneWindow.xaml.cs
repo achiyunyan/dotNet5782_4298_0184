@@ -43,17 +43,13 @@ namespace PL
             Location.Text = blDrone.Location.ToString();
             if (blDrone.Parcel != default)
             {
-                ParcelTag.Text = "Parcel:";
+                ParcelTag.Visibility = Visibility.Visible;
                 Parcel.Text = blDrone.Parcel.ToString();
             }
             else
             {
-                ParcelTag.Text = "";
-                ParcelTag.BorderThickness = new Thickness(0);
-                ParcelTag.Background = Brushes.MintCream;
+                ParcelTag.Visibility = Visibility.Hidden;
                 Parcel.Text = "";
-                Parcel.BorderThickness = new Thickness(0);
-                Parcel.Background = Brushes.MintCream;
             }
 
             Update.Visibility = Visibility.Collapsed;
@@ -178,6 +174,7 @@ namespace PL
             UpdateWindow();
         }
 
+        private void Nothing(object sender, DependencyPropertyChangedEventArgs e) { }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Add drone functions
@@ -195,7 +192,7 @@ namespace PL
             this.comboMaxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategory));
         }
 
-        private void btnSaveCanges_Click(object sender, RoutedEventArgs e)
+        private void addDroneBtn_Click(object sender, RoutedEventArgs e)
         {
             if (well.All(pl => pl == true))
             {
@@ -289,6 +286,8 @@ namespace PL
             if (exit == false)
                 e.Cancel = true;
         }
+
+       
     }
 
 }

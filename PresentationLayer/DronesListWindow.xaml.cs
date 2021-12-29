@@ -137,5 +137,19 @@ namespace PL
                 }
             }
         }
+
+        private void openParcelBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnGroupByState_Click(object sender, RoutedEventArgs e)
+        {
+            var groupsList = from drone in (IEnumerable<ListDrone>)lstvDrones.ItemsSource
+                             group drone by drone.State;
+            lstvDrones.ItemsSource = from list in groupsList
+                                     from drone in list
+                                     select drone;
+        }
     }
 }

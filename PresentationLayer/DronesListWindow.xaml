@@ -8,44 +8,82 @@
         Title="DisplaydronesWindow" Height="450" Width="800"
         Closing="Window_Closing"
         Background="MintCream"  
-        Icon="DroneIcon.png">        
-        
+        Icon="DroneIcon.png">
+
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="80*"/>
-            <RowDefinition Height="370*"/>
+            <RowDefinition Height="120*"/>
+            <RowDefinition Height="330*"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid"
-            Height="auto" Grid.Row="0" Width="auto">            
+        <TextBox Background="Teal" BorderThickness="0"/>
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2.2*"/>
-                <ColumnDefinition Width="0.8*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
-            <TextBox Grid.Column="2" Background="Teal" BorderThickness="0"/>
-            <TextBox Grid.Column="3" Background="Teal" BorderThickness="0"/>
-            <TextBox Grid.Column="4" Background="Teal" BorderThickness="0"/>
-            <TextBox Grid.Column="5" Background="Teal" BorderThickness="0"/>
-            <StackPanel Grid.Column="2" VerticalAlignment="Center">                
-                <TextBox x:Name="txtTemp" FontSize="16" Background="Teal" FontWeight="Bold" Foreground="White" BorderThickness="0" Text="Drone Status:" TextWrapping="Wrap" IsReadOnly="True" Width="150" Height="35" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="btnAddDrone" FontSize="16" Background="Teal" FontWeight="Bold" Foreground="White" BorderThickness="0" Text="Drone max weight:" Width="150" Height="35" IsReadOnly="True" HorizontalAlignment="Right" VerticalContentAlignment="Center" />
-            </StackPanel>
-            <StackPanel Grid.Column="3" VerticalAlignment="Center">
-                <ComboBox x:Name="comboStatus" Width="170" HorizontalAlignment="Left"
+                <ColumnDefinition Width="6.6*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="5.4*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Text="Drones" Style="{StaticResource Title}" FontSize="50"/>
+            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                <TextBox x:Name="statusTxt" FontSize="12"  Text="Drone status:" Style="{StaticResource Title}" HorizontalAlignment="Left"/>
+                <ComboBox x:Name="comboStatus"  HorizontalAlignment="Stretch"
                 IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream"
                 SelectionChanged="comboStatus_SelectionChanged" />
-                <ComboBox x:Name="comboMaxWeight" Width="170" HorizontalAlignment="Left"
+                <TextBox x:Name="maxWeightTxt" FontSize="12" Text="Drone max weight:" Style="{StaticResource Title}" HorizontalAlignment="Left" />
+                <ComboBox x:Name="comboMaxWeight"  HorizontalAlignment="Stretch"
                 IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream" 
-                SelectionChanged="comboMaxWeight_SelectionChanged" />
+                SelectionChanged="comboMaxWeight_SelectionChanged"/>
             </StackPanel>
-            <TextBox Text="Filter" Grid.Column="1" Background="Teal" IsReadOnly="True" Foreground="White"  HorizontalContentAlignment="Center" FontWeight="Bold"  FontSize="20"  BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
-            <TextBox Text="Drones" Background="Teal" Foreground="White" IsReadOnly="True" Grid.Column="0" HorizontalContentAlignment="Center"  FontSize="50" FontWeight="Bold" BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
-            <Button x:Name="btnClose" Content="Close" BorderThickness="0" Background="Aquamarine" Foreground="DarkSlateGray" FontWeight="Bold" FontSize="16" Click="btnClose_Click" Grid.Column="5" Height="50" Width="50"/>
-            <Button x:Name="btnAddDrones" BorderThickness="0" Content=" add&#xa;Drone" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="15" Click="btnAddDrones_Click" Grid.Column="4" Height="50" Width="50"/>
+            <TextBox Text="Filter" Grid.Column="1" Style="{StaticResource Title}" FontSize="24" />
+            <Button x:Name="btnClose" Content="Close" Click="btnClose_Click" Style="{StaticResource ButtonStyle}" Grid.Column="5" Margin="22"/>
+            <Button x:Name="btnGroupByState" Content=" Group&#xa;by state" Style="{StaticResource ButtonStyle}" Click="btnGroupByState_Click"  Grid.Column="3" Margin="22"/>
+            <Button x:Name="btnAddDrones" Content=" Add&#xa;drone" Style="{StaticResource ButtonStyle}" Click="btnAddDrones_Click" Grid.Column="4" Margin="22"/>
         </Grid>
-        <ListView x:Name="lstvDrones" Background="MintCream"  MouseDoubleClick="openActionsWindow" Grid.Row="2" />
+        <ListBox x:Name="lstvDrones" ScrollViewer.CanContentScroll="False" Background="MintCream" MouseDoubleClick="openActionsWindow" Grid.Row="2" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:Name="DroneTempalte" DataType="local:ListDrone">
+                    <Border BorderBrush="LightSeaGreen" BorderThickness="1" Padding="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Id:" FontWeight="DemiBold"/>
+                                <TextBlock Text="Model:" FontWeight="DemiBold"/>
+                                <TextBlock Text="Weight category:" FontWeight="DemiBold"/>
+                                <TextBlock Text="Battery:" FontWeight="DemiBold"/>
+                                <TextBlock Text="State:" FontWeight="DemiBold"/>
+                                <TextBlock Text="Location:" FontWeight="DemiBold"/>
+                                <TextBlock x:Name="parcelIdTag" Text="Parcel Id:" FontWeight="DemiBold"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding Path=Id}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Path=Model}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Path=WeightCategory}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Path=Battery}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Path=State}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Path=Location}" FontWeight="DemiBold"/>
+                                <TextBlock x:Name="parcelId" Text="{Binding Path=ParcelId}" FontWeight="DemiBold"/>
+                            </StackPanel>
+                            <Button x:Name="openParcelBtn" Click="openParcelBtn_Click" FontSize="16" Content="Open&#xa;Parcel" FontWeight="DemiBold" Background="Aquamarine" Foreground="DarkSlateGray" Grid.Column="3" Margin="15" BorderThickness="0" />
+                        </Grid>
+                    </Border>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Path=ParcelId}" Value="0">
+                            <DataTrigger.Setters>
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="openParcelBtn"/>
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="parcelIdTag"/>
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="parcelId"/>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

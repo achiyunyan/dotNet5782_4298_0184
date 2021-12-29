@@ -34,5 +34,19 @@ namespace PL
             Close();
         }
 
+        private void btnShowStations_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnShowCustomers_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnShowParcels_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
