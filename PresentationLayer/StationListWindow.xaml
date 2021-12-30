@@ -12,34 +12,51 @@
 
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="80*"/>
-            <RowDefinition Height="370*"/>
+            <RowDefinition Height="120*"/>
+            <RowDefinition Height="330*"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid"
-            Height="auto" Grid.Row="0" Width="auto">
+        <TextBox Background="Teal" BorderThickness="0"/>
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2.2*"/>
-                <ColumnDefinition Width="2.8*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
-            <TextBox Grid.Column="1" Background="Teal" BorderThickness="0"/>
-            <TextBox Grid.Column="2" Background="Teal" BorderThickness="0"/>
-            <TextBox Grid.Column="3" Background="Teal" BorderThickness="0"/>
-            <TextBox Grid.Column="4" Background="Teal" BorderThickness="0"/>
-            <Button x:Name="btnShowCharge" Grid.Column="1" FontSize="14" Background="Aquamarine" FontWeight="Bold" Foreground="Teal" BorderThickness="0" Content="Show Stations with&#xa; free charging slots" VerticalContentAlignment="Center" Margin="10"/>
-            <StackPanel Grid.Column="3" VerticalAlignment="Center"/>
-            <TextBox Text="Stations" Background="Teal" Foreground="White" IsReadOnly="True" Grid.Column="0" HorizontalContentAlignment="Center"  FontSize="50" FontWeight="Bold" BorderThickness="0" TextWrapping="Wrap" VerticalContentAlignment="Center"/>
-
-
-            <Button x:Name="btnClose" Content="Close" BorderThickness="0" Background="Aquamarine" Foreground="DarkSlateGray" FontWeight="Bold" FontSize="16" Click="btnClose_Click" Grid.Column="5" Height="50" Width="50"/>
-            <Button x:Name="btnAddStation" BorderThickness="0" Content=" add&#xa;Station"  Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" FontSize="15" Click="btnAddStation_Click" Grid.Column="3" Height="50" Margin="10,14,19,13"/>
-            <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                <TextBox Text="Group by number of free slots:" Background="Aquamarine" FontWeight="Bold" Foreground="DarkSlateGray"  IsReadOnly="True" Height="33"  />
-                <ComboBox x:Name="comboNumberSlots" Height="28" Background="MintCream" SelectionChanged="comboNumberSlots_SelectionChanged" />
-            </StackPanel>
+                <ColumnDefinition Width="6.6*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Text="Stations" Style="{StaticResource Title}" FontSize="45"/>
+            <Button x:Name="btnGroupBySlotsNumber" Content="Group by&#xa;slots num." Style="{StaticResource ButtonStyle}" Grid.Column="1" Margin="20" FontSize="13" Click="btnGroupBySlotsNumber_Click"/>
+            <Button x:Name="btnGroupByExistingSlots" Content=" Group by&#xa; existing slots" Style="{StaticResource ButtonStyle}" Click="btnGroupByExistingSlots_Click" FontSize="11" Grid.Column="2" Margin="22"/>
+            <Button x:Name="btnRefresh" Content="Refresh" Style="{StaticResource ButtonStyle}" Grid.Column="3" Margin="20"  Click="btnRefresh_Click"/>
+            <Button x:Name="btnAddStation" Content=" Add&#xa;station" Style="{StaticResource ButtonStyle}" Click="btnAddStation_Click" Grid.Column="4" Margin="22"/>
+            <Button x:Name="btnClose" Content="Close" Click="btnClose_Click" Style="{StaticResource ButtonStyle}" Grid.Column="5" Margin="22"/>
         </Grid>
-        <ListView x:Name="lstvStations" Background="MintCream"  MouseDoubleClick="lstvStations_MouseDoubleClick" Grid.Row="2" />
+        <ListBox x:Name="lstvStations" ScrollViewer.CanContentScroll="False" Background="MintCream" MouseDoubleClick="lstvStations_MouseDoubleClick" Grid.Row="2" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:Name="StationTempalte" DataType="local:ListStation">
+                    <Border BorderBrush="LightSeaGreen" BorderThickness="1" Padding="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Id:" FontWeight="DemiBold"/>
+                                <TextBlock Text="Name:" FontWeight="DemiBold"/>
+                                <TextBlock Text="Free Charge Slots:" FontWeight="DemiBold"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding Path=Id}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Path=Name}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Path=FreeChargeSlots}" FontWeight="DemiBold"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
