@@ -27,7 +27,7 @@
             </Grid.ColumnDefinitions>
             <TextBox Text="Stations" Style="{StaticResource Title}" FontSize="45"/>
             <Button x:Name="btnGroupBySlotsNumber" Content="Group by&#xa;slots num." Style="{StaticResource ButtonStyle}" Grid.Column="1" Margin="20" FontSize="13" Click="btnGroupBySlotsNumber_Click"/>
-            <Button x:Name="btnGroupByExistingSlots" Content=" Group by&#xa; existing slots" Style="{StaticResource ButtonStyle}" Click="btnGroupByExistingSlots_Click" FontSize="11" Grid.Column="2" Margin="22"/>
+            <Button x:Name="btnGroupByFreeSlots" Content=" Group by&#xa; free slots" Style="{StaticResource ButtonStyle}" Click="btnGroupByFreeSlots_Click" FontSize="13" Grid.Column="2" Margin="22"/>
             <Button x:Name="btnRefresh" Content="Refresh" Style="{StaticResource ButtonStyle}" Grid.Column="3" Margin="20"  Click="btnRefresh_Click"/>
             <Button x:Name="btnAddStation" Content=" Add&#xa;station" Style="{StaticResource ButtonStyle}" Click="btnAddStation_Click" Grid.Column="4" Margin="22"/>
             <Button x:Name="btnClose" Content="Close" Click="btnClose_Click" Style="{StaticResource ButtonStyle}" Grid.Column="5" Margin="22"/>

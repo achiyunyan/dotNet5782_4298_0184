@@ -44,12 +44,12 @@ namespace PL
 
         private void btnAddStation_Click(object sender, RoutedEventArgs e)
         {
-
+            new StationWindow(ibl).Show();
         }
 
         private void lstvStations_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            new StationWindow(ibl, (BO.ListStation)lstvStations.SelectedItem).Show();
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
@@ -66,7 +66,7 @@ namespace PL
                                        select Station;
         }
 
-        private void btnGroupByExistingSlots_Click(object sender, RoutedEventArgs e)
+        private void btnGroupByFreeSlots_Click(object sender, RoutedEventArgs e)
         {
             var groupsList = from Station in (IEnumerable<ListStation>)lstvStations.ItemsSource
                              group Station by (Station.FreeChargeSlots>0);
