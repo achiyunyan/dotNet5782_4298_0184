@@ -64,30 +64,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\zviko\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\yunia\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\PL.csproj",
+      "projectUniqueName": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\PL.csproj",
       "projectName": "PL",
-      "projectPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\PL.csproj",
-      "packagesPath": "C:\\Users\\zviko\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\obj\\",
+      "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\PL.csproj",
+      "packagesPath": "C:\\Users\\yunia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\PresentationLayer\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\zviko\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\yunia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0-windows7.0"
@@ -100,8 +90,8 @@
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
           "projectReferences": {
-            "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\BL\\BL.csproj": {
-              "projectPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\BL\\BL.csproj"
+            "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\BL\\BL.csproj": {
+              "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\BL\\BL.csproj"
             }
           }
         }
@@ -133,7 +123,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }
