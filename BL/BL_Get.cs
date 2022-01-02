@@ -184,9 +184,14 @@ namespace BL
                    });
         }
 
-        public IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null)
+        public IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null, DateTime? firstDate = null, DateTime? secondDate = null)
         {
-            IEnumerable<DO.Parcel> dalParcels = myDal.GetParcelsList(predicate);
+            IEnumerable<DO.Parcel> dalParcels;
+            if (firstDate == null)
+                firstDate = DateTime.MinValue;
+            if (secondDate == null)
+                secondDate = DateTime.MaxValue;
+            dalParcels = myDal.GetParcelsList(pr => pr.Requested >= firstDate && pr.Requested <= secondDate || DalParcelLastTime(pr) >= firstDate && DalParcelLastTime(pr) <= secondDate);            
             return from dalParcel in dalParcels
                    select new ListParcel
                    {
@@ -197,6 +202,17 @@ namespace BL
                        SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
                        ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
                    };
+        }
+
+        private DateTime? DalParcelLastTime(DO.Parcel pr)
+        {
+            if (pr.Delivered != null)
+                return pr.Delivered;
+            if (pr.PickedUp != null)
+                return pr.PickedUp;
+            if (pr.Scheduled != null)
+                return pr.Scheduled;
+            return pr.Requested;
         }
 
         public IEnumerable<ListParcel> GetNonLinkedParcelsList()
