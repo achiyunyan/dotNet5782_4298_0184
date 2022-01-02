@@ -38,5 +38,10 @@ namespace PL
         {
 
         }
+
+        private void addDroneBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
