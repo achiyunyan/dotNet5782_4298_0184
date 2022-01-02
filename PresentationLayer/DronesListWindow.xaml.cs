@@ -92,11 +92,15 @@ namespace PL
         }
         private void openActionsWindow(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow((ListDrone)lstvDrones.SelectedItem, ibl,this).Show();
+            DroneWindow dw = new DroneWindow((ListDrone)lstvDrones.SelectedItem, ibl);
+            dw.Owner = this;
+            dw.Show();
         }
         private void btnAddDrones_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(ibl, this).Show();
+            DroneWindow dw = new DroneWindow(ibl);
+            dw.Owner = this;
+            dw.Show();
             exit = true;
         }
 

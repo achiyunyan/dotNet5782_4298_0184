@@ -53,10 +53,9 @@ namespace PL
         /// <summary>
         /// Drone actions functions
         /// </summary>
-        /// 
-        public DroneWindow(BO.ListDrone myDrone, BlApi.IBL myBl,DronesListWindow dronesListWindow)
+
+        public DroneWindow(BO.ListDrone myDrone, BlApi.IBL myBl)
         {
-            dlw = dronesListWindow;
             bl = myBl;
             ListDrone = myDrone;
             InitializeComponent();
@@ -122,7 +121,8 @@ namespace PL
         {
             bl.UpdateDrone(ListDrone.Id, Model.Text);
             MessageBox.Show("Model updated successfully!");
-            dlw.Refresh();
+            if (Owner is DronesListWindow)
+                ((DronesListWindow)this.Owner).Refresh();
             Update.Visibility = Visibility.Collapsed;
         }
 
@@ -138,7 +138,10 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
-            dlw.Refresh();
+            if(Owner is DronesListWindow)
+                ((DronesListWindow)this.Owner).Refresh();
+            if (Owner is StationWindow)
+                ((StationWindow)this.Owner).Refresh();
             UpdateWindow();
         }
 
@@ -154,7 +157,10 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
-            dlw.Refresh();
+            if (Owner is DronesListWindow)
+                ((DronesListWindow)this.Owner).Refresh();
+            if (Owner is StationWindow)
+                ((StationWindow)this.Owner).Refresh();
             UpdateWindow();
         }
 
@@ -170,7 +176,10 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
-            dlw.Refresh();
+            if (Owner is DronesListWindow)
+                ((DronesListWindow)this.Owner).Refresh();
+            if (Owner is StationWindow)
+                ((StationWindow)this.Owner).Refresh();
             UpdateWindow();
         }
 
@@ -186,7 +195,10 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
-            dlw.Refresh();
+            if (Owner is DronesListWindow)
+                ((DronesListWindow)this.Owner).Refresh();
+            if (Owner is StationWindow)
+                ((StationWindow)this.Owner).Refresh();
             UpdateWindow();
         }
 
@@ -202,20 +214,20 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
-            dlw.Refresh();
+            if (Owner is DronesListWindow)
+                ((DronesListWindow)this.Owner).Refresh();
+            if (Owner is StationWindow)
+                ((StationWindow)this.Owner).Refresh();
             UpdateWindow();
         }        
 
-        private void Nothing(object sender, DependencyPropertyChangedEventArgs e) { }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Add drone functions
         /// </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        public DroneWindow(BlApi.IBL myBl, DronesListWindow dronesListWindow)
+        public DroneWindow(BlApi.IBL myBl)
         {
-            dlw = dronesListWindow;
             bl = myBl;
             InitializeComponent();
             DroneActions.Visibility = Visibility.Hidden;
@@ -255,7 +267,11 @@ namespace PL
 
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
         {
-            dlw.Refresh();
+            //TO DO - update drone list
+            if (Owner is DronesListWindow)
+                ((DronesListWindow)this.Owner).Refresh();
+            if (Owner is StationWindow)
+                ((StationWindow)this.Owner).Refresh();
             exit = true;
             this.Close();
         }
@@ -273,7 +289,7 @@ namespace PL
             }
             else
             {
-                if (bl.GetDronesList(dr => dr.Id == id).Count() > 0)//==1
+                if (bl.GetDronesList(dr => dr.Id == id).Any())//==1
                 {
                     idExeption.Text = "Id already exists!";
                 }
@@ -283,7 +299,6 @@ namespace PL
                     Id.Background = Brushes.Aqua;
                     well[0] = true;
                 }
-
             }
 
         }
