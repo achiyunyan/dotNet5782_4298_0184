@@ -27,8 +27,9 @@ namespace BlApi
         IEnumerable<ListStation> GetStationsList(Func<DO.Station, bool> predicate = null);
         IEnumerable<ListDrone> GetDronesList(Func<ListDrone, bool> predicate = null);        
         IEnumerable<ListCustomer> GetCustomersList(Func<DO.Customer, bool> predicate = null);        
-        IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null);
+        IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null, DateTime? firstDate = null, DateTime? secondDate = null);
         IEnumerable<ListParcel> GetNonLinkedParcelsList();
         IEnumerable<ListStation> GetStationsWithFreeSlotsList();
+        void DeleteParcel(Parcel parcel);
     }
 }

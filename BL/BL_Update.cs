@@ -1,4 +1,5 @@
 ﻿using BO;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -261,6 +262,14 @@ namespace BL
             double disFromReciverTosStation = DistanceBetweenTwoPoints(parcelDestination, ClosestStationLocation(BlDrone.Location));
             double electricityNeeded = (disFromDroneToParcel + disFromReciverTosStation) * ElectricityUsePerKmAvailable + disFromtSenderToReciver * ElecriciryUsePerWeight(dalParcel.Weight);
             return BlDrone.Battery >= electricityNeeded;
+        }
+
+        public void DeleteParcel(Parcel parcel)
+        {
+            if (parcel.Drone == null)
+                myDal.DeleteParcel(myDal.GetParcel(parcel.Id));
+            else
+                throw new BlException($"Parcel {parcel.Id} is already Scheduled!");
         }
     }
 }

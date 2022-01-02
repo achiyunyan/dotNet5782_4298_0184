@@ -39,18 +39,18 @@
                 <TextBox x:Name="ParcelTag" Text="Parcel: " Style="{StaticResource SimpleTextStyle}" Height="222"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="1">
-                <TextBox Text="{Binding Path=Id}"  Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox x:Name="Model" Text="{Binding Path=Model}" Style="{StaticResource SimpleTextStyle}" IsReadOnly="False" TextChanged="Model_TextChanged"/>
-                <TextBox Text="{Binding Path=WeightCategory}"  Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox Text="{Binding Path=Battery, StringFormat={}{0:N0}%}" Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox Text="{Binding Path=State}" Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox Text="{Binding Path=Location, StringFormat={}{0}}"  Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox Text="{Binding Id}"  Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox x:Name="Model" Text="{Binding Model}" Style="{StaticResource SimpleTextStyle}" IsReadOnly="False" TextChanged="Model_TextChanged"/>
+                <TextBox Text="{Binding WeightCategory}"  Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox Text="{Binding Battery, StringFormat={}{0:N0}%}" Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox Text="{Binding State}" Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox Text="{Binding Location, Converter={StaticResource locationToStringConverter}}" Style="{StaticResource SimpleTextStyle}"/>
                 <Grid x:Name="Parcel" Height="222">                    
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="1.7*"/>
                     </Grid.ColumnDefinitions>                    
-                    <StackPanel DataContext="{Binding Path=Parcel}">
+                    <StackPanel>
                         <TextBox Text="Parcel Id:" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
                         <TextBox Text="State:" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
                         <TextBox Text="Priority:" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
@@ -63,18 +63,18 @@
                         <TextBox Text="PickUp Location:" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
                         <TextBox Text="Destination Location:" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
                     </StackPanel>
-                    <StackPanel Grid.Column="1" DataContext="{Binding Path=Parcel}">
-                        <TextBox Text="{Binding Path=Id}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
-                        <TextBox Text="{Binding Path=State, Converter={StaticResource booleanStateToStringConverter}}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
-                        <TextBox Text="{Binding Path=Priority}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
-                        <TextBox Text="{Binding Path=WeightCategory}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
-                        <TextBox Text="{Binding Path=Distance, StringFormat={}{0:N2}km}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
-                        <TextBox Text="{Binding Path=Sender.Id, StringFormat=Customer Id: {0}}" HorizontalContentAlignment="Stretch" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
-                        <TextBox Text="{Binding Path=Sender.Name, StringFormat=Name:            {0}}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
-                        <TextBox Text="{Binding Path=Receiver.Id, StringFormat=Customer Id: {0}}" HorizontalContentAlignment="Stretch" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
-                        <TextBox Text="{Binding Path=Receiver.Name, StringFormat=Name:            {0}}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
-                        <TextBox Text="{Binding Path=PickUp, StringFormat={}{0}}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
-                        <TextBox Text="{Binding Path=Destination, StringFormat={}{0}}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
+                    <StackPanel Grid.Column="1" DataContext="{Binding Parcel}">
+                        <TextBox Text="{Binding Id}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
+                        <TextBox Text="{Binding State, Converter={StaticResource booleanStateToStringConverter}}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
+                        <TextBox Text="{Binding Priority}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
+                        <TextBox Text="{Binding WeightCategory}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
+                        <TextBox Text="{Binding Distance, StringFormat={}{0:N2}km}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
+                        <TextBox Text="{Binding Sender.Id, StringFormat=Customer Id: {0}}" HorizontalContentAlignment="Stretch" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
+                        <TextBox Text="{Binding Sender.Name, StringFormat=Name:            {0}}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
+                        <TextBox Text="{Binding Receiver.Id, StringFormat=Customer Id: {0}}" HorizontalContentAlignment="Stretch" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
+                        <TextBox Text="{Binding Receiver.Name, StringFormat=Name:            {0}}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
+                        <TextBox Text="{Binding PickUp, Converter={StaticResource locationToStringConverter}}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
+                        <TextBox Text="{Binding Destination, Converter={StaticResource locationToStringConverter}}" Height="auto" Style="{StaticResource SimpleTextStyle}" FontSize="13"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>

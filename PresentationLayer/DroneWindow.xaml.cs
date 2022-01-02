@@ -18,8 +18,21 @@ namespace PL
         //convert from source property type to target property type
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool State = (bool)value;
-            return State ? "Collected" : "Associated";
+            return (bool)value ? "Collected" : "Associated";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
+    public class LocationToStringConverter : IValueConverter
+    {
+        //convert from source property type to target property type
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ((Location)value).ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -36,7 +49,7 @@ namespace PL
         bool[] well = { false, false, false, false };
         bool exit = false;
         bool first = true;
-
+        DronesListWindow dlw;
         /// <summary>
         /// Drone actions functions
         /// </summary>
@@ -199,7 +212,7 @@ namespace PL
         /// Add drone functions
         /// </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        DronesListWindow dlw;
+        
         public DroneWindow(BlApi.IBL myBl, DronesListWindow dronesListWindow)
         {
             dlw = dronesListWindow;
@@ -242,7 +255,6 @@ namespace PL
 
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
         {
-            //TO DO - update drone list
             dlw.Refresh();
             exit = true;
             this.Close();

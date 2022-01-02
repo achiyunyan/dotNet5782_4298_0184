@@ -12,33 +12,37 @@
 
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="120*"/>
-            <RowDefinition Height="330*"/>
+            <RowDefinition Height="14*"/>
+            <RowDefinition Height="33*"/>
         </Grid.RowDefinitions>
         <TextBox Background="Teal" BorderThickness="0"/>
         <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="18*"/>
+                <ColumnDefinition Width="8*"/>
                 <ColumnDefinition Width="11*"/>
                 <ColumnDefinition Width="0.6*"/>
                 <ColumnDefinition Width="11*"/>
                 <ColumnDefinition Width="0.6*"/>
                 <ColumnDefinition Width="11*"/>
-                <ColumnDefinition Width="10.8*"/>
-                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="0.6*"/>
+                <ColumnDefinition Width="11*"/>
                 <ColumnDefinition Width="9*"/>
             </Grid.ColumnDefinitions>
             <TextBox Text="Parcels" Style="{StaticResource Title}" FontSize="50"/>
-
-            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                <TextBox Text="Filter" Grid.Column="1" Style="{StaticResource Title}" Height="51" FontSize="24" />
+            <TextBox Text="Filter" Grid.Column="1" Style="{StaticResource Title}" FontSize="24" />
+            
+            <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,9,0,0">  
                 <TextBox x:Name="stateTxt" FontSize="12"  Text="State:" Style="{StaticResource Title}" HorizontalAlignment="Left"/>
                 <ComboBox x:Name="comboState"  HorizontalAlignment="Stretch"
                 IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream"
                 SelectionChanged="comboState_SelectionChanged" />
+                <TextBox x:Name="DateTxt"  FontSize="12"  Text="Range of dates:" Style="{StaticResource Title}" HorizontalAlignment="Left"/>
+                <DatePicker x:Name="firstDate" BorderThickness="0" SelectedDateFormat="Short" SelectedDateChanged="firstDate_SelectedDateChanged" Language="English"/>
+                <DatePicker x:Name="secondDate" BorderThickness="0" SelectedDateFormat="Short" SelectedDateChanged="secondDate_SelectedDateChanged" Language="English"/>
             </StackPanel>
             
-            <StackPanel Grid.Column="3" VerticalAlignment="Center">
+            <StackPanel Grid.Column="4" VerticalAlignment="Center">
                 <TextBox x:Name="senderNameTxt" FontSize="12"  Text="Sender Name:" Style="{StaticResource Title}" HorizontalAlignment="Left"/>
                 <ComboBox x:Name="comboSender" IsTextSearchEnabled="True" HorizontalAlignment="Stretch"
                 IsEditable="true" FontSize="16" Height="35" Background="MintCream"
@@ -46,9 +50,9 @@
                 <TextBox x:Name="ReceiverTxt" FontSize="12" Text="Receiver Name:" Style="{StaticResource Title}" HorizontalAlignment="Left" />
                 <ComboBox x:Name="comboReceiver" IsTextSearchEnabled="True" HorizontalAlignment="Stretch"
                 IsEditable="true" FontSize="16" Height="35" Background="MintCream" 
-                SelectionChanged="comboReceiver_SelectionChanged"/>
+                SelectionChanged="comboReceiver_SelectionChanged"/>                
             </StackPanel>
-            <StackPanel Grid.Column="5" VerticalAlignment="Center">
+            <StackPanel Grid.Column="6" VerticalAlignment="Center">
                 <TextBox x:Name="weightTxt" FontSize="12"  Text="Weight Category:" Style="{StaticResource Title}" HorizontalAlignment="Left"/>
                 <ComboBox x:Name="comboWeight"  HorizontalAlignment="Stretch"
                 IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream"
@@ -59,16 +63,17 @@
                 SelectionChanged="comboPriority_SelectionChanged"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="6" VerticalAlignment="Center" Margin="6,0,0,0">
+            <StackPanel Grid.Column="8" VerticalAlignment="Center">
                 <TextBox Text="Group by" Grid.Column="1" Style="{StaticResource Title}" FontSize="18" />
                 <Button x:Name="btnGroupBySenderName" Content="Sender Name" FontSize="12" Height="24" Style="{StaticResource ButtonStyle}" Margin="0,10,0,0" Click="btnGroupBySenderName_Click"/>
                 <Button x:Name="btnGroupByReceiverName" Content="Receiver Name"  FontSize="12" Height="24" Style="{StaticResource ButtonStyle}" Margin="0,10,0,0" Click="btnGroupByReceiverName_Click"/>
             </StackPanel>
-
-            <Button x:Name="btnClose" Content="Close" Click="btnClose_Click" Style="{StaticResource ButtonStyle}" Grid.Column="8" Margin="9,12,12,12" Height="70"/>
-            <Button x:Name="btnAddParcel" Content=" Add&#xa;parcel" Style="{StaticResource ButtonStyle}" Click="btnAddParcel_Click" Grid.Column="7" Margin="12,12,9,12" Height="70"/>
+            <StackPanel Grid.Column="10" VerticalAlignment="center">
+                <Button x:Name="btnClose" Content="Close" Click="btnClose_Click" Style="{StaticResource ButtonStyle}" Margin="8,8,8,4" Height="50"/>
+                <Button x:Name="btnAddParcel" Content=" Add&#xa;parcel" Style="{StaticResource ButtonStyle}" Click="btnAddParcel_Click" Height="50" Margin="8,4,8,8" />
+            </StackPanel>
         </Grid>
-        <ListBox x:Name="parcelsList" ScrollViewer.CanContentScroll="False" Background="MintCream" Grid.Row="2" HorizontalContentAlignment="Stretch">
+        <ListBox x:Name="parcelsList" ScrollViewer.CanContentScroll="False" Background="MintCream" Grid.Row="2" HorizontalContentAlignment="Stretch" MouseDoubleClick="parcelsList_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate x:Name="ParcelTempalte" DataType="local:ListParcel">
                     <Border BorderBrush="LightSeaGreen" BorderThickness="1" Padding="5">
@@ -87,12 +92,12 @@
                                 <TextBlock Text="State:" FontWeight="DemiBold"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
-                                <TextBlock Text="{Binding Path=Id}" FontWeight="DemiBold"/>
-                                <TextBlock Text="{Binding Path=SenderName}" FontWeight="DemiBold"/>
-                                <TextBlock Text="{Binding Path=ReceiverName}" FontWeight="DemiBold"/>
-                                <TextBlock Text="{Binding Path=WeightCategory}" FontWeight="DemiBold"/>
-                                <TextBlock Text="{Binding Path=Priority}" FontWeight="DemiBold"/>
-                                <TextBlock Text="{Binding Path=State}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Id}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding SenderName}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding ReceiverName}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding WeightCategory}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Priority}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding State}" FontWeight="DemiBold"/>
                             </StackPanel>
                         </Grid>
                     </Border>

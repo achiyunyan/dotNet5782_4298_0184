@@ -58,5 +58,7 @@
             <Setter Property="Height" Value="50"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
+
+        <local:LocationToStringConverter x:Key="locationToStringConverter"/>
     </Application.Resources>
 </Application>

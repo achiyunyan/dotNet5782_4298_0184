@@ -94,33 +94,45 @@ namespace PL
 
         private void comboState_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Filter();
+            Refresh();
         }
 
         private void comboSender_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Filter();
+            Refresh();
         }
 
         private void comboReceiver_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Filter();
+            Refresh();
         }
 
         private void comboWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Filter();
+            Refresh();
         }
 
         private void comboPriority_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Filter();
+            Refresh();
         }
 
-        private void Filter()
+        private void firstDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            IEnumerable<ListParcel> parcels = ibl.GetParcelsList();
+            secondDate.DisplayDateStart = firstDate.SelectedDate;
+            Refresh();
+        }
 
+        private void secondDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            firstDate.DisplayDateEnd = secondDate.SelectedDate;
+            Refresh();
+        }
+
+        public void Refresh()
+        {
+            IEnumerable<ListParcel> parcels;
+            parcels = ibl.GetParcelsList(null, firstDate.SelectedDate, secondDate.SelectedDate);            
             if (!(comboSender.SelectedItem == null || comboSender.SelectedItem == ""))
                 parcels = parcels.Where(par => par.SenderName == comboSender.SelectedItem);
 
@@ -137,6 +149,11 @@ namespace PL
                 parcels = parcels.Where(par => par.WeightCategory == (WeightCategory)comboWeight.SelectedItem);
 
             parcelsList.ItemsSource = parcels;
+        }
+
+        private void parcelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            new ParcelWindow((ListParcel)parcelsList.SelectedItem,ibl, this).Show();
         }
     }
 }
