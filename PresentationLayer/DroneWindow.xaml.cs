@@ -44,12 +44,12 @@ namespace PL
     public partial class DroneWindow : Window
     {
         BlApi.IBL bl;
-        BO.ListDrone ListDrone;
         BO.Drone drone;
-        bool[] well = { false, false, false, false };
-        bool exit = false;
-        bool first = true;
-        DronesListWindow dlw;
+        PO.Drone poDrone;
+        private bool[] well = { false, false, false, false };
+        private bool exit = false;
+        private bool first = true;
+
         /// <summary>
         /// Drone actions functions
         /// </summary>
@@ -57,7 +57,7 @@ namespace PL
         public DroneWindow(BO.ListDrone myDrone, BlApi.IBL myBl)
         {
             bl = myBl;
-            ListDrone = myDrone;
+            poDrone = new PO.Drone(bl.GetDrone(myDrone.Id));
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;
             Title = "DroneActionsWindow";
@@ -66,10 +66,10 @@ namespace PL
 
         public void Refresh()
         {
-            drone = bl.GetDrone(ListDrone.Id);
-            DroneActions.DataContext = drone;
+            poDrone = new PO.Drone(bl.GetDrone(poDrone.Id));//not the best solution... ze ma yesh
+            DroneActions.DataContext = poDrone;
 
-            if (drone.Parcel != default)
+            if (poDrone.Parcel != default)
             {
                 ParcelTag.Visibility = Visibility.Visible; 
                 Parcel.Visibility = Visibility.Visible;               
@@ -80,27 +80,27 @@ namespace PL
                 Parcel.Visibility = Visibility.Hidden;
             }
 
-            if (ListDrone.State != BO.DroneState.Available)
+            if (poDrone.State != BO.DroneState.Available)
                 SendToCharge.Visibility = Visibility.Collapsed;
             else
                 SendToCharge.Visibility = Visibility.Visible;
 
-            if (ListDrone.State != BO.DroneState.Maintenance)
+            if (poDrone.State != BO.DroneState.Maintenance)
                 FreeFromCharge.Visibility = Visibility.Collapsed;
             else
                 FreeFromCharge.Visibility = Visibility.Visible;
 
-            if (ListDrone.State != BO.DroneState.Available)
+            if (poDrone.State != BO.DroneState.Available)
                 SendToDelivery.Visibility = Visibility.Collapsed;
             else
                 SendToDelivery.Visibility = Visibility.Visible;
 
-            if (drone.State != BO.DroneState.Delivery || drone.Parcel.State)
+            if (poDrone.State != BO.DroneState.Delivery || poDrone.Parcel.State)
                 CollectParcel.Visibility = Visibility.Collapsed;
             else
                 CollectParcel.Visibility = Visibility.Visible;
 
-            if (drone.State != BO.DroneState.Delivery || !drone.Parcel.State)
+            if (poDrone.State != BO.DroneState.Delivery || !poDrone.Parcel.State)
                 DeliverParcel.Visibility = Visibility.Collapsed;
             else
                 DeliverParcel.Visibility = Visibility.Visible;
@@ -117,7 +117,7 @@ namespace PL
 
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-            bl.UpdateDrone(ListDrone.Id, Model.Text);
+            bl.UpdateDrone(poDrone.Id, Model.Text);
             MessageBox.Show("Model updated successfully!");
             if (Owner is DronesListWindow)
                 ((DronesListWindow)this.Owner).Refresh();
@@ -129,7 +129,7 @@ namespace PL
             string str = "Drone sent to charge successfully!";
             try
             {
-                bl.SendDroneToCharge(ListDrone.Id);
+                bl.SendDroneToCharge(poDrone.Id);
             }
             catch (BL.BlException exem)
             {
@@ -148,7 +148,7 @@ namespace PL
             string str = "Drone freed from charge successfully!";
             try
             {
-                bl.DroneRelease(ListDrone.Id, 3);
+                bl.DroneRelease(poDrone.Id, 3);
             }
             catch (BL.BlException exem)
             {
@@ -167,7 +167,7 @@ namespace PL
             string str = "Drone sent to delivery successfully!";
             try
             {
-                bl.LinkParcelToDroneBL(ListDrone.Id);
+                bl.LinkParcelToDroneBL(poDrone.Id);
             }
             catch (BL.BlException exem)
             {
@@ -186,7 +186,7 @@ namespace PL
             string str = "Parcel collected successfully!";
             try
             {
-                bl.PickParcel(ListDrone.Id);
+                bl.PickParcel(poDrone.Id);
             }
             catch (BL.BlException exem)
             {
@@ -205,7 +205,7 @@ namespace PL
             string str = "Parcel Delivered successfully!";
             try
             {
-                bl.DeliverParcel(ListDrone.Id);
+                bl.DeliverParcel(poDrone.Id);
             }
             catch (BL.BlException exem)
             {
