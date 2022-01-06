@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Drone Window" Height="450" Width="800"
+        Title="Parcel Window" Height="450" Width="800"
         Background="MintCream"  
         Icon="DroneIcon.png"
         Closing="Window_Closing">
@@ -29,7 +29,7 @@
             <TextBox Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True" Background="Teal" BorderThickness="0"/>
 
             <TextBox Text="Properties" FontSize="20" Background="Teal" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="White" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" />
-            <Button Content="Close" Grid.Column="2" Click="btnBackToList_Click" Foreground="DarkSlateGray" Background="Aquamarine" FontWeight="Bold" BorderThickness="0" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="35" Width="100"/>
+            <Button Grid.Column="2" Content="Close"  Style="{StaticResource ButtonStyle}" VerticalAlignment="Center" Margin="0" Height="35" Width="100" Click="btnBackToList_Click"/>
             <StackPanel Grid.Row="1" HorizontalAlignment="Center">
                 <TextBox Text="Id: " Style="{StaticResource SimpleTextStyle}"/>
                 <TextBox Text="Sender: " Style="{StaticResource SimpleTextStyle}"/>
@@ -45,33 +45,57 @@
                 <TextBox x:Name="DroneTag" Text="Drone: " Style="{StaticResource SimpleTextStyle}" Visibility="{Binding Drone, Converter={StaticResource nullToCollapsedConverter}}"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="1">
-                <TextBox x:Name="Id" Text="{Binding Id}"  Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox Text="{Binding Sender.Id, StringFormat=Customer Id: {0}}" Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox Text="{Binding Sender.Name, StringFormat=Name:            {0}}" Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox Text="{Binding Receiver.Id, StringFormat=Customer Id: {0}}" Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox Text="{Binding Receiver.Name, StringFormat=Name:            {0}}" Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox x:Name="Id" Text="{Binding Id}" Style="{StaticResource SimpleTextStyle}"/>
+                <Grid x:Name="Sender" Background="MintCream">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBox Text="{Binding Sender.Id, StringFormat=Customer Id: {0}}" Style="{StaticResource SimpleTextStyle}"/>
+                        <TextBox Text="{Binding Sender.Name, StringFormat=Name:            {0}}" Style="{StaticResource SimpleTextStyle}"/>
+                    </StackPanel>
+                    <Button x:Name="openSenderBtn" Grid.Column="1" Style="{StaticResource goToButtonStyle}" Click="openSenderBtn_Click"/>
+                </Grid>
+                <Grid x:Name="Receiver" Background="MintCream">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBox Text="{Binding Receiver.Id, StringFormat=Customer Id: {0}}" Style="{StaticResource SimpleTextStyle}"/>
+                        <TextBox Text="{Binding Receiver.Name, StringFormat=Name:            {0}}" Style="{StaticResource SimpleTextStyle}"/>
+                    </StackPanel>
+                    <Button x:Name="openReceiverBtn" Grid.Column="1" Style="{StaticResource goToButtonStyle}" Click="openReceiverBtn_Click"/>
+                </Grid>
                 <TextBox Text="{Binding WeightCategory}"  Style="{StaticResource SimpleTextStyle}"/>
                 <TextBox Text="{Binding Priority}" Style="{StaticResource SimpleTextStyle}"/>
                 <TextBox Text="{Binding Requested}" Style="{StaticResource SimpleTextStyle}"/>
                 <TextBox x:Name="Scheduled" Text="{Binding Scheduled}" Style="{StaticResource SimpleTextStyle}" Visibility="{Binding Scheduled, Converter={StaticResource nullToCollapsedConverter}}"/>
                 <TextBox x:Name="PickedUp" Text="{Binding PickedUp}" Style="{StaticResource SimpleTextStyle}" Visibility="{Binding PickedUp, Converter={StaticResource nullToCollapsedConverter}}"/>
                 <TextBox x:Name="Delivered" Text="{Binding Delivered}" Style="{StaticResource SimpleTextStyle}" Visibility="{Binding Delivered, Converter={StaticResource nullToCollapsedConverter}}"/>
-                <StackPanel x:Name="Drone" Visibility="{Binding Drone, Converter={StaticResource nullToCollapsedConverter}}">
-                    <TextBox Text="{Binding Drone.Id,StringFormat=Drone Id:        {0}}" Style="{StaticResource SimpleTextStyle}"/>
-                    <TextBox Text="{Binding Drone.Battery,StringFormat=Battery:          {0:N0}%}" Style="{StaticResource SimpleTextStyle}"/>
-                    <TextBox Text="{Binding Drone.Location,StringFormat=Location:        {0}, Converter={StaticResource locationToStringConverter}}" Style="{StaticResource SimpleTextStyle}"/>
-                </StackPanel>
+                <Grid x:Name="Drone" Visibility="{Binding Drone, Converter={StaticResource nullToCollapsedConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBox Text="{Binding Drone.Id,StringFormat=Drone Id:        {0}}" Style="{StaticResource SimpleTextStyle}"/>
+                        <TextBox Text="{Binding Drone.Battery,StringFormat=Battery:          {0:N0}%}" Style="{StaticResource SimpleTextStyle}"/>
+                        <Viewbox HorizontalAlignment="Left" StretchDirection="DownOnly" Stretch="Uniform">
+                            <TextBox  Text="{Binding Drone.Location,StringFormat=Location:         {0}, Converter={StaticResource locationToStringConverter}}" Style="{StaticResource SimpleTextStyle}"/>
+                        </Viewbox>
+                    </StackPanel>
+                    <Button x:Name="openDroneBtn" Grid.Column="1" Style="{StaticResource goToButtonStyle}" Visibility="{Binding Delivered, Converter={StaticResource nullToVisibleConverter}}" Click="openDroneBtn_Click"/>
+                </Grid>
             </StackPanel>
 
             <StackPanel Grid.Column="2" Grid.Row="1" >
-                <Button x:Name="deleteBtn" Content="Delete" Style="{StaticResource StackPanelButtonStyle}" Visibility="{Binding Drone, Converter={StaticResource nullToVisibleConverter}}" Click="Delete_Click"/>
-                <Button x:Name="openDroneBtn" Content="Open drone" Style="{StaticResource StackPanelButtonStyle}" Visibility="{Binding Drone, Converter={StaticResource nullToVisibleConverter}}" Click="openDroneBtn_Click"/>
-                <Button x:Name="openSenderBtn" Content="Open sender" Style="{StaticResource StackPanelButtonStyle}" Click="openSenderBtn_Click" />
-                <Button x:Name="openReceiverBtn" Content="Open receiver" Style="{StaticResource StackPanelButtonStyle}" Click="openReceiverBtn_Click" />
+                <Button x:Name="deleteBtn" Content="Delete" Style="{StaticResource StackPanelButtonStyle}" Click="Delete_Click" Visibility="{Binding Drone, Converter={StaticResource nullToVisibleConverter}}"/>
             </StackPanel>
         </Grid>
         <!-- Add Parcel -->
-        <Grid x:Name="AddParcel" Visibility="Hidden">
+        <Grid x:Name="AddParcel">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
@@ -83,22 +107,23 @@
             </Grid.RowDefinitions>
             <TextBox IsReadOnly="True" Background="Teal" BorderThickness="0"/>
             <TextBox Grid.Column="2" IsReadOnly="True" Background="Teal" BorderThickness="0"/>
-            <TextBox Grid.Column="1" FontSize="32" FontWeight="Bold"  BorderThickness="0" TextWrapping="Wrap" Background="Teal" Foreground="White" IsReadOnly="True" Text="Enter drone properties" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <TextBox Grid.Column="1" FontSize="32"  Text="Enter Parcel properties" Style="{StaticResource Title}"/>
 
             <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBox Text="Id:" Style="{StaticResource AddPropertiesTags}"/>
-                <TextBox Text="Model:" Style="{StaticResource AddPropertiesTags}"/>
-                <TextBox Text="Maximum Weight:" Style="{StaticResource AddPropertiesTags}"/>
-                <TextBox Text="Initial station:" Style="{StaticResource AddPropertiesTags}"/>
+                <TextBox Text="Sender Id:" Style="{StaticResource AddPropertiesTags}" Margin="0"/>
+                <TextBox Text="Receiver Id:" Style="{StaticResource AddPropertiesTags}"/>
+                <TextBox Text="Weight:" Style="{StaticResource AddPropertiesTags}"/>
+                <TextBox Text="Priority:" Style="{StaticResource AddPropertiesTags}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
-                <TextBox x:Name="Ids" TextWrapping="Wrap" Height="40" FontSize="18"/>
-                <TextBox x:Name="idExeption" TextWrapping="Wrap" Height="30" FontSize="18" FontWeight="DemiBold" Background="MintCream" Foreground="Red" BorderThickness="0" IsReadOnly="True"/>
-                <TextBox x:Name="ModelAdd" TextWrapping="Wrap" Height="40" Margin="0,10,0,0" FontSize="18"/>
-                <ComboBox x:Name="comboMaxWeight" Height="40" Margin="0,40,0,0" />
-                <ComboBox x:Name="comboInitialStation" Height="40" Margin="0,40,0,0" />
+                <TextBox x:Name="SenderId" TextWrapping="Wrap" Height="40" FontSize="18" TextChanged="SenderId_TextChanged"/>
+                <TextBox x:Name="SenderIdExeption" Style="{StaticResource ExeptionStyle}"/>
+                <TextBox x:Name="ReceiverId" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18" TextChanged="ReceiverId_TextChanged"/>
+                <TextBox x:Name="ReceiverIdExeption" TextWrapping="Wrap" Height="30" FontSize="18" FontWeight="DemiBold" Background="MintCream" Foreground="Red" BorderThickness="0" IsReadOnly="True"/>
+                <ComboBox x:Name="comboWeight" Height="40" Margin="0,10,0,0" SelectionChanged="comboWeight_SelectionChanged" />
+                <ComboBox x:Name="comboPriority" Height="40" Margin="0,40,0,0" SelectionChanged="comboPriority_SelectionChanged"/>
             </StackPanel>
-            <Button x:Name="addDroneBtn" Grid.Row="1" Grid.Column="2" Content="Add Drone" Style="{StaticResource StackPanelButtonStyle}"/>
+            <Button x:Name="addParcelBtn" Grid.Row="1" Grid.Column="2" Content="Add Parcel" Style="{StaticResource StackPanelButtonStyle}" Click="addParcelBtn_Click"/>
             <Button Grid.Column="2" Content="Close"  Style="{StaticResource ButtonStyle}" VerticalAlignment="Center" Margin="0" Height="35" Width="100" Click="btnBackToList_Click"/>
         </Grid>
     </Grid>

@@ -60,11 +60,11 @@ namespace PL
             ListDrone = myDrone;
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;
-            Title = "DroneActionsWindow";            
-            UpdateWindow();
+            Title = "DroneActionsWindow";
+            Refresh();
         }
 
-        private void UpdateWindow()
+        public void Refresh()
         {
             drone = bl.GetDrone(ListDrone.Id);
             DroneActions.DataContext = drone;
@@ -72,14 +72,12 @@ namespace PL
             if (drone.Parcel != default)
             {
                 ParcelTag.Visibility = Visibility.Visible; 
-                Parcel.Visibility = Visibility.Visible;
-                OpenParcel.Visibility = Visibility.Visible;               
+                Parcel.Visibility = Visibility.Visible;               
             }
             else
             {
                 ParcelTag.Visibility = Visibility.Hidden;
                 Parcel.Visibility = Visibility.Hidden;
-                OpenParcel.Visibility = Visibility.Collapsed;
             }
 
             if (ListDrone.State != BO.DroneState.Available)
@@ -142,7 +140,7 @@ namespace PL
                 ((DronesListWindow)this.Owner).Refresh();
             if (Owner is StationWindow)
                 ((StationWindow)this.Owner).Refresh();
-            UpdateWindow();
+            Refresh();
         }
 
         private void FreeFromCharge_Click(object sender, RoutedEventArgs e)
@@ -161,7 +159,7 @@ namespace PL
                 ((DronesListWindow)this.Owner).Refresh();
             if (Owner is StationWindow)
                 ((StationWindow)this.Owner).Refresh();
-            UpdateWindow();
+            Refresh();
         }
 
         private void SendToDelivery_Click(object sender, RoutedEventArgs e)
@@ -180,7 +178,7 @@ namespace PL
                 ((DronesListWindow)this.Owner).Refresh();
             if (Owner is StationWindow)
                 ((StationWindow)this.Owner).Refresh();
-            UpdateWindow();
+            Refresh();
         }
 
         private void CollectParcel_Click(object sender, RoutedEventArgs e)
@@ -199,7 +197,7 @@ namespace PL
                 ((DronesListWindow)this.Owner).Refresh();
             if (Owner is StationWindow)
                 ((StationWindow)this.Owner).Refresh();
-            UpdateWindow();
+            Refresh();
         }
 
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
@@ -218,8 +216,13 @@ namespace PL
                 ((DronesListWindow)this.Owner).Refresh();
             if (Owner is StationWindow)
                 ((StationWindow)this.Owner).Refresh();
-            UpdateWindow();
-        }        
+            Refresh();
+        }
+
+        private void openParcelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == ListDrone.ParcelId), bl).Show();
+        }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -292,11 +295,12 @@ namespace PL
                 if (bl.GetDronesList(dr => dr.Id == id).Any())//==1
                 {
                     idExeption.Text = "Id already exists!";
+                    well[0] = false;
                 }
                 else
                 {
                     idExeption.Text = "";
-                    Id.Background = Brushes.Aqua;
+                    Id.Background = null;
                     well[0] = true;
                 }
             }
@@ -312,7 +316,7 @@ namespace PL
             }
             else
             {
-                ModelAdd.Background = Brushes.AliceBlue;
+                ModelAdd.Background = null;
                 well[1] = true;
             }
         }
@@ -331,11 +335,6 @@ namespace PL
         {
             if (exit == false)
                 e.Cancel = true;
-        }
-
-        private void OpenParcel_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        }        
     }    
 }

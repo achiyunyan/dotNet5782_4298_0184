@@ -35,7 +35,7 @@
         <ListBox x:Name="lstvStations" ScrollViewer.CanContentScroll="False" Background="MintCream" MouseDoubleClick="lstvStations_MouseDoubleClick" Grid.Row="2" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate x:Name="StationTempalte" DataType="local:ListStation">
-                    <Border BorderBrush="LightSeaGreen" BorderThickness="1" Padding="5">
+                    <Border BorderBrush="LightSeaGreen" BorderThickness="1" Padding="5" CornerRadius="7">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"/>

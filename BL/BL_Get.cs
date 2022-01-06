@@ -1,5 +1,7 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -184,15 +186,9 @@ namespace BL
                    });
         }
 
-        public IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null, DateTime? firstDate = null, DateTime? secondDate = null)
-        {
-            IEnumerable<DO.Parcel> dalParcels;
-            if (firstDate == null)
-                firstDate = DateTime.MinValue;
-            if (secondDate == null)
-                secondDate = DateTime.MaxValue;
-            dalParcels = myDal.GetParcelsList(pr => pr.Requested >= firstDate && pr.Requested <= secondDate || DalParcelLastTime(pr) >= firstDate && DalParcelLastTime(pr) <= secondDate);            
-            return from dalParcel in dalParcels
+        public IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null)
+        {                       
+            return from dalParcel in myDal.GetParcelsList()
                    select new ListParcel
                    {
                        Id = dalParcel.Id,
@@ -202,6 +198,41 @@ namespace BL
                        SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
                        ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
                    };
+        }
+
+        public IEnumerable<ListParcel> GetFilteredParcelsList(DateTime? firstDate, DateTime? secondDate, object Sender, object Receiver, object Priority, object State, object Weight)
+        {
+            IEnumerable<DO.Parcel> dalParcels;
+            if (firstDate == null)
+                firstDate = DateTime.MinValue;
+            if (secondDate == null)
+                secondDate = DateTime.MaxValue;
+            dalParcels = myDal.GetParcelsList(pr => pr.Requested >= firstDate && pr.Requested <= secondDate || DalParcelLastTime(pr) >= firstDate && DalParcelLastTime(pr) <= secondDate);
+            IEnumerable<ListParcel> parcels = from dalParcel in dalParcels
+                                              select new ListParcel
+                                              {
+                                                  Id = dalParcel.Id,
+                                                  Priority = (Priority)(int)dalParcel.Priority,
+                                                  WeightCategory = (WeightCategory)(int)dalParcel.Weight,
+                                                  State = GetParcelStateByDalParcel(dalParcel),
+                                                  SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
+                                                  ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
+                                              };
+            if (!(Sender == null || Sender == ""))
+                parcels = parcels.Where(par => par.SenderName == Sender);
+
+            if (!(Receiver == null || Receiver == ""))
+                parcels = parcels.Where(par => par.ReceiverName == Receiver);
+
+            if (!(Priority == null || Priority == ""))
+                parcels = parcels.Where(par => par.Priority == (Priority)Priority);
+
+            if (!(State == null || State == ""))
+                parcels = parcels.Where(par => par.State == (ParcelState)State);
+
+            if (!(Weight == null || Weight == ""))
+                parcels = parcels.Where(par => par.WeightCategory == (WeightCategory)Weight);
+            return parcels;
         }
 
         private DateTime? DalParcelLastTime(DO.Parcel pr)
@@ -272,8 +303,6 @@ namespace BL
                 Receiver = new CustomerInParcel { Id = reciver.Id, Name = reciver.Name }
             };
             return parcelInTransit;
-        }
-
-
+        }        
     }
 }

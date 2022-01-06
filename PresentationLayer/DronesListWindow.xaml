@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"        
-        Title="DisplaydronesWindow" Height="450" Width="800"
+        Title="DisplayDronesWindow" Height="450" Width="800"
         Closing="Window_Closing"
         Background="MintCream"  
         Icon="DroneIcon.png">
@@ -44,7 +44,7 @@
         <ListBox x:Name="lstvDrones" ScrollViewer.CanContentScroll="False" Background="MintCream" MouseDoubleClick="openActionsWindow" Grid.Row="2" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate x:Name="DroneTempalte" DataType="local:ListDrone">
-                    <Border BorderBrush="LightSeaGreen" BorderThickness="1" Padding="5">
+                    <Border BorderBrush="LightSeaGreen" BorderThickness="1" Padding="5" CornerRadius="7">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"/>
@@ -62,18 +62,25 @@
                                 <TextBlock x:Name="parcelIdTag" Text="Parcel Id:" FontWeight="DemiBold"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
-                                <TextBlock Text="{Binding Path=Id}" FontWeight="DemiBold"/>
-                                <TextBlock Text="{Binding Path=Model}" FontWeight="DemiBold"/>
-                                <TextBlock Text="{Binding Path=WeightCategory}" FontWeight="DemiBold"/>
-                                <TextBlock Text="{Binding Path=Battery}" FontWeight="DemiBold"/>
-                                <TextBlock Text="{Binding Path=State}" FontWeight="DemiBold"/>
-                                <TextBlock Text="{Binding Path=Location}" FontWeight="DemiBold"/>
-                                <TextBlock x:Name="parcelId" Text="{Binding Path=ParcelId}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Id}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Model}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding WeightCategory}" FontWeight="DemiBold"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ProgressBar Value="{Binding Battery}" Style="{StaticResource progressBarStyle}"/>
+                                    <TextBlock Text="{Binding Battery, StringFormat={}{0}%}" HorizontalAlignment="Center" FontWeight="DemiBold"/>
+                                </Grid>
+                                <TextBlock Text="{Binding State}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Location}" FontWeight="DemiBold"/>
+                                <TextBlock x:Name="parcelId" Text="{Binding ParcelId}" FontWeight="DemiBold"/>
                             </StackPanel>
                         </Grid>
                     </Border>
                     <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Path=ParcelId}" Value="0">
+                        <DataTrigger Binding="{Binding ParcelId}" Value="0">
                             <DataTrigger.Setters>
                                 <Setter Property="Visibility" Value="Collapsed" TargetName="parcelIdTag"/>
                                 <Setter Property="Visibility" Value="Collapsed" TargetName="parcelId"/>

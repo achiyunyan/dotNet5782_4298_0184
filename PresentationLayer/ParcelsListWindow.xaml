@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"        
-        Title="DisplaydronesWindow" Height="450" Width="800"
+        Title="DisplayParcelsWindow" Height="450" Width="800"
         Closing="Window_Closing"
         Background="MintCream"  
         Icon="DroneIcon.png">
@@ -36,7 +36,7 @@
                 <TextBox x:Name="stateTxt" FontSize="12"  Text="State:" Style="{StaticResource Title}" HorizontalAlignment="Left"/>
                 <ComboBox x:Name="comboState"  HorizontalAlignment="Stretch"
                 IsEditable="true"  IsReadOnly="true" FontSize="16" Height="35" Background="MintCream"
-                SelectionChanged="comboState_SelectionChanged" />
+                SelectionChanged="comboState_SelectionChanged"/>
                 <TextBox x:Name="DateTxt"  FontSize="12"  Text="Range of dates:" Style="{StaticResource Title}" HorizontalAlignment="Left"/>
                 <DatePicker x:Name="firstDate" BorderThickness="0" SelectedDateFormat="Short" SelectedDateChanged="firstDate_SelectedDateChanged" Language="English"/>
                 <DatePicker x:Name="secondDate" BorderThickness="0" SelectedDateFormat="Short" SelectedDateChanged="secondDate_SelectedDateChanged" Language="English"/>
@@ -76,7 +76,7 @@
         <ListBox x:Name="parcelsList" ScrollViewer.CanContentScroll="False" Background="MintCream" Grid.Row="2" HorizontalContentAlignment="Stretch" MouseDoubleClick="parcelsList_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate x:Name="ParcelTempalte" DataType="local:ListParcel">
-                    <Border BorderBrush="LightSeaGreen" BorderThickness="1" Padding="5">
+                    <Border BorderBrush="LightSeaGreen" BorderThickness="1" Padding="5" CornerRadius="7">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"/>

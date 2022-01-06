@@ -14,12 +14,19 @@
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="Height" Value="25"/>
         </Style>
-        
+
+        <Style x:Key="ExeptionStyle" BasedOn="{StaticResource SimpleTextStyle}" TargetType="TextBox">
+            <Setter Property="Height" Value="30" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="DemiBold" />
+            <Setter Property="Foreground" Value="Red" />
+        </Style>
+
         <Style x:Key="Title" TargetType="TextBox">
             <Setter Property="Background" Value="Teal"/>
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
@@ -28,6 +35,11 @@
         </Style>
         
         <Style x:Key="ButtonStyle" TargetType="Button">
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="7" />
+                </Style>
+            </Style.Resources>
             <Setter Property="Foreground" Value="DarkSlateGray"/>
             <Setter Property="Background" Value="Aquamarine"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -50,6 +62,11 @@
         </Style>
         
         <Style x:Key="mainWindowButtonStyle" TargetType="Button">
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="7" />
+                </Style>
+            </Style.Resources>
             <Setter Property="Background" Value="Teal"/>
             <Setter Property="Margin" Value="15"/>
             <Setter Property="Foreground" Value="White"/>
@@ -57,6 +74,26 @@
             <Setter Property="FontSize" Value="19"/>
             <Setter Property="Height" Value="50"/>
             <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style x:Key="goToButtonStyle" TargetType="Button">
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="7" />
+                </Style>
+            </Style.Resources>
+            <Setter Property="Background" Value="Teal"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Content" Value="❯"/>            
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+
+        <Style x:Key="progressBarStyle" TargetType="ProgressBar">
+            <Setter Property="Minimum" Value="0"/>
+            <Setter Property="Maximum" Value="100"/>            
         </Style>
 
         <local:LocationToStringConverter x:Key="locationToStringConverter"/>
