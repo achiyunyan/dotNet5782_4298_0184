@@ -221,7 +221,7 @@ namespace PL
 
         private void openParcelBtn_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == ListDrone.ParcelId), bl).Show();
+            new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == poDrone.Id), bl).Show();
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

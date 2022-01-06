@@ -185,10 +185,6 @@ namespace BL
                        SentSuppliedParcels = dalParcels.Count(par => par.SenderId == dalCustomer.Id && par.Delivered != null)
                    });
         }
-        public IEnumerable<ListParcel> GetParcelsListBetweenDates(DateTime? firstDate, DateTime? secondDate)
-        {
-            return GetParcelsList(firstDate, secondDate);
-        }
 
         public IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null)
         {                       
@@ -205,8 +201,6 @@ namespace BL
         }
 
         public IEnumerable<ListParcel> GetFilteredParcelsList(DateTime? firstDate, DateTime? secondDate, object Sender, object Receiver, object Priority, object State, object Weight)
-        {
-        public IEnumerable<ListParcel> GetParcelsList( DateTime? firstDate = null, DateTime? secondDate = null)
         {
             IEnumerable<DO.Parcel> dalParcels;
             if (firstDate == null)
@@ -252,9 +246,9 @@ namespace BL
                    };
         }
 
-        private IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate)
+        private IEnumerable<ListParcel> GetParcelsList()
         {
-            return from dalParcel in myDal.GetParcelsList(predicate)
+            return from dalParcel in myDal.GetParcelsList()
                    select new ListParcel
                    {
                        Id = dalParcel.Id,

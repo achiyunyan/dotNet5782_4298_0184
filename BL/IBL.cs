@@ -26,9 +26,8 @@ namespace BlApi
         Customer GetCustomer(int id);
         Parcel GetParcel(int id);
         IEnumerable<ListStation> GetStationsList();
-        IEnumerable<ListParcel> GetParcelsListBetweenDates(DateTime? firstDate , DateTime? secondDate );
         IEnumerable<ListDrone> GetDronesList(Func<ListDrone, bool> predicate = null);        
-        IEnumerable<ListCustomer> GetCustomersList(Func<DO.Customer, bool> predicate = null);        
+        IEnumerable<ListCustomer> GetCustomersList();        
         IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null);
         IEnumerable<ListParcel> GetNonLinkedParcelsList();
         IEnumerable<ListStation> GetStationsWithFreeSlotsList();

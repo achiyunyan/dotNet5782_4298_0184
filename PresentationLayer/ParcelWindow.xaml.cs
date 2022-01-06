@@ -77,9 +77,15 @@ namespace PL
                 e.Cancel = true;
         }
 
-        private void Update()
+
+        //   ||      |||||||| |||||||| ||  //
+        //   ||      ||    || ||    || || //
+        //   ||      ||    || ||    || ||//
+        //   ||      ||    || ||    || ||\\
+        //   ||||||| |||||||| |||||||| || \\
+        private void Update() //
         {
-            if (Owner is ParcelsListWindow)
+            if (Owner is ParcelsListWindow) // for some reason it doesn't work
                 ((ParcelsListWindow)this.Owner).Refresh();
             if (Owner is DroneWindow)
                 ((DroneWindow)this.Owner).Refresh();
