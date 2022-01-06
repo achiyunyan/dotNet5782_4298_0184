@@ -148,9 +148,9 @@ namespace BL
             return parcel;
         }
 
-        public IEnumerable<ListStation> GetStationsList(Func<DO.Station, bool> predicate = null)
+        public IEnumerable<ListStation> GetStationsList()
         {
-            return from dalStation in myDal.GetStationsList(predicate)
+            return from dalStation in myDal.GetStationsList()
                    select new ListStation
                    {
                        Id = dalStation.Id,
@@ -167,9 +167,9 @@ namespace BL
             return Drones.Where(predicate).ToList();
         }
 
-        public IEnumerable<ListCustomer> GetCustomersList(Func<DO.Customer, bool> predicate = null)
+        public IEnumerable<ListCustomer> GetCustomersList()
         {
-            IEnumerable<DO.Customer> dalCustomers = myDal.GetCustomersList(predicate);
+            IEnumerable<DO.Customer> dalCustomers = myDal.GetCustomersList();
             IEnumerable<DO.Parcel> dalParcels = myDal.GetParcelsList();
             return from dalCustomer in dalCustomers
                    select (new ListCustomer
@@ -183,8 +183,12 @@ namespace BL
                        SentSuppliedParcels = dalParcels.Count(par => par.SenderId == dalCustomer.Id && par.Delivered != null)
                    });
         }
+        public IEnumerable<ListParcel> GetParcelsListBetweenDates(DateTime? firstDate, DateTime? secondDate)
+        {
+            return GetParcelsList(firstDate, secondDate);
+        }
 
-        public IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null, DateTime? firstDate = null, DateTime? secondDate = null)
+        public IEnumerable<ListParcel> GetParcelsList( DateTime? firstDate = null, DateTime? secondDate = null)
         {
             IEnumerable<DO.Parcel> dalParcels;
             if (firstDate == null)
@@ -201,6 +205,32 @@ namespace BL
                        State = GetParcelStateByDalParcel(dalParcel),
                        SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
                        ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
+                   };
+        }
+
+        private IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate)
+        {
+            return from dalParcel in myDal.GetParcelsList(predicate)
+                   select new ListParcel
+                   {
+                       Id = dalParcel.Id,
+                       Priority = (Priority)(int)dalParcel.Priority,
+                       WeightCategory = (WeightCategory)(int)dalParcel.Weight,
+                       State = GetParcelStateByDalParcel(dalParcel),
+                       SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
+                       ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
+                   };
+        }
+
+        private IEnumerable<ListStation> GetStationsList(Func<DO.Station, bool> predicate)
+        {
+            return from dalStation in myDal.GetStationsList(predicate)
+                   select new ListStation
+                   {
+                       Id = dalStation.Id,
+                       Name = dalStation.Name,
+                       FreeChargeSlots = dalStation.ChargeSlots,
+                       BusyChargeSlots = Drones.Count(dr => dr.State == DroneState.Maintenance && dr.Location.Latitude == dalStation.Latitude && dr.Location.Longitude == dalStation.Longitude)
                    };
         }
 

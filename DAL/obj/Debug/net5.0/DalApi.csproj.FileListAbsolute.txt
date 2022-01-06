@@ -1,0 +1,11 @@
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\bin\Debug\net5.0\DalApi.deps.json
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\bin\Debug\net5.0\DalApi.dll
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\bin\Debug\net5.0\ref\DalApi.dll
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\bin\Debug\net5.0\DalApi.pdb
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DalApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DalApi.AssemblyInfoInputs.cache
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DalApi.AssemblyInfo.cs
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DalApi.csproj.CoreCompileInputs.cache
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DalApi.dll
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\ref\DalApi.dll
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DalApi.pdb

@@ -132,7 +132,7 @@ namespace PL
         public void Refresh()
         {
             IEnumerable<ListParcel> parcels;
-            parcels = ibl.GetParcelsList(null, firstDate.SelectedDate, secondDate.SelectedDate);            
+            parcels = ibl.GetParcelsList( firstDate.SelectedDate, secondDate.SelectedDate);            
             if (!(comboSender.SelectedItem == null || comboSender.SelectedItem == ""))
                 parcels = parcels.Where(par => par.SenderName == comboSender.SelectedItem);
 

@@ -22,6 +22,7 @@ namespace PL
     {
         BlApi.IBL bl;
         BO.Station station;
+        bool firstChange = true;
         public StationWindow(BlApi.IBL bL, BO.ListStation lStation)
         {
             bl = bL;
@@ -30,6 +31,7 @@ namespace PL
             AddStation.Visibility = Visibility.Hidden;
             lstvDrones.ItemsSource = station.DronesList;
             StackPanelDrone.DataContext = station;
+            StationUpdate.Visibility = Visibility.Collapsed;
         }
 
         private void lstvDrones_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -39,7 +41,7 @@ namespace PL
             DroneWindow dw = new DroneWindow(ListDroneInCharge, bl);
             dw.Owner = this;
             dw.Show();
-            
+
         }
 
         public void Refresh()
@@ -49,6 +51,12 @@ namespace PL
 
         private void StationName_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (firstChange)
+            {
+                StationUpdate.Visibility = Visibility.Visible;
+                firstChange = false;
+            }
+
             if (StationName.Text == "")
             {
                 StationName.Background = Brushes.Tomato;
@@ -64,6 +72,11 @@ namespace PL
 
         private void StationSlots_TextChanged(object sender, RoutedEventArgs e)
         {
+            if (firstChange)
+            {
+                StationUpdate.Visibility = Visibility.Visible;
+                firstChange = false;
+            }
             int slots;
             bool success = int.TryParse(StationSlots.Text, out slots);
             if (!success || slots < 0)
@@ -79,13 +92,13 @@ namespace PL
         }
 
         private void StationUpdate_Click(object sender, RoutedEventArgs e)
-        {//to finish...
-            if (well[0]&&well[1])
+        {
+            if (well[0] && well[1])
             {
                 string str = "Updated succesfully";
                 try
                 {
-                    bl.UpdateStation(station.Id, StationName.Text, int.Parse(StationSlots.Text)+station.DronesList.Count);
+                    bl.UpdateStation(station.Id, StationName.Text, int.Parse(StationSlots.Text) + station.DronesList.Count);
                 }
                 catch (BL.BlException exem)
                 {
@@ -178,7 +191,7 @@ namespace PL
             }
             else
             {
-                if (bl.GetStationsList(st => st.Id == id).Count() > 0)//==1
+                if (bl.GetStationsList().Any(st => st.Id == id))//==1
                 {
                     idExeption.Text = "Id already exists!";
                 }

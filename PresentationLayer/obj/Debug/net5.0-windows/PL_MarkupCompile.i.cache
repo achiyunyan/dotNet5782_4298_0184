@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\obj\Debug\net5.0-windows\
 PL
 none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
-C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\PresentationLayer\App.xaml
-6138754305
+C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\PresentationLayer\App.xaml
+7-2040745116
 
-10318645189
-196-1635880568
-DronesListWindow.xaml;DroneWindow.xaml;MainWindow.xaml;ParcelsListWindow.xaml;ParcelWindow.xaml;StationListWindow.xaml;
+12-57561003
+196-510720826
+DronesListWindow.xaml;DroneWindow.xaml;MainWindow.xaml;ParcelsListWindow.xaml;ParcelWindow.xaml;StationListWindow.xaml;StationWindow.xaml;
 
-True
+False
 
