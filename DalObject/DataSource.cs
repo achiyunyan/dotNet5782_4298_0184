@@ -93,7 +93,7 @@ namespace DS
                     int id;
                     do
                     {
-                        id = rand.Next(1000000000);
+                        id = rand.Next(100000000,1000000000);
                     } while (Customers.Any(st => st.Id == id));
                     Customers.Add(new Customer
                     {

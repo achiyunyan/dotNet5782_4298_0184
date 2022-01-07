@@ -1,5 +1,6 @@
 ﻿using BO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,12 +26,11 @@ namespace BlApi
         Customer GetCustomer(int id);
         Parcel GetParcel(int id);
         IEnumerable<ListStation> GetStationsList();
-        IEnumerable<ListParcel> GetParcelsListBetweenDates(DateTime? firstDate , DateTime? secondDate );
         IEnumerable<ListDrone> GetDronesList(Func<ListDrone, bool> predicate = null);        
         IEnumerable<ListCustomer> GetCustomersList();        
-        IEnumerable<ListParcel> GetParcelsList(DateTime? firstDate = null, DateTime? secondDate = null);
+        IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null);
         IEnumerable<ListParcel> GetNonLinkedParcelsList();
         IEnumerable<ListStation> GetStationsWithFreeSlotsList();
         void DeleteParcel(Parcel parcel);
-    }
+        IEnumerable<ListParcel> GetFilteredParcelsList(DateTime? firstDate, DateTime? secondDate, object Sender, object Receiver, object Priority, object State, object Weight);    }
 }
