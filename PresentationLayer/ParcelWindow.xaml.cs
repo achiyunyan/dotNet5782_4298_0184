@@ -119,7 +119,11 @@ namespace PL
 
         private void openDroneBtn_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl.GetDronesList().First(dr => dr.Id == parcel.Drone.Id), bl).Show();
+            DroneWindow droneWindow = new DroneWindow(bl.GetDronesList().First(dr => dr.Id == parcel.Drone.Id), bl)
+            {
+                Owner = this
+            };
+            droneWindow.Show();
         }
 
         private void openReceiverBtn_Click(object sender, RoutedEventArgs e)
