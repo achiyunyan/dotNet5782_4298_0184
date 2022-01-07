@@ -62,7 +62,9 @@ namespace PL
 
         private void btnAddParcel_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow(ibl).Show();
+            ParcelWindow pW = new ParcelWindow(ibl);
+            pW.Owner = this;
+            pW.Show();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -143,7 +145,9 @@ namespace PL
 
         private void parcelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new ParcelWindow((ListParcel)parcelsList.SelectedItem,ibl).Show();
+            ParcelWindow pW = new ParcelWindow((ListParcel)parcelsList.SelectedItem, ibl);
+            pW.Owner = this;
+            pW.Show();
         }
     }
 }

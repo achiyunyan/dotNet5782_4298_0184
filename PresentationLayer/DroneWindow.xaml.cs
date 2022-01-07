@@ -221,7 +221,18 @@ namespace PL
 
         private void openParcelBtn_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == poDrone.Id), bl).Show();
+            if (Owner is ParcelWindow)
+            {
+                exit = true;
+                this.Close();
+                Owner.Show();
+                return;
+            }
+            ParcelWindow pW = new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == poDrone.Id), bl)
+            {
+                Owner = this
+            };
+            pW.Show();
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
