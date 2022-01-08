@@ -42,7 +42,8 @@ namespace PL
 
         private void btnShowCustomers_Click(object sender, RoutedEventArgs e)
         {
-
+            new CustomersListWindow(myBl).Show();
+            Close();
         }
 
         private void btnShowParcels_Click(object sender, RoutedEventArgs e)

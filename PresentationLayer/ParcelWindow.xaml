@@ -8,11 +8,7 @@
         Title="Parcel Window" Height="450" Width="800"
         Background="MintCream"  
         Icon="DroneIcon.png"
-        Closing="Window_Closing">
-    <Window.Resources>
-        <local:NullToCollapsedConverter x:Key="nullToCollapsedConverter"/>
-        <local:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
-    </Window.Resources>
+        Closing="Window_Closing">    
     <Grid>
         <!-- Parcel Actions -->
         <Grid x:Name="ParcelActions">

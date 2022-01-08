@@ -97,5 +97,7 @@
         </Style>
 
         <local:LocationToStringConverter x:Key="locationToStringConverter"/>
+        <local:NullToCollapsedConverter x:Key="nullToCollapsedConverter"/>
+        <local:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
     </Application.Resources>
 </Application>

@@ -41,10 +41,69 @@ namespace PL
         }
     }
 
+    public class DroneStateAvailableToVisibleConverter : IValueConverter
+    {
+        //convert from source property type to target property type
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (DroneState)value == DroneState.Available ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class DroneStateMaintenanceToVisibleConverter : IValueConverter
+    {
+        //convert from source property type to target property type
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (DroneState)value == DroneState.Maintenance ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ParcelStateAssociatedToVisibleConverter : IValueConverter
+    {
+        //convert from source property type to target property type
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value != null)
+                return ((ParcelInTransit)value).State ? Visibility.Collapsed : Visibility.Visible;
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ParcelStateCollectedToVisibleConverter : IValueConverter
+    {
+        //convert from source property type to target property type
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value != null)
+                return ((ParcelInTransit)value).State ? Visibility.Visible : Visibility.Collapsed;
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public partial class DroneWindow : Window
     {
         BlApi.IBL bl;
-        BO.Drone drone;
         PO.Drone poDrone;
         private bool[] well = { false, false, false, false };
         private bool exit = false;
@@ -60,50 +119,20 @@ namespace PL
             poDrone = new PO.Drone(bl.GetDrone(myDrone.Id));
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;
-            Title = "DroneActionsWindow";
-            Refresh();
+            Title = "DroneActionsWindow";            
+            DroneActions.DataContext = poDrone;
         }
 
         public void Refresh()
         {
-            poDrone = new PO.Drone(bl.GetDrone(poDrone.Id));//not the best solution... ze ma yesh
+            poDrone = new PO.Drone(bl.GetDrone(poDrone.Id));
             DroneActions.DataContext = poDrone;
-
-            if (poDrone.Parcel != default)
-            {
-                ParcelTag.Visibility = Visibility.Visible; 
-                Parcel.Visibility = Visibility.Visible;               
-            }
-            else
-            {
-                ParcelTag.Visibility = Visibility.Hidden;
-                Parcel.Visibility = Visibility.Hidden;
-            }
-
-            if (poDrone.State != BO.DroneState.Available)
-                SendToCharge.Visibility = Visibility.Collapsed;
-            else
-                SendToCharge.Visibility = Visibility.Visible;
-
-            if (poDrone.State != BO.DroneState.Maintenance)
-                FreeFromCharge.Visibility = Visibility.Collapsed;
-            else
-                FreeFromCharge.Visibility = Visibility.Visible;
-
-            if (poDrone.State != BO.DroneState.Available)
-                SendToDelivery.Visibility = Visibility.Collapsed;
-            else
-                SendToDelivery.Visibility = Visibility.Visible;
-
-            if (poDrone.State != BO.DroneState.Delivery || poDrone.Parcel.State)
-                CollectParcel.Visibility = Visibility.Collapsed;
-            else
-                CollectParcel.Visibility = Visibility.Visible;
-
-            if (poDrone.State != BO.DroneState.Delivery || !poDrone.Parcel.State)
-                DeliverParcel.Visibility = Visibility.Collapsed;
-            else
-                DeliverParcel.Visibility = Visibility.Visible;
+            if (Owner is DronesListWindow)
+                ((DronesListWindow)this.Owner).Refresh();
+            if (Owner is StationWindow)
+                ((StationWindow)this.Owner).Refresh();
+            if (Owner is ParcelWindow)
+                ((ParcelWindow)this.Owner).Refresh();
         }
 
         private void Model_TextChanged(object sender, TextChangedEventArgs e)
@@ -119,8 +148,6 @@ namespace PL
         {
             bl.UpdateDrone(poDrone.Id, Model.Text);
             MessageBox.Show("Model updated successfully!");
-            if (Owner is DronesListWindow)
-                ((DronesListWindow)this.Owner).Refresh();
             Update.Visibility = Visibility.Collapsed;
         }
 
@@ -136,10 +163,7 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
-            if(Owner is DronesListWindow)
-                ((DronesListWindow)this.Owner).Refresh();
-            if (Owner is StationWindow)
-                ((StationWindow)this.Owner).Refresh();
+            
             Refresh();
         }
 
@@ -155,10 +179,6 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
-            if (Owner is DronesListWindow)
-                ((DronesListWindow)this.Owner).Refresh();
-            if (Owner is StationWindow)
-                ((StationWindow)this.Owner).Refresh();
             Refresh();
         }
 
@@ -174,10 +194,6 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
-            if (Owner is DronesListWindow)
-                ((DronesListWindow)this.Owner).Refresh();
-            if (Owner is StationWindow)
-                ((StationWindow)this.Owner).Refresh();
             Refresh();
         }
 
@@ -193,10 +209,6 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
-            if (Owner is DronesListWindow)
-                ((DronesListWindow)this.Owner).Refresh();
-            if (Owner is StationWindow)
-                ((StationWindow)this.Owner).Refresh();
             Refresh();
         }
 
@@ -212,10 +224,6 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
-            if (Owner is DronesListWindow)
-                ((DronesListWindow)this.Owner).Refresh();
-            if (Owner is StationWindow)
-                ((StationWindow)this.Owner).Refresh();
             Refresh();
         }
 
@@ -228,11 +236,10 @@ namespace PL
                 Owner.Show();
                 return;
             }
-            ParcelWindow pW = new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == poDrone.Id), bl)
+            new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == poDrone.Parcel.Id), bl)
             {
                 Owner = this
-            };
-            pW.Show();
+            }.Show();
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -254,7 +261,7 @@ namespace PL
         {
             if (well.All(pl => pl == true))
             {
-                drone = new BO.Drone();
+                BO.Drone drone = new BO.Drone();
                 drone.Id = int.Parse(Id.Text);
                 ListStation x = (ListStation)comboInitialStation.SelectedItem;
                 drone.Model = ModelAdd.Text;

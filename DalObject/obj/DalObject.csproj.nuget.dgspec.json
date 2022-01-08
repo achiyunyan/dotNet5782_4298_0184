@@ -1,21 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\DalObject.csproj": {}
+    "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\DalObject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\DalObject.csproj": {
+    "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\DalObject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\DalObject.csproj",
+        "projectUniqueName": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\DalObject.csproj",
         "projectName": "DalObject",
-        "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\DalObject.csproj",
-        "packagesPath": "C:\\Users\\yunia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\obj\\",
+        "projectPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\DalObject.csproj",
+        "packagesPath": "C:\\Users\\zviko\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\yunia\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\zviko\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -28,8 +35,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj": {
-                "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj"
+              "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj": {
+                "projectPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj"
               }
             }
           }
@@ -58,22 +65,29 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj": {
+    "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj",
+        "projectUniqueName": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj",
         "projectName": "DalApi",
-        "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj",
-        "packagesPath": "C:\\Users\\yunia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\obj\\",
+        "projectPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj",
+        "packagesPath": "C:\\Users\\zviko\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\yunia\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\zviko\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -112,7 +126,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

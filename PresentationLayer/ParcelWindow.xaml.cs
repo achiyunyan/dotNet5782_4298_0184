@@ -21,35 +21,7 @@ namespace PL
     /// <summary>
     /// Interaction logic for ParcelWindow.xaml
     /// </summary>
-    /// 
-
-    public class NullToCollapsedConverter : IValueConverter
-    {
-        //convert from source property type to target property type
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value == null ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class NullToVisibleConverter : IValueConverter
-    {
-        //convert from source property type to target property type
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value != null ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    ///     
 
     public partial class ParcelWindow : Window
     {
@@ -58,7 +30,7 @@ namespace PL
         bool[] well = { false, false, false, false };
         bool exit = false;
         /// <summary>
-        /// Drone actions functions
+        /// Parcel actions functions
         /// </summary>
         /// 
         public ParcelWindow(BO.ListParcel myParcel, BlApi.IBL myBl)
@@ -67,7 +39,7 @@ namespace PL
             parcel = new Parcel(bl.GetParcel(myParcel.Id));
             InitializeComponent();
             AddParcel.Visibility = Visibility.Hidden;
-            Title = "DroneActionsWindow";
+            Title = "ParcelActionsWindow";
             ParcelActions.DataContext = parcel;
         }
 
@@ -77,24 +49,21 @@ namespace PL
                 e.Cancel = true;
         }
 
-
-        //   ||      |||||||| |||||||| ||  //
-        //   ||      ||    || ||    || || //
-        //   ||      ||    || ||    || ||//
-        //   ||      ||    || ||    || ||\\
-        //   ||||||| |||||||| |||||||| || \\
-
-        private void Update() //
+        public void Refresh()
         {
-            if (Owner is ParcelsListWindow) // for some reason it doesn't work
+            parcel = new Parcel(bl.GetParcel(parcel.Id));
+            ParcelActions.DataContext = parcel;
+            if (Owner is ParcelsListWindow)
                 ((ParcelsListWindow)this.Owner).Refresh();
             if (Owner is DroneWindow)
                 ((DroneWindow)this.Owner).Refresh();
+            if (Owner is CustomerWindow)
+                ((CustomerWindow)this.Owner).Refresh();
         }
 
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
         {
-            Update();
+            Refresh();
             exit = true;
             this.Close();
         }
@@ -128,12 +97,16 @@ namespace PL
 
         private void openReceiverBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            CustomerWindow cw = new CustomerWindow(bl.GetCustomersList().First(cs => cs.Id == parcel.Receiver.Id), bl);
+            cw.Owner = this;
+            cw.Show();
         }
 
         private void openSenderBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            CustomerWindow cw = new CustomerWindow(bl.GetCustomersList().First(cs => cs.Id == parcel.Sender.Id), bl);
+            cw.Owner = this;
+            cw.Show();
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -154,7 +127,7 @@ namespace PL
         private void addParcelBtn_Click(object sender, RoutedEventArgs e)
         {
             if (well.All(pl => pl == true))
-            {                
+            {
                 string str = "Parcel successfuly added!";
                 bool error = false;
                 try
@@ -189,7 +162,7 @@ namespace PL
                 SenderIdExeption.Text = "";
                 SenderId.Background = null;
                 well[0] = true;
-            }            
+            }
         }
         private void ReceiverId_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -206,7 +179,7 @@ namespace PL
                 ReceiverIdExeption.Text = "";
                 ReceiverId.Background = null;
                 well[1] = true;
-            }            
+            }
         }
 
         private void comboWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
