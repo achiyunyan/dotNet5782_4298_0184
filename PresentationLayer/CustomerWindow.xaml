@@ -39,7 +39,7 @@
     </Window.Resources>
     <Grid>
         <!-- Customer Actions -->
-        <Grid x:Name="CustomerActions" Visibility="Collapsed">
+        <Grid x:Name="CustomerActions">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
@@ -98,32 +98,37 @@
             </Grid.RowDefinitions>
             <TextBox IsReadOnly="True" Background="Teal" BorderThickness="0"/>
             <TextBox Grid.Column="2" IsReadOnly="True" Background="Teal" BorderThickness="0"/>
-            <TextBox Grid.Column="1" FontSize="32"  Text="Enter Parcel properties" Style="{StaticResource Title}"/>
+            <TextBox Grid.Column="1" FontSize="31"  Text="Enter Customer properties" Style="{StaticResource Title}"/>
 
             <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBox Text="Id:" Style="{StaticResource AddPropertiesTags}" Margin="0"/>
                 <TextBox Text="Name:" Style="{StaticResource AddPropertiesTags}"/>
-                <TextBox Text="Phone:" Style="{StaticResource AddPropertiesTags}"/>
+                <TextBox Text="Phone number:" Style="{StaticResource AddPropertiesTags}"/>
                 <TextBox Text="Location(lat,long):" Style="{StaticResource AddPropertiesTags}" Margin="0,40,0,25"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
-                <TextBox x:Name="IdGet" TextWrapping="Wrap" Height="40" FontSize="18"/>
+                <TextBox x:Name="IdGet" TextWrapping="Wrap" Height="40" FontSize="18" TextChanged="IdGet_TextChanged"/>
                 <TextBox x:Name="IdExeption" Style="{StaticResource ExeptionStyle}"/>
-                <TextBox x:Name="NameGet" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18"/>
+                <TextBox x:Name="NameGet" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18" TextChanged="NameGet_TextChanged"/>
                 <TextBox x:Name="NameExeption" Style="{StaticResource ExeptionStyle}"/>
-                <TextBox x:Name="PhoneGet" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18"/>
+                <TextBox x:Name="PhoneGet" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18" TextChanged="PhoneGet_TextChanged"/>
                 <TextBox x:Name="PhoneExeption" Style="{StaticResource ExeptionStyle}"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="LocationLatGet" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18"/>
-                    <TextBox x:Name="LocationLongGet" Grid.Column="1" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18"/>
-                </Grid>
-                <TextBox x:Name="LocationExeption" Style="{StaticResource ExeptionStyle}"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="LocationLatGet" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18" TextChanged="LocationLatGet_TextChanged"/>
+                    <TextBox x:Name="LocationLongGet" Grid.Column="1" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18" TextChanged="LocationLongGet_TextChanged"/>
+                    <TextBox x:Name="LocationLatExeption" Grid.Row="1" Style="{StaticResource ExeptionStyle}"/>
+                    <TextBox x:Name="LocationLongExeption" Grid.Row="1" Grid.Column="1" Style="{StaticResource ExeptionStyle}"/>
+                </Grid>                
             </StackPanel>
-            <Button x:Name="addParcelBtn" Grid.Row="1" Grid.Column="2" Content="Add Parcel" Style="{StaticResource StackPanelButtonStyle}"/>
+            <Button x:Name="addCustomerBtn" Grid.Row="1" Grid.Column="2" Content="Add Customer" Style="{StaticResource StackPanelButtonStyle}" Click="addCustomerBtn_Click"/>
             <Button Grid.Column="2" Content="Close"  Style="{StaticResource ButtonStyle}" VerticalAlignment="Center" Margin="0" Height="35" Width="100" Click="btnBackToList_Click"/>
         </Grid>
     </Grid>
