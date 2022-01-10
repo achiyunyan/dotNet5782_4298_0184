@@ -93,11 +93,13 @@
 
         <Style x:Key="progressBarStyle" TargetType="ProgressBar">
             <Setter Property="Minimum" Value="0"/>
-            <Setter Property="Maximum" Value="100"/>            
+            <Setter Property="Maximum" Value="100"/>             
+            <Setter Property="Background" Value="White"/>             
         </Style>
 
         <local:LocationToStringConverter x:Key="locationToStringConverter"/>
         <local:NullToCollapsedConverter x:Key="nullToCollapsedConverter"/>
         <local:NullToVisibleConverter x:Key="nullToVisibleConverter"/>
+        <local:BatteryPercentToColor x:Key="batteryPercentToColor"/>
     </Application.Resources>
 </Application>

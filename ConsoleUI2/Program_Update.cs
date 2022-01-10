@@ -96,7 +96,7 @@ namespace ConsoleUI_BL
             int.TryParse(Console.ReadLine(), out chargingTime);
             try
             {
-                myBl.DroneRelease(id, chargingTime);
+                myBl.DroneRelease(id);
             }
             catch (BL.BlException exec)
             {

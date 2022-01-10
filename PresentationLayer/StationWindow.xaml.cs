@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PO;
 
 namespace PL
 {
@@ -21,12 +22,13 @@ namespace PL
     public partial class StationWindow : Window
     {
         BlApi.IBL bl;
-        BO.Station station;
-        bool firstChange = true;
+        Station station;
+        bool firstChange1 = true;
+        bool firstChange2 = true;
         public StationWindow(BlApi.IBL bL, BO.ListStation lStation)
         {
             bl = bL;
-            station = bl.GetStation(lStation.Id);
+            station = new Station(bl.GetStation(lStation.Id));
             InitializeComponent();
             AddStation.Visibility = Visibility.Hidden;
             lstvDrones.ItemsSource = station.DronesList;
@@ -46,70 +48,85 @@ namespace PL
 
         public void Refresh()
         {
+            station = new Station(bl.GetStation(station.Id));
+            StackPanelDrone.DataContext = station;
             lstvDrones.ItemsSource = bl.GetStation(station.Id).DronesList;
+            if (Owner is StationsListWindow)
+                ((StationsListWindow)Owner).Refresh();
         }
 
         private void StationName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (firstChange)
+            if (firstChange1)
             {
-                StationUpdate.Visibility = Visibility.Visible;
-                firstChange = false;
-            }
-
-            if (StationName.Text == "")
-            {
-                StationName.Background = Brushes.Tomato;
-                well[1] = false;
+                firstChange1 = false;
             }
             else
             {
-                StationName.Background = Brushes.AliceBlue;
-                well[1] = true;
+                if (StationName.Text == "")
+                {
+                    NameExeption.Text = " Name not valid!";
+                    StationName.Background = Brushes.Tomato;
+                    well[1] = false;
+                    StationUpdate.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    NameExeption.Text = "";
+                    StationName.Background = Brushes.MintCream;
+                    well[1] = true;
+                    StationUpdate.Visibility = Visibility.Visible;
+                }
             }
         }
 
 
         private void StationSlots_TextChanged(object sender, RoutedEventArgs e)
         {
-            if (firstChange)
+            if (firstChange2)
             {
-                StationUpdate.Visibility = Visibility.Visible;
-                firstChange = false;
-            }
-            int slots;
-            bool success = int.TryParse(StationSlots.Text, out slots);
-            if (!success || slots < 0)
-            {
-                StationSlots.Background = Brushes.Tomato;
-                well[0] = false;
+                firstChange2 = false;
             }
             else
             {
-                StationSlots.Background = Brushes.AliceBlue;
-                well[0] = true;
+                int slots;
+                bool success = int.TryParse(StationSlots.Text, out slots);
+                if (!success || slots < 0)
+                {
+                    SlotsExeption.Text = " Free slots not valid!";
+                    StationSlots.Background = Brushes.Tomato;
+                    well[0] = false;
+                    StationUpdate.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    StationUpdate.Visibility = Visibility.Visible;
+                    SlotsExeption.Text = "";
+                    StationSlots.Background = Brushes.MintCream;
+                    well[0] = true;
+                }
             }
         }
 
         private void StationUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if (well[0] && well[1])
+            if (well[0] || well[1])
             {
                 string str = "Updated succesfully";
+                int chargingSlots = 0;
+                int help;
+                if (int.TryParse(StationSlots.Text, out help))
+                    chargingSlots = int.Parse(StationSlots.Text) + ((station.DronesList == null) ? 0 : station.DronesList.Count);
                 try
                 {
-                    bl.UpdateStation(station.Id, StationName.Text, int.Parse(StationSlots.Text) + station.DronesList.Count);
+                    bl.UpdateStation(station.Id, StationName.Text, chargingSlots);
                 }
                 catch (BL.BlException exem)
                 {
                     str = exem.Message;
-                    error = true;
                 }
                 MessageBox.Show(str);
-                if (!error)
-                {
-                    btnBackToList_Click(sender, e);
-                }
+                Refresh();
             }
 
         }

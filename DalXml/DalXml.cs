@@ -82,7 +82,7 @@ namespace Dal
             throw new NotImplementedException();
         }
 
-        public double GetElectricityChargePerHour()
+        public double GetElectricityChargePerSec()
         {
             throw new NotImplementedException();
         }

@@ -46,7 +46,14 @@
                 <TextBox Text="{Binding Id}"  Style="{StaticResource SimpleTextStyle}"/>
                 <TextBox x:Name="Model" Text="{Binding Model}" Style="{StaticResource SimpleTextStyle}" IsReadOnly="False" TextChanged="Model_TextChanged"/>
                 <TextBox Text="{Binding WeightCategory}"  Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox Text="{Binding Battery, StringFormat={}{0:N0}%}" Style="{StaticResource SimpleTextStyle}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ProgressBar x:Name="BaterryProgressBar" Value="{Binding Battery}" Style="{StaticResource progressBarStyle}" Height="25" Foreground="{Binding Battery, Converter={StaticResource batteryPercentToColor}}"/>
+                    <TextBlock Text="{Binding Battery, StringFormat={}{0:N0}%}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Height="25"/>
+                </Grid>
                 <TextBox Text="{Binding State}" Style="{StaticResource SimpleTextStyle}"/>
                 <TextBox Text="{Binding Location, Converter={StaticResource locationToStringConverter}}" Style="{StaticResource SimpleTextStyle}"/>
                 <Grid x:Name="Parcel" Height="222" Visibility="{Binding Parcel, Converter={StaticResource nullToCollapsedConverter}}">

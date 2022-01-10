@@ -26,7 +26,7 @@ namespace PL
             throw new NotImplementedException();
         }
     }
-    
+
     public class LocationToStringConverter : IValueConverter
     {
         //convert from source property type to target property type
@@ -119,7 +119,7 @@ namespace PL
             poDrone = new PO.Drone(bl.GetDrone(myDrone.Id));
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;
-            Title = "DroneActionsWindow";            
+            Title = "DroneActionsWindow";
             DroneActions.DataContext = poDrone;
         }
 
@@ -163,7 +163,7 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
-            
+
             Refresh();
         }
 
@@ -172,7 +172,7 @@ namespace PL
             string str = "Drone freed from charge successfully!";
             try
             {
-                bl.DroneRelease(poDrone.Id, 3);
+                bl.DroneRelease(poDrone.Id);
             }
             catch (BL.BlException exem)
             {
@@ -241,6 +241,7 @@ namespace PL
                 Owner = this
             }.Show();
         }
+          
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -353,6 +354,6 @@ namespace PL
         {
             if (exit == false)
                 e.Cancel = true;
-        }        
-    }    
+        }
+    }
 }

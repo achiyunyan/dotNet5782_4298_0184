@@ -75,9 +75,9 @@
                     <TextBox x:Name="phoneExp" Grid.Column="1" Foreground="Red" Style="{StaticResource SimpleTextStyle}"/>
                 </Grid>
                 <TextBox x:Name="Location" Text="{Binding Location, Converter={StaticResource locationToStringConverter}}" Style="{StaticResource SimpleTextStyle}"/>
-                <ListBox x:Name="OutParcelsList" Margin="0,5,0,0" ItemsSource="{Binding OutDeliveries}" ItemTemplate="{StaticResource ParcelTempalte}"  
+                <ListBox x:Name="OutParcelsList" Margin="0,5,0,0" ItemsSource="{Binding OutDeliveries}" ItemTemplate="{StaticResource ParcelTempalte}" Visibility="{Binding OutDeliveries, Converter={StaticResource nullToCollapsedConverter}}" 
                          Height="125" ScrollViewer.CanContentScroll="False" Background="MintCream" HorizontalContentAlignment="Stretch" MouseDoubleClick="outParcelsList_MouseDoubleClick"/>
-                <ListBox x:Name="InParcelsList" Margin="0,10,0,0" ItemsSource="{Binding InDeliveries}" ItemTemplate="{StaticResource ParcelTempalte}"  
+                <ListBox x:Name="InParcelsList" Margin="0,10,0,0" ItemsSource="{Binding InDeliveries}" ItemTemplate="{StaticResource ParcelTempalte}" Visibility="{Binding InDeliveries, Converter={StaticResource nullToCollapsedConverter}}"
                          Height="125" ScrollViewer.CanContentScroll="False" Background="MintCream" HorizontalContentAlignment="Stretch" MouseDoubleClick="InParcelsList_MouseDoubleClick"/>
             </StackPanel>
 

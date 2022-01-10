@@ -1,4 +1,4 @@
-﻿<Window x:Class="PL.StationListWindow"
+﻿<Window x:Class="PL.StationsListWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -49,9 +49,9 @@
                                 <TextBlock Text="Free Charge Slots:" FontWeight="DemiBold"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
-                                <TextBlock Text="{Binding Path=Id}" FontWeight="DemiBold"/>
-                                <TextBlock Text="{Binding Path=Name}" FontWeight="DemiBold"/>
-                                <TextBlock Text="{Binding Path=FreeChargeSlots}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Id}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding Name}" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding FreeChargeSlots}" FontWeight="DemiBold"/>
                             </StackPanel>
                         </Grid>
                     </Border>
