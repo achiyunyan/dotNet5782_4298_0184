@@ -39,7 +39,7 @@
     </Window.Resources>
     <Grid>
         <!-- Customer Actions -->
-        <Grid x:Name="CustomerActions">
+        <Grid x:Name="CustomerActions" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
@@ -66,7 +66,14 @@
             <StackPanel Grid.Column="1" Grid.Row="1">
                 <TextBox x:Name="Id" Text="{Binding Id}" Style="{StaticResource SimpleTextStyle}"/>
                 <TextBox x:Name="Name" Text="{Binding Name}" Style="{StaticResource SimpleTextStyle}"  IsReadOnly="False" TextChanged="Name_TextChanged"/>
-                <TextBox x:Name="Phone" Text="{Binding Phone}" Style="{StaticResource SimpleTextStyle}" IsReadOnly="False" TextChanged="Phone_TextChanged"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="Phone" Text="{Binding Phone}" Style="{StaticResource SimpleTextStyle}" IsReadOnly="False" TextChanged="Phone_TextChanged"/>
+                    <TextBox x:Name="phoneExp" Grid.Column="1" Foreground="Red" Style="{StaticResource SimpleTextStyle}"/>
+                </Grid>
                 <TextBox x:Name="Location" Text="{Binding Location, Converter={StaticResource locationToStringConverter}}" Style="{StaticResource SimpleTextStyle}"/>
                 <ListBox x:Name="OutParcelsList" Margin="0,5,0,0" ItemsSource="{Binding OutDeliveries}" ItemTemplate="{StaticResource ParcelTempalte}"  
                          Height="125" ScrollViewer.CanContentScroll="False" Background="MintCream" HorizontalContentAlignment="Stretch" MouseDoubleClick="outParcelsList_MouseDoubleClick"/>
@@ -79,7 +86,7 @@
             </StackPanel>
         </Grid>
         <!-- Add Customer -->
-        <Grid x:Name="AddCustomer" Visibility="Collapsed">
+        <Grid x:Name="AddCustomer">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
@@ -94,18 +101,27 @@
             <TextBox Grid.Column="1" FontSize="32"  Text="Enter Parcel properties" Style="{StaticResource Title}"/>
 
             <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBox Text="Sender Id:" Style="{StaticResource AddPropertiesTags}" Margin="0"/>
-                <TextBox Text="Receiver Id:" Style="{StaticResource AddPropertiesTags}"/>
-                <TextBox Text="Weight:" Style="{StaticResource AddPropertiesTags}"/>
-                <TextBox Text="Priority:" Style="{StaticResource AddPropertiesTags}"/>
+                <TextBox Text="Id:" Style="{StaticResource AddPropertiesTags}" Margin="0"/>
+                <TextBox Text="Name:" Style="{StaticResource AddPropertiesTags}"/>
+                <TextBox Text="Phone:" Style="{StaticResource AddPropertiesTags}"/>
+                <TextBox Text="Location(lat,long):" Style="{StaticResource AddPropertiesTags}" Margin="0,40,0,25"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
-                <TextBox x:Name="SenderId" TextWrapping="Wrap" Height="40" FontSize="18"/>
-                <TextBox x:Name="SenderIdExeption" Style="{StaticResource ExeptionStyle}"/>
-                <TextBox x:Name="ReceiverId" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18"/>
-                <TextBox x:Name="ReceiverIdExeption" TextWrapping="Wrap" Height="30" FontSize="18" FontWeight="DemiBold" Background="MintCream" Foreground="Red" BorderThickness="0" IsReadOnly="True"/>
-                <ComboBox x:Name="comboWeight" Height="40" Margin="0,10,0,0"/>
-                <ComboBox x:Name="comboPriority" Height="40" Margin="0,40,0,0"/>
+                <TextBox x:Name="IdGet" TextWrapping="Wrap" Height="40" FontSize="18"/>
+                <TextBox x:Name="IdExeption" Style="{StaticResource ExeptionStyle}"/>
+                <TextBox x:Name="NameGet" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18"/>
+                <TextBox x:Name="NameExeption" Style="{StaticResource ExeptionStyle}"/>
+                <TextBox x:Name="PhoneGet" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18"/>
+                <TextBox x:Name="PhoneExeption" Style="{StaticResource ExeptionStyle}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="LocationLatGet" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18"/>
+                    <TextBox x:Name="LocationLongGet" Grid.Column="1" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18"/>
+                </Grid>
+                <TextBox x:Name="LocationExeption" Style="{StaticResource ExeptionStyle}"/>
             </StackPanel>
             <Button x:Name="addParcelBtn" Grid.Row="1" Grid.Column="2" Content="Add Parcel" Style="{StaticResource StackPanelButtonStyle}"/>
             <Button Grid.Column="2" Content="Close"  Style="{StaticResource ButtonStyle}" VerticalAlignment="Center" Margin="0" Height="35" Width="100" Click="btnBackToList_Click"/>

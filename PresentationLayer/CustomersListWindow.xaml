@@ -26,7 +26,7 @@
             </Grid.ColumnDefinitions>
             <TextBox Text="Customers" Style="{StaticResource Title}" FontSize="50"/>            
             <Button x:Name="btnClose" Content="Close" Click="btnClose_Click" Style="{StaticResource ButtonStyle}" Grid.Column="4" Margin="22"/>
-            <Button x:Name="btnAddCustomer" Content="    Add&#xa;customer" FontSize="15" Style="{StaticResource ButtonStyle}" Grid.Column="3" Margin="22"/>
+            <Button x:Name="btnAddCustomer" Content="    Add&#xa;customer" FontSize="15" Style="{StaticResource ButtonStyle}" Grid.Column="3" Margin="22" Click="btnAddCustomer_Click"/>
         </Grid>
         <ListBox x:Name="lstvCustomers" ScrollViewer.CanContentScroll="False" Background="MintCream" MouseDoubleClick="openActionsWindow" Grid.Row="2" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>

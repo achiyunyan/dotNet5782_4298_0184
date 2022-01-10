@@ -58,6 +58,12 @@ namespace PL
             lstvCustomers.ItemsSource = ibl.GetCustomersList();
         }
 
-
+        private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            CustomerWindow cw = new CustomerWindow(ibl);
+            cw.Owner = this;
+            cw.Show();
+            exit = true;
+        }
     }
 }

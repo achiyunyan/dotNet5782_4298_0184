@@ -26,6 +26,7 @@ namespace PL
         bool exit = false;
         private bool first1 = true;
         private bool first2 = true;
+        private bool phoneIsOk = true;
         /// <summary>
         /// Customer actions functions
         /// </summary>
@@ -48,8 +49,11 @@ namespace PL
 
         public void Refresh()
         {
-            customer = new Customer(bl.GetCustomer(customer.Id));
-            CustomerActions.DataContext = customer;
+            if (CustomerActions.Visibility == Visibility.Visible)
+            {
+                customer = new Customer(bl.GetCustomer(customer.Id));
+                CustomerActions.DataContext = customer;
+            }
             if (Owner is CustomersListWindow)
                 ((CustomersListWindow)this.Owner).Refresh();
             if (Owner is ParcelWindow)
@@ -65,15 +69,33 @@ namespace PL
 
         private void Phone_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!first1)
+            ulong phone;
+            if (!first1 && ulong.TryParse(Phone.Text, out phone) && (Phone.Text.Length == 11 || Phone.Text.Length == 10))
+            {
+                phoneIsOk = true;
+                Phone.Background = Brushes.MintCream;
+                Phone.Foreground = Brushes.Teal;
+                phoneExp.Text = " ";
                 Update.Visibility = Visibility.Visible;
+            }
             else
-                first1 = false;
+            {
+                if (!first1)
+                {
+                    phoneIsOk = false;
+                    Update.Visibility = Visibility.Collapsed;
+                    Phone.Background = Brushes.Tomato;
+                    Phone.Foreground = Brushes.White;
+                    phoneExp.Text = " Phone not valid!";
+                }
+                else
+                    first1 = false;
+            }
         }
 
         private void Name_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!first2)
+            if (!first2 && phoneIsOk)
                 Update.Visibility = Visibility.Visible;
             else
                 first2 = false;

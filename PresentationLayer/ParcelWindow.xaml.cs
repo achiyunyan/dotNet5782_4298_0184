@@ -29,6 +29,7 @@ namespace PL
         Parcel parcel;
         bool[] well = { false, false, false, false };
         bool exit = false;
+        bool exist = true;
         /// <summary>
         /// Parcel actions functions
         /// </summary>
@@ -51,7 +52,8 @@ namespace PL
 
         public void Refresh()
         {
-            parcel = new Parcel(bl.GetParcel(parcel.Id));
+            if(exist)
+                parcel = new Parcel(bl.GetParcel(parcel.Id));
             ParcelActions.DataContext = parcel;
             if (Owner is ParcelsListWindow)
                 ((ParcelsListWindow)this.Owner).Refresh();
@@ -83,7 +85,10 @@ namespace PL
             }
             MessageBox.Show(str);
             if (success)
+            {
+                exist = false;
                 btnBackToList_Click(sender, e);
+            }
         }
 
         private void openDroneBtn_Click(object sender, RoutedEventArgs e)
