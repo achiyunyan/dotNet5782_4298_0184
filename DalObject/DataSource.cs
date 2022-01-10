@@ -99,7 +99,7 @@ namespace DS
                     {
                         Id = id,
                         Name = names[rand.Next(names.Length)],
-                        Phone = $"0{rand.Next(1000000000) + 5000000000}",
+                        Phone = $"0{rand.Next(100000000) + 500000000}",
                         Latitude = rand.NextDouble() * (31.809648051878856 - 31.742227429597634) + 31.742227429597634,
                         Longitude = rand.NextDouble() * (35.22496332365079 - 35.16242159781234) + 35.16242159781234
                     });
@@ -107,12 +107,12 @@ namespace DS
             }
 
             /// <summary>
-            /// Adds between 10 to 1000 parcels
+            /// Adds between 10 to 100 parcels
             /// </summary>
             private static void RandomParcel()
             {
                 int maxDronesInDelivery = rand.Next(Drones.Count - 4, Drones.Count - 2);
-                int size = rand.Next(10, 1001);
+                int size = rand.Next(10, 101);
                 int choice;
                 bool NotCreated;
                 for (int i = 0; i < size; i++)

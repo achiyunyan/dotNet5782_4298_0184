@@ -71,7 +71,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <ProgressBar Value="{Binding Battery}" Style="{StaticResource progressBarStyle}"/>
-                                    <TextBlock Text="{Binding Battery, StringFormat={}{0}%}" HorizontalAlignment="Center" FontWeight="DemiBold"/>
+                                    <TextBlock Text="{Binding Battery, StringFormat={}{0:N0}%}" HorizontalAlignment="Center" FontWeight="DemiBold"/>
                                 </Grid>
                                 <TextBlock Text="{Binding State}" FontWeight="DemiBold"/>
                                 <TextBlock Text="{Binding Location}" FontWeight="DemiBold"/>

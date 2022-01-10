@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-namespace PL.PO
+namespace PO
 {
     class Drone : INotifyPropertyChanged
     {
@@ -31,7 +31,6 @@ namespace PL.PO
                 WeightCategory=internalDrone.WeightCategory
             };
         }
-        public bool IsValid { set; get; }
         public event PropertyChangedEventHandler PropertyChanged;
         #region properties
         public string Model
@@ -39,7 +38,7 @@ namespace PL.PO
             set
             {
                 internalDrone.Model = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
             }
             get
             {
@@ -51,7 +50,7 @@ namespace PL.PO
             set
             {
                 internalDrone.Id = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
             }
             get
             {
@@ -63,7 +62,7 @@ namespace PL.PO
             set
             {
                 internalDrone.State = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
             }
             get
             {
@@ -75,7 +74,7 @@ namespace PL.PO
             set
             {
                 internalDrone.Location = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
             }
             get
             {
@@ -87,7 +86,7 @@ namespace PL.PO
             set
             {
                 internalDrone.Battery = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
             }
             get
             {
@@ -99,7 +98,7 @@ namespace PL.PO
             set
             {
                 internalDrone.Parcel = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
             }
             get
             {
@@ -111,25 +110,13 @@ namespace PL.PO
             set
             {
                 internalDrone.WeightCategory = value;
-                OnPropertyChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
             }
             get
             {
                 return internalDrone.WeightCategory;
             }
         }
-        #endregion
-        public bool checkValid()
-        {
-            return
-                Id != 0 &&
-                Model != "" &&
-                Location != null;
-        }
-        protected void OnPropertyChanged(string propertyName = null)
-        {
-            IsValid = checkValid();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        #endregion        
     }
 }

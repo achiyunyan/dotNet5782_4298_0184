@@ -1,0 +1,136 @@
+﻿<Window x:Class="PL.CustomerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="Customer Window" Height="450" Width="800"
+        Background="MintCream"  
+        Icon="DroneIcon.png"
+        Closing="Window_Closing">
+    <Window.Resources>
+        <DataTemplate x:Key="ParcelTempalte" DataType="local:ParcelInCustomer">
+            <Border BorderBrush="LightSeaGreen" BorderThickness="1" Padding="5" CornerRadius="7">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Id:" FontWeight="DemiBold"/>
+                        <TextBlock Text="Weight Category:" FontWeight="DemiBold"/>
+                        <TextBlock Text="Priority:" FontWeight="DemiBold"/>
+                        <TextBlock Text="State:" FontWeight="DemiBold"/>
+                        <TextBlock Text="Customer:" FontWeight="DemiBold"/>
+                        <TextBlock Text="Space" FontWeight="DemiBold" Visibility="Hidden"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="{Binding Id}" FontWeight="DemiBold"/>
+                        <TextBlock Text="{Binding WeightCategory}" FontWeight="DemiBold"/>
+                        <TextBlock Text="{Binding Priority}" FontWeight="DemiBold"/>
+                        <TextBlock Text="{Binding State}" FontWeight="DemiBold"/>
+                        <TextBlock Text="{Binding Customer.Id, StringFormat=Customer Id: {0}}" FontWeight="DemiBold"/>
+                        <TextBlock Text="{Binding Customer.Name, StringFormat=Name:            {0}}" FontWeight="DemiBold"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <!-- Customer Actions -->
+        <Grid x:Name="CustomerActions">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+
+            <TextBox Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True" Background="Teal" BorderThickness="0"/>
+
+            <TextBox Text="Properties" FontSize="20" Background="Teal" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="White" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" />
+            <Button Grid.Column="2" Content="Close"  Style="{StaticResource ButtonStyle}" VerticalAlignment="Center" Margin="0" Height="35" Width="100" Click="btnBackToList_Click"/>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+                <TextBox Text="Id: " Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox Text="Name: " Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox Text="Phone number: " Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox Text="Location: " Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox Text="Outgoing parcels: " Style="{StaticResource SimpleTextStyle}" Visibility="{Binding OutDeliveries, Converter={StaticResource nullToCollapsedConverter}}"/>
+                <TextBox Name="Space" Background="MintCream" BorderThickness="0" Height="110" Visibility="{Binding OutDeliveries, Converter={StaticResource nullToCollapsedConverter}}"/>
+                <TextBox Text="Incoming parcels: " Style="{StaticResource SimpleTextStyle}" Visibility="{Binding InDeliveries, Converter={StaticResource nullToCollapsedConverter}}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="1">
+                <TextBox x:Name="Id" Text="{Binding Id}" Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox x:Name="Name" Text="{Binding Name}" Style="{StaticResource SimpleTextStyle}"  IsReadOnly="False" TextChanged="Name_TextChanged"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="Phone" Text="{Binding Phone}" Style="{StaticResource SimpleTextStyle}" IsReadOnly="False" TextChanged="Phone_TextChanged"/>
+                    <TextBox x:Name="phoneExp" Grid.Column="1" Foreground="Red" Style="{StaticResource SimpleTextStyle}"/>
+                </Grid>
+                <TextBox x:Name="Location" Text="{Binding Location, Converter={StaticResource locationToStringConverter}}" Style="{StaticResource SimpleTextStyle}"/>
+                <ListBox x:Name="OutParcelsList" Margin="0,5,0,0" ItemsSource="{Binding OutDeliveries}" ItemTemplate="{StaticResource ParcelTempalte}"  
+                         Height="125" ScrollViewer.CanContentScroll="False" Background="MintCream" HorizontalContentAlignment="Stretch" MouseDoubleClick="outParcelsList_MouseDoubleClick"/>
+                <ListBox x:Name="InParcelsList" Margin="0,10,0,0" ItemsSource="{Binding InDeliveries}" ItemTemplate="{StaticResource ParcelTempalte}"  
+                         Height="125" ScrollViewer.CanContentScroll="False" Background="MintCream" HorizontalContentAlignment="Stretch" MouseDoubleClick="InParcelsList_MouseDoubleClick"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Grid.Row="1">
+                <Button x:Name="Update" Content="Update" Click="Update_Click"  Style="{StaticResource StackPanelButtonStyle}" Visibility="Collapsed"/>
+            </StackPanel>
+        </Grid>
+        <!-- Add Customer -->
+        <Grid x:Name="AddCustomer">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+            <TextBox IsReadOnly="True" Background="Teal" BorderThickness="0"/>
+            <TextBox Grid.Column="2" IsReadOnly="True" Background="Teal" BorderThickness="0"/>
+            <TextBox Grid.Column="1" FontSize="31"  Text="Enter Customer properties" Style="{StaticResource Title}"/>
+
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBox Text="Id:" Style="{StaticResource AddPropertiesTags}" Margin="0"/>
+                <TextBox Text="Name:" Style="{StaticResource AddPropertiesTags}"/>
+                <TextBox Text="Phone number:" Style="{StaticResource AddPropertiesTags}"/>
+                <TextBox Text="Location(lat,long):" Style="{StaticResource AddPropertiesTags}" Margin="0,40,0,25"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                <TextBox x:Name="IdGet" TextWrapping="Wrap" Height="40" FontSize="18" TextChanged="IdGet_TextChanged"/>
+                <TextBox x:Name="IdExeption" Style="{StaticResource ExeptionStyle}"/>
+                <TextBox x:Name="NameGet" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18" TextChanged="NameGet_TextChanged"/>
+                <TextBox x:Name="NameExeption" Style="{StaticResource ExeptionStyle}"/>
+                <TextBox x:Name="PhoneGet" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18" TextChanged="PhoneGet_TextChanged"/>
+                <TextBox x:Name="PhoneExeption" Style="{StaticResource ExeptionStyle}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="LocationLatGet" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18" TextChanged="LocationLatGet_TextChanged"/>
+                    <TextBox x:Name="LocationLongGet" Grid.Column="1" TextWrapping="Wrap" Margin="0,10,0,0" Height="40" FontSize="18" TextChanged="LocationLongGet_TextChanged"/>
+                    <TextBox x:Name="LocationLatExeption" Grid.Row="1" Style="{StaticResource ExeptionStyle}"/>
+                    <TextBox x:Name="LocationLongExeption" Grid.Row="1" Grid.Column="1" Style="{StaticResource ExeptionStyle}"/>
+                </Grid>                
+            </StackPanel>
+            <Button x:Name="addCustomerBtn" Grid.Row="1" Grid.Column="2" Content="Add Customer" Style="{StaticResource StackPanelButtonStyle}" Click="addCustomerBtn_Click"/>
+            <Button Grid.Column="2" Content="Close"  Style="{StaticResource ButtonStyle}" VerticalAlignment="Center" Margin="0" Height="35" Width="100" Click="btnBackToList_Click"/>
+        </Grid>
+    </Grid>
+</Window>
+
