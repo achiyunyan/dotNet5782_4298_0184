@@ -12,9 +12,13 @@ namespace BL
     public partial class BL : BlApi.IBL
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void StartDroneSimulator(int id, Action update, Func<bool> checkStop)
+        public void StartSimulator(int id, Action update, Func<bool> checkStop)
         {
 
+        }
+        internal void UpdateDroneBattery(int id, double battery)
+        {
+            Drones.First(dr => dr.Id == id).Battery = battery;
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int id, string model)

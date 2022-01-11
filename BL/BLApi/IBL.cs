@@ -33,6 +33,6 @@ namespace BlApi
         IEnumerable<ListStation> GetStationsWithFreeSlotsList();
         void DeleteParcel(Parcel parcel);
         IEnumerable<ListParcel> GetFilteredParcelsList(DateTime? firstDate, DateTime? secondDate, object Sender, object Receiver, object Priority, object State, object Weight);
-        void StartDroneSimulator(int id, Action update, Func<bool> checkStop);
+        void StartSimulator(int id, Action update, Func<bool> checkStop);
     }
 }

@@ -21,7 +21,7 @@ namespace BL
         private double ElectricityUsePerKmLight;
         private double ElectricityUsePerKmMedium;
         private double ElectricityUsePerKmHeavy;
-        private double ElectricityChargePerSec;
+        internal double ElectricityChargePerSec;
         #region singleton
         private static readonly IBL instance = new BL();
         public static IBL Instance { get { return instance; } }
@@ -138,6 +138,10 @@ namespace BL
                 });
             }
         }
+        internal double ElecriciryUsePerWeight(WeightCategory weight)
+        {
+            return ElecriciryUsePerWeight((DO.WeightCategories)(int)weight);
+        }
 
         private double ElecriciryUsePerWeight(DO.WeightCategories weight)
         {
@@ -153,7 +157,7 @@ namespace BL
             return default;
         }
 
-        private Location ClosestStationLocation(Location loc)
+        internal Location ClosestStationLocation(Location loc)
         {
             return ClosestStationLocation(loc.Latitude, loc.Longitude);
         }
@@ -175,7 +179,8 @@ namespace BL
                 name = station.Name;
                 dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
             }
-
+            if (dis == double.MaxValue)
+                throw new BlException("No possible to reach stations!");
             return location;
         }
 
@@ -314,7 +319,7 @@ namespace BL
             }
         }
 
-        private double DistanceBetweenTwoPoints(Location loc1, Location loc2)
+        internal double DistanceBetweenTwoPoints(Location loc1, Location loc2)
         {
             return DistanceBetweenTwoPoints(loc1.Latitude, loc1.Longitude, loc2.Latitude, loc2.Longitude);
         }

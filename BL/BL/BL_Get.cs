@@ -385,6 +385,11 @@ namespace BL
                 Receiver = new CustomerInParcel { Id = reciver.Id, Name = reciver.Name }
             };
             return parcelInTransit;
-        }        
+        } 
+        
+        internal double GetElectricityChargePerSec()
+        {
+            return ElectricityChargePerSec;
+        }
     }
 }
