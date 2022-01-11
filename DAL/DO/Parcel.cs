@@ -10,10 +10,10 @@ namespace DO
         public WeightCategories Weight { set; get; }
         public Priorities Priority { set; get; }
         public DateTime? Requested { set; get; }
-        public int DroneId { set; get; }
         public DateTime? Scheduled { set; get; }
         public DateTime? PickedUp { set; get; }
         public DateTime? Delivered { set; get; }
+        public int DroneId { set; get; }
         public override string ToString()
         {
             return $" Parcel Id:        {Id}\n" +

@@ -26,11 +26,12 @@ namespace ConsoleUI
     partial class Program
     {
 
-        static IDAL.IDal dataBase = new DalObject.DalObject();
+        //static IDAL.IDal dataBase = new DalObject.DalObject();
 
-        static int Main(string[] args)
+        static void Main(string[] args)
         {
-            return 0;
+            //Dal.Program.Main();
+            
         }
     }
 }
