@@ -75,6 +75,8 @@ namespace PO
         {
             get
             {
+                if(blCustomer.OutDeliveries.Count == 0)
+                    return null;
                 return blCustomer.OutDeliveries;
             }
         }
@@ -82,6 +84,8 @@ namespace PO
         {
             get
             {
+                if (blCustomer.InDeliveries.Count == 0)
+                    return null;
                 return blCustomer.InDeliveries;
             }
         }     

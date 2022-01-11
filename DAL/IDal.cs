@@ -28,7 +28,7 @@ namespace DalApi
         Drone GetDrone(int id);
         IEnumerable<DroneCharge> GetDroneCharges();
         IEnumerable<Drone> GetDronesList(Func<Drone, bool> predicate = null);
-        double GetElectricityChargePerHour();
+        double GetElectricityChargePerSec();
         double GetElectricityUsePerKmAvailable();
         double GetElectricityUsePerKmHeavy();
         double GetElectricityUsePerKmLight();

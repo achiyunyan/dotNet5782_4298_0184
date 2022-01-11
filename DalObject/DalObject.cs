@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using DO;
 using DalApi;
 using DS;
+using System.Runtime.CompilerServices;
+
 
 
 namespace Dal
@@ -29,6 +31,8 @@ namespace Dal
         /// adds station to the stations' list
         /// </summary>
         /// <param name="addStation"></param>
+        
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station addStation)
         {
             if (DataSource.Stations.Any(st => st.Id == addStation.Id))
@@ -41,6 +45,7 @@ namespace Dal
         /// Adds drone to the drones' list 
         /// </summary>
         /// <param name="AddDrone"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone addDrone)
         {
             if (DataSource.Drones.Any(st => st.Id == addDrone.Id))
@@ -53,6 +58,7 @@ namespace Dal
         /// Adds customer to the customers' list
         /// </summary>
         /// <param name="AddCustomer"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer addCustomer)
         {
             if (DataSource.Customers.Any(st => st.Id == addCustomer.Id))
@@ -65,15 +71,18 @@ namespace Dal
         /// Adds parcel to the parcels' list
         /// </summary>
         /// <param name="AddParcel"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(Parcel addParcel)
         {
             addParcel.Id = ++DataSource.Config.parcelNum;
             DataSource.Parcels.Add(addParcel);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDroneCharge(DroneCharge addDroneCharge)
         {
             DataSource.DroneCharges.Add(addDroneCharge);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(Drone updateDrone)
         {
             int indexOfDrone = DataSource.Drones.IndexOf(DataSource.Drones.Find(dr => dr.Id == updateDrone.Id));
@@ -83,6 +92,7 @@ namespace Dal
             }
             DataSource.Drones[indexOfDrone] = updateDrone;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(Customer updateCustomer)
         {
             int indexOfCustomer = DataSource.Customers.IndexOf(DataSource.Customers.Find(cu => cu.Id == updateCustomer.Id));
@@ -92,6 +102,7 @@ namespace Dal
             }
             DataSource.Customers[indexOfCustomer] = updateCustomer;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(Station updateStation)
         {
             int indexOfStation = DataSource.Stations.IndexOf(DataSource.Stations.Find(st => st.Id == updateStation.Id));
@@ -101,7 +112,7 @@ namespace Dal
             }
             DataSource.Stations[indexOfStation] = updateStation;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcel(Parcel updateParcel)
         {
             int indexOfParcel = DataSource.Parcels.IndexOf(DataSource.Parcels.Find(pr => pr.Id == updateParcel.Id));
@@ -111,6 +122,7 @@ namespace Dal
             }
             DataSource.Parcels[indexOfParcel] = updateParcel;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(Station deleteStation)
         {
             if (!DataSource.Stations.Remove(deleteStation))
@@ -118,7 +130,7 @@ namespace Dal
                 throw new NotExistsException($"id: {deleteStation.Id} not exists!!");
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(Drone deleteDrone)
         {
             if (!DataSource.Drones.Remove(deleteDrone))
@@ -126,7 +138,7 @@ namespace Dal
                 throw new NotExistsException($"id: {deleteDrone.Id} not exists!!");
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteCustomer(Customer deleteCustomer)
         {
             if (!DataSource.Customers.Remove(deleteCustomer))
@@ -134,7 +146,7 @@ namespace Dal
                 throw new NotExistsException($"id: {deleteCustomer.Id} not exists!!");
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(Parcel deleteParcel)
         {
             if (!DataSource.Parcels.Remove(deleteParcel))
@@ -142,7 +154,7 @@ namespace Dal
                 throw new NotExistsException($"id: {deleteParcel.Id} not exists!!");
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDroneCharge(DroneCharge deleteDroneCharge)
         {
             if (!DataSource.DroneCharges.Remove(deleteDroneCharge))
@@ -155,6 +167,7 @@ namespace Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int id)
         {
             Station targ;
@@ -173,6 +186,7 @@ namespace Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int id)
         {
             Drone targ;
@@ -191,6 +205,7 @@ namespace Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int id)
         {
             Customer targ;
@@ -209,6 +224,7 @@ namespace Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int id)
         {
             Parcel targ;
@@ -226,6 +242,7 @@ namespace Dal
         /// returns a copy of he stations' list
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStationsList(Func<Station, bool> predicate = null)
         {
             if (predicate == null)
@@ -236,6 +253,7 @@ namespace Dal
         /// returns a copy of he Drones' list
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDronesList(Func<Drone, bool> predicate = null)
         {
             if (predicate == null)
@@ -246,6 +264,7 @@ namespace Dal
         /// returns a copy of he Customers' list
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetCustomersList(Func<Customer, bool> predicate = null)
         {
             if (predicate == null)
@@ -256,38 +275,39 @@ namespace Dal
         /// returns a copy of he Parcels' list
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcelsList(Func<Parcel, bool> predicate = null)
         {
             if (predicate == null)
                 return DataSource.Parcels.ToList();
             return DataSource.Parcels.ToList().Where(predicate);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetElectricityUsePerKmAvailable()
         {
             return DataSource.Config.ElectricityUsePerKmAvailable;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetElectricityUsePerKmLight()
         {
             return DataSource.Config.ElectricityUsePerKmLight;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetElectricityUsePerKmMedium()
         {
             return DataSource.Config.ElectricityUsePerKmMedium;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetElectricityUsePerKmHeavy()
         {
             return DataSource.Config.ElectricityUsePerKmHeavy;
         }
-
-        public double GetElectricityChargePerHour()
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public double GetElectricityChargePerSec()
         {
-            return DataSource.Config.ElectricityChargePerHour;
+            return DataSource.Config.ElectricityChargePerSec;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetDroneCharges()
         {
             return DataSource.DroneCharges.ToList();

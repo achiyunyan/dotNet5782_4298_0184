@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DalApi;
 using BlApi;
+using System.Runtime.CompilerServices;
+
 
 namespace BL
 {
@@ -13,29 +15,33 @@ namespace BL
     {
 
         private static Random rand = new Random();
-        private static IDal myDal;
+        internal static IDal myDal;
         private static List<ListDrone> Drones = new List<ListDrone>();
         private double ElectricityUsePerKmAvailable;
         private double ElectricityUsePerKmLight;
         private double ElectricityUsePerKmMedium;
         private double ElectricityUsePerKmHeavy;
-        private double ElectricityChargePerHour;
+        internal double ElectricityChargePerSec;
         #region singleton
         private static readonly IBL instance = new BL();
         public static IBL Instance { get { return instance; } }
         #endregion
         private BL()
         {
-            //myDal = new Dal.DalObject();
             myDal = FactoryDal.GetDal();
-            ElectricityUsePerKmAvailable = myDal.GetElectricityUsePerKmAvailable();
-            ElectricityUsePerKmLight = myDal.GetElectricityUsePerKmLight();
-            ElectricityUsePerKmMedium = myDal.GetElectricityUsePerKmMedium();
-            ElectricityUsePerKmHeavy = myDal.GetElectricityUsePerKmHeavy();
-            ElectricityChargePerHour = myDal.GetElectricityChargePerHour();
+            IEnumerable<DO.Drone> dalDrones;
+            IEnumerable<DO.Parcel> dalParcels;
+            lock (myDal)
+            {                
+                ElectricityUsePerKmAvailable = myDal.GetElectricityUsePerKmAvailable();
+                ElectricityUsePerKmLight = myDal.GetElectricityUsePerKmLight();
+                ElectricityUsePerKmMedium = myDal.GetElectricityUsePerKmMedium();
+                ElectricityUsePerKmHeavy = myDal.GetElectricityUsePerKmHeavy();
+                ElectricityChargePerSec = myDal.GetElectricityChargePerSec();
 
-            IEnumerable<DO.Drone> dalDrones = myDal.GetDronesList();
-            IEnumerable<DO.Parcel> dalParcels = myDal.GetParcelsList();
+                dalDrones = myDal.GetDronesList();
+                dalParcels = myDal.GetParcelsList();
+            }
             double battery = default;
             DroneState state = default;
             int parcelId;
@@ -49,8 +55,13 @@ namespace BL
                 {
                     DO.Parcel dalParcel = dalParcels.First(pr => pr.DroneId == drone.Id && pr.Delivered == null);
                     state = DroneState.Delivery;
-                    DO.Customer sender = myDal.GetCustomer(dalParcel.SenderId);
-                    DO.Customer reciver = myDal.GetCustomer(dalParcel.ReciverId);
+                    DO.Customer sender;
+                    DO.Customer reciver;
+                    lock (myDal)
+                    {
+                        sender = myDal.GetCustomer(dalParcel.SenderId);
+                        reciver = myDal.GetCustomer(dalParcel.ReciverId);
+                    }
                     double dis = DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude);
                     parcelId = dalParcel.Id;
 
@@ -60,11 +71,14 @@ namespace BL
                     }
                     else
                     {
-                        location = new Location
+                        lock (myDal)
                         {
-                            Latitude = myDal.GetCustomer(dalParcel.SenderId).Latitude,
-                            Longitude = myDal.GetCustomer(dalParcel.SenderId).Longitude
-                        };
+                            location = new Location
+                            {
+                                Latitude = myDal.GetCustomer(dalParcel.SenderId).Latitude,
+                                Longitude = myDal.GetCustomer(dalParcel.SenderId).Longitude
+                            };
+                        }
                     }
                     Location reciverLocation = new Location { Latitude = reciver.Latitude, Longitude = reciver.Longitude };
                     Location senderLocation = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude };
@@ -77,7 +91,11 @@ namespace BL
                     isAvaliable = true;
                     if (rand.Next(0, 2) == 0)// in charge
                     {
-                        IEnumerable<DO.Station> dalStationsWithSlots = myDal.GetStationsList().Where(st => st.ChargeSlots > 0);
+                        IEnumerable<DO.Station> dalStationsWithSlots;
+                        lock (myDal)
+                        {
+                            dalStationsWithSlots = myDal.GetStationsList().Where(st => st.ChargeSlots > 0);
+                        }
                         if (dalStationsWithSlots.Any())
                         {
                             isAvaliable = false;
@@ -85,7 +103,10 @@ namespace BL
                             battery = rand.Next(0, 21);
                             int index = rand.Next(0, dalStationsWithSlots.Count());
                             location = new Location { Latitude = dalStationsWithSlots.ElementAt(index).Latitude, Longitude = dalStationsWithSlots.ElementAt(index).Longitude };
-                            myDal.AddDroneCharge(new DO.DroneCharge { DroneId = drone.Id, StationId = dalStationsWithSlots.ElementAt(index).Id });
+                            lock (myDal)
+                            {
+                                myDal.AddDroneCharge(new DO.DroneCharge { DroneId = drone.Id, StationId = dalStationsWithSlots.ElementAt(index).Id });
+                            }
                         }
                     }
 
@@ -95,7 +116,10 @@ namespace BL
                         DO.Customer customer;
                         do
                         {
-                            customer = myDal.GetCustomer(dalDeliveredParcels.ElementAt(rand.Next(0, dalDeliveredParcels.Count())).ReciverId);
+                            lock (myDal)
+                            {
+                                customer = myDal.GetCustomer(dalDeliveredParcels.ElementAt(rand.Next(0, dalDeliveredParcels.Count())).ReciverId);
+                            }
                         } while ((int)DistanceFromClosestStation(customer.Latitude, customer.Longitude) > 100);
                         state = DroneState.Available;
                         location = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };
@@ -114,6 +138,10 @@ namespace BL
                 });
             }
         }
+        internal double ElecriciryUsePerWeight(WeightCategory weight)
+        {
+            return ElecriciryUsePerWeight((DO.WeightCategories)(int)weight);
+        }
 
         private double ElecriciryUsePerWeight(DO.WeightCategories weight)
         {
@@ -129,14 +157,18 @@ namespace BL
             return default;
         }
 
-        private Location ClosestStationLocation(Location loc)
+        internal Location ClosestStationLocation(Location loc)
         {
             return ClosestStationLocation(loc.Latitude, loc.Longitude);
         }
 
         private Location ClosestStationLocation(double lat, double lon)
         {
-            IEnumerable<DO.Station> dalStations = myDal.GetStationsList();
+            IEnumerable<DO.Station> dalStations;
+            lock (myDal)
+            {
+                dalStations = myDal.GetStationsList();
+            }
             double dis = double.MaxValue;
             Location location = new Location();
             string name = "";
@@ -147,13 +179,18 @@ namespace BL
                 name = station.Name;
                 dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
             }
-
+            if (dis == double.MaxValue)
+                throw new BlException("No possible to reach stations!");
             return location;
         }
 
         private double DistanceFromClosestStation(double lat, double lon)
         {
-            IEnumerable<DO.Station> dalStations = myDal.GetStationsList();
+            IEnumerable<DO.Station> dalStations;
+            lock (myDal)
+            {
+                dalStations = myDal.GetStationsList();
+            }
             double dis = double.MaxValue;
             foreach (var station in dalStations.Where(station => dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0))
             {
@@ -162,19 +199,22 @@ namespace BL
 
             return dis;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station blStation)
         {
             try
             {
-                myDal.AddStation(new DO.Station()
+                lock (myDal)
                 {
-                    Id = blStation.Id,
-                    Name = blStation.Name,
-                    ChargeSlots = blStation.FreeChargeSlots,
-                    Latitude = blStation.Location.Latitude,
-                    Longitude = blStation.Location.Longitude
-                });
+                    myDal.AddStation(new DO.Station()
+                    {
+                        Id = blStation.Id,
+                        Name = blStation.Name,
+                        ChargeSlots = blStation.FreeChargeSlots,
+                        Latitude = blStation.Location.Latitude,
+                        Longitude = blStation.Location.Longitude
+                    });
+                }
             }
             catch (DO.AlreadyExistsException stex)
             {
@@ -182,12 +222,16 @@ namespace BL
                 throw new BlException(str);
             }
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone blDrone, int stationId)
         {
             DO.Station station = default;
             try
             {
-                station = myDal.GetStation(stationId);
+                lock (myDal)
+                {
+                    station = myDal.GetStation(stationId);
+                }
             }
             catch (DO.NotExistsException stex)
             {
@@ -202,7 +246,10 @@ namespace BL
             };
             try
             {
-                myDal.AddDrone(dalDrone);
+                lock (myDal)
+                {
+                    myDal.AddDrone(dalDrone);
+                }
             }
             catch (DO.AlreadyExistsException stex)
             {
@@ -219,6 +266,7 @@ namespace BL
                 WeightCategory = blDrone.WeightCategory,
             });
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer blCustomer)
         {
             DO.Customer dalCustomer = new DO.Customer()
@@ -231,7 +279,10 @@ namespace BL
             };
             try
             {
-                myDal.AddCustomer(dalCustomer);
+                lock (myDal)
+                {
+                    myDal.AddCustomer(dalCustomer);
+                }
             }
             catch (DO.AlreadyExistsException stex)
             {
@@ -239,7 +290,7 @@ namespace BL
                 throw new BlException(str);
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(int senderId, int reciverId, int weight, int priority)
         {
             DO.Parcel dalParcel = new DO.Parcel()
@@ -256,7 +307,10 @@ namespace BL
             };
             try
             {
-                myDal.AddParcel(dalParcel);
+                lock (myDal)
+                {
+                    myDal.AddParcel(dalParcel);
+                }
             }
             catch (DO.AlreadyExistsException stex)
             {
@@ -265,7 +319,7 @@ namespace BL
             }
         }
 
-        private double DistanceBetweenTwoPoints(Location loc1, Location loc2)
+        internal double DistanceBetweenTwoPoints(Location loc1, Location loc2)
         {
             return DistanceBetweenTwoPoints(loc1.Latitude, loc1.Longitude, loc2.Latitude, loc2.Longitude);
         }

@@ -46,7 +46,14 @@
                 <TextBox Text="{Binding Id}"  Style="{StaticResource SimpleTextStyle}"/>
                 <TextBox x:Name="Model" Text="{Binding Model}" Style="{StaticResource SimpleTextStyle}" IsReadOnly="False" TextChanged="Model_TextChanged"/>
                 <TextBox Text="{Binding WeightCategory}"  Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox Text="{Binding Battery, StringFormat={}{0:N0}%}" Style="{StaticResource SimpleTextStyle}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ProgressBar x:Name="BaterryProgressBar" Value="{Binding Battery}" Style="{StaticResource progressBarStyle}" Height="25" Foreground="{Binding Battery, Converter={StaticResource batteryPercentToColor}}"/>
+                    <TextBlock Text="{Binding Battery, StringFormat={}{0:N0}%}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Height="25"/>
+                </Grid>
                 <TextBox Text="{Binding State}" Style="{StaticResource SimpleTextStyle}"/>
                 <TextBox Text="{Binding Location, Converter={StaticResource locationToStringConverter}}" Style="{StaticResource SimpleTextStyle}"/>
                 <Grid x:Name="Parcel" Height="222" Visibility="{Binding Parcel, Converter={StaticResource nullToCollapsedConverter}}">
@@ -89,16 +96,20 @@
                 </Grid>                
             </StackPanel>
             <StackPanel Grid.Column="2" Grid.Row="1" >
-                <Button x:Name="Update" Content="Update" Click="Update_Click"  Style="{StaticResource StackPanelButtonStyle}" Visibility="Collapsed"/>
-                <Button x:Name="SendToCharge" Content="Send to charge" Click="SendToCharge_Click" Style="{StaticResource StackPanelButtonStyle}" Visibility="{Binding State, Converter={StaticResource droneStateAvailableToVisibleConverter}}"/>
-                <Button x:Name="FreeFromCharge" Content="Free from charge" Click="FreeFromCharge_Click" Style="{StaticResource StackPanelButtonStyle}" Visibility="{Binding State, Converter={StaticResource droneStateMaintenanceToVisibleConverter}}"/>
-                <Button x:Name="SendToDelivery" Content="Send to delivery" Click="SendToDelivery_Click" Style="{StaticResource StackPanelButtonStyle}" Visibility="{Binding State, Converter={StaticResource droneStateAvailableToVisibleConverter}}"/>
-                <Button x:Name="CollectParcel" Content="Collect parcel" Click="CollectParcel_Click" Style="{StaticResource StackPanelButtonStyle}" Visibility="{Binding Parcel, Converter={StaticResource parcelStateAssociatedToVisibleConverter}}"/>
-                <Button x:Name="DeliverParcel" Content="Deliver parcel" Click="DeliverParcel_Click" Style="{StaticResource StackPanelButtonStyle}" Visibility="{Binding Parcel, Converter={StaticResource parcelStateCollectedToVisibleConverter}}"/>
+                <Button x:Name="Automatic" Content="Automatic" Click="Automatic_Click" Style="{StaticResource StackPanelButtonStyle}" />
+                <Button x:Name="Manual" Content="Manual" Click="Manual_Click" Style="{StaticResource StackPanelButtonStyle}" Visibility="Collapsed"/>
+                <StackPanel x:Name="ActionsButtons">
+                    <Button x:Name="Update" Content="Update" Click="Update_Click"  Style="{StaticResource StackPanelButtonStyle}" Visibility="Collapsed"/>
+                    <Button x:Name="SendToCharge" Content="Send to charge" Click="SendToCharge_Click" Style="{StaticResource StackPanelButtonStyle}" Visibility="{Binding State, Converter={StaticResource droneStateAvailableToVisibleConverter}}"/>
+                    <Button x:Name="FreeFromCharge" Content="Free from charge" Click="FreeFromCharge_Click" Style="{StaticResource StackPanelButtonStyle}" Visibility="{Binding State, Converter={StaticResource droneStateMaintenanceToVisibleConverter}}"/>
+                    <Button x:Name="SendToDelivery" Content="Send to delivery" Click="SendToDelivery_Click" Style="{StaticResource StackPanelButtonStyle}" Visibility="{Binding State, Converter={StaticResource droneStateAvailableToVisibleConverter}}"/>
+                    <Button x:Name="CollectParcel" Content="Collect parcel" Click="CollectParcel_Click" Style="{StaticResource StackPanelButtonStyle}" Visibility="{Binding Parcel, Converter={StaticResource parcelStateAssociatedToVisibleConverter}}"/>
+                    <Button x:Name="DeliverParcel" Content="Deliver parcel" Click="DeliverParcel_Click" Style="{StaticResource StackPanelButtonStyle}" Visibility="{Binding Parcel, Converter={StaticResource parcelStateCollectedToVisibleConverter}}"/>
+                </StackPanel>
             </StackPanel>
         </Grid>
         <!-- Add Drone -->
-        <Grid x:Name="AddDrone">
+        <Grid x:Name="AddDrone" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>

@@ -1,20 +1,35 @@
 ﻿using BO;
-using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+
+
 namespace BL
 {
     public partial class BL : BlApi.IBL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void StartSimulator(int id, Action update, Func<bool> checkStop)
+        {
+
+        }
+        internal void UpdateDroneBattery(int id, double battery)
+        {
+            Drones.First(dr => dr.Id == id).Battery = battery;
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int id, string model)
         {
             DO.Drone dalDrone;
             try//I can assume that every drone exists in both lists of drones
             {
-                dalDrone = myDal.GetDrone(id);
+                lock (myDal)
+                {
+                    dalDrone = myDal.GetDrone(id);
+                }
             }
             catch (DO.NotExistsException exec)
             {
@@ -22,24 +37,30 @@ namespace BL
             }
             ListDrone dr = Drones.Find(st => st.Id == id);
             dalDrone.Model = model;
-            myDal.UpdateDrone(dalDrone);//if we got so far so ther is is no concern of exeptions
+            lock (myDal)
+            {
+                myDal.UpdateDrone(dalDrone);//if we got so far so ther is is no concern of exeptions
+            }
             Drones.Remove(dr);
             dr.Model = model;
             Drones.Add(dr);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int id, string name, int chargingSlots)
         {
             DO.Station dalStation;
-            try//I can assume that every drone exists in both lists of drones
+            try
             {
-                dalStation = myDal.GetStation(id);
+                lock (myDal)
+                {
+                    dalStation = myDal.GetStation(id);
+                }
             }
             catch (DO.NotExistsException exec)
             {
                 throw new BlException(exec.Message);
             }
-            if (name != "")
+            if (name != "" && name != null)
                 dalStation.Name = name;
             if (chargingSlots != 0)
             {
@@ -53,16 +74,21 @@ namespace BL
                     throw new BlException("Too few charging slots!");
                 }
             }
-
-            myDal.UpdateStation(dalStation);//if we got so far so ther is is no concern of exeptions
+            lock (myDal)
+            {
+                myDal.UpdateStation(dalStation);//if we got so far so ther is is no concern of exeptions
+            }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(int id, string name, string phone)
         {
             DO.Customer dalCustomer;
             try//I can assume that every drone exists in both lists of drones
             {
-                dalCustomer = myDal.GetCustomer(id);
+                lock (myDal)
+                {
+                    dalCustomer = myDal.GetCustomer(id);
+                }
             }
             catch (DO.NotExistsException exec)
             {
@@ -72,9 +98,12 @@ namespace BL
                 dalCustomer.Name = name;
             if (phone != "")
                 dalCustomer.Phone = phone;
-            myDal.UpdateCustomer(dalCustomer);//if we got so far so ther is is no concern of exeptions
+            lock (myDal)
+            {
+                myDal.UpdateCustomer(dalCustomer);//if we got so far so ther is is no concern of exeptions
+            }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCharge(int id)
         {
             ListDrone drone;
@@ -88,44 +117,48 @@ namespace BL
             }
             if (drone.State != DroneState.Available)
                 throw new BlException($"Drone {id} is not available!");
-
-            if (myDal.GetStationsList().Any(st => st.ChargeSlots > 0))
+            lock (myDal)
             {
-
-                double distanceToClose = default, tempDis;
-                IEnumerable<DO.Station> dalStationList = myDal.GetStationsList();
-
-                DO.Station closestDalStation = dalStationList.First(st => st.ChargeSlots > 0);
-                for (int i = 1; i < dalStationList.Count(); i++)
+                if (myDal.GetStationsList().Any(st => st.ChargeSlots > 0))
                 {
-                    distanceToClose = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, closestDalStation.Latitude, closestDalStation.Longitude);
-                    tempDis = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, dalStationList.ElementAt(i).Latitude, dalStationList.ElementAt(i).Longitude);
-                    if (distanceToClose > tempDis && dalStationList.ElementAt(i).ChargeSlots > 0)
-                        closestDalStation = dalStationList.ElementAt(i);
+
+                    double distanceToClose = default, tempDis;
+                    IEnumerable<DO.Station> dalStationList = myDal.GetStationsList();
+
+                    DO.Station closestDalStation = dalStationList.First(st => st.ChargeSlots > 0);
+                    for (int i = 1; i < dalStationList.Count(); i++)
+                    {
+                        distanceToClose = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, closestDalStation.Latitude, closestDalStation.Longitude);
+                        tempDis = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, dalStationList.ElementAt(i).Latitude, dalStationList.ElementAt(i).Longitude);
+                        if (distanceToClose > tempDis && dalStationList.ElementAt(i).ChargeSlots > 0)
+                            closestDalStation = dalStationList.ElementAt(i);
+                    }
+
+                    if (drone.Battery - ElectricityUsePerKmAvailable * distanceToClose < 0)
+                        throw new BlException("Not enough battery");
+
+                    drone.Location = new Location { Latitude = closestDalStation.Latitude, Longitude = closestDalStation.Longitude };
+                    drone.State = DroneState.Maintenance;
+                    drone.Battery -= ElectricityUsePerKmAvailable * distanceToClose;
+                    //update the station, which is a struct
+                    closestDalStation.ChargeSlots -= 1;
+                    myDal.UpdateStation(closestDalStation);
+                    myDal.AddDroneCharge(new DO.DroneCharge
+                    {
+                        DroneId = id,
+                        StationId = closestDalStation.Id,
+                        StatrtTime = DateTime.Now
+                    });
                 }
-
-                if (drone.Battery - ElectricityUsePerKmAvailable * distanceToClose < 0)
-                    throw new BlException("Not enough battery");
-
-                drone.Location = new Location { Latitude = closestDalStation.Latitude, Longitude = closestDalStation.Longitude };
-                drone.State = DroneState.Maintenance;
-                drone.Battery -= ElectricityUsePerKmAvailable * distanceToClose;
-                //update the station, which is a struct
-                closestDalStation.ChargeSlots -= 1;
-                myDal.UpdateStation(closestDalStation);
-                myDal.AddDroneCharge(new DO.DroneCharge
+                else
                 {
-                    DroneId = id,
-                    StationId = closestDalStation.Id
-                });
-            }
-            else
-            {
-                throw new BlException("No Free Charging Slots");
+                    throw new BlException("No Free Charging Slots");
+                }
             }
 
         }
-        public void DroneRelease(int id, int chargingTime)
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DroneRelease(int id)
         {
             ListDrone BlDrone = Drones.Find(st => st.Id == id);
             if (!Drones.Any(st => st.Id == id))
@@ -137,19 +170,23 @@ namespace BL
                 if (BlDrone.State == DroneState.Maintenance)
                 {
                     DO.Station stationOfDrone = new DO.Station();
-                    BlDrone.Battery += chargingTime * ElectricityChargePerHour;
-                    if (BlDrone.Battery > 100)
-                        BlDrone.Battery = 100;
                     BlDrone.State = DroneState.Available;
-                    foreach (DO.DroneCharge dalDroneCharge in myDal.GetDroneCharges())
+                    lock (myDal)
                     {
-                        if (dalDroneCharge.DroneId == id)
+                        foreach (DO.DroneCharge dalDroneCharge in myDal.GetDroneCharges())
                         {
-                            stationOfDrone = myDal.GetStation(dalDroneCharge.StationId);
-                            stationOfDrone.ChargeSlots += 1;
-                            myDal.UpdateStation(stationOfDrone);
-                            myDal.DeleteDroneCharge(dalDroneCharge);
-                            return;
+                            if (dalDroneCharge.DroneId == id)
+                            {
+
+                                BlDrone.Battery += (DateTime.Now - dalDroneCharge.StatrtTime).Seconds * ElectricityChargePerSec;
+                                if (BlDrone.Battery > 100)
+                                    BlDrone.Battery = 100;
+                                stationOfDrone = myDal.GetStation(dalDroneCharge.StationId);
+                                stationOfDrone.ChargeSlots += 1;
+                                myDal.UpdateStation(stationOfDrone);
+                                myDal.DeleteDroneCharge(dalDroneCharge);
+                                return;
+                            }
                         }
                     }
                 }
@@ -160,7 +197,7 @@ namespace BL
 
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void LinkParcelToDroneBL(int droneId)
         {
             if (Drones.Any(dr => dr.Id == droneId))
@@ -168,7 +205,11 @@ namespace BL
                 ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
                 if (BlDrone.State != DroneState.Available)
                     throw new BlException($"Drone: {droneId} not available!");
-                IEnumerable<DO.Parcel> allParcels = myDal.GetParcelsList();
+                IEnumerable<DO.Parcel> allParcels;
+                lock (myDal)
+                {
+                    allParcels = myDal.GetParcelsList();
+                }
                 List<DO.Parcel> parcels = new List<DO.Parcel>();
                 bool noAvailalableParcel = true;
                 bool cannotCarryAnyParcel = true;
@@ -200,7 +241,10 @@ namespace BL
                 BlDrone.ParcelId = bestParcel.Id;
                 bestParcel.Scheduled = DateTime.Now;
                 bestParcel.DroneId = droneId;
-                myDal.UpdateParcel(bestParcel);
+                lock (myDal)
+                {
+                    myDal.UpdateParcel(bestParcel);
+                }
             }
             else
             {
@@ -208,12 +252,16 @@ namespace BL
             }
 
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickParcel(int droneId)
         {
             GetDrone(droneId);
             ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
-            DO.Parcel pickedParcel = myDal.GetParcel(BlDrone.ParcelId);
+            DO.Parcel pickedParcel;
+            lock (myDal)
+            {
+                pickedParcel = myDal.GetParcel(BlDrone.ParcelId);
+            }
             if (BlDrone.State != DroneState.Delivery || pickedParcel.PickedUp != null)
                 throw new BlException($"Drone {droneId} can't pick the parcel!");
 
@@ -222,14 +270,21 @@ namespace BL
             BlDrone.Location.Latitude = sender.Location.Latitude;
             BlDrone.Location.Longitude = sender.Location.Longitude;
             pickedParcel.PickedUp = DateTime.Now;
-            myDal.UpdateParcel(pickedParcel);
+            lock (myDal)
+            {
+                myDal.UpdateParcel(pickedParcel);
+            }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliverParcel(int droneId)
         {
             GetDrone(droneId);
             ListDrone BlDrone = Drones.Find(dr => dr.Id == droneId);
-            DO.Parcel deliveredParcel = myDal.GetParcel(BlDrone.ParcelId);
+            DO.Parcel deliveredParcel;
+            lock (myDal)
+            {
+                deliveredParcel = myDal.GetParcel(BlDrone.ParcelId);
+            }
             if (BlDrone.State != DroneState.Delivery || deliveredParcel.Delivered != null)
             {
                 throw new BlException($"Drone {droneId} can't deliver the parcel!");
@@ -241,7 +296,10 @@ namespace BL
             BlDrone.State = DroneState.Available;
             BlDrone.ParcelId = 0;
             deliveredParcel.Delivered = DateTime.Now;
-            myDal.UpdateParcel(deliveredParcel);
+            lock (myDal)
+            {
+                myDal.UpdateParcel(deliveredParcel);
+            }
         }
 
         private DO.Parcel BestParcel(IEnumerable<DO.Parcel> parlist, int droneId)
@@ -265,11 +323,16 @@ namespace BL
             double electricityNeeded = (disFromDroneToParcel + disFromReciverTosStation) * ElectricityUsePerKmAvailable + disFromtSenderToReciver * ElecriciryUsePerWeight(dalParcel.Weight);
             return BlDrone.Battery >= electricityNeeded;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(Parcel parcel)
         {
             if (parcel.Drone == null)
-                myDal.DeleteParcel(myDal.GetParcel(parcel.Id));
+            {
+                lock (myDal)
+                {
+                    myDal.DeleteParcel(myDal.GetParcel(parcel.Id));
+                }
+            }
             else
                 throw new BlException($"Parcel {parcel.Id} is already Scheduled!");
         }

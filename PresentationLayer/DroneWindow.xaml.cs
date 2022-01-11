@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.ComponentModel;
 
 namespace PL
 {
@@ -26,7 +27,7 @@ namespace PL
             throw new NotImplementedException();
         }
     }
-    
+
     public class LocationToStringConverter : IValueConverter
     {
         //convert from source property type to target property type
@@ -108,6 +109,7 @@ namespace PL
         private bool[] well = { false, false, false, false };
         private bool exit = false;
         private bool first = true;
+        BackgroundWorker worker = new BackgroundWorker();
 
         /// <summary>
         /// Drone actions functions
@@ -119,9 +121,13 @@ namespace PL
             poDrone = new PO.Drone(bl.GetDrone(myDrone.Id));
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;
-            Title = "DroneActionsWindow";            
+            Title = "DroneActionsWindow";
             DroneActions.DataContext = poDrone;
+
         }
+
+        private void updateDrone() { worker.ReportProgress(0); }
+        private bool checkStop() { return worker.CancellationPending; }
 
         public void Refresh()
         {
@@ -163,7 +169,7 @@ namespace PL
                 str = exem.Message;
             }
             MessageBox.Show(str);
-            
+
             Refresh();
         }
 
@@ -172,7 +178,7 @@ namespace PL
             string str = "Drone freed from charge successfully!";
             try
             {
-                bl.DroneRelease(poDrone.Id, 3);
+                bl.DroneRelease(poDrone.Id);
             }
             catch (BL.BlException exem)
             {
@@ -241,6 +247,20 @@ namespace PL
                 Owner = this
             }.Show();
         }
+
+        private void Automatic_Click(object sender, RoutedEventArgs e)
+        {
+            Automatic.Visibility = Visibility.Collapsed;
+            Manual.Visibility = Visibility.Visible;
+            ActionsButtons.Visibility = Visibility.Collapsed;
+            
+        }
+
+        private void Manual_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -353,6 +373,7 @@ namespace PL
         {
             if (exit == false)
                 e.Cancel = true;
-        }        
-    }    
+        }
+
+    }
 }

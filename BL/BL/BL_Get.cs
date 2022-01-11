@@ -6,16 +6,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+
+
 namespace BL
 {
     public partial class BL : BlApi.IBL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int id)
         {
             DO.Station dalStation;
             try
             {
-                dalStation = myDal.GetStation(id);
+                lock (myDal)
+                {
+                    dalStation = myDal.GetStation(id);
+                }
             }
             catch (DO.NotExistsException stex)
             {
@@ -36,7 +43,7 @@ namespace BL
             }
             return station;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int id)
         {
             ListDrone listDrone;
@@ -58,16 +65,19 @@ namespace BL
                 Location = listDrone.Location,
                 Model = listDrone.Model,
                 WeightCategory = listDrone.WeightCategory,
-                Parcel = GetParcelInTransit(listDrone.ParcelId)
+                Parcel = GetParcelInTransit(listDrone.ParcelId, listDrone.Location)
             };
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int id)
         {
             DO.Customer dalCustomer;
             try
             {
-                dalCustomer = myDal.GetCustomer(id);
+                lock (myDal)
+                {
+                    dalCustomer = myDal.GetCustomer(id);
+                }
             }
             catch (DO.NotExistsException stex)
             {
@@ -81,8 +91,13 @@ namespace BL
                 Phone = dalCustomer.Phone,
                 Location = new Location { Latitude = dalCustomer.Latitude, Longitude = dalCustomer.Longitude }
             };
-            IEnumerable<DO.Parcel> inParcels = myDal.GetParcelsList().Where(pr => pr.ReciverId == dalCustomer.Id);
-            IEnumerable<DO.Parcel> outParcels = myDal.GetParcelsList().Where(pr => pr.SenderId == dalCustomer.Id);
+            IEnumerable<DO.Parcel> inParcels;
+            IEnumerable<DO.Parcel> outParcels;
+            lock (myDal)
+            {
+                inParcels = myDal.GetParcelsList().Where(pr => pr.ReciverId == dalCustomer.Id);
+                outParcels = myDal.GetParcelsList().Where(pr => pr.SenderId == dalCustomer.Id);
+            }
             foreach (var parcel in inParcels)
             {
                 customer.InDeliveries.Add(new ParcelInCustomer
@@ -107,13 +122,16 @@ namespace BL
             }
             return customer;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int id)
         {
             DO.Parcel dalParcel;
             try
             {
-                dalParcel = myDal.GetParcel(id);
+                lock (myDal)
+                {
+                    dalParcel = myDal.GetParcel(id);
+                }
             }
             catch (DO.NotExistsException stex)
             {
@@ -149,30 +167,38 @@ namespace BL
             }
             return parcel;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ListStation> GetStationsList()
         {
-            return from dalStation in myDal.GetStationsList()
-                   select new ListStation
-                   {
-                       Id = dalStation.Id,
-                       Name = dalStation.Name,
-                       FreeChargeSlots = dalStation.ChargeSlots,
-                       BusyChargeSlots = Drones.Count(dr => dr.State == DroneState.Maintenance && dr.Location.Latitude == dalStation.Latitude && dr.Location.Longitude == dalStation.Longitude)
-                   };
+            lock (myDal)
+            {
+                return from dalStation in myDal.GetStationsList()
+                       select new ListStation
+                       {
+                           Id = dalStation.Id,
+                           Name = dalStation.Name,
+                           FreeChargeSlots = dalStation.ChargeSlots,
+                           BusyChargeSlots = Drones.Count(dr => dr.State == DroneState.Maintenance && dr.Location.Latitude == dalStation.Latitude && dr.Location.Longitude == dalStation.Longitude)
+                       };
+            }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ListDrone> GetDronesList(Func<ListDrone, bool> predicate = null)
         {
             if (predicate == null)
                 return Drones.ToList();
             return Drones.Where(predicate).ToList();
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ListCustomer> GetCustomersList()
         {
-            IEnumerable<DO.Customer> dalCustomers = myDal.GetCustomersList();
-            IEnumerable<DO.Parcel> dalParcels = myDal.GetParcelsList();
+            IEnumerable<DO.Customer> dalCustomers;
+            IEnumerable<DO.Parcel> dalParcels;
+            lock (myDal)
+            {
+                dalCustomers = myDal.GetCustomersList();
+                dalParcels = myDal.GetParcelsList();
+            }
             return from dalCustomer in dalCustomers
                    select (new ListCustomer
                    {
@@ -185,21 +211,24 @@ namespace BL
                        SentSuppliedParcels = dalParcels.Count(par => par.SenderId == dalCustomer.Id && par.Delivered != null)
                    });
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null)
-        {                       
-            return from dalParcel in myDal.GetParcelsList()
-                   select new ListParcel
-                   {
-                       Id = dalParcel.Id,
-                       Priority = (Priority)(int)dalParcel.Priority,
-                       WeightCategory = (WeightCategory)(int)dalParcel.Weight,
-                       State = GetParcelStateByDalParcel(dalParcel),
-                       SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
-                       ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
-                   };
+        {
+            lock (myDal)
+            {
+                return from dalParcel in myDal.GetParcelsList()
+                       select new ListParcel
+                       {
+                           Id = dalParcel.Id,
+                           Priority = (Priority)(int)dalParcel.Priority,
+                           WeightCategory = (WeightCategory)(int)dalParcel.Weight,
+                           State = GetParcelStateByDalParcel(dalParcel),
+                           SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
+                           ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
+                       };
+            }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ListParcel> GetFilteredParcelsList(DateTime? firstDate, DateTime? secondDate, object Sender, object Receiver, object Priority, object State, object Weight)
         {
             IEnumerable<DO.Parcel> dalParcels;
@@ -207,17 +236,21 @@ namespace BL
                 firstDate = DateTime.MinValue;
             if (secondDate == null)
                 secondDate = DateTime.MaxValue;
-            dalParcels = myDal.GetParcelsList(pr => pr.Requested >= firstDate && pr.Requested <= secondDate || DalParcelLastTime(pr) >= firstDate && DalParcelLastTime(pr) <= secondDate);
-            IEnumerable<ListParcel> parcels = from dalParcel in dalParcels
-                                              select new ListParcel
-                                              {
-                                                  Id = dalParcel.Id,
-                                                  Priority = (Priority)(int)dalParcel.Priority,
-                                                  WeightCategory = (WeightCategory)(int)dalParcel.Weight,
-                                                  State = GetParcelStateByDalParcel(dalParcel),
-                                                  SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
-                                                  ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
-                                              };
+            IEnumerable<ListParcel> parcels;
+            lock (myDal)
+            {
+                dalParcels = myDal.GetParcelsList(pr => pr.Requested >= firstDate && pr.Requested <= secondDate || DalParcelLastTime(pr) >= firstDate && DalParcelLastTime(pr) <= secondDate);
+                parcels = from dalParcel in dalParcels
+                                                  select new ListParcel
+                                                  {
+                                                      Id = dalParcel.Id,
+                                                      Priority = (Priority)(int)dalParcel.Priority,
+                                                      WeightCategory = (WeightCategory)(int)dalParcel.Weight,
+                                                      State = GetParcelStateByDalParcel(dalParcel),
+                                                      SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
+                                                      ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
+                                                  };
+            }
             if (!(Sender == null || Sender == ""))
                 parcels = parcels.Where(par => par.SenderName == Sender);
 
@@ -232,44 +265,39 @@ namespace BL
 
             if (!(Weight == null || Weight == ""))
                 parcels = parcels.Where(par => par.WeightCategory == (WeightCategory)Weight);
-            return parcels;
-            dalParcels = myDal.GetParcelsList(pr => pr.Requested >= firstDate && pr.Requested <= secondDate || DalParcelLastTime(pr) >= firstDate && DalParcelLastTime(pr) <= secondDate);            
-            return from dalParcel in dalParcels
-                   select new ListParcel
-                   {
-                       Id = dalParcel.Id,
-                       Priority = (Priority)(int)dalParcel.Priority,
-                       WeightCategory = (WeightCategory)(int)dalParcel.Weight,
-                       State = GetParcelStateByDalParcel(dalParcel),
-                       SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
-                       ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
-                   };
+            return parcels;            
         }
 
         private IEnumerable<ListParcel> GetParcelsList()
         {
-            return from dalParcel in myDal.GetParcelsList()
-                   select new ListParcel
-                   {
-                       Id = dalParcel.Id,
-                       Priority = (Priority)(int)dalParcel.Priority,
-                       WeightCategory = (WeightCategory)(int)dalParcel.Weight,
-                       State = GetParcelStateByDalParcel(dalParcel),
-                       SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
-                       ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
-                   };
+            lock (myDal)
+            {
+                return from dalParcel in myDal.GetParcelsList()
+                       select new ListParcel
+                       {
+                           Id = dalParcel.Id,
+                           Priority = (Priority)(int)dalParcel.Priority,
+                           WeightCategory = (WeightCategory)(int)dalParcel.Weight,
+                           State = GetParcelStateByDalParcel(dalParcel),
+                           SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
+                           ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
+                       };
+            }
         }
 
         private IEnumerable<ListStation> GetStationsList(Func<DO.Station, bool> predicate)
         {
-            return from dalStation in myDal.GetStationsList(predicate)
-                   select new ListStation
-                   {
-                       Id = dalStation.Id,
-                       Name = dalStation.Name,
-                       FreeChargeSlots = dalStation.ChargeSlots,
-                       BusyChargeSlots = Drones.Count(dr => dr.State == DroneState.Maintenance && dr.Location.Latitude == dalStation.Latitude && dr.Location.Longitude == dalStation.Longitude)
-                   };
+            lock (myDal)
+            {
+                return from dalStation in myDal.GetStationsList(predicate)
+                       select new ListStation
+                       {
+                           Id = dalStation.Id,
+                           Name = dalStation.Name,
+                           FreeChargeSlots = dalStation.ChargeSlots,
+                           BusyChargeSlots = Drones.Count(dr => dr.State == DroneState.Maintenance && dr.Location.Latitude == dalStation.Latitude && dr.Location.Longitude == dalStation.Longitude)
+                       };
+            }
         }
 
         private DateTime? DalParcelLastTime(DO.Parcel pr)
@@ -282,12 +310,12 @@ namespace BL
                 return pr.Scheduled;
             return pr.Requested;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ListParcel> GetNonLinkedParcelsList()
         {
             return GetParcelsList(pr => pr.Scheduled == null);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ListStation> GetStationsWithFreeSlotsList()
         {
             return GetStationsList(st => st.ChargeSlots > 0);
@@ -306,7 +334,11 @@ namespace BL
 
         private CustomerInParcel GetCustomerInParcel(int id)
         {
-            DO.Customer dalCustomer = myDal.GetCustomer(id);
+            DO.Customer dalCustomer;
+            lock (myDal)
+            {
+                dalCustomer = myDal.GetCustomer(id);
+            }
             return new CustomerInParcel
             {
                 Id = dalCustomer.Id,
@@ -314,24 +346,37 @@ namespace BL
             };
         }
 
-        private ParcelInTransit GetParcelInTransit(int id)
+        private ParcelInTransit GetParcelInTransit(int id, Location droneLocation)
         {
             DO.Parcel dalParcel;
             try
             {
-                dalParcel = myDal.GetParcel(id);
+                lock (myDal)
+                {
+                    dalParcel = myDal.GetParcel(id);
+                }
             }
             catch (DO.NotExistsException)
             {
                 return default;
             }
-            DO.Customer reciver = myDal.GetCustomer(dalParcel.ReciverId);
-            DO.Customer sender = myDal.GetCustomer(dalParcel.SenderId);
+            DO.Customer reciver;
+            DO.Customer sender;
+            lock (myDal)
+            {
+                reciver = myDal.GetCustomer(dalParcel.ReciverId);
+                sender = myDal.GetCustomer(dalParcel.SenderId);
+            }
+            double distance;
+            if (dalParcel.PickedUp != null) //Collected
+                distance = DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude);
+            else //Associated
+                distance = DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, droneLocation.Latitude, droneLocation.Longitude);
             ParcelInTransit parcelInTransit = new ParcelInTransit
             {
                 Id = dalParcel.Id,
                 WeightCategory = (WeightCategory)(int)dalParcel.Weight,
-                Distance = DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude),
+                Distance = distance,
                 PickUp = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude },
                 Destination = new Location { Latitude = reciver.Latitude, Longitude = reciver.Longitude },
                 Priority = (Priority)(int)dalParcel.Priority,
@@ -340,6 +385,11 @@ namespace BL
                 Receiver = new CustomerInParcel { Id = reciver.Id, Name = reciver.Name }
             };
             return parcelInTransit;
-        }        
+        } 
+        
+        internal double GetElectricityChargePerSec()
+        {
+            return ElectricityChargePerSec;
+        }
     }
 }

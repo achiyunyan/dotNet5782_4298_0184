@@ -36,7 +36,7 @@ namespace PL
 
         private void btnShowStations_Click(object sender, RoutedEventArgs e)
         {
-            new StationListWindow(myBl).Show();
+            new StationsListWindow(myBl).Show();
             Close();
         }
 

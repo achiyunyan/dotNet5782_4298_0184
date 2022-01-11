@@ -17,12 +17,12 @@ namespace PL
     /// <summary>
     /// Interaction logic for StationListWindow.xaml
     /// </summary>
-    public partial class StationListWindow : Window
+    public partial class StationsListWindow : Window
     {
         private bool exit = false;
         private BlApi.IBL ibl;
 
-        public StationListWindow(BlApi.IBL bL)
+        public StationsListWindow(BlApi.IBL bL)
         {
             InitializeComponent();
             ibl = bL;
@@ -42,6 +42,11 @@ namespace PL
             Close();
         }
 
+        public void Refresh()
+        {
+            lstvStations.ItemsSource = ibl.GetStationsList();
+        }
+
         private void btnAddStation_Click(object sender, RoutedEventArgs e)
         {
             new StationWindow(ibl).Show();
@@ -49,12 +54,14 @@ namespace PL
 
         private void lstvStations_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new StationWindow(ibl, (BO.ListStation)lstvStations.SelectedItem).Show();
+            StationWindow sw = new StationWindow(ibl, (BO.ListStation)lstvStations.SelectedItem);
+            sw.Owner = this;
+            sw.Show();
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            lstvStations.ItemsSource = ibl.GetStationsList();
+            Refresh();
         }
 
         private void btnGroupBySlotsNumber_Click(object sender, RoutedEventArgs e)
@@ -69,10 +76,10 @@ namespace PL
         private void btnGroupByFreeSlots_Click(object sender, RoutedEventArgs e)
         {
             var groupsList = from Station in (IEnumerable<ListStation>)lstvStations.ItemsSource
-                             group Station by (Station.FreeChargeSlots>0);
+                             group Station by (Station.FreeChargeSlots > 0);
             lstvStations.ItemsSource = from list in groupsList
-                                     from Station in list
-                                     select Station;
+                                       from Station in list
+                                       select Station;
         }
     }
 }
