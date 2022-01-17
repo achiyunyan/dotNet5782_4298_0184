@@ -35,10 +35,6 @@ namespace DS
                 RandomStations();
                 RandomDrones();
                 RandomParcel();
-                foreach (Drone d in Drones)
-                {
-                    //Dal.Xml
-                }
                   
             }
 

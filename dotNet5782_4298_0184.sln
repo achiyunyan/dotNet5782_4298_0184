@@ -5,8 +5,13 @@ VisualStudioVersion = 16.0.31727.386
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{47BA699B-E8D5-47D8-A5E1-529646CE53E7}"
 	ProjectSection(SolutionItems) = preProject
+		xml\CustomersXml.xml = xml\CustomersXml.xml
 		xml\dal-config.xml = xml\dal-config.xml
+		xml\DCharge.xml = xml\DCharge.xml
+		xml\DronesXml.xml = xml\DronesXml.xml
+		xml\ParcelsXml.xml = xml\ParcelsXml.xml
 		..\README.md = ..\README.md
+		xml\StationsXml.xml = xml\StationsXml.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalApi", "DAL\DalApi.csproj", "{8DE653E5-40D6-410D-821F-716A6B1B52AB}"

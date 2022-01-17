@@ -11,6 +11,19 @@
         "runtime": {
           "bin/placeholder/DalApi.dll": {}
         }
+      },
+      "DalXml/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "DalApi": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DalXml.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DalXml.dll": {}
+        }
       }
     }
   },
@@ -19,11 +32,17 @@
       "type": "project",
       "path": "../DAL/DalApi.csproj",
       "msbuildProject": "../DAL/DalApi.csproj"
+    },
+    "DalXml/1.0.0": {
+      "type": "project",
+      "path": "../DalXml/DalXml.csproj",
+      "msbuildProject": "../DalXml/DalXml.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "DalApi >= 1.0.0"
+      "DalApi >= 1.0.0",
+      "DalXml >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -53,6 +72,9 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
+            "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DalXml\\DalXml.csproj": {
+              "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DalXml\\DalXml.csproj"
+            },
             "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj": {
               "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj"
             }

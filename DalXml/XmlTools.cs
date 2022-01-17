@@ -85,6 +85,7 @@ namespace Dal
             }
             catch (Exception ex)
             {
+                int x = System.Runtime.InteropServices.Marshal.GetLastWin32Error();
                 throw new DO.XmlFileLoadCreateException(filePath, $"fail to load xml file: {filePath}", ex);
             }
         }

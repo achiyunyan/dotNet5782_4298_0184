@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace Dal
 {
@@ -20,6 +21,21 @@ namespace Dal
 
         private DalXml()//costructor for dalObject
         {
+            Config();
+        }
+
+        #endregion
+
+        #region config
+        internal static int parcelNum;
+        internal static double ElectricityUsePerKmAvailable;
+        internal static double ElectricityUsePerKmLight;
+        internal static double ElectricityUsePerKmMedium;
+        internal static double ElectricityUsePerKmHeavy;
+        internal static double ElectricityChargePerSec;
+        private void Config()
+        {
+            #region files Create
             if (!File.Exists(xmlPath + parcelsPath))
                 File.Create(xmlPath + parcelsPath);
             if (!File.Exists(xmlPath + stationsPath))
@@ -30,19 +46,18 @@ namespace Dal
                 File.Create(xmlPath + DronesPath);
             if (!File.Exists(xmlPath + DroneChargePath))
                 File.Create(xmlPath + DroneChargePath);
-
-
+            #endregion
+            if (File.Exists(xmlPath + ConfigPath))
+            {
+                XElement Electricity = XmlTools.LoadListFromXMLElement(ConfigPath).Element("dalXmlData");
+                ElectricityUsePerKmAvailable = double.Parse(Electricity.Element("ElectricityUsePerKmAvailable").Value);
+                ElectricityUsePerKmLight = double.Parse(Electricity.Element("ElectricityUsePerKmLight").Value);
+                ElectricityUsePerKmMedium = double.Parse(Electricity.Element("ElectricityUsePerKmMedium").Value);
+                ElectricityUsePerKmHeavy = double.Parse(Electricity.Element("ElectricityUsePerKmHeavy").Value);
+                ElectricityChargePerSec = double.Parse(Electricity.Element("ElectricityChargePerSec").Value);
+                parcelNum = int.Parse(Electricity.Element("parcelNum").Value);
+            }
         }
-
-        #endregion
-
-        #region config
-        internal static int parcelNum = 1000000;
-        internal static double ElectricityUsePerKmAvailable = 5;
-        internal static double ElectricityUsePerKmLight = 7;
-        internal static double ElectricityUsePerKmMedium = 8;
-        internal static double ElectricityUsePerKmHeavy = 9;
-        internal static double ElectricityChargePerHour = 20;
         #endregion
 
         private string xmlPath = @"C:\Users\yunia\source\repos\dotNet5782_4298_0184\xml\";
@@ -51,17 +66,18 @@ namespace Dal
         private string CustomersPath = @"CustomersXml.xml";
         private string DronesPath = @"DronesXml.xml";
         private string DroneChargePath = @"DCharge.xml";
+        private string ConfigPath = @"dal-config.Xml";
 
-        #region StationFuncs
+        #region ParcelFuncs
         public void AddParcel(Parcel AddParcel)
         {
             XElement parcelElement = XmlTools.LoadListFromXMLElement(parcelsPath);
 
-            XElement parcelItem = new XElement("Parcel", new XElement("Id", ++parcelNum),
+            XElement parcelItem = new XElement("Parcel", new XElement("Id", parcelNum++),
                                   new XElement("SenderId", AddParcel.SenderId),
                                   new XElement("ReciverId", AddParcel.ReciverId),
-                                  new XElement("Weight", AddParcel.Weight),
-                                  new XElement("Priority", AddParcel.Priority),
+                                  new XElement("Weight", (int)AddParcel.Weight),
+                                  new XElement("Priority", (int)AddParcel.Priority),
                                   new XElement("Requested", AddParcel.Requested),
                                   new XElement("Scheduled", AddParcel.Scheduled),
                                   new XElement("PickedUp", AddParcel.PickedUp),
@@ -84,13 +100,13 @@ namespace Dal
                 parcelItem.Element("Id").Value = updateParcel.Id.ToString();
                 parcelItem.Element("SenderId").Value = updateParcel.SenderId.ToString();
                 parcelItem.Element("ReciverId").Value = updateParcel.ReciverId.ToString();
-                parcelItem.Element("Weight").Value = updateParcel.Weight.ToString();
-                parcelItem.Element("Priority").Value = updateParcel.Priority.ToString();
-                parcelItem.Element("Reqested").Value = updateParcel.Requested.ToString();
+                parcelItem.Element("Weight").Value = ((int)updateParcel.Weight).ToString();
+                parcelItem.Element("Priority").Value = ((int)updateParcel.Priority).ToString();
+                parcelItem.Element("Requested").Value = updateParcel.Requested.ToString();
                 parcelItem.Element("Scheduled").Value = updateParcel.Scheduled.ToString();
                 parcelItem.Element("PickedUp").Value = updateParcel.PickedUp.ToString();
                 parcelItem.Element("Delivered").Value = updateParcel.Delivered.ToString();
-                parcelItem.Element("DroneID").Value = updateParcel.DroneId.ToString();
+                parcelItem.Element("DroneId").Value = updateParcel.DroneId.ToString();
 
                 XmlTools.SaveListToXMLElement(parcelElement, parcelsPath);
             }
@@ -100,45 +116,50 @@ namespace Dal
         {
             XElement parcelElement = XmlTools.LoadListFromXMLElement(parcelsPath);
 
-            Parcel? p = (from par in parcelElement.Elements()
-                         where int.Parse(par.Element("Id").Value) == id
-                         select new Parcel()
-                         {
-                             Id = int.Parse(par.Element("Id").Value),
-                             SenderId = int.Parse(par.Element("SenderId").Value),
-                             ReciverId = int.Parse(par.Element("ReciverId").Value),
-                             Weight = (WeightCategories)int.Parse(par.Element("Weight").Value),
-                             Priority = (Priorities)int.Parse(par.Element("Priority").Value),
-                             Requested = DateTime.Parse(par.Element("Reqested").Value),
-                             Scheduled = DateTime.Parse(par.Element("Scheduled").Value),
-                             PickedUp = DateTime.Parse(par.Element("PickedUp").Value),
-                             Delivered = DateTime.Parse(par.Element("Delivered").Value),
-                             DroneId = int.Parse(par.Element("DroneID").Value)
+            Parcel p = (from par in parcelElement.Elements()
+                        where int.Parse(par.Element("Id").Value) == id
+                        select new Parcel()
+                        {
+                            Id = int.Parse(par.Element("Id").Value),
+                            SenderId = int.Parse(par.Element("SenderId").Value),
+                            ReciverId = int.Parse(par.Element("ReciverId").Value),
+                            Weight = (WeightCategories)int.Parse(par.Element("Weight").Value),
+                            Requested = par.Element("Requested").Value == "" ? null : DateTime.Parse(par.Element("Requested").Value),
+                            Scheduled = par.Element("Scheduled").Value == "" ? null : DateTime.Parse(par.Element("Scheduled").Value),
+                            PickedUp = par.Element("PickedUp").Value == "" ? null : DateTime.Parse(par.Element("PickedUp").Value),
+                            Delivered = par.Element("Delivered").Value == "" ? null : DateTime.Parse(par.Element("Delivered").Value),
+                            DroneId = int.Parse(par.Element("DroneId").Value)
 
-                         }).FirstOrDefault();
-            if (p == null)
+                        }).FirstOrDefault();
+            if (p.Id == 0)//so it is default
                 throw new NotExistsException($"id: {id} not exists!!");
-            return (Parcel)p;
+            return p;
         }
 
         public IEnumerable<Parcel> GetParcelsList(Func<Parcel, bool> predicate = null)
         {
             XElement parcelElement = XmlTools.LoadListFromXMLElement(parcelsPath);
-            return from par in parcelElement.Elements()
-                   select new Parcel()
-                   {
-                       Id = int.Parse(par.Element("Id").Value),
-                       SenderId = int.Parse(par.Element("SenderId").Value),
-                       ReciverId = int.Parse(par.Element("ReciverId").Value),
-                       Weight = (WeightCategories)int.Parse(par.Element("Weight").Value),
-                       Priority = (Priorities)int.Parse(par.Element("Priority").Value),
-                       Requested = DateTime.Parse(par.Element("Reqested").Value),
-                       Scheduled = DateTime.Parse(par.Element("Scheduled").Value),
-                       PickedUp = DateTime.Parse(par.Element("PickedUp").Value),
-                       Delivered = DateTime.Parse(par.Element("Delivered").Value),
-                       DroneId = int.Parse(par.Element("DroneID").Value)
-
-                   };
+            if (parcelElement.Elements().Count() == 0)
+                return new List<Parcel>();
+            List<Parcel> p = new List<Parcel>();
+            foreach (var par in parcelElement.Elements())
+            {
+                var x = par.Element("Scheduled").Value;
+                p.Add(new Parcel()
+                {
+                    Id = int.Parse(par.Element("Id").Value),
+                    SenderId = int.Parse(par.Element("SenderId").Value),
+                    ReciverId = int.Parse(par.Element("ReciverId").Value),
+                    Weight = (WeightCategories)int.Parse(par.Element("Weight").Value),
+                    Priority = (Priorities)int.Parse(par.Element("Priority").Value),
+                    Requested = par.Element("Requested").Value == "" ? null : DateTime.Parse(par.Element("Requested").Value),
+                    Scheduled = par.Element("Scheduled").Value == "" ? null : DateTime.Parse(par.Element("Scheduled").Value),
+                    PickedUp = par.Element("PickedUp").Value == "" ? null : DateTime.Parse(par.Element("PickedUp").Value),
+                    Delivered = par.Element("Delivered").Value == "" ? null : DateTime.Parse(par.Element("Delivered").Value),
+                    DroneId = int.Parse(par.Element("DroneId").Value)
+                });
+            }
+            return p;
         }
 
         public void DeleteParcel(Parcel deleteParcel)
@@ -206,7 +227,8 @@ namespace Dal
                 stations.Remove(deleteStation);
                 XmlTools.SaveListToXMLSerializer<Station>(stations, stationsPath);
             }
-            throw new NotExistsException($"id: {deleteStation.Id} not exists!!");
+            else
+                throw new NotExistsException($"id: {deleteStation.Id} not exists!!");
         }
 
         #endregion
@@ -258,7 +280,8 @@ namespace Dal
                 Customers.Remove(deleteCustomer);
                 XmlTools.SaveListToXMLSerializer<Customer>(Customers, CustomersPath);
             }
-            throw new NotExistsException($"id: {deleteCustomer.Id} not exists!!");
+            else
+                throw new NotExistsException($"id: {deleteCustomer.Id} not exists!!");
         }
 
         #endregion
@@ -310,27 +333,44 @@ namespace Dal
                 Drones.Remove(deleteDrone);
                 XmlTools.SaveListToXMLSerializer<Drone>(Drones, DronesPath);
             }
-            throw new NotExistsException($"id: {deleteDrone.Id} not exists!!");
+            else
+                throw new NotExistsException($"id: {deleteDrone.Id} not exists!!");
         }
 
         #endregion
 
-
+        #region DroneCharge
         public void AddDroneCharge(DroneCharge addDroneCharge)
         {
-            
+            List<DroneCharge> DC = XmlTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargePath);
+            if (DC.Any(DC => DC.DroneId == addDroneCharge.DroneId))
+            {
+                throw new AlreadyExistsException($"id: {addDroneCharge.DroneId} already exists!!");
+            }
+            DC.Add(addDroneCharge);
+            XmlTools.SaveListToXMLSerializer<DroneCharge>(DC, DroneChargePath);
         }
 
         public void DeleteDroneCharge(DroneCharge deleteDroneCharge)
         {
-            throw new NotImplementedException();
+            List<DroneCharge> DC = XmlTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargePath);
+
+            if (DC.Any(st => st.DroneId == st.DroneId))
+            {
+                DC.Remove(deleteDroneCharge);
+                XmlTools.SaveListToXMLSerializer<DroneCharge>(DC, DroneChargePath);
+            }
+            else
+                throw new NotExistsException($"id: {deleteDroneCharge.DroneId} not exists!!");
         }
 
         public IEnumerable<DroneCharge> GetDroneCharges()
         {
-            throw new NotImplementedException();
+            return XmlTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargePath);
         }
+        #endregion
 
+        #region Electricity
         public double GetElectricityUsePerKmAvailable()
         {
             return ElectricityUsePerKmAvailable;
@@ -351,10 +391,11 @@ namespace Dal
             return ElectricityUsePerKmHeavy;
         }
 
-        public double GetElectricityChargePerHour()
+        public double GetElectricityChargePerSec()
         {
-            return ElectricityChargePerHour;
+            return ElectricityChargePerSec;
         }
+        #endregion
 
     }
 }

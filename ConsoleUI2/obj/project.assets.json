@@ -59,7 +59,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
-          "DalApi": "1.0.0"
+          "DalApi": "1.0.0",
+          "DalXml": "1.0.0"
         },
         "compile": {
           "bin/placeholder/DalObject.dll": {}

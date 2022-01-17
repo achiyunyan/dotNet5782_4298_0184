@@ -9,6 +9,9 @@ using DalApi;
 using DS;
 using System.Runtime.CompilerServices;
 
+using System.Xml.Linq;
+using System.Xml.Serialization;
+
 
 
 namespace Dal
@@ -20,9 +23,34 @@ namespace Dal
 
         public static IDal Instance { get { return instance; } }
 
+        int parcelNum = 1000000;
         private DalObject()//costructor for dalObject
         {
             DataSource.Config.Initialize();
+            XmlTools.SaveListToXMLSerializer<Customer>(DataSource.Customers, @"CustomersXml.xml");
+            XmlTools.SaveListToXMLSerializer<Drone>(DataSource.Drones, @"DronesXml.xml");
+            XmlTools.SaveListToXMLSerializer<Station>(DataSource.Stations, @"StationsXml.xml");
+            XmlTools.SaveListToXMLSerializer<DroneCharge>(DataSource.DroneCharges, @"DCharge.xml");
+
+            XElement parcelElement = XmlTools.LoadListFromXMLElement(@"ParcelsXml.xml");
+
+            foreach (Parcel AddParcel in DataSource.Parcels)
+            {
+                XElement parcelItem = new XElement("Parcel", new XElement("Id", parcelNum++),
+                      new XElement("SenderId", AddParcel.SenderId),
+                      new XElement("ReciverId", AddParcel.ReciverId),
+                      new XElement("Weight", (int)AddParcel.Weight),
+                      new XElement("Priority", (int)AddParcel.Priority),
+                      new XElement("Requested", AddParcel.Requested),
+                      new XElement("Scheduled", AddParcel.Scheduled),
+                      new XElement("PickedUp", AddParcel.PickedUp),
+                      new XElement("Delivered", AddParcel.Delivered),
+                      new XElement("DroneId", AddParcel.DroneId));
+                parcelElement.Add(parcelItem);
+            }
+
+            XmlTools.SaveListToXMLElement(parcelElement, @"ParcelsXml.xml");
+            int x = 0;
         }
 
         #endregion
