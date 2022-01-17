@@ -28,7 +28,7 @@ namespace DS
             internal static double ElectricityUsePerKmLight = 7;
             internal static double ElectricityUsePerKmMedium = 8;
             internal static double ElectricityUsePerKmHeavy = 9;
-            internal static double ElectricityChargePerSec = 10;            
+            internal static double ElectricityChargePerSec = 5;            
             internal static void Initialize()
             {
                 RandomCustomers();

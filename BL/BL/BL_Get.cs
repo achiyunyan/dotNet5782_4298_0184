@@ -46,16 +46,20 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int id)
         {
-            ListDrone listDrone;
-            listDrone = Drones.Find(dr => dr.Id == id);
+            return ListDroneToDrone(GetListDrone(id));
+        }
+
+        internal ListDrone GetListDrone(int id)
+        {
+            ListDrone listDrone = Drones.Find(dr => dr.Id == id);
             if (listDrone == default)
             {
                 throw new BlException($"id: {id} not exists!!");
             }
-            return ListDroneToDrone(listDrone);
+            return listDrone;
         }
 
-        private Drone ListDroneToDrone(ListDrone listDrone)
+        internal Drone ListDroneToDrone(ListDrone listDrone)
         {
             return new Drone
             {

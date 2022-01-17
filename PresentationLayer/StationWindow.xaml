@@ -35,7 +35,7 @@
                 <TextBox Text="Name:"  Margin="0,10,0,0"  Style="{StaticResource SimpleTextStyle}"/>
                 <TextBox Text="Free Slots number:" Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}"/>
                 <TextBox Text="Loation:"  Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox x:Name="DronesTag" Text="Drones:" Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}" Visibility="{Binding DronesList,Converter={StaticResource nullToCollapsedConverter}}" Height="222"/>
+                <TextBox x:Name="DronesTag" Text="Drones:" Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}" Visibility="{Binding DronesList, Converter={StaticResource nullToCollapsedConverter}}" Height="222"/>
             </StackPanel>
             <StackPanel x:Name="StackPanelDrone" Grid.Column="1" Grid.Row="1" >
                 <TextBox Text="{Binding  Id}" Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}"/>
@@ -86,7 +86,7 @@
             </StackPanel>
         </Grid>
         <!-- Add Station -->
-        <Grid x:Name="AddStation" Visibility="Collapsed"> 
+        <Grid x:Name="AddStation"> 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>

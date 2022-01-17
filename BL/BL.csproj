@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DalObject\DalObject.csproj" />
     <ProjectReference Include="..\DAL\DalApi.csproj" />
+    <ProjectReference Include="..\LocalGeo\LocalGeo.csproj" />
   </ItemGroup>
 
 </Project>

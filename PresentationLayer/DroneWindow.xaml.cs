@@ -109,7 +109,8 @@ namespace PL
         private bool[] well = { false, false, false, false };
         private bool exit = false;
         private bool first = true;
-        BackgroundWorker worker = new BackgroundWorker();
+        BackgroundWorker worker;
+        ParcelWindow parcelWindow;
 
         /// <summary>
         /// Drone actions functions
@@ -123,16 +124,14 @@ namespace PL
             AddDrone.Visibility = Visibility.Hidden;
             Title = "DroneActionsWindow";
             DroneActions.DataContext = poDrone;
-
         }
-
-        private void updateDrone() { worker.ReportProgress(0); }
-        private bool checkStop() { return worker.CancellationPending; }
 
         public void Refresh()
         {
             poDrone = new PO.Drone(bl.GetDrone(poDrone.Id));
             DroneActions.DataContext = poDrone;
+            if (parcelWindow != null)
+                parcelWindow.Refresh(this);
             if (Owner is DronesListWindow)
                 ((DronesListWindow)this.Owner).Refresh();
             if (Owner is StationWindow)
@@ -237,15 +236,19 @@ namespace PL
         {
             if (Owner is ParcelWindow)
             {
-                exit = true;
-                this.Close();
                 Owner.Show();
                 return;
             }
-            new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == poDrone.Parcel.Id), bl)
+            if(parcelWindow != null)
+            {
+                parcelWindow.Show();
+                return;
+            }
+            parcelWindow = new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == poDrone.Parcel.Id), bl)
             {
                 Owner = this
-            }.Show();
+            };
+            parcelWindow.Show();
         }
 
         private void Automatic_Click(object sender, RoutedEventArgs e)
@@ -253,12 +256,23 @@ namespace PL
             Automatic.Visibility = Visibility.Collapsed;
             Manual.Visibility = Visibility.Visible;
             ActionsButtons.Visibility = Visibility.Collapsed;
-            
+            worker =  new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true, };
+            worker.DoWork += (sender, args) => bl.StartSimulator(poDrone.Id, updateWindow, checkStop);
+            worker.RunWorkerCompleted += (sender, args) => { worker = null; };
+            worker.ProgressChanged += (sender, args) => Refresh();
+            worker.RunWorkerAsync(poDrone.Id);
         }
+
+        private void updateWindow() { worker.ReportProgress(0); }
+        private bool checkStop() { return !worker.CancellationPending; }
 
         private void Manual_Click(object sender, RoutedEventArgs e)
         {
-
+            worker.CancelAsync();
+            Refresh();
+            Automatic.Visibility = Visibility.Visible;
+            ActionsButtons.Visibility = Visibility.Visible;
+            Manual.Visibility = Visibility.Collapsed;
         }
 
 
@@ -308,6 +322,8 @@ namespace PL
 
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
         {
+            if (worker != null)
+                Manual_Click(sender, e);
             //TO DO - update drone list
             if (Owner is DronesListWindow)
                 ((DronesListWindow)this.Owner).Refresh();

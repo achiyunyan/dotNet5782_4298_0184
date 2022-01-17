@@ -9,7 +9,7 @@ namespace BO
     public class ParcelInTransit
     {
         public int Id { set; get; }
-        public bool State { set; get; } // 0 - Associated, 1 - Collected
+        public bool State { set; get; } // false- Associated, true - Collected
         public Priority Priority { set; get; }
         public WeightCategory WeightCategory { set; get; }
         public CustomerInParcel Sender { set; get; }

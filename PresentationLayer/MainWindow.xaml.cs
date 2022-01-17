@@ -31,25 +31,21 @@ namespace PL
          private void btnShowDrones_Click(object sender, RoutedEventArgs e)
         {
             new DronesListWindow(myBl).Show();
-            Close();
         }
 
         private void btnShowStations_Click(object sender, RoutedEventArgs e)
         {
             new StationsListWindow(myBl).Show();
-            Close();
         }
 
         private void btnShowCustomers_Click(object sender, RoutedEventArgs e)
         {
             new CustomersListWindow(myBl).Show();
-            Close();
         }
 
         private void btnShowParcels_Click(object sender, RoutedEventArgs e)
         {
             new ParcelsListWindow(myBl).Show();
-            Close();
         }
     }
 }

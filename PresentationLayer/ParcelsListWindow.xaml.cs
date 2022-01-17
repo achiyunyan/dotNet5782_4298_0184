@@ -75,7 +75,6 @@ namespace PL
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindow().Show();
             exit = true;
             Close();
         }

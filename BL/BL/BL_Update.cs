@@ -11,10 +11,9 @@ namespace BL
 {
     public partial class BL : BlApi.IBL
     {
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public void StartSimulator(int id, Action update, Func<bool> checkStop)
         {
-
+            new Simulator(id, update, checkStop, this);
         }
         internal void UpdateDroneBattery(int id, double battery)
         {
@@ -106,6 +105,11 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCharge(int id)
         {
+            Location location;
+            SendDroneToCharge(id, false, out location);
+        }
+        internal double SendDroneToCharge(int id, bool simulation, out Location stationLocation)
+        {
             ListDrone drone;
             try
             {
@@ -115,45 +119,45 @@ namespace BL
             {
                 throw new BlException(exec.Message);
             }
-            if (drone.State != DroneState.Available)
+            if (!simulation && drone.State != DroneState.Available)
                 throw new BlException($"Drone {id} is not available!");
             lock (myDal)
             {
-                if (myDal.GetStationsList().Any(st => st.ChargeSlots > 0))
-                {
-
-                    double distanceToClose = default, tempDis;
-                    IEnumerable<DO.Station> dalStationList = myDal.GetStationsList();
-
-                    DO.Station closestDalStation = dalStationList.First(st => st.ChargeSlots > 0);
-                    for (int i = 1; i < dalStationList.Count(); i++)
-                    {
-                        distanceToClose = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, closestDalStation.Latitude, closestDalStation.Longitude);
-                        tempDis = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, dalStationList.ElementAt(i).Latitude, dalStationList.ElementAt(i).Longitude);
-                        if (distanceToClose > tempDis && dalStationList.ElementAt(i).ChargeSlots > 0)
-                            closestDalStation = dalStationList.ElementAt(i);
-                    }
-
-                    if (drone.Battery - ElectricityUsePerKmAvailable * distanceToClose < 0)
-                        throw new BlException("Not enough battery");
-
-                    drone.Location = new Location { Latitude = closestDalStation.Latitude, Longitude = closestDalStation.Longitude };
-                    drone.State = DroneState.Maintenance;
-                    drone.Battery -= ElectricityUsePerKmAvailable * distanceToClose;
-                    //update the station, which is a struct
-                    closestDalStation.ChargeSlots -= 1;
-                    myDal.UpdateStation(closestDalStation);
-                    myDal.AddDroneCharge(new DO.DroneCharge
-                    {
-                        DroneId = id,
-                        StationId = closestDalStation.Id,
-                        StatrtTime = DateTime.Now
-                    });
-                }
-                else
+                if (!myDal.GetStationsList().Any(st => st.ChargeSlots > 0))
                 {
                     throw new BlException("No Free Charging Slots");
                 }
+                double distanceToClose = default, tempDis;
+                IEnumerable<DO.Station> dalStationList = myDal.GetStationsList();
+
+                DO.Station closestDalStation = dalStationList.First(st => st.ChargeSlots > 0);
+                for (int i = 1; i < dalStationList.Count(); i++)
+                {
+                    distanceToClose = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, closestDalStation.Latitude, closestDalStation.Longitude);
+                    tempDis = DistanceBetweenTwoPoints(drone.Location.Latitude, drone.Location.Longitude, dalStationList.ElementAt(i).Latitude, dalStationList.ElementAt(i).Longitude);
+                    if (distanceToClose > tempDis && dalStationList.ElementAt(i).ChargeSlots > 0)
+                        closestDalStation = dalStationList.ElementAt(i);
+                }
+
+                stationLocation = new Location { Latitude = closestDalStation.Latitude, Longitude = closestDalStation.Longitude };
+
+                if (drone.Battery - ElectricityUsePerKmAvailable * distanceToClose < 0)
+                    throw new BlException("Not enough battery");
+                //update the station, which is a struct
+                closestDalStation.ChargeSlots -= 1;
+                myDal.UpdateStation(closestDalStation);
+                myDal.AddDroneCharge(new DO.DroneCharge
+                {
+                    DroneId = id,
+                    StationId = closestDalStation.Id,
+                    StatrtTime = DateTime.Now
+                });
+                if (simulation)
+                    return distanceToClose;
+                drone.Location = new Location { Latitude = closestDalStation.Latitude, Longitude = closestDalStation.Longitude };
+                drone.State = DroneState.Maintenance;
+                drone.Battery -= ElectricityUsePerKmAvailable * distanceToClose;
+                return 0;
             }
 
         }
@@ -173,21 +177,12 @@ namespace BL
                     BlDrone.State = DroneState.Available;
                     lock (myDal)
                     {
-                        foreach (DO.DroneCharge dalDroneCharge in myDal.GetDroneCharges())
-                        {
-                            if (dalDroneCharge.DroneId == id)
-                            {
-
-                                BlDrone.Battery += (DateTime.Now - dalDroneCharge.StatrtTime).Seconds * ElectricityChargePerSec;
-                                if (BlDrone.Battery > 100)
-                                    BlDrone.Battery = 100;
-                                stationOfDrone = myDal.GetStation(dalDroneCharge.StationId);
-                                stationOfDrone.ChargeSlots += 1;
-                                myDal.UpdateStation(stationOfDrone);
-                                myDal.DeleteDroneCharge(dalDroneCharge);
-                                return;
-                            }
-                        }
+                        DO.DroneCharge dalDroneCharge = SetDroneBatteryAndReturnCharge(BlDrone);
+                        stationOfDrone = myDal.GetStation(dalDroneCharge.StationId);
+                        stationOfDrone.ChargeSlots += 1;
+                        myDal.UpdateStation(stationOfDrone);
+                        myDal.DeleteDroneCharge(dalDroneCharge);
+                        return;
                     }
                 }
                 else
@@ -197,6 +192,19 @@ namespace BL
 
             }
         }
+
+        internal DO.DroneCharge SetDroneBatteryAndReturnCharge(ListDrone BlDrone)
+        {
+            lock (myDal)
+            {
+                DO.DroneCharge dalDroneCharge = myDal.GetDroneCharges().First(drch => drch.DroneId == BlDrone.Id);
+                BlDrone.Battery += (DateTime.Now - dalDroneCharge.StatrtTime).Seconds * ElectricityChargePerSec;
+                if (BlDrone.Battery > 100)
+                    BlDrone.Battery = 100;
+                return dalDroneCharge;
+            }
+        }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void LinkParcelToDroneBL(int droneId)
         {
@@ -233,9 +241,9 @@ namespace BL
                 if (noAvailalableParcel)
                     throw new BlException("No availalable parcel!");
                 if (cannotCarryAnyParcel)
-                    throw new BlException($"Drone {droneId} cannot carry any parcel!");
+                    throw new BlException("Cannot carry any parcel!");
                 if (cannotFulfill)
-                    throw new BlException($"Drone {droneId} cannot fulfill the fly(not enough battery)");
+                    throw new BlException("Cannot fulfill the fly(not enough battery)");
                 DO.Parcel bestParcel = BestParcel(parcels, droneId);
                 BlDrone.State = DroneState.Delivery;
                 BlDrone.ParcelId = bestParcel.Id;
@@ -311,7 +319,7 @@ namespace BL
                     orderby DistanceBetweenTwoPoints(BlDrone.Location, GetCustomer(parcel.SenderId).Location)
                     select parcel).ElementAt(0);
         }
-        
+
         private bool PossibleFly(Drone BlDrone, DO.Parcel dalParcel)
         {
             Parcel BlParcel = DALParcelToBL(dalParcel);

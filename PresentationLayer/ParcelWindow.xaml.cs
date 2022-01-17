@@ -50,14 +50,14 @@ namespace PL
                 e.Cancel = true;
         }
 
-        public void Refresh()
+        public void Refresh(Window w = null)
         {
             if(exist)
                 parcel = new Parcel(bl.GetParcel(parcel.Id));
             ParcelActions.DataContext = parcel;
             if (Owner is ParcelsListWindow)
                 ((ParcelsListWindow)this.Owner).Refresh();
-            if (Owner is DroneWindow)
+            if (Owner != w && Owner is DroneWindow)
                 ((DroneWindow)this.Owner).Refresh();
             if (Owner is CustomerWindow)
                 ((CustomerWindow)this.Owner).Refresh();

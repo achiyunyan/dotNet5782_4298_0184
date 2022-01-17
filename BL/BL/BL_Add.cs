@@ -17,7 +17,7 @@ namespace BL
         private static Random rand = new Random();
         internal static IDal myDal;
         private static List<ListDrone> Drones = new List<ListDrone>();
-        private double ElectricityUsePerKmAvailable;
+        internal double ElectricityUsePerKmAvailable;
         private double ElectricityUsePerKmLight;
         private double ElectricityUsePerKmMedium;
         private double ElectricityUsePerKmHeavy;
@@ -32,7 +32,7 @@ namespace BL
             IEnumerable<DO.Drone> dalDrones;
             IEnumerable<DO.Parcel> dalParcels;
             lock (myDal)
-            {                
+            {
                 ElectricityUsePerKmAvailable = myDal.GetElectricityUsePerKmAvailable();
                 ElectricityUsePerKmLight = myDal.GetElectricityUsePerKmLight();
                 ElectricityUsePerKmMedium = myDal.GetElectricityUsePerKmMedium();
@@ -54,7 +54,7 @@ namespace BL
                 if (dalParcels.Any(pr => pr.DroneId == drone.Id && pr.Delivered == null)) // in delivery
                 {
                     DO.Parcel dalParcel = dalParcels.First(pr => pr.DroneId == drone.Id && pr.Delivered == null);
-                    state = DroneState.Delivery;
+                    state = DroneState.Delivery; 
                     DO.Customer sender;
                     DO.Customer reciver;
                     lock (myDal)
@@ -84,7 +84,7 @@ namespace BL
                     Location senderLocation = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude };
                     double disToClosesrStation = DistanceBetweenTwoPoints(reciverLocation, ClosestStationLocation(reciverLocation));
                     double disToSender = DistanceBetweenTwoPoints(location, senderLocation);
-                    battery = rand.Next((int)(ElecriciryUsePerWeight(dalParcel.Weight) * dis + ElectricityUsePerKmAvailable * (disToClosesrStation + disToSender)), 101);
+                    battery = rand.Next((int)(ElecriciryUsePerWeight(dalParcel.Weight) * dis + ElectricityUsePerKmAvailable * (disToClosesrStation + disToSender) + 1), 101);
                 }
                 else // not in delivery
                 {

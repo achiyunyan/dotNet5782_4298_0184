@@ -7,7 +7,8 @@
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
           "DalApi": "1.0.0",
-          "DalObject": "1.0.0"
+          "DalObject": "1.0.0",
+          "LocalGeo": "1.0.0"
         },
         "compile": {
           "bin/placeholder/BL.dll": {}
@@ -38,6 +39,16 @@
         "runtime": {
           "bin/placeholder/DalObject.dll": {}
         }
+      },
+      "LocalGeo/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/LocalGeo.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LocalGeo.dll": {}
+        }
       }
     }
   },
@@ -56,6 +67,11 @@
       "type": "project",
       "path": "../DalObject/DalObject.csproj",
       "msbuildProject": "../DalObject/DalObject.csproj"
+    },
+    "LocalGeo/1.0.0": {
+      "type": "project",
+      "path": "../LocalGeo/LocalGeo.csproj",
+      "msbuildProject": "../LocalGeo/LocalGeo.csproj"
     }
   },
   "projectFileDependencyGroups": {
