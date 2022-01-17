@@ -16,7 +16,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
-          "DalApi": "1.0.0"
+          "DalApi": "1.0.0",
+          "DalXml": "1.0.0"
         },
         "compile": {
           "bin/placeholder/DalObject.dll": {}
@@ -25,14 +26,17 @@
           "bin/placeholder/DalObject.dll": {}
         }
       },
-      "LocalGeo/1.0.0": {
+      "DalXml/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "DalApi": "1.0.0"
+        },
         "compile": {
-          "bin/placeholder/LocalGeo.dll": {}
+          "bin/placeholder/DalXml.dll": {}
         },
         "runtime": {
-          "bin/placeholder/LocalGeo.dll": {}
+          "bin/placeholder/DalXml.dll": {}
         }
       }
     }
@@ -48,44 +52,34 @@
       "path": "../DalObject/DalObject.csproj",
       "msbuildProject": "../DalObject/DalObject.csproj"
     },
-    "LocalGeo/1.0.0": {
+    "DalXml/1.0.0": {
       "type": "project",
-      "path": "../LocalGeo/LocalGeo.csproj",
-      "msbuildProject": "../LocalGeo/LocalGeo.csproj"
+      "path": "../DalXml/DalXml.csproj",
+      "msbuildProject": "../DalXml/DalXml.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
       "DalApi >= 1.0.0",
       "DalObject >= 1.0.0",
-      "LocalGeo >= 1.0.0"
+      "DalXml >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\zviko\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\yunia\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\BL\\BL.csproj",
+      "projectUniqueName": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\BL\\BL.csproj",
       "projectName": "BL",
-      "projectPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\BL\\BL.csproj",
-      "packagesPath": "C:\\Users\\zviko\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\BL\\obj\\",
+      "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\BL\\BL.csproj",
+      "packagesPath": "C:\\Users\\yunia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\BL\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\zviko\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\yunia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -98,14 +92,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\DalObject.csproj": {
-              "projectPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\DalObject.csproj"
+            "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\DalObject.csproj": {
+              "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DalObject\\DalObject.csproj"
             },
-            "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj": {
-              "projectPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj"
+            "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DalXml\\DalXml.csproj": {
+              "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DalXml\\DalXml.csproj"
             },
-            "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\LocalGeo\\LocalGeo.csproj": {
-              "projectPath": "C:\\Users\\zviko\\Source\\Repos\\dotNet5782_4298_0184\\LocalGeo\\LocalGeo.csproj"
+            "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj": {
+              "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj"
             }
           }
         }
@@ -134,7 +128,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }

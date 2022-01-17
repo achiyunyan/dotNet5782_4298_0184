@@ -8,7 +8,6 @@ using DalApi;
 using BlApi;
 using System.Runtime.CompilerServices;
 
-
 namespace BL
 {
     public partial class BL : IBL
@@ -118,7 +117,8 @@ namespace BL
                         {
                             lock (myDal)
                             {
-                                customer = myDal.GetCustomer(dalDeliveredParcels.ElementAt(rand.Next(0, dalDeliveredParcels.Count())).ReciverId);
+                                DO.Parcel x = dalDeliveredParcels.ElementAt(rand.Next(0, dalDeliveredParcels.Count()));
+                                customer = myDal.GetCustomer(x.ReciverId);
                             }
                         } while ((int)DistanceFromClosestStation(customer.Latitude, customer.Longitude) > 100);
                         state = DroneState.Available;

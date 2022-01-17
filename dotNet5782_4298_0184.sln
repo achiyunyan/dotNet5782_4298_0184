@@ -5,8 +5,13 @@ VisualStudioVersion = 16.0.31727.386
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{47BA699B-E8D5-47D8-A5E1-529646CE53E7}"
 	ProjectSection(SolutionItems) = preProject
+		xml\CustomersXml.xml = xml\CustomersXml.xml
 		xml\dal-config.xml = xml\dal-config.xml
+		xml\DCharge.xml = xml\DCharge.xml
+		xml\DronesXml.xml = xml\DronesXml.xml
+		xml\ParcelsXml.xml = xml\ParcelsXml.xml
 		..\README.md = ..\README.md
+		xml\StationsXml.xml = xml\StationsXml.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalApi", "DAL\DalApi.csproj", "{8DE653E5-40D6-410D-821F-716A6B1B52AB}"
@@ -19,6 +24,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PresentationLayer\PL.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{1867A8D5-4564-4280-88A2-5663377FF4B5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalObject", "DalObject\DalObject.csproj", "{498B6249-79BD-4118-850A-47B3207B2AA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{1867A8D5-4564-4280-88A2-5663377FF4B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{BB87E095-3126-43D3-8CF4-58E0D6F3BE87}"
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalObject", "DalObject\DalObject.csproj", "{498B6249-79BD-4118-850A-47B3207B2AA7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalGeo", "LocalGeo\LocalGeo.csproj", "{959FFB1A-B012-46A1-878E-B6BA7A4334CB}"
@@ -53,6 +62,10 @@ Global
 		{498B6249-79BD-4118-850A-47B3207B2AA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{498B6249-79BD-4118-850A-47B3207B2AA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{498B6249-79BD-4118-850A-47B3207B2AA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB87E095-3126-43D3-8CF4-58E0D6F3BE87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB87E095-3126-43D3-8CF4-58E0D6F3BE87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB87E095-3126-43D3-8CF4-58E0D6F3BE87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB87E095-3126-43D3-8CF4-58E0D6F3BE87}.Release|Any CPU.Build.0 = Release|Any CPU
 		{959FFB1A-B012-46A1-878E-B6BA7A4334CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{959FFB1A-B012-46A1-878E-B6BA7A4334CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{959FFB1A-B012-46A1-878E-B6BA7A4334CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
