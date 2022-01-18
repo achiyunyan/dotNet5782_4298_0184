@@ -321,7 +321,7 @@ namespace BL
 
         internal double DistanceBetweenTwoPoints(Location loc1, Location loc2)
         {
-            return DistanceBetweenTwoPoints(loc1.Latitude, loc1.Longitude, loc2.Latitude, loc2.Longitude);
+            return DistanceBetweenTwoPoints(loc1.Latitude, loc1.Longitude, loc2.Latitude, loc2.Longitude); 
         }
 
         private double DistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2)

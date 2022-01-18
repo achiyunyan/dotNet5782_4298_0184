@@ -10,9 +10,10 @@ namespace Dal
 {
     public class XmlTools
     {
-        static string dir = @"C:\Users\yunia\source\repos\dotNet5782_4298_0184\xml\";
+        static string dir= Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName).FullName + @"\xml\";
         static XmlTools()
         {
+            dir = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName).FullName + @"\xml\";
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
         }
