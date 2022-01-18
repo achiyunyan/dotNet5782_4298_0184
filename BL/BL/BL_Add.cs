@@ -41,6 +41,12 @@ namespace BL
                 dalDrones = myDal.GetDronesList();
                 dalParcels = myDal.GetParcelsList();
             }
+
+            foreach(var droneCharge in myDal.GetDroneCharges())
+            {
+                myDal.DeleteDroneCharge(droneCharge);
+            }
+
             double battery = default;
             DroneState state = default;
             int parcelId;

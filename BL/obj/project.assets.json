@@ -38,6 +38,16 @@
         "runtime": {
           "bin/placeholder/DalXml.dll": {}
         }
+      },
+      "LocalGeo/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/LocalGeo.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LocalGeo.dll": {}
+        }
       }
     }
   },
@@ -56,13 +66,19 @@
       "type": "project",
       "path": "../DalXml/DalXml.csproj",
       "msbuildProject": "../DalXml/DalXml.csproj"
+    },
+    "LocalGeo/1.0.0": {
+      "type": "project",
+      "path": "../LocalGeo/LocalGeo.csproj",
+      "msbuildProject": "../LocalGeo/LocalGeo.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
       "DalApi >= 1.0.0",
       "DalObject >= 1.0.0",
-      "DalXml >= 1.0.0"
+      "DalXml >= 1.0.0",
+      "LocalGeo >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -100,6 +116,9 @@
             },
             "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj": {
               "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\DAL\\DalApi.csproj"
+            },
+            "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\LocalGeo\\LocalGeo.csproj": {
+              "projectPath": "C:\\Users\\yunia\\Source\\Repos\\dotNet5782_4298_0184\\LocalGeo\\LocalGeo.csproj"
             }
           }
         }
