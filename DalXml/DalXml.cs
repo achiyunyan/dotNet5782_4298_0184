@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
@@ -72,6 +73,7 @@ namespace Dal
         #endregion
 
         #region ParcelFuncs
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(Parcel AddParcel)
         {
             XElement parcelElement = XmlTools.LoadListFromXMLElement(parcelsPath);
@@ -90,7 +92,7 @@ namespace Dal
 
             XmlTools.SaveListToXMLElement(parcelElement, parcelsPath);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcel(Parcel updateParcel)
         {
             XElement parcelElement = XmlTools.LoadListFromXMLElement(parcelsPath);
@@ -114,7 +116,7 @@ namespace Dal
                 XmlTools.SaveListToXMLElement(parcelElement, parcelsPath);
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int id)
         {
             XElement parcelElement = XmlTools.LoadListFromXMLElement(parcelsPath);
@@ -138,7 +140,7 @@ namespace Dal
                 throw new NotExistsException($"id: {id} not exists!!");
             return p;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcelsList(Func<Parcel, bool> predicate = null)
         {
             XElement parcelElement = XmlTools.LoadListFromXMLElement(parcelsPath);
@@ -164,7 +166,7 @@ namespace Dal
             }
             return p;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(Parcel deleteParcel)
         {
             XElement parcelElement = XmlTools.LoadListFromXMLElement(parcelsPath);
@@ -184,6 +186,7 @@ namespace Dal
         #endregion
 
         #region StationFuncs
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station addStation)
         {
             List<Station> stations = XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
@@ -195,6 +198,7 @@ namespace Dal
             XmlTools.SaveListToXMLSerializer<Station>(stations, stationsPath);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int id)
         {
             List<Station> stations = XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
@@ -205,11 +209,13 @@ namespace Dal
             throw new NotExistsException($"id: {id} not exists!!");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStationsList(Func<Station, bool> predicate = null)
         {
             return XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(Station updateStation)
         {
             List<Station> stations = XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
@@ -221,6 +227,7 @@ namespace Dal
             stations[indexOfStation] = updateStation;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(Station deleteStation)
         {
             List<Station> stations = XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
@@ -237,6 +244,7 @@ namespace Dal
         #endregion
 
         #region CustomerFuncs
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer addCustomer)
         {
             List<Customer> Customers = XmlTools.LoadListFromXMLSerializer<Customer>(CustomersPath);
@@ -248,6 +256,7 @@ namespace Dal
             XmlTools.SaveListToXMLSerializer<Customer>(Customers, CustomersPath);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int id)
         {
             List<Customer> Customers = XmlTools.LoadListFromXMLSerializer<Customer>(CustomersPath);
@@ -258,11 +267,13 @@ namespace Dal
             throw new NotExistsException($"id: {id} not exists!!");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetCustomersList(Func<Customer, bool> predicate = null)
         {
             return XmlTools.LoadListFromXMLSerializer<Customer>(CustomersPath);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(Customer updateCustomer)
         {
             List<Customer> Customers = XmlTools.LoadListFromXMLSerializer<Customer>(CustomersPath);
@@ -274,6 +285,8 @@ namespace Dal
             Customers[indexOfCustomer] = updateCustomer;
         }
 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteCustomer(Customer deleteCustomer)
         {
             List<Customer> Customers = XmlTools.LoadListFromXMLSerializer<Customer>(CustomersPath);
@@ -290,6 +303,7 @@ namespace Dal
         #endregion
 
         #region DroneFuncs
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone addDrone)
         {
             List<Drone> Drones = XmlTools.LoadListFromXMLSerializer<Drone>(DronesPath);
@@ -301,6 +315,7 @@ namespace Dal
             XmlTools.SaveListToXMLSerializer(Drones, DronesPath);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int id)
         {
             List<Drone> Drones = XmlTools.LoadListFromXMLSerializer<Drone>(DronesPath);
@@ -311,11 +326,13 @@ namespace Dal
             throw new NotExistsException($"id: {id} not exists!!");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDronesList(Func<Drone, bool> predicate = null)
         {
             return XmlTools.LoadListFromXMLSerializer<Drone>(DronesPath);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(Drone updateDrone)
         {
             List<Drone> Drones = XmlTools.LoadListFromXMLSerializer<Drone>(DronesPath);
@@ -327,6 +344,7 @@ namespace Dal
             Drones[indexOfDrone] = updateDrone;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(Drone deleteDrone)
         {
             List<Drone> Drones = XmlTools.LoadListFromXMLSerializer<Drone>(DronesPath);
@@ -343,6 +361,7 @@ namespace Dal
         #endregion
 
         #region DroneCharge
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDroneCharge(DroneCharge addDroneCharge)
         {
             List<DroneCharge> DC = XmlTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargePath);
@@ -354,6 +373,7 @@ namespace Dal
             XmlTools.SaveListToXMLSerializer<DroneCharge>(DC, DroneChargePath);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDroneCharge(DroneCharge deleteDroneCharge)
         {
             List<DroneCharge> DC = XmlTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargePath);
@@ -367,6 +387,7 @@ namespace Dal
                 throw new NotExistsException($"id: {deleteDroneCharge.DroneId} not exists!!");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetDroneCharges()
         {
             return XmlTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargePath);

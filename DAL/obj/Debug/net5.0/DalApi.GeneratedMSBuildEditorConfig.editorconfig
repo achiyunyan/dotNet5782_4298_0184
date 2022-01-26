@@ -6,5 +6,5 @@ build_property.ProjectTypeGuids =
 build_property.PublishSingleFile = 
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
-build_property.RootNamespace = ConsoleUI_BL
-build_property.ProjectDir = C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\ConsoleUI2\
+build_property.RootNamespace = DalApi
+build_property.ProjectDir = C:\Users\yunia\Source\Repos\dotNet5782_4298_0184\DAL\
