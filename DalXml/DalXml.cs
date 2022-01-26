@@ -20,7 +20,7 @@ namespace Dal
 
         public static IDal Instance { get { return instance; } }
 
-        private DalXml()//costructor for dalObject
+        private DalXml()
         {
             Config();
         }
@@ -34,8 +34,19 @@ namespace Dal
         internal static double ElectricityUsePerKmMedium;
         internal static double ElectricityUsePerKmHeavy;
         internal static double ElectricityChargePerSec;
+        private static string solutionDirectory;
+        private string xmlPath ;
+        private string parcelsPath = @"ParcelsXml.xml";
+        private string stationsPath = @"StationsXml.xml";
+        private string CustomersPath = @"CustomersXml.xml";
+        private string DronesPath = @"DronesXml.xml";
+        private string DroneChargePath = @"DCharge.xml";
+        private string ConfigPath = @"dal-config.Xml";
+
         private void Config()
         {
+            solutionDirectory= Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName).FullName).FullName;
+            xmlPath = solutionDirectory + @"\xml\";
             #region files Create
             if (!File.Exists(xmlPath + parcelsPath))
                 File.Create(xmlPath + parcelsPath);
@@ -60,14 +71,6 @@ namespace Dal
             }
         }
         #endregion
-
-        private string xmlPath = @"C:\Users\yunia\source\repos\dotNet5782_4298_0184\xml\";
-        private string parcelsPath = @"ParcelsXml.xml";
-        private string stationsPath = @"StationsXml.xml";
-        private string CustomersPath = @"CustomersXml.xml";
-        private string DronesPath = @"DronesXml.xml";
-        private string DroneChargePath = @"DCharge.xml";
-        private string ConfigPath = @"dal-config.Xml";
 
         #region ParcelFuncs
         [MethodImpl(MethodImplOptions.Synchronized)]
