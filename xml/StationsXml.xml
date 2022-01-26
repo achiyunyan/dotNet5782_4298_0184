@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Station>
-    <Id>68022</Id>
+    <Id>62158</Id>
     <Name>Rehavia</Name>
     <Longitude>35.21284491679851</Longitude>
     <Latitude>31.773883970410303</Latitude>
-    <ChargeSlots>3</ChargeSlots>
+    <ChargeSlots>2</ChargeSlots>
   </Station>
   <Station>
-    <Id>44785</Id>
+    <Id>94140</Id>
     <Name>Katamon</Name>
     <Longitude>35.206849163507805</Longitude>
     <Latitude>31.761073049323283</Latitude>

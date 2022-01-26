@@ -53,9 +53,12 @@ namespace PL
 
         private void lstvStations_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            StationWindow sw = new StationWindow(ibl, (BO.ListStation)lstvStations.SelectedItem);
-            sw.Owner = this;
-            sw.Show();
+            if (lstvStations.Items.Count > 0)
+            {
+                StationWindow sw = new StationWindow(ibl, (BO.ListStation)lstvStations.SelectedItem);
+                sw.Owner = this;
+                sw.Show();
+            }
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)

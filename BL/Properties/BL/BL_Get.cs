@@ -255,11 +255,12 @@ namespace BL
                                                       ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
                                                   };
             }
-            if (!(Sender == null || Sender == ""))
-                parcels = parcels.Where(par => par.SenderName == Sender);
-
-            if (!(Receiver == null || Receiver == ""))
-                parcels = parcels.Where(par => par.ReceiverName == Receiver);
+            var x = parcels.Count();
+            if (!(Sender == null || (string)Sender == ""))
+                parcels = parcels.Where(par => par.SenderName == (string)Sender);
+            x = parcels.Count();
+            if (!(Receiver == null || (string)Receiver == ""))
+                parcels = parcels.Where(par => par.ReceiverName == (string)Receiver);
 
             if (!(Priority == null || Priority == ""))
                 parcels = parcels.Where(par => par.Priority == (Priority)Priority);
@@ -269,6 +270,7 @@ namespace BL
 
             if (!(Weight == null || Weight == ""))
                 parcels = parcels.Where(par => par.WeightCategory == (WeightCategory)Weight);
+            
             return parcels;            
         }
 
