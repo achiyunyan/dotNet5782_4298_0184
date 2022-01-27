@@ -35,6 +35,8 @@ namespace Dal
         internal static double ElectricityUsePerKmHeavy;
         internal static double ElectricityChargePerSec;
         private static string solutionDirectory;
+
+        //Relevant storage paths of the xml files
         private string xmlPath ;
         private string parcelsPath = @"ParcelsXml.xml";
         private string stationsPath = @"StationsXml.xml";
@@ -73,6 +75,10 @@ namespace Dal
         #endregion
 
         #region ParcelFuncs
+        /// <summary>
+        /// Add the specified parcel to the parcels' xml file
+        /// </summary>
+        /// <param name="AddParcel"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(Parcel AddParcel)
         {
@@ -92,6 +98,11 @@ namespace Dal
 
             XmlTools.SaveListToXMLElement(parcelElement, parcelsPath);
         }
+
+        /// <summary>
+        ///  Update the specified parcel to the parcels' xml file
+        /// </summary>
+        /// <param name="updateParcel"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcel(Parcel updateParcel)
         {
@@ -116,6 +127,12 @@ namespace Dal
                 XmlTools.SaveListToXMLElement(parcelElement, parcelsPath);
             }
         }
+
+        /// <summary>
+        /// Return a specific parcel by its Id if exists,else throw an exeption
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int id)
         {
@@ -140,6 +157,11 @@ namespace Dal
                 throw new NotExistsException($"id: {id} not exists!!");
             return p;
         }
+        /// <summary>
+        /// Return the parcels in the database,according to rhe predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcelsList(Func<Parcel, bool> predicate = null)
         {
@@ -166,6 +188,11 @@ namespace Dal
             }
             return predicate==null?p:p.Where(predicate);
         }
+
+        /// <summary>
+        /// Delete a parcel,or throw exeption if not found
+        /// </summary>
+        /// <param name="deleteParcel"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(Parcel deleteParcel)
         {
