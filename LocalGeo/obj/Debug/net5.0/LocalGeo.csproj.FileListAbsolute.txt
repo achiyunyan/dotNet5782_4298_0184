@@ -1,0 +1,11 @@
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\LocalGeo\bin\Debug\net5.0\LocalGeo.deps.json
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\LocalGeo\bin\Debug\net5.0\LocalGeo.dll
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\LocalGeo\bin\Debug\net5.0\ref\LocalGeo.dll
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\LocalGeo\bin\Debug\net5.0\LocalGeo.pdb
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\LocalGeo\obj\Debug\net5.0\LocalGeo.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\LocalGeo\obj\Debug\net5.0\LocalGeo.AssemblyInfoInputs.cache
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\LocalGeo\obj\Debug\net5.0\LocalGeo.AssemblyInfo.cs
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\LocalGeo\obj\Debug\net5.0\LocalGeo.csproj.CoreCompileInputs.cache
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\LocalGeo\obj\Debug\net5.0\LocalGeo.dll
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\LocalGeo\obj\Debug\net5.0\ref\LocalGeo.dll
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\LocalGeo\obj\Debug\net5.0\LocalGeo.pdb

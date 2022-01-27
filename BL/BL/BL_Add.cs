@@ -12,8 +12,7 @@ namespace BL
 {
     public partial class BL : IBL
     {
-
-        private static Random rand = new Random();
+        #region Data 
         internal static IDal myDal;
         private static List<ListDrone> Drones = new List<ListDrone>();
         internal double ElectricityUsePerKmAvailable;
@@ -21,16 +20,24 @@ namespace BL
         private double ElectricityUsePerKmMedium;
         private double ElectricityUsePerKmHeavy;
         internal double ElectricityChargePerSec;
+        #endregion
+
+        private static Random rand = new Random();
+
         #region singleton
         private static readonly IBL instance = new BL();
         public static IBL Instance { get { return instance; } }
         #endregion
+
+        /// <summary>
+        /// constractor for BL
+        /// </summary>
         private BL()
         {
             myDal = FactoryDal.GetDal();
             IEnumerable<DO.Drone> dalDrones;
             IEnumerable<DO.Parcel> dalParcels;
-            lock (myDal)
+            lock (myDal)// loads data from dal
             {
                 ElectricityUsePerKmAvailable = myDal.GetElectricityUsePerKmAvailable();
                 ElectricityUsePerKmLight = myDal.GetElectricityUsePerKmLight();
@@ -42,24 +49,20 @@ namespace BL
                 dalParcels = myDal.GetParcelsList();
             }
 
-            foreach(var droneCharge in myDal.GetDroneChargesList())
-            {
-                myDal.DeleteDroneCharge(droneCharge);
-            }
-
-            double battery = default;
+            double battery = default; 
             DroneState state = default;
             int parcelId;
             Location location = default;
-            bool isAvaliable = default;
+            bool deliveryPossible;
+            bool maintenancePossible;
 
-            foreach (var drone in dalDrones)
+            foreach (var drone in dalDrones) // set every drone to bl
             {
                 parcelId = 0;
-                if (dalParcels.Any(pr => pr.DroneId == drone.Id && pr.Delivered == null)) // in delivery
+                deliveryPossible = false;
+                if (dalParcels.Any(pr => pr.DroneId == drone.Id && pr.Delivered == null)) // in delivery (there is a linked parcel)
                 {
                     DO.Parcel dalParcel = dalParcels.First(pr => pr.DroneId == drone.Id && pr.Delivered == null);
-                    state = DroneState.Delivery; 
                     DO.Customer sender;
                     DO.Customer reciver;
                     lock (myDal)
@@ -67,14 +70,15 @@ namespace BL
                         sender = myDal.GetCustomer(dalParcel.SenderId);
                         reciver = myDal.GetCustomer(dalParcel.ReciverId);
                     }
-                    double dis = DistanceBetweenTwoPoints(sender.Latitude, sender.Longitude, reciver.Latitude, reciver.Longitude);
-                    parcelId = dalParcel.Id;
-
-                    if (dalParcel.PickedUp == null)
+                    Location reciverLocation = new Location { Latitude = reciver.Latitude, Longitude = reciver.Longitude };
+                    Location senderLocation = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude };
+                    
+                    //calculates the drone location based on its state
+                    if (dalParcel.PickedUp == null) //Scheduled -> closest 
                     {
                         location = ClosestStationLocation(sender.Latitude, sender.Longitude);
                     }
-                    else
+                    else //Collected -> 
                     {
                         lock (myDal)
                         {
@@ -85,19 +89,26 @@ namespace BL
                             };
                         }
                     }
-                    Location reciverLocation = new Location { Latitude = reciver.Latitude, Longitude = reciver.Longitude };
-                    Location senderLocation = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude };
+
+                    //checks if the delivery flight is possible
+                    double deliveryDis = DistanceBetweenTwoPoints(senderLocation, reciverLocation);
                     double disToClosesrStation = DistanceBetweenTwoPoints(reciverLocation, ClosestStationLocation(reciverLocation));
                     double disToSender = DistanceBetweenTwoPoints(location, senderLocation);
-                    int minimum = (int)(ElecriciryUsePerWeight(dalParcel.Weight) * dis + ElectricityUsePerKmAvailable * (disToClosesrStation + disToSender) + 1);
+                    int minimum = (int)(ElecriciryUsePerWeight(dalParcel.Weight) * deliveryDis + ElectricityUsePerKmAvailable * (disToClosesrStation + disToSender) + 1);
                     if (minimum > 101)//temporary solution 
                         battery = 100;
                     else
                         battery = rand.Next(minimum, 101);
+
+
+                    parcelId = dalParcel.Id;
+                    state = DroneState.Delivery;
+                    
+                    
                 }
-                else // not in delivery
+                if(!deliveryPossible) // not in delivery
                 {
-                    isAvaliable = true;
+                    maintenancePossible = true;
                     if (rand.Next(0, 2) == 0)// in charge
                     {
                         IEnumerable<DO.Station> dalStationsWithSlots;
@@ -107,7 +118,7 @@ namespace BL
                         }
                         if (dalStationsWithSlots.Any())
                         {
-                            isAvaliable = false;
+                            maintenancePossible = false;
                             state = DroneState.Maintenance;
                             battery = rand.Next(0, 21);
                             int index = rand.Next(0, dalStationsWithSlots.Count());
@@ -119,7 +130,7 @@ namespace BL
                         }
                     }
 
-                    if (isAvaliable) // available
+                    if (!maintenancePossible) // available
                     {
                         IEnumerable<DO.Parcel> dalDeliveredParcels = dalParcels.Where(par => par.Delivered != null);
                         DO.Customer customer;
@@ -172,7 +183,7 @@ namespace BL
             return ClosestStationLocation(loc.Latitude, loc.Longitude);
         }
 
-        private Location ClosestStationLocation(double lat, double lon)
+        private Location ClosestStationLocation(double lat, double lon, bool withFreeChargeSlots = true)
         {
             IEnumerable<DO.Station> dalStations;
             lock (myDal)

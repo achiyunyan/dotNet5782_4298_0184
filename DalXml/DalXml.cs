@@ -157,6 +157,7 @@ namespace Dal
                 throw new NotExistsException($"id: {id} not exists!!");
             return p;
         }
+
         /// <summary>
         /// Return the parcels in the database,according to rhe predicate
         /// </summary>
@@ -451,5 +452,9 @@ namespace Dal
         }
         #endregion
 
+        public IEnumerable<DroneCharge> GetDroneChargesList(Func<DroneCharge, bool> predicate = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
