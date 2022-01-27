@@ -30,9 +30,12 @@ namespace PL
         }
         private void openActionsWindow(object sender, MouseButtonEventArgs e)
         {
-            CustomerWindow pw = new CustomerWindow((ListCustomer)lstvCustomers.SelectedItem, ibl);
-            pw.Owner = this;
-            pw.Show();
+            if (lstvCustomers.Items.Count > 0)
+            {
+                CustomerWindow pw = new CustomerWindow((ListCustomer)lstvCustomers.SelectedItem, ibl);
+                pw.Owner = this;
+                pw.Show();
+            }
         }
         private void btnAddDrones_Click(object sender, RoutedEventArgs e)
         {

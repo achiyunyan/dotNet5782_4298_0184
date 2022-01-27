@@ -89,7 +89,11 @@ namespace BL
                     Location senderLocation = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude };
                     double disToClosesrStation = DistanceBetweenTwoPoints(reciverLocation, ClosestStationLocation(reciverLocation));
                     double disToSender = DistanceBetweenTwoPoints(location, senderLocation);
-                    battery = rand.Next((int)(ElecriciryUsePerWeight(dalParcel.Weight) * dis + ElectricityUsePerKmAvailable * (disToClosesrStation + disToSender) + 1), 101);
+                    int minimum = (int)(ElecriciryUsePerWeight(dalParcel.Weight) * dis + ElectricityUsePerKmAvailable * (disToClosesrStation + disToSender) + 1);
+                    if (minimum > 101)//temporary solution 
+                        battery = 100;
+                    else
+                        battery = rand.Next(minimum, 101);
                 }
                 else // not in delivery
                 {

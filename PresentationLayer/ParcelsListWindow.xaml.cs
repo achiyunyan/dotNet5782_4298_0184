@@ -144,9 +144,12 @@ namespace PL
 
         private void parcelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ParcelWindow pW = new ParcelWindow((ListParcel)parcelsList.SelectedItem, ibl);
-            pW.Owner = this;
-            pW.Show();
+            if (parcelsList.Items.Count > 0)
+            {
+                ParcelWindow pW = new ParcelWindow((ListParcel)parcelsList.SelectedItem, ibl);
+                pW.Owner = this;
+                pW.Show();
+            }
         }
     }
 }

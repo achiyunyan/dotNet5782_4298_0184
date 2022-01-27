@@ -164,7 +164,7 @@ namespace Dal
                     DroneId = int.Parse(par.Element("DroneId").Value)
                 });
             }
-            return p;
+            return predicate==null?p:p.Where(predicate);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(Parcel deleteParcel)
@@ -225,6 +225,7 @@ namespace Dal
                 throw new NotExistsException($"id: {updateStation.Id} not exists!!");
             }
             stations[indexOfStation] = updateStation;
+            XmlTools.SaveListToXMLSerializer(stations,stationsPath);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -283,6 +284,7 @@ namespace Dal
                 throw new NotExistsException($"id: {updateCustomer.Id} not exists!!");
             }
             Customers[indexOfCustomer] = updateCustomer;
+            XmlTools.SaveListToXMLSerializer<Customer>(Customers, CustomersPath);
         }
 
 
@@ -342,6 +344,7 @@ namespace Dal
                 throw new NotExistsException($"id: {updateDrone.Id} not exists!!");
             }
             Drones[indexOfDrone] = updateDrone;
+            XmlTools.SaveListToXMLSerializer(Drones, DronesPath);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
