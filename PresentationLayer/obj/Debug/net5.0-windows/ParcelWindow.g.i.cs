@@ -245,7 +245,7 @@ namespace PL {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/PL;V1.0.0.0;component/parcelwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/PL;component/parcelwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\ParcelWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

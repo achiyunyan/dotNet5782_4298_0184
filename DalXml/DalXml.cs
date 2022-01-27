@@ -75,6 +75,7 @@ namespace Dal
                 ElectricityChargePerSec = double.Parse(Electricity.Element("ElectricityChargePerSec").Value);
                 parcelNum = int.Parse(Electricity.Element("parcelNum").Value);
             }
+            XmlTools.SaveListToXMLSerializer(new List<DroneCharge>(), DroneChargePath);//clear the charges
         }
         #endregion
 
@@ -510,7 +511,7 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetDroneChargesList(Func<DroneCharge, bool> predicate = null)
         {
-            return XmlTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargePath).Where(predicate);
+            return predicate==null? XmlTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargePath):XmlTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargePath).Where(predicate);
         }
         #endregion
 

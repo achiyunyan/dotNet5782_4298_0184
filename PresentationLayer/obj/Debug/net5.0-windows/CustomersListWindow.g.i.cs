@@ -93,7 +93,7 @@ namespace PL {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/PL;V1.0.0.0;component/customerslistwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/PL;component/customerslistwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\CustomersListWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
