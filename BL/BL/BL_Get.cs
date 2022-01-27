@@ -215,8 +215,8 @@ namespace BL
                        SentSuppliedParcels = dalParcels.Count(par => par.SenderId == dalCustomer.Id && par.Delivered != null)
                    });
         }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null)
+        
+        private IEnumerable<ListParcel> GetParcelsList(Func<DO.Parcel, bool> predicate = null)
         {
             lock (myDal)
             {
@@ -245,15 +245,15 @@ namespace BL
             {
                 dalParcels = myDal.GetParcelsList(pr => pr.Requested >= firstDate && pr.Requested <= secondDate || DalParcelLastTime(pr) >= firstDate && DalParcelLastTime(pr) <= secondDate);
                 parcels = from dalParcel in dalParcels
-                                                  select new ListParcel
-                                                  {
-                                                      Id = dalParcel.Id,
-                                                      Priority = (Priority)(int)dalParcel.Priority,
-                                                      WeightCategory = (WeightCategory)(int)dalParcel.Weight,
-                                                      State = GetParcelStateByDalParcel(dalParcel),
-                                                      SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
-                                                      ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
-                                                  };
+                          select new ListParcel
+                          {
+                              Id = dalParcel.Id,
+                              Priority = (Priority)(int)dalParcel.Priority,
+                              WeightCategory = (WeightCategory)(int)dalParcel.Weight,
+                              State = GetParcelStateByDalParcel(dalParcel),
+                              SenderName = myDal.GetCustomer(dalParcel.SenderId).Name,
+                              ReceiverName = myDal.GetCustomer(dalParcel.ReciverId).Name
+                          };
             }
             var x = parcels.Count();
             if (!(Sender == null || (string)Sender == ""))
@@ -270,11 +270,12 @@ namespace BL
 
             if (!(Weight == null || Weight == ""))
                 parcels = parcels.Where(par => par.WeightCategory == (WeightCategory)Weight);
-            
-            return parcels;            
+
+            return parcels;
         }
 
-        private IEnumerable<ListParcel> GetParcelsList()
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<ListParcel> GetParcelsList()
         {
             lock (myDal)
             {
@@ -391,8 +392,8 @@ namespace BL
                 Receiver = new CustomerInParcel { Id = reciver.Id, Name = reciver.Name }
             };
             return parcelInTransit;
-        } 
-        
+        }
+
         internal double GetElectricityChargePerSec()
         {
             return ElectricityChargePerSec;

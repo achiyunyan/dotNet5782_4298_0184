@@ -74,11 +74,11 @@ namespace BL
                     Location senderLocation = new Location { Latitude = sender.Latitude, Longitude = sender.Longitude };
                     
                     //calculates the drone location based on its state
-                    if (dalParcel.PickedUp == null) //Scheduled -> closest 
+                    if (dalParcel.PickedUp == null) //Scheduled -> closest station location
                     {
-                        location = ClosestStationLocation(sender.Latitude, sender.Longitude);
+                        location = ClosestStationLocation(sender.Latitude, sender.Longitude, false);
                     }
-                    else //Collected -> 
+                    else //Collected -> sender location
                     {
                         lock (myDal)
                         {
@@ -91,49 +91,61 @@ namespace BL
                     }
 
                     //checks if the delivery flight is possible
+                    // drone's location (Available) -> sender location (Carrying weight) -> receiver location (Available) -> closest station
                     double deliveryDis = DistanceBetweenTwoPoints(senderLocation, reciverLocation);
-                    double disToClosesrStation = DistanceBetweenTwoPoints(reciverLocation, ClosestStationLocation(reciverLocation));
+                    double disToClosestStation = DistanceBetweenTwoPoints(reciverLocation, ClosestStationLocation(reciverLocation, false));
                     double disToSender = DistanceBetweenTwoPoints(location, senderLocation);
-                    int minimum = (int)(ElecriciryUsePerWeight(dalParcel.Weight) * deliveryDis + ElectricityUsePerKmAvailable * (disToClosesrStation + disToSender) + 1);
-                    if (minimum > 101)//temporary solution 
-                        battery = 100;
+                    double minimum = ElecriciryUsePerWeight(dalParcel.Weight) * deliveryDis + ElectricityUsePerKmAvailable * (disToClosestStation + disToSender);
+                    
+                    if (minimum > 100)// can't fulfil the mission -> restart the parcel
+                    {
+                        dalParcel.Scheduled = null;
+                        dalParcel.PickedUp = null;
+                        lock(myDal)
+                        {
+                            myDal.UpdateParcel(dalParcel);
+                        }
+                    }
                     else
-                        battery = rand.Next(minimum, 101);
-
-
-                    parcelId = dalParcel.Id;
-                    state = DroneState.Delivery;
-                    
-                    
+                    {
+                        deliveryPossible = true;
+                        battery = rand.Next((int)Math.Ceiling(minimum), 101);
+                        parcelId = dalParcel.Id;
+                        state = DroneState.Delivery;
+                    }    
                 }
                 if(!deliveryPossible) // not in delivery
                 {
-                    maintenancePossible = true;
-                    if (rand.Next(0, 2) == 0)// in charge
+                    maintenancePossible = false;
+                    if (rand.Next(0, 2) == 0)// in charge (if there are stations with free charging slots)
                     {
                         IEnumerable<DO.Station> dalStationsWithSlots;
                         lock (myDal)
                         {
-                            dalStationsWithSlots = myDal.GetStationsList().Where(st => st.ChargeSlots > 0);
+                            dalStationsWithSlots = myDal.GetStationsList(st => st.ChargeSlots > 0);
                         }
-                        if (dalStationsWithSlots.Any())
+                        if (dalStationsWithSlots.Any()) // there is a place to charge
                         {
-                            maintenancePossible = false;
+                            maintenancePossible = true; // not available
                             state = DroneState.Maintenance;
                             battery = rand.Next(0, 21);
                             int index = rand.Next(0, dalStationsWithSlots.Count());
-                            location = new Location { Latitude = dalStationsWithSlots.ElementAt(index).Latitude, Longitude = dalStationsWithSlots.ElementAt(index).Longitude };
+                            DO.Station station = dalStationsWithSlots.ElementAt(index);
+                            location = new Location { Latitude = station.Latitude, Longitude = station.Longitude };
+                            station.ChargeSlots -= 1;
                             lock (myDal)
                             {
+                                myDal.UpdateStation(station);
                                 myDal.AddDroneCharge(new DO.DroneCharge { DroneId = drone.Id, StationId = dalStationsWithSlots.ElementAt(index).Id });
                             }
                         }
                     }
 
                     if (!maintenancePossible) // available
-                    {
-                        IEnumerable<DO.Parcel> dalDeliveredParcels = dalParcels.Where(par => par.Delivered != null);
+                    {                        
+                        IEnumerable<DO.Parcel> dalDeliveredParcels = dalParcels.Where(par => par.Delivered != null); // customers that got parcels
                         DO.Customer customer;
+                        // picks a random customer that is close enough to a station
                         do
                         {
                             lock (myDal)
@@ -141,12 +153,14 @@ namespace BL
                                 DO.Parcel x = dalDeliveredParcels.ElementAt(rand.Next(0, dalDeliveredParcels.Count()));
                                 customer = myDal.GetCustomer(x.ReciverId);
                             }
-                        } while ((int)DistanceFromClosestStation(customer.Latitude, customer.Longitude) > 100);
+                        } while (DistanceFromClosestStation(customer.Latitude, customer.Longitude) * ElectricityUsePerKmAvailable > 100);
+
                         state = DroneState.Available;
                         location = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };
                         battery = rand.Next((int)(DistanceFromClosestStation(customer.Latitude, customer.Longitude) * ElectricityUsePerKmAvailable), 101);
                     }
                 }
+                // adds the drone do the bl list
                 Drones.Add(new ListDrone
                 {
                     Id = drone.Id,
@@ -159,6 +173,7 @@ namespace BL
                 });
             }
         }
+
         internal double ElecriciryUsePerWeight(WeightCategory weight)
         {
             return ElecriciryUsePerWeight((DO.WeightCategories)(int)weight);
@@ -178,9 +193,9 @@ namespace BL
             return default;
         }
 
-        internal Location ClosestStationLocation(Location loc)
+        internal Location ClosestStationLocation(Location loc, bool withFreeChargeSlots = true)
         {
-            return ClosestStationLocation(loc.Latitude, loc.Longitude);
+            return ClosestStationLocation(loc.Latitude, loc.Longitude, withFreeChargeSlots);
         }
 
         private Location ClosestStationLocation(double lat, double lon, bool withFreeChargeSlots = true)
@@ -193,7 +208,7 @@ namespace BL
             double dis = double.MaxValue;
             Location location = new Location();
             string name = "";
-            foreach (var station in dalStations.Where(station => dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && station.ChargeSlots > 0))
+            foreach (var station in dalStations.Where(station => !withFreeChargeSlots || station.ChargeSlots > 0))
             {
                 location.Latitude = station.Latitude;
                 location.Longitude = station.Longitude;

@@ -101,7 +101,7 @@ namespace BL
                             {
                                 break; //wait
                             }
-                            else //Cannot fulfill the fly(not enough battery)
+                            else if (drone.Battery != 100); //Cannot fulfill the fly(not enough battery)
                             {
                                 drone.State = DroneState.Maintenance;
                                 maintenance = Maintenance.SearchingStation;

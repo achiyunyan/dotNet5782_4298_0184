@@ -544,10 +544,5 @@ namespace Dal
             return ElectricityChargePerSec;
         }
         #endregion
-
-        public IEnumerable<DroneCharge> GetDroneChargesList(Func<DroneCharge, bool> predicate = null)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -28,7 +28,7 @@ namespace BlApi
         #endregion
         #region Get List
         IEnumerable<ListStation> GetStationsList();
-        IEnumerable<ListDrone> GetDronesList();
+        IEnumerable<ListDrone> GetDronesList(Func<ListDrone, bool> predicate = null);
         IEnumerable<ListCustomer> GetCustomersList();
         IEnumerable<ListParcel> GetParcelsList();
         //filtered lists

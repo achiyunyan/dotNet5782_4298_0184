@@ -9,3 +9,4 @@ C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DalApi.csp
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DalApi.dll
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\ref\DalApi.dll
 C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DalApi.pdb
+C:\Users\zviko\Source\Repos\dotNet5782_4298_0184\DAL\obj\Debug\net5.0\DalApi.csproj.AssemblyReference.cache
