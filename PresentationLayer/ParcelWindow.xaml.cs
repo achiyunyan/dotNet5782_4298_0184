@@ -29,13 +29,14 @@ namespace PL
         Parcel parcel;
         bool[] well = { false, false, false, false };
         bool exit = false;
-        bool exist = true;
+        bool exist = false;
         /// <summary>
         /// Parcel actions functions
         /// </summary>
         /// 
         public ParcelWindow(BO.ListParcel myParcel, BlApi.IBL myBl)
         {
+            exist = true;
             bl = myBl;
             parcel = new Parcel(bl.GetParcel(myParcel.Id));
             InitializeComponent();

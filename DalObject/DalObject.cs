@@ -24,9 +24,14 @@ namespace Dal
         public static IDal Instance { get { return instance; } }
 
         int parcelNum = 1000000;
+
         private DalObject()//costructor for dalObject
         {
             DataSource.Config.Initialize();
+
+            // not in use 
+            #region write to xml
+            /*
             XmlTools.SaveListToXMLSerializer<Customer>(DataSource.Customers, @"CustomersXml.xml");
             XmlTools.SaveListToXMLSerializer<Drone>(DataSource.Drones, @"DronesXml.xml");
             XmlTools.SaveListToXMLSerializer<Station>(DataSource.Stations, @"StationsXml.xml");
@@ -50,16 +55,17 @@ namespace Dal
             }
 
             XmlTools.SaveListToXMLElement(parcelElement, @"ParcelsXml.xml");
-            int x = 0;
+            */
+            #endregion 
         }
 
         #endregion
 
+        #region Add
         /// <summary>
         /// adds station to the stations' list
         /// </summary>
-        /// <param name="addStation"></param>
-        
+        /// <param name="addStation"/>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station addStation)
         {
@@ -69,6 +75,7 @@ namespace Dal
             }
             DataSource.Stations.Add(addStation);
         }
+
         /// <summary>
         /// Adds drone to the drones' list 
         /// </summary>
@@ -82,6 +89,7 @@ namespace Dal
             }
             DataSource.Drones.Add(addDrone);
         }
+
         /// <summary>
         /// Adds customer to the customers' list
         /// </summary>
@@ -95,6 +103,7 @@ namespace Dal
             }
             DataSource.Customers.Add(addCustomer);
         }
+
         /// <summary>
         /// Adds parcel to the parcels' list
         /// </summary>
@@ -105,11 +114,90 @@ namespace Dal
             addParcel.Id = ++DataSource.Config.parcelNum;
             DataSource.Parcels.Add(addParcel);
         }
+
+        /// <summary>
+        /// Adds drone charge to drone charges' list
+        /// </summary>
+        /// <param name="addDroneCharge"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDroneCharge(DroneCharge addDroneCharge)
         {
             DataSource.DroneCharges.Add(addDroneCharge);
         }
+        #endregion
+
+        #region Delete
+        /// <summary>
+        /// Deletes a station
+        /// </summary>
+        /// <param name="deleteStation"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteStation(Station deleteStation)
+        {
+            if (!DataSource.Stations.Remove(deleteStation))
+            {
+                throw new NotExistsException($"id: {deleteStation.Id} not exists!!");
+            }
+        }
+        
+        /// <summary>
+        /// Deletes a drone
+        /// </summary>
+        /// <param name="deleteDrone"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteDrone(Drone deleteDrone)
+        {
+            if (!DataSource.Drones.Remove(deleteDrone))
+            {
+                throw new NotExistsException($"id: {deleteDrone.Id} not exists!!");
+            }
+        }
+
+        /// <summary>
+        /// Deletes a customer
+        /// </summary>
+        /// <param name="deleteCustomer"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteCustomer(Customer deleteCustomer)
+        {
+            if (!DataSource.Customers.Remove(deleteCustomer))
+            {
+                throw new NotExistsException($"id: {deleteCustomer.Id} not exists!!");
+            }
+        }
+
+        /// <summary>
+        /// Deletes a parcel
+        /// </summary>
+        /// <param name="deleteParcel"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteParcel(Parcel deleteParcel)
+        {
+            if (!DataSource.Parcels.Remove(deleteParcel))
+            {
+                throw new NotExistsException($"id: {deleteParcel.Id} not exists!!");
+            }
+        }
+
+        /// <summary>
+        /// Deletes a drone charge
+        /// </summary>
+        /// <param name="deleteDroneCharge"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteDroneCharge(DroneCharge deleteDroneCharge)
+        {
+            if (!DataSource.DroneCharges.Remove(deleteDroneCharge))
+            {
+                throw new NotExistsException($"id: {deleteDroneCharge.DroneId} not exists!!");
+            }
+        }
+        #endregion
+
+        #region Update
+        /// <summary>
+        /// Updates a drone
+        /// </summary>
+        /// <param name="updateDrone"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(Drone updateDrone)
         {
@@ -120,6 +208,11 @@ namespace Dal
             }
             DataSource.Drones[indexOfDrone] = updateDrone;
         }
+
+        /// <summary>
+        /// Updates a customer
+        /// </summary>
+        /// <param name="updateCustomer"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(Customer updateCustomer)
         {
@@ -130,6 +223,11 @@ namespace Dal
             }
             DataSource.Customers[indexOfCustomer] = updateCustomer;
         }
+
+        /// <summary>
+        /// Updates a station
+        /// </summary>
+        /// <param name="updateStation"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(Station updateStation)
         {
@@ -140,6 +238,11 @@ namespace Dal
             }
             DataSource.Stations[indexOfStation] = updateStation;
         }
+
+        /// <summary>
+        /// Updates a parcel
+        /// </summary>
+        /// <param name="updateParcel"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcel(Parcel updateParcel)
         {
@@ -150,46 +253,9 @@ namespace Dal
             }
             DataSource.Parcels[indexOfParcel] = updateParcel;
         }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteStation(Station deleteStation)
-        {
-            if (!DataSource.Stations.Remove(deleteStation))
-            {
-                throw new NotExistsException($"id: {deleteStation.Id} not exists!!");
-            }
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteDrone(Drone deleteDrone)
-        {
-            if (!DataSource.Drones.Remove(deleteDrone))
-            {
-                throw new NotExistsException($"id: {deleteDrone.Id} not exists!!");
-            }
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteCustomer(Customer deleteCustomer)
-        {
-            if (!DataSource.Customers.Remove(deleteCustomer))
-            {
-                throw new NotExistsException($"id: {deleteCustomer.Id} not exists!!");
-            }
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteParcel(Parcel deleteParcel)
-        {
-            if (!DataSource.Parcels.Remove(deleteParcel))
-            {
-                throw new NotExistsException($"id: {deleteParcel.Id} not exists!!");
-            }
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteDroneCharge(DroneCharge deleteDroneCharge)
-        {
-            if (!DataSource.DroneCharges.Remove(deleteDroneCharge))
-            {
-                throw new NotExistsException($"id: {deleteDroneCharge.DroneId} not exists!!");
-            }
-        }
+        #endregion
+
+        #region Get Item
         /// <summary>
         /// returns a station by chosen id 
         /// </summary>
@@ -209,6 +275,7 @@ namespace Dal
             }
             throw new NotExistsException($"id: {id} not exists!!");
         }
+
         /// <summary>
         /// returns a drone by chosen id 
         /// </summary>
@@ -228,6 +295,7 @@ namespace Dal
             }
             throw new DO.NotExistsException($"id: {id} not exists!!");
         }
+
         /// <summary>
         /// returns a customer by chosen id 
         /// </summary>
@@ -247,6 +315,7 @@ namespace Dal
             }
             throw new NotExistsException($"id: {id} not exists!!");
         }
+
         /// <summary>
         /// returns a parcel by chosen id 
         /// </summary>
@@ -266,6 +335,9 @@ namespace Dal
             }
             throw new NotExistsException($"id: {id} not exists!!");
         }
+        #endregion
+
+        #region Get List
         /// <summary>
         /// returns a copy of he stations' list
         /// </summary>
@@ -277,6 +349,7 @@ namespace Dal
                 return DataSource.Stations.ToList();
             return DataSource.Stations.ToList().Where(predicate);
         }
+
         /// <summary>
         /// returns a copy of he Drones' list
         /// </summary>
@@ -288,6 +361,7 @@ namespace Dal
                 return DataSource.Drones.ToList();
             return DataSource.Drones.ToList().Where(predicate);
         }
+
         /// <summary>
         /// returns a copy of he Customers' list
         /// </summary>
@@ -299,6 +373,7 @@ namespace Dal
                 return DataSource.Customers.ToList();
             return DataSource.Customers.ToList().Where(predicate);
         }
+
         /// <summary>
         /// returns a copy of he Parcels' list
         /// </summary>
@@ -310,35 +385,71 @@ namespace Dal
                 return DataSource.Parcels.ToList();
             return DataSource.Parcels.ToList().Where(predicate);
         }
+
+        /// <summary>
+        /// returns a copy of he drone charges' list
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<DroneCharge> GetDroneChargesList(Func<DroneCharge, bool> predicate = null)
+        {
+            if (predicate == null)
+                return DataSource.DroneCharges.ToList();
+            return DataSource.DroneCharges.ToList().Where(predicate);
+        }
+        #endregion
+
+        #region Get Electricity Data
+        /// <summary>
+        /// returns the Electricity Use Per Km Available
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetElectricityUsePerKmAvailable()
         {
             return DataSource.Config.ElectricityUsePerKmAvailable;
         }
+
+        /// <summary>
+        /// return the Electricity Use Per Km carrying Light weight
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetElectricityUsePerKmLight()
         {
             return DataSource.Config.ElectricityUsePerKmLight;
         }
+
+        /// <summary>
+        /// returns the Electricity Use Per Km carrying Medium weight
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetElectricityUsePerKmMedium()
         {
             return DataSource.Config.ElectricityUsePerKmMedium;
         }
+
+        /// <summary>
+        /// return the Electricity Use Per Km carrying Heavy weight
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetElectricityUsePerKmHeavy()
         {
             return DataSource.Config.ElectricityUsePerKmHeavy;
         }
+
+        /// <summary>
+        /// return the Electricity Charge Per Second 
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetElectricityChargePerSec()
         {
             return DataSource.Config.ElectricityChargePerSec;
         }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<DroneCharge> GetDroneCharges()
-        {
-            return DataSource.DroneCharges.ToList();
-        }
+        #endregion
+
     }
 }

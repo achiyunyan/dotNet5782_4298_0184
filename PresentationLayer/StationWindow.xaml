@@ -15,7 +15,7 @@
     
     <Grid>
         <!-- Station Actions -->
-        <Grid x:Name="StationActions" >
+        <Grid x:Name="StationActions">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
@@ -31,32 +31,32 @@
             <TextBox Text="Properties" FontSize="20" Background="Teal" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="White" TextWrapping="Wrap" BorderThickness="0" IsReadOnly="True" />
             <Button Content="Close" Grid.Column="2" Click="btnBackToList_Click" Style="{StaticResource ButtonStyle}" Height="35" Width="100"/>
             <StackPanel Grid.Row="1" HorizontalAlignment="Center">
-                <TextBox Text="Id:" Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox Text="Name:"  Margin="0,10,0,0"  Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox Text="Free Slots number:" Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox Text="Loation:"  Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}"/>
-                <TextBox x:Name="DronesTag" Text="Drones:" Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}" Visibility="{Binding DronesList, Converter={StaticResource nullToCollapsedConverter}}" Height="222"/>
+                <TextBox Text="Id:" Margin="0,20,0,0" Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox Text="Name:"  Margin="0,20,0,0"  Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox Text="Free Slots number:" Margin="0,20,0,0" Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox Text="Loation:"  Margin="0,20,0,0" Style="{StaticResource SimpleTextStyle}"/>
+                <TextBox x:Name="DronesTag" Text="Drones:" Margin="0,20,0,0" Style="{StaticResource SimpleTextStyle}" Visibility="{Binding DronesList, Converter={StaticResource nullToCollapsedConverter}}" Height="222"/>
             </StackPanel>
             <StackPanel x:Name="StackPanelDrone" Grid.Column="1" Grid.Row="1" >
-                <TextBox Text="{Binding  Id}" Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}"/>
-                <Grid>
+                <TextBox Text="{Binding  Id}" Margin="0,20,0,0" Style="{StaticResource SimpleTextStyle}"/>
+                <Grid Margin="0,20,0,0" Height="25">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="StationName" Text="{Binding  Name}" Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}" TextChanged="StationName_TextChanged" IsReadOnly="False"/>
-                    <TextBox x:Name="NameExeption" Grid.Column="1" Margin="0,10,0,0" Style="{StaticResource ExeptionStyle}" FontSize="16"  VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="StationName" Text="{Binding  Name}" Style="{StaticResource SimpleTextStyle}" TextChanged="StationName_TextChanged" IsReadOnly="False"/>
+                    <TextBox x:Name="NameExeption" Grid.Column="1" Style="{StaticResource ExeptionStyle}" FontSize="16"  VerticalContentAlignment="Center"/>
                 </Grid>
-                <Grid>
+                <Grid Margin="0,20,0,0" Height="25"> 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="StationSlots" Text="{Binding  FreeChargeSlots}" Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}" TextChanged="StationSlots_TextChanged" IsReadOnly="False"/>
-                    <TextBox x:Name="SlotsExeption" Grid.Column="1" Margin="0,10,0,0" Style="{StaticResource ExeptionStyle}" FontSize="16" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="StationSlots" Text="{Binding  FreeChargeSlots}" Style="{StaticResource SimpleTextStyle}" TextChanged="StationSlots_TextChanged" IsReadOnly="False"/>
+                    <TextBox x:Name="SlotsExeption" Grid.Column="1" Style="{StaticResource ExeptionStyle}" FontSize="16" VerticalContentAlignment="Center"/>
                 </Grid>
-                <TextBox Text="{Binding Location, Converter={StaticResource locationToStringConverter}, StringFormat={}{0}}" Margin="0,10,0,0" Style="{StaticResource SimpleTextStyle}"/>
-                <ListBox x:Name="lstvDrones" ScrollViewer.CanContentScroll="True" Background="MintCream" Margin="0,15,0,0" MouseDoubleClick="lstvDrones_MouseDoubleClick" Visibility="{Binding DronesList,Converter={StaticResource nullToCollapsedConverter}}" Grid.Row="2" HorizontalContentAlignment="Stretch">
+                <TextBox Text="{Binding Location, Converter={StaticResource locationToStringConverter}, StringFormat={}{0}}" Margin="0,20,0,0" Style="{StaticResource SimpleTextStyle}"/>
+                <ListBox x:Name="lstvDrones" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding DronesList}" Background="MintCream" Margin="0,20,0,0" MouseDoubleClick="lstvDrones_MouseDoubleClick" Visibility="{Binding DronesList,Converter={StaticResource nullToCollapsedConverter}}" Grid.Row="2" HorizontalContentAlignment="Stretch">
                     <ListBox.ItemTemplate>
                         <DataTemplate x:Name="DroneTempalte" DataType="local:DroneInCharge">
                             <Border BorderBrush="LightSeaGreen" BorderThickness="1" Padding="5">
@@ -86,7 +86,7 @@
             </StackPanel>
         </Grid>
         <!-- Add Station -->
-        <Grid x:Name="AddStation"> 
+        <Grid x:Name="AddStation" Visibility="Collapsed"> 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
@@ -100,22 +100,32 @@
             <TextBox Grid.Column="2" IsReadOnly="True" Background="Teal" BorderThickness="0"/>
             <TextBox Grid.Column="1" FontSize="32" FontWeight="Bold"  BorderThickness="0" TextWrapping="Wrap" Background="Teal" Foreground="White" IsReadOnly="True" Text="Enter station properties" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 
-            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="376">
-                <TextBox Text="Id:" Style="{StaticResource AddPropertiesTags}"/>
-                <TextBox Text="Name:" Style="{StaticResource AddPropertiesTags}"/>
-                <TextBox Text="Free Slots:" Style="{StaticResource AddPropertiesTags}"/>
-                <TextBox Text="longitude:" Style="{StaticResource AddPropertiesTags}" Margin="0,10" />
-                <TextBox Text="latitude:" Style="{StaticResource AddPropertiesTags}" Margin="0,10"/>
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBox Text="Id:" Style="{StaticResource AddPropertiesTags}" Margin="0"/>
+                <TextBox Text="Name:" Style="{StaticResource AddPropertiesTags}" Margin="0,30,0,0"/>
+                <TextBox Text="Free Slots:" Style="{StaticResource AddPropertiesTags}" Margin="0,30,0,0"/>
+                <TextBox Text="Latitude:" Style="{StaticResource AddPropertiesTags}" Margin="0,30,0,0"/>
+                <TextBox Text="Longitude:" Style="{StaticResource AddPropertiesTags}" Margin="0,30,0,0"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
-                <TextBox x:Name="Id" TextWrapping="Wrap" Height="40" FontSize="18"  TextChanged="Id_TextChanged"/>
-                <TextBox x:Name="idExeption" TextWrapping="Wrap" Height="30" FontSize="18" FontWeight="DemiBold" Background="MintCream" Foreground="Red" BorderThickness="0" IsReadOnly="True"/>
-                <TextBox x:Name="Name" TextWrapping="Wrap" Height="40" Margin="0,10,0,0" FontSize="18"  TextChanged="Name_TextChanged"/>
-                <ComboBox x:Name="comboFreeSlots" Height="40" Margin="0,40,0,0" SelectionChanged="comboFreeSlots_SelectionChanged" />
-                <TextBox x:Name="longitude" TextWrapping="Wrap" Height="40" Margin="0,10,0,0" FontSize="18"  TextChanged="longitude_TextChanged"/>
-                <TextBox x:Name="latitude" TextWrapping="Wrap" Height="40" Margin="0,10,0,0" FontSize="18"  TextChanged="latitude_TextChanged"/>
+                <TextBox x:Name="Id" TextWrapping="Wrap" Height="40" FontSize="18" TextChanged="Id_TextChanged"/>
+                <TextBox x:Name="idExeption" TextWrapping="Wrap" Height="25" FontSize="18" FontWeight="DemiBold" Background="MintCream" Foreground="Red" BorderThickness="0" IsReadOnly="True"/>
+                <TextBox x:Name="Name" TextWrapping="Wrap" Height="40" Margin="0,5,0,0" FontSize="18"  TextChanged="Name_TextChanged"/>
+                <TextBox x:Name="FreeSlots" Height="40" Margin="0,30,0,0" FontSize="18" TextChanged="FreeSlots_TextChanged"/>
+                <TextBox x:Name="latitude" TextWrapping="Wrap" Height="40" Margin="0,30,0,0" FontSize="18"  TextChanged="latitude_TextChanged"/>
+                <TextBox x:Name="longitude" TextWrapping="Wrap" Height="40" Margin="0,30,0,0" FontSize="18"  TextChanged="longitude_TextChanged"/>
             </StackPanel>
-            <Button x:Name="addStationBtn" Grid.Row="1" Grid.Column="2" Content="Add Station" Style="{StaticResource StackPanelButtonStyle}" Click="addStationBtn_Click"/>
+            <Grid Grid.Row="1" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="addStationBtn" Content="Add Station" Style="{StaticResource StackPanelButtonStyle}" Click="addStationBtn_Click"/>
+                <TextBox Text="Jerusalem Range:
+                         Latitude: 31.74 - 31.81
+                         Longtitude: 35.16 - 35.23"
+                         FontSize="16" Height="auto" Margin="0" VerticalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="1" Style="{StaticResource AddPropertiesTags}"/>
+            </Grid>
             <Button Grid.Column="2" Content="Close"  Style="{StaticResource ButtonStyle}" VerticalAlignment="Center" Margin="0" Height="35" Width="100" Click="btnBackToList_Click"/>
         </Grid>
     </Grid>

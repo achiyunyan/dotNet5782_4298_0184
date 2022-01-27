@@ -23,16 +23,17 @@ namespace PL
     {
         BlApi.IBL bl;
         Station station;
+        bool exist = false;
         bool firstChange1 = true;
         bool firstChange2 = true;
         public StationWindow(BlApi.IBL bL, BO.ListStation lStation)
         {
+            exist = true;
             bl = bL;
             station = new Station(bl.GetStation(lStation.Id));
             InitializeComponent();
+            Refresh();
             AddStation.Visibility = Visibility.Hidden;
-            lstvDrones.ItemsSource = station.DronesList;
-            StackPanelDrone.DataContext = station;
             StationUpdate.Visibility = Visibility.Collapsed;
         }
 
@@ -48,9 +49,11 @@ namespace PL
 
         public void Refresh()
         {
-            station = new Station(bl.GetStation(station.Id));
-            StackPanelDrone.DataContext = station;
-            lstvDrones.ItemsSource = bl.GetStation(station.Id).DronesList;
+            if (exist)
+            {
+                station = new Station(bl.GetStation(station.Id));
+                StationActions.DataContext = station;
+            }
             if (Owner is StationsListWindow)
                 ((StationsListWindow)Owner).Refresh();
         }
@@ -113,13 +116,13 @@ namespace PL
             if (well[0] || well[1])
             {
                 string str = "Updated succesfully";
-                int chargingSlots = 0;
-                int help;
-                if (int.TryParse(StationSlots.Text, out help))
-                    chargingSlots = int.Parse(StationSlots.Text) + ((station.DronesList == null) ? 0 : station.DronesList.Count);
+                int freeChargingSlots = station.FreeChargeSlots;
+                uint help;
+                if (uint.TryParse(StationSlots.Text, out help))
+                    freeChargingSlots = int.Parse(StationSlots.Text) + ((station.DronesList == null) ? 0 : station.DronesList.Count);
                 try
                 {
-                    bl.UpdateStation(station.Id, StationName.Text, chargingSlots);
+                    bl.UpdateStation(station.Id, StationName.Text, freeChargingSlots);
                 }
                 catch (BL.BlException exem)
                 {
@@ -156,9 +159,7 @@ namespace PL
         public StationWindow(BlApi.IBL myBl)
         {
             bl = myBl;
-            InitializeComponent();
-            int[] x = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            comboFreeSlots.ItemsSource = x;
+            InitializeComponent();;
             StationActions.Visibility = Visibility.Hidden;
             Title = "AddStationWindow";
 
@@ -179,7 +180,7 @@ namespace PL
                     {
                         Id = int.Parse(Id.Text),
                         Name = Name.Text,
-                        FreeChargeSlots = int.Parse(comboFreeSlots.SelectedItem.ToString()),
+                        FreeChargeSlots = int.Parse(FreeSlots.Text),
                         Location = loc
                     });
                 }
@@ -191,6 +192,8 @@ namespace PL
                 MessageBox.Show(str);
                 if (!error)
                 {
+                    if (Owner is StationsListWindow)
+                        ((StationsListWindow)Owner).Refresh();
                     btnBackToList_Click(sender, e);
                 }
             }
@@ -215,7 +218,7 @@ namespace PL
                 else
                 {
                     idExeption.Text = "";
-                    Id.Background = Brushes.Aqua;
+                    Id.Background = Brushes.White;
                     well[0] = true;
                 }
             }
@@ -230,14 +233,24 @@ namespace PL
             }
             else
             {
-                Name.Background = Brushes.AliceBlue;
+                Name.Background = Brushes.White;
                 well[1] = true;
             }
         }
 
-        private void comboFreeSlots_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void FreeSlots_TextChanged(object sender, TextChangedEventArgs e)
         {
-            well[2] = true;
+            uint help;
+            if (uint.TryParse(FreeSlots.Text, out help))
+            {
+                FreeSlots.Background = Brushes.White;
+                well[2] = true;
+            }
+            else
+            {
+                FreeSlots.Background = Brushes.Tomato;
+                well[2] = false;
+            }
         }
 
         private void longitude_TextChanged(object sender, TextChangedEventArgs e)
@@ -245,14 +258,15 @@ namespace PL
             double longitudeInt;
             if (double.TryParse(longitude.Text, out longitudeInt))
             {
-                if (longitudeInt > 35.22496332365079 || longitudeInt < 35.16242159781234)
+                //if (longitudeInt > 35.22496332365079 || longitudeInt < 35.16242159781234)
+                if (longitudeInt > 180 || longitudeInt < -180)
                 {
                     longitude.Background = Brushes.Tomato;
                     well[3] = false;
                 }
                 else
                 {
-                    longitude.Background = Brushes.AliceBlue;
+                    longitude.Background = Brushes.White;
                     well[3] = true;
                 }
             }
@@ -268,7 +282,8 @@ namespace PL
             double latitudeInt;
             if (double.TryParse(latitude.Text, out latitudeInt))
             {
-                if (latitudeInt > 31.809648051878856 || latitudeInt < 31.742227429597634)
+                //if (latitudeInt > 31.809648051878856 || latitudeInt < 31.742227429597634)
+                if (latitudeInt > 90 || latitudeInt < -90)
                 {
                     latitude.Background = Brushes.Tomato;
                     well[4] = false;
@@ -285,7 +300,6 @@ namespace PL
                 well[4] = false;
             }
 
-        }
-
+        }        
     }
 }

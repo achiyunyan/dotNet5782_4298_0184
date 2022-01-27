@@ -42,7 +42,7 @@ namespace BL
                 dalParcels = myDal.GetParcelsList();
             }
 
-            foreach(var droneCharge in myDal.GetDroneCharges())
+            foreach(var droneCharge in myDal.GetDroneChargesList())
             {
                 myDal.DeleteDroneCharge(droneCharge);
             }

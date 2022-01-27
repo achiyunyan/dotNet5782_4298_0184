@@ -128,7 +128,17 @@
                     <TextBox x:Name="LocationLongExeption" Grid.Row="1" Grid.Column="1" Style="{StaticResource ExeptionStyle}"/>
                 </Grid>                
             </StackPanel>
-            <Button x:Name="addCustomerBtn" Grid.Row="1" Grid.Column="2" Content="Add Customer" Style="{StaticResource StackPanelButtonStyle}" Click="addCustomerBtn_Click"/>
+            <Grid Grid.Row="1" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="addCustomerBtn" Content="Add Customer" Style="{StaticResource StackPanelButtonStyle}" Click="addCustomerBtn_Click"/>
+                <TextBox Text="Jerusalem Range:
+                         Latitude: 31.74 - 31.81
+                         Longtitude: 35.16 - 35.23"
+                         FontSize="16" Height="auto" Margin="0" VerticalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="1" Style="{StaticResource AddPropertiesTags}"/>
+            </Grid>
             <Button Grid.Column="2" Content="Close"  Style="{StaticResource ButtonStyle}" VerticalAlignment="Center" Margin="0" Height="35" Width="100" Click="btnBackToList_Click"/>
         </Grid>
     </Grid>

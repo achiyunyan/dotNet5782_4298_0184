@@ -418,7 +418,7 @@ namespace Dal
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<DroneCharge> GetDroneCharges()
+        public IEnumerable<DroneCharge> GetDroneChargesList()
         {
             return XmlTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargePath);
         }

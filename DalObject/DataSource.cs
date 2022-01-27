@@ -11,6 +11,7 @@ namespace DS
 {
     public class DataSource
     {
+        
         internal static List<Drone> Drones = new List<Drone>();
         internal static List<Station> Stations = new List<Station>();
         internal static List<Customer> Customers = new List<Customer>();
@@ -19,47 +20,51 @@ namespace DS
         private static Random rand = new Random();
         internal class Config
         {
-            #region static vars
-            internal static int parcelNum = 1000000;
-            private static string[] names = new string[] { "Adam", "Alex", "Aaron", "Ben", "Charly", "Chase", "Che", "Chester", "Chevy", "Chi", "Chibudom", "Chidera", "Chimsom", "Chin", "Chintu", "Chiqal", "Chiron", "Chris", "Chris-Daniel", "Chrismedi", "Christian", "Christie", "Christoph", "Christopher", "Christopher-Lee", "Christy", "Chu", "Chukwuemeka", "Cian", "Ciann", "Ciar", "Ciaran", "Ciarian", "Cieran", "Cillian", "Cillin", "Cinar", "CJ", "C-Jay", "Clark", "Clarke", "Clayton", "Clement", "Clifford", "Clyde", "Cobain", "Coban", "Coben", "Cobi", "Cobie", "Coby", "Codey", "Codi", "Codie", "Cody", "Cody-Lee", "Coel", "Cohan", "Cohen", "Colby", "Cole", "Colin", "Coll", "Colm", "Colt", "Colton", "Colum", "Dan", "David", "Edward", "Fred", "Frank", "George", "Hal", "Hank", "Ike", "John", "Jack", "Joe", "Larry", "Monte", "Matthew", "Mark", "Nathan", "Otto", "Paul", "Peter", "Roger", "Roger", "Steve", "Thomas", "Tim", "Ty", "Victor", "Walter", "Wiktor", "Wilkie", "Will", "William", "William-John", "Willum", "Wilson", "Windsor", "Wojciech", "Woyenbrakemi", "Wyatt", "Wylie", "Wynn", "Xabier", "Xander", "Xavier", "Xiao", "Xida", "Xin", "Xue", "Yadgor", "Yago", "Yahya", "Yakup", "Yang", "Yanick", "Yann", "Yannick", "Yaseen", "Yasin", "Yasir", "Yassin", "Yoji", "Yong", "Yoolgeun", "Yorgos", "Youcef", "Yousif", "Youssef", "Yu", "Yuanyu", "Yuri", "Yusef", "Yusuf", "Yves", "Zaaine", "Zaak", "Zac", "Zach", "Zachariya", "Zachary", "Zachary-Marc", "Zachery", "Zack", "Zackary", "Zaid", "Zain", "Zaine", "Miguel", "Mika", "Mikael", "Mikee", "Mikey", "Mikhail", "Mikolaj", "Miles", "Millar", "Miller", "Milo", "Milos", "Milosz", "Mir", "Mirza", "Mitch", "Mitchel", "Mitchell", "Moad", "Moayd", "Mobeen", "Modoulamin", "Modu", "Mohamad", "Mohamed", "Mohammad", "Mohammad-Bilal", "Mohammed", "Mohanad", "Mohd", "Momin", "Momooreoluwa", "Montague", "Montgomery", "Monty" };
-            private static string[] stationsNames = new string[] { "Rehavia", "Katamon", "Givat Mordechai", "Arnona", "Romema" };
-            private static double[] latitudes = new double[] { 31.773883970410303, 31.761073049323283, 31.762682895985005, 31.747320910723996, 31.791571360711526 };
-            private static double[] longitudes = new double[] { 35.21284491679851, 35.206849163507805, 35.19817109950662, 35.21964424530334, 35.20602291668603 };
+            #region Data
+            internal static double ElectricityChargePerSec = 20;
             internal static double ElectricityUsePerKmAvailable = 5;
             internal static double ElectricityUsePerKmLight = 7;
             internal static double ElectricityUsePerKmMedium = 8;
             internal static double ElectricityUsePerKmHeavy = 9;
-            internal static double ElectricityChargePerSec = 5;
             #endregion
+
+            internal static int parcelNum = 1000000; // Parcels running number
+
+            private static string[] names = new string[] { "Adam", "Alex", "Aaron", "Ben", "Charly", "Chase", "Che", "Chester", "Chevy", "Chi", "Chibudom", "Chidera", "Chimsom", "Chin", "Chintu", "Chiqal", "Chiron", "Chris", "Chris-Daniel", "Chrismedi", "Christian", "Christie", "Christoph", "Christopher", "Christopher-Lee", "Christy", "Chu", "Chukwuemeka", "Cian", "Ciann", "Ciar", "Ciaran", "Ciarian", "Cieran", "Cillian", "Cillin", "Cinar", "CJ", "C-Jay", "Clark", "Clarke", "Clayton", "Clement", "Clifford", "Clyde", "Cobain", "Coban", "Coben", "Cobi", "Cobie", "Coby", "Codey", "Codi", "Codie", "Cody", "Cody-Lee", "Coel", "Cohan", "Cohen", "Colby", "Cole", "Colin", "Coll", "Colm", "Colt", "Colton", "Colum", "Dan", "David", "Edward", "Fred", "Frank", "George", "Hal", "Hank", "Ike", "John", "Jack", "Joe", "Larry", "Monte", "Matthew", "Mark", "Nathan", "Otto", "Paul", "Peter", "Roger", "Roger", "Steve", "Thomas", "Tim", "Ty", "Victor", "Walter", "Wiktor", "Wilkie", "Will", "William", "William-John", "Willum", "Wilson", "Windsor", "Wojciech", "Woyenbrakemi", "Wyatt", "Wylie", "Wynn", "Xabier", "Xander", "Xavier", "Xiao", "Xida", "Xin", "Xue", "Yadgor", "Yago", "Yahya", "Yakup", "Yang", "Yanick", "Yann", "Yannick", "Yaseen", "Yasin", "Yasir", "Yassin", "Yoji", "Yong", "Yoolgeun", "Yorgos", "Youcef", "Yousif", "Youssef", "Yu", "Yuanyu", "Yuri", "Yusef", "Yusuf", "Yves", "Zaaine", "Zaak", "Zac", "Zach", "Zachariya", "Zachary", "Zachary-Marc", "Zachery", "Zack", "Zackary", "Zaid", "Zain", "Zaine", "Miguel", "Mika", "Mikael", "Mikee", "Mikey", "Mikhail", "Mikolaj", "Miles", "Millar", "Miller", "Milo", "Milos", "Milosz", "Mir", "Mirza", "Mitch", "Mitchel", "Mitchell", "Moad", "Moayd", "Mobeen", "Modoulamin", "Modu", "Mohamad", "Mohamed", "Mohammad", "Mohammad-Bilal", "Mohammed", "Mohanad", "Mohd", "Momin", "Momooreoluwa", "Montague", "Montgomery", "Monty" };
+            private static string[] stationsNames = new string[] { "Rehavia", "Katamon", "Givat Mordechai", "Arnona", "Romema" };
+            private static double[] stationsLatitudes = new double[] { 31.773883970410303, 31.761073049323283, 31.762682895985005, 31.747320910723996, 31.791571360711526 };
+            private static double[] stationsLongitudes = new double[] { 35.21284491679851, 35.206849163507805, 35.19817109950662, 35.21964424530334, 35.20602291668603 };
+            
+            
+            
             internal static void Initialize()
             {
                 RandomCustomers();
                 RandomStations();
                 RandomDrones();
-                RandomParcel();
-                  
+                RandomParcel();                  
             }
-
+            
             /// <summary>
             /// Adds between 2 to 5 stations
             /// </summary>
             private static void RandomStations()
             {
-                int size = rand.Next(2, 6);
+                int size = rand.Next(2, 6); // number of stations
                 for (int i = 0; i < size; i++)
                 {
                     int id;
                     do
                     {
-                        id = rand.Next(10000, 100000);
-                    } while (Stations.Any(st => st.Id == id));
+                        id = rand.Next(10000, 100000); // random Id
+                    } while (Stations.Any(st => st.Id == id)); // checks if the Id doesn't allready exists
                     Stations.Add(new Station
                     {
                         Id = id,
                         Name = stationsNames[i],
                         ChargeSlots = rand.Next(2, 4),
-                        Latitude = latitudes[i],
-                        Longitude = longitudes[i]
+                        Latitude = stationsLatitudes[i],
+                        Longitude = stationsLongitudes[i]
                     });
                 }
             }
@@ -69,7 +74,7 @@ namespace DS
             /// </summary>
             private static void RandomDrones()
             {
-                int size = rand.Next(5, 11);
+                int size = rand.Next(5, 11); // number of drones
                 for (int i = 0; i < size; i++)
                 {
                     int id;
@@ -105,6 +110,7 @@ namespace DS
                         Id = id,
                         Name = names[rand.Next(names.Length)],
                         Phone = $"0{rand.Next(100000000) + 500000000}",
+                        // random location in Jerusalem
                         Latitude = rand.NextDouble() * (31.809648051878856 - 31.742227429597634) + 31.742227429597634,
                         Longitude = rand.NextDouble() * (35.22496332365079 - 35.16242159781234) + 35.16242159781234
                     });
@@ -113,22 +119,30 @@ namespace DS
 
             /// <summary>
             /// Adds between 10 to 100 parcels
-            /// </summary>
+            /// </summary>            
             private static void RandomParcel()
             {
                 int maxDronesInDelivery = rand.Next(Drones.Count - 4, Drones.Count - 2);
+                // if not restricted all drones will be in delivery because the big number of parcels
                 int size = rand.Next(10, 101);
-                int choice;
+                int parcelState; // 0 - deliverd , 1 - collected ,2 - scheduled, 3 - created 
                 bool NotCreated;
+
+                DateTime now;
+                TimeSpan timeSpan1;
+                TimeSpan timeSpan2;
+                TimeSpan timeSpan3;
+                TimeSpan timeSpan4;
+
                 for (int i = 0; i < size; i++)
                 {
                     NotCreated = true;
                     while(NotCreated)
                     {
-                        choice = rand.Next(0, 4);
-                        if (choice == 3) // new unlinked parcel from the last week
+                        parcelState = rand.Next(0, 4);
+                        if (parcelState == 3) // new unlinked parcel from the last week
                         {
-                            TimeSpan timeSpan = new TimeSpan(rand.Next(2), rand.Next(24), rand.Next(60), rand.Next(60));
+                            timeSpan1 = new TimeSpan(rand.Next(2), rand.Next(24), rand.Next(60), rand.Next(60));
                             Parcels.Add(new Parcel
                             {
                                 Id = parcelNum++,
@@ -137,7 +151,7 @@ namespace DS
                                 Weight = (WeightCategories)rand.Next(3),
                                 Priority = (Priorities)rand.Next(3),
                                 DroneId = 0,
-                                Requested = DateTime.Now - timeSpan,
+                                Requested = DateTime.Now - timeSpan1,
                                 Scheduled = null,
                                 PickedUp = null,
                                 Delivered = null
@@ -145,11 +159,11 @@ namespace DS
                             NotCreated = false;                            
                         }
 
-                        if (choice == 2 && maxDronesInDelivery > 0) // adds Scheduled parcel
+                        else if (parcelState == 2 && maxDronesInDelivery > 0) // adds Scheduled parcel
                         {
-                            DateTime now = DateTime.Now;
-                            TimeSpan timeSpan1 = new TimeSpan(rand.Next(2, 7), rand.Next(24), rand.Next(60), rand.Next(60));
-                            TimeSpan timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
+                            now = DateTime.Now;
+                            timeSpan1 = new TimeSpan(rand.Next(2, 7), rand.Next(24), rand.Next(60), rand.Next(60));
+                            timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
                             int droneId = Drones[rand.Next(Drones.Count)].Id;
                             int intWeight = rand.Next(3);
                             if (!Parcels.Any(st => st.Delivered == null && st.DroneId == droneId) && (int)Drones.First(st => st.Id == droneId).MaxWeight >= intWeight)
@@ -172,12 +186,12 @@ namespace DS
                             }
                         }
 
-                        if (choice == 1 && maxDronesInDelivery > 0)
+                        else if (parcelState == 1 && maxDronesInDelivery > 0) // collected
                         {
-                            DateTime now = DateTime.Now;
-                            TimeSpan timeSpan1 = new TimeSpan(rand.Next(2, 7), rand.Next(24), rand.Next(60), rand.Next(60));
-                            TimeSpan timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
-                            TimeSpan timeSpan3 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
+                            now = DateTime.Now;
+                            timeSpan1 = new TimeSpan(rand.Next(2, 7), rand.Next(24), rand.Next(60), rand.Next(60));
+                            timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
+                            timeSpan3 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
                             int droneId = Drones[rand.Next(Drones.Count)].Id;
                             int intWeight = rand.Next(3);
                             if (!Parcels.Any(st => st.Delivered == null && st.DroneId == droneId) && (int)Drones.First(st => st.Id == droneId).MaxWeight >= intWeight)
@@ -200,13 +214,13 @@ namespace DS
                             }
                         }
 
-                        if (choice == 0) // new deliverd parcel from two weeks ago up to a week ago
+                        else if (parcelState == 0) // new deliverd parcel from two weeks ago up to a week ago
                         {
-                            DateTime now = DateTime.Now;
-                            TimeSpan timeSpan1 = new TimeSpan(rand.Next(7, 14), rand.Next(24), rand.Next(60), rand.Next(60));
-                            TimeSpan timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
-                            TimeSpan timeSpan3 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
-                            TimeSpan timeSpan4 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
+                            now = DateTime.Now;
+                            timeSpan1 = new TimeSpan(rand.Next(7, 14), rand.Next(24), rand.Next(60), rand.Next(60));
+                            timeSpan2 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
+                            timeSpan3 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
+                            timeSpan4 = new TimeSpan(rand.Next(1), rand.Next(24), rand.Next(60), rand.Next(60));
                             int droneId = Drones[rand.Next(Drones.Count)].Id;
                             int intWeight = rand.Next(3);
                             if ((int)Drones.First(st => st.Id == droneId).MaxWeight >= intWeight)
