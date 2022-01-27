@@ -13,6 +13,10 @@ using System.Runtime.CompilerServices;
 
 namespace Dal
 {
+    /// <summary>
+    /// Dal class which saves the data to xml files
+    /// Implement of the IDal interface
+    /// </summary>
     internal sealed class DalXml : IDal
     {
         #region singleton
@@ -213,6 +217,10 @@ namespace Dal
         #endregion
 
         #region StationFuncs
+        /// <summary>
+        /// Add the specified station to the stations' xml file
+        /// </summary>
+        /// <param name="addStation"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station addStation)
         {
@@ -225,6 +233,11 @@ namespace Dal
             XmlTools.SaveListToXMLSerializer<Station>(stations, stationsPath);
         }
 
+        /// <summary>
+        /// Return a specified station by id, if not found throw exeption
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int id)
         {
@@ -236,12 +249,21 @@ namespace Dal
             throw new NotExistsException($"id: {id} not exists!!");
         }
 
+        /// <summary>
+        /// Retutn the stations in the database according to the predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStationsList(Func<Station, bool> predicate = null)
         {
             return XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
         }
 
+        /// <summary>
+        /// Update the specified station to the database
+        /// </summary>
+        /// <param name="updateStation"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(Station updateStation)
         {
@@ -255,6 +277,10 @@ namespace Dal
             XmlTools.SaveListToXMLSerializer(stations,stationsPath);
         }
 
+        /// <summary>
+        /// Delete the specified station from the database, if not found throw exeption
+        /// </summary>
+        /// <param name="deleteStation"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(Station deleteStation)
         {
@@ -272,6 +298,11 @@ namespace Dal
         #endregion
 
         #region CustomerFuncs
+        /// <summary>
+        /// Add the specified customer to the database
+        /// throw exeption if already exists
+        /// </summary>
+        /// <param name="addCustomer"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer addCustomer)
         {
@@ -284,6 +315,11 @@ namespace Dal
             XmlTools.SaveListToXMLSerializer<Customer>(Customers, CustomersPath);
         }
 
+        /// <summary>
+        /// Return a customer by Id, exeption if not found
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int id)
         {
@@ -295,12 +331,21 @@ namespace Dal
             throw new NotExistsException($"id: {id} not exists!!");
         }
 
+        /// <summary>
+        /// Return the customers in the database by the predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetCustomersList(Func<Customer, bool> predicate = null)
         {
             return XmlTools.LoadListFromXMLSerializer<Customer>(CustomersPath);
         }
 
+        /// <summary>
+        /// Update the specified customer to the database
+        /// </summary>
+        /// <param name="updateCustomer"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(Customer updateCustomer)
         {
@@ -314,7 +359,10 @@ namespace Dal
             XmlTools.SaveListToXMLSerializer<Customer>(Customers, CustomersPath);
         }
 
-
+        /// <summary>
+        /// Delete the specified customer from the database 
+        /// </summary>
+        /// <param name="deleteCustomer"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteCustomer(Customer deleteCustomer)
         {
@@ -332,6 +380,12 @@ namespace Dal
         #endregion
 
         #region DroneFuncs
+
+        /// <summary>
+        /// Add a drone to the database 
+        /// Throw an exeption if already exists
+        /// </summary>
+        /// <param name="addDrone"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone addDrone)
         {
@@ -344,6 +398,12 @@ namespace Dal
             XmlTools.SaveListToXMLSerializer(Drones, DronesPath);
         }
 
+        /// <summary>
+        /// Return a specified drone its id 
+        /// throw exeption if not found
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int id)
         {
@@ -355,12 +415,22 @@ namespace Dal
             throw new NotExistsException($"id: {id} not exists!!");
         }
 
+        /// <summary>
+        /// Return the drones in the database by a predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDronesList(Func<Drone, bool> predicate = null)
         {
             return XmlTools.LoadListFromXMLSerializer<Drone>(DronesPath);
         }
 
+        /// <summary>
+        /// Update the specified drone to the databasde
+        /// Trow exeption if not exists
+        /// </summary>
+        /// <param name="updateDrone"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(Drone updateDrone)
         {
@@ -374,6 +444,11 @@ namespace Dal
             XmlTools.SaveListToXMLSerializer(Drones, DronesPath);
         }
 
+        /// <summary>
+        /// Delete a drone from the database
+        /// Trow exeption if not exists
+        /// </summary>
+        /// <param name="deleteDrone"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(Drone deleteDrone)
         {
@@ -391,6 +466,11 @@ namespace Dal
         #endregion
 
         #region DroneCharge
+        /// <summary>
+        /// Add the given droneCharge instance to the database
+        /// Throw exeption if already exists
+        /// </summary>
+        /// <param name="addDroneCharge"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDroneCharge(DroneCharge addDroneCharge)
         {
@@ -403,6 +483,11 @@ namespace Dal
             XmlTools.SaveListToXMLSerializer<DroneCharge>(DC, DroneChargePath);
         }
 
+        /// <summary>
+        /// Delete the given instance of a droneCharge from the database
+        /// Trow exeption if not exists
+        /// </summary>
+        /// <param name="deleteDroneCharge"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDroneCharge(DroneCharge deleteDroneCharge)
         {
@@ -416,15 +501,22 @@ namespace Dal
             else
                 throw new NotExistsException($"id: {deleteDroneCharge.DroneId} not exists!!");
         }
-
+        
+        /// <summary>
+        /// Return the instances of the droneCharges in the database by a predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<DroneCharge> GetDroneChargesList()
+        public IEnumerable<DroneCharge> GetDroneChargesList(Func<DroneCharge, bool> predicate = null)
         {
-            return XmlTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargePath);
+            return XmlTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargePath).Where(predicate);
         }
         #endregion
 
         #region Electricity
+        //'Get' functions for the Electricity constants
+
         public double GetElectricityUsePerKmAvailable()
         {
             return ElectricityUsePerKmAvailable;
