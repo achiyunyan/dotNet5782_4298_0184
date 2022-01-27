@@ -48,7 +48,9 @@ namespace PL
 
         private void btnAddStation_Click(object sender, RoutedEventArgs e)
         {
-            new StationWindow(ibl).Show();
+            StationWindow sw =  new StationWindow(ibl);
+            sw.Owner = this;
+            sw.Show();
         }
 
         private void lstvStations_MouseDoubleClick(object sender, MouseButtonEventArgs e)

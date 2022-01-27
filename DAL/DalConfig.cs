@@ -18,7 +18,7 @@ namespace DalApi
         static DalConfig()
         {
             XElement dalConfig = XElement.Load(filePath);
-            DalName = dalConfig.Element("dalXml").Value;
+            DalName = dalConfig.Element("dalXml").Value;//dalXml or dal
             DalPackages = (from pkg in dalConfig.Element("dal-packages").Elements()
                            select pkg
                           ).ToDictionary(p => "" + p.Name, p => p.Value);
