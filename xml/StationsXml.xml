@@ -1,28 +1,28 @@
 <?xml version="1.0"?>
 <ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Station>
-    <Id>38573</Id>
+    <Id>72239</Id>
     <Name>Rehavia</Name>
     <Longitude>35.21284491679851</Longitude>
     <Latitude>31.773883970410303</Latitude>
     <ChargeSlots>3</ChargeSlots>
   </Station>
   <Station>
-    <Id>75397</Id>
+    <Id>49421</Id>
     <Name>Katamon</Name>
     <Longitude>35.206849163507805</Longitude>
     <Latitude>31.761073049323283</Latitude>
     <ChargeSlots>2</ChargeSlots>
   </Station>
   <Station>
-    <Id>37391</Id>
+    <Id>10684</Id>
     <Name>Givat Mordechai</Name>
     <Longitude>35.19817109950662</Longitude>
     <Latitude>31.762682895985005</Latitude>
-    <ChargeSlots>3</ChargeSlots>
+    <ChargeSlots>2</ChargeSlots>
   </Station>
   <Station>
-    <Id>78011</Id>
+    <Id>31193</Id>
     <Name>Arnona</Name>
     <Longitude>35.21964424530334</Longitude>
     <Latitude>31.747320910723996</Latitude>
