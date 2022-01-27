@@ -197,7 +197,7 @@ namespace BL
         {
             lock (myDal)
             {
-                DO.DroneCharge dalDroneCharge = myDal.GetDroneCharges().First(drch => drch.DroneId == BlDrone.Id);
+                DO.DroneCharge dalDroneCharge = myDal.GetDroneChargesList().First(drch => drch.DroneId == BlDrone.Id);
                 BlDrone.Battery += (DateTime.Now - dalDroneCharge.StatrtTime).Seconds * ElectricityChargePerSec;
                 if (BlDrone.Battery > 100)
                     BlDrone.Battery = 100;
