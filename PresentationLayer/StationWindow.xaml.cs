@@ -24,8 +24,16 @@ namespace PL
         BlApi.IBL bl;
         Station station;
         bool exist = false;
+
+        #region Show Station 
         bool firstChange1 = true;
         bool firstChange2 = true;
+
+        /// <summary>
+        /// Show station constructor
+        /// </summary>
+        /// <param name="bL"></param>
+        /// <param name="lStation"></param>
         public StationWindow(BlApi.IBL bL, BO.ListStation lStation)
         {
             exist = true;
@@ -37,6 +45,11 @@ namespace PL
             StationUpdate.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Open the droneWindow for the charged drone 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lstvDrones_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.DroneInCharge droneInCharge = (BO.DroneInCharge)lstvDrones.SelectedItem;
@@ -47,6 +60,9 @@ namespace PL
 
         }
 
+        /// <summary>
+        /// Refresh the window so changes will be seen
+        /// </summary>
         public void Refresh()
         {
             if (exist)
@@ -58,6 +74,13 @@ namespace PL
                 ((StationsListWindow)Owner).Refresh();
         }
 
+
+        /// <summary>
+        /// Paint red the background of the field if not valid
+        /// If valid, let the user update the station
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StationName_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (firstChange1)
@@ -83,7 +106,12 @@ namespace PL
             }
         }
 
-
+        /// <summary>
+        /// Paint red the background of the field if not valid
+        /// If valid, let the user update the station
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StationSlots_TextChanged(object sender, RoutedEventArgs e)
         {
             if (firstChange2)
@@ -111,14 +139,18 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Update the station
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StationUpdate_Click(object sender, RoutedEventArgs e)
         {
             if (well[0] || well[1])
             {
                 string str = "Updated succesfully";
                 int freeChargingSlots = station.FreeChargeSlots;
-                uint help;
-                if (uint.TryParse(StationSlots.Text, out help))
+                if (uint.TryParse(StationSlots.Text, out _))
                     freeChargingSlots = int.Parse(StationSlots.Text) + ((station.DronesList == null) ? 0 : station.DronesList.Count);
                 try
                 {
@@ -134,28 +166,43 @@ namespace PL
 
         }
 
+        /// <summary>
+        /// Button 'exit' was clicked
+        /// closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
         {
             exit = true;
             this.Close();
         }
 
-
+        /// <summary>
+        /// Let only alowed exit to happen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (exit == false)
                 e.Cancel = true;
         }
+        #endregion
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Add station functions
         /// </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        #region addStation functions
 
         bool[] well = { false, false, false, false, false };
         private bool exit;
-        private bool error;
 
+        /// <summary>
+        /// constructor for add station operations window
+        /// </summary>
+        /// <param name="myBl"></param>
         public StationWindow(BlApi.IBL myBl)
         {
             bl = myBl;
@@ -165,6 +212,12 @@ namespace PL
 
         }
 
+        /// <summary>
+        /// Add station button was clicked
+        /// Will add the requested station to the databse if the parameters are legal
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addStationBtn_Click(object sender, RoutedEventArgs e)
         {
             string str = "Station succesfully added";
@@ -199,6 +252,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Inform the user whether if the assigned id is not ok 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Id_TextChanged(object sender, TextChangedEventArgs e)
         {
             int id;
@@ -224,6 +282,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Paint red the background of the field if not valid 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Name_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (Name.Text == "")
@@ -238,6 +301,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Paint red the background of the field if not valid 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FreeSlots_TextChanged(object sender, TextChangedEventArgs e)
         {
             uint help;
@@ -253,6 +321,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Paint red the background of the field if not valid 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void longitude_TextChanged(object sender, TextChangedEventArgs e)
         {
             double longitudeInt;
@@ -277,6 +350,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Paint red the background of the field if not valid 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void latitude_TextChanged(object sender, TextChangedEventArgs e)
         {
             double latitudeInt;
@@ -300,6 +378,7 @@ namespace PL
                 well[4] = false;
             }
 
-        }        
+        }
+        #endregion
     }
 }
