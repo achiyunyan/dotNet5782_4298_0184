@@ -239,11 +239,6 @@ namespace PL
                 Owner.Show();
                 return;
             }
-            if(parcelWindow != null)
-            {
-                parcelWindow.Show();
-                return;
-            }
             parcelWindow = new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == poDrone.Parcel.Id), bl)
             {
                 Owner = this
