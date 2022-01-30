@@ -18,10 +18,10 @@
     <ReciverId>898667310</ReciverId>
     <Weight>1</Weight>
     <Priority>0</Priority>
-    <Requested>2022-01-25T15:21:10.986282+02:00</Requested>
-    <Scheduled>2022-01-26T00:57:30.986282+02:00</Scheduled>
-    <PickedUp />
-    <Delivered />
+    <Requested>25/01/2022 15:21:10</Requested>
+    <Scheduled>26/01/2022 00:57:30</Scheduled>
+    <PickedUp>30/01/2022 18:17:35</PickedUp>
+    <Delivered>30/01/2022 18:17:36</Delivered>
     <DroneId>64300</DroneId>
   </Parcel>
   <Parcel>

@@ -406,13 +406,14 @@ namespace BL
             }
             double dis = double.MaxValue;
             Location location = new Location();
-            string name = "";
             foreach (var station in dalStations.Where(station => !withFreeChargeSlots || station.ChargeSlots > 0))
             {
-                location.Latitude = station.Latitude;
-                location.Longitude = station.Longitude;
-                name = station.Name;
-                dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
+                if (dis > DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude))
+                {
+                    dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
+                    location.Latitude = station.Latitude;
+                    location.Longitude = station.Longitude;
+                }
             }
             if (dis == double.MaxValue)
                 throw new BlException("No possible to reach stations!");
@@ -427,18 +428,18 @@ namespace BL
         /// <returns></returns>
         private double DistanceFromClosestStation(double lat, double lon, bool withChargeSlots = true)
         {
-            IEnumerable<DO.Station> dalStations;
-            lock (myDal)
-            {
-                dalStations = myDal.GetStationsList();
-            }
-            double dis = double.MaxValue;
-            foreach (var station in dalStations.Where(station => dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && (withChargeSlots || station.ChargeSlots > 0)))
-            {
-                dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
-            }
-
-            return dis;
+            //IEnumerable<DO.Station> dalStations;
+            //lock (myDal)
+            //{
+            //    dalStations = myDal.GetStationsList();
+            //}
+            //double dis = double.MaxValue;
+            //foreach (var station in dalStations.Where(station => dis >= DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude) && (withChargeSlots || station.ChargeSlots > 0)))
+            //{
+            //    dis = DistanceBetweenTwoPoints(lat, lon, station.Latitude, station.Longitude);
+            //}
+            Location location = new Location() { Latitude = lat, Longitude = lon };
+            return DistanceBetweenTwoPoints(ClosestStationLocation(location), location);
         }
 
         /// <summary>
@@ -451,7 +452,7 @@ namespace BL
         /// <returns></returns>
         private double DistanceBetweenTwoPoints(double lat1, double lon1, double lat2, double lon2)
         {
-            double rlat1 = Math.PI * lat1 / 180;
+            /*double rlat1 = Math.PI * lat1 / 180;
             double rlat2 = Math.PI * lat2 / 180;
             double theta = lon1 - lon2;
             double rtheta = Math.PI * theta / 180;
@@ -461,7 +462,21 @@ namespace BL
             dist = Math.Acos(dist);
             dist = dist * 180 / Math.PI;
             dist = dist * 60 * 1.1515;
-            return dist * 1.609344;
+            return dist * 1.609344;*/
+
+            int R = 6371 * 1000; // metres
+            double phi1 = lat1 * Math.PI / 180; // φ, λ in radians
+            double phi2 = lat2 * Math.PI / 180;
+            double deltaPhi = (lat2 - lat1) * Math.PI / 180;
+            double deltaLambda = (lon2 - lon1) * Math.PI / 180;
+
+            double a = Math.Sin(deltaPhi / 2) * Math.Sin(deltaPhi / 2) +
+                       Math.Cos(phi1) * Math.Cos(phi2) *
+                       Math.Sin(deltaLambda / 2) * Math.Sin(deltaLambda / 2);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            double d = R * c / 1000; // in kilometres
+            return d;
+
         }
         #endregion
     }

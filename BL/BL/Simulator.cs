@@ -17,15 +17,18 @@ namespace BL
         enum Maintenance { SearchingStation, OnWayToSation, Charging }
         private const int DELAY = 500; // half a second
         private const double SPEED = 1;// km/s
-        
+
 
         internal Simulator(int droneId, Action update, Func<bool> checkStop, BL bl)
         {
             const double possibleDistance = (double)DELAY / 1000 * SPEED; // the max distance reached with the given speed for the every update
             Maintenance maintenanceStage = Maintenance.Charging; // charging stage 
             bool delivery = false; //// false- Associated, true - Collected
-
-            ListDrone drone = bl.GetListDrone(droneId);
+            ListDrone drone;
+            lock (bl)
+            {
+                drone = bl.GetListDrone(droneId);
+            }
             if (drone.State == DroneState.Maintenance)
             {
                 lock (bl)
@@ -33,14 +36,16 @@ namespace BL
                     bl.SetDroneBatteryAndReturnCharge(drone);//gets the current battery
                 }
             }
+            double distance = 0;// the distance left to reach
             if (drone.State == DroneState.Delivery)
             {
                 lock (bl)
                 {
                     delivery = bl.ListDroneToDrone(drone).Parcel.State;
+                    distance = bl.ListDroneToDrone(drone).Parcel.Distance;
                 }
             }
-            double distance = 0;// the distance left to reach
+           
             Location destination = new Location(); // the current destansion of the drone
 
             while (checkStop())
@@ -62,7 +67,7 @@ namespace BL
             }
 
             // If the drone is searching for a place or on his way to charge it is not realy in maintenance mode
-            if (drone.State == DroneState.Maintenance && maintenanceStage != Maintenance.Charging) 
+            if (drone.State == DroneState.Maintenance && maintenanceStage != Maintenance.Charging)
                 drone.State = DroneState.Available;
         }
 
@@ -143,10 +148,10 @@ namespace BL
                     }
                     lock (bl)
                     {
-                        drone.Battery -= Min(distance, possibleDistance) * bl.ElectricityUsePerKmAvailable; 
-                    }
-                    distance -= Min(distance, possibleDistance);
-                    MoveToRealLocation(drone, destination, distance, bl);
+                        drone.Battery -= Min(distance, possibleDistance) * bl.ElectricityUsePerKmAvailable;
+                        distance -= Min(distance, possibleDistance);
+                        MoveToRealLocation(drone, destination, distance, bl);
+                    }   
                     break;
 
                 case Maintenance.Charging:
@@ -173,7 +178,7 @@ namespace BL
         /// <param name="distance"></param>
         /// <param name="destination"></param>
         /// <param name="delivery"></param>
-        private void DeliveryMode(int droneId, BL bl, ListDrone drone, double possibleDistance,  ref double distance, ref Location destination, ref bool delivery)
+        private void DeliveryMode(int droneId, BL bl, ListDrone drone, double possibleDistance, ref double distance, ref Location destination, ref bool delivery)
         {
             switch (delivery)
             {
@@ -183,7 +188,7 @@ namespace BL
                         lock (bl)
                         {
                             double battery = drone.Battery;
-                            bl.PickParcel(droneId); 
+                            bl.PickParcel(droneId);
                             drone.Battery = battery;// battey updated to the real battery 'because Pick function is not for simulator
                             destination = bl.ListDroneToDrone(drone).Parcel.Destination;// receiver location
                             distance = bl.ListDroneToDrone(drone).Parcel.Distance;// distance to receiver
@@ -238,7 +243,7 @@ namespace BL
             {
                 Coordinate source = new Coordinate { Latitude = (float)drone.Location.Latitude, Longitude = (float)drone.Location.Longitude };
                 Coordinate detination = new Coordinate { Latitude = (float)dest.Latitude, Longitude = (float)dest.Longitude };
-                Line line = new Line(source, detination);
+                Line line = new Line(source, detination);                
                 Coordinate locationMovedTo = line.LocationAfterDistance((float)distance * 1000);
                 drone.Location = new Location { Latitude = locationMovedTo.Latitude, Longitude = locationMovedTo.Longitude };
             }

@@ -555,9 +555,16 @@
   </Customer>
   <Customer>
     <Id>123456</Id>
-    <Name>zvi</Name>
+    <Name>Harel</Name>
     <Phone>0532492423</Phone>
     <Longitude>35.21</Longitude>
     <Latitude>31.8</Latitude>
+  </Customer>
+  <Customer>
+    <Id>326004280</Id>
+    <Name>ohad</Name>
+    <Phone>0545434343</Phone>
+    <Longitude>35.23</Longitude>
+    <Latitude>31.74</Latitude>
   </Customer>
 </ArrayOfCustomer>

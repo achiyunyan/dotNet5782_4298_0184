@@ -420,7 +420,7 @@ namespace BL
             double disFromtSenderToReciver = DistanceBetweenTwoPoints(parcelLocation, parcelDestination);
             double disFromReciverTosStation = DistanceBetweenTwoPoints(parcelDestination, ClosestStationLocation(BlDrone.Location));
             double electricityNeeded = (disFromDroneToParcel + disFromReciverTosStation) * ElectricityUsePerKmAvailable + disFromtSenderToReciver * ElecriciryUsePerWeight(dalParcel.Weight);
-            return BlDrone.Battery >= Math.Ceiling(electricityNeeded);
+            return BlDrone.Battery > Math.Ceiling(electricityNeeded);
         }
         #endregion
 
