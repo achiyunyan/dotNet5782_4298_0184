@@ -23,6 +23,10 @@ namespace PL
         BlApi.IBL ibl;
         bool exit = false;
 
+        /// <summary>
+        /// constractor
+        /// </summary>
+        /// <param name="myBl"></param>
         public ParcelsListWindow(BlApi.IBL myBl)
         {
             ibl = myBl;
@@ -60,25 +64,12 @@ namespace PL
                                         .Prepend("");           
         }
 
-        private void btnAddParcel_Click(object sender, RoutedEventArgs e)
-        {
-            ParcelWindow pW = new ParcelWindow(ibl);
-            pW.Owner = this;
-            pW.Show();
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (exit == false)
-                e.Cancel = true;
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            exit = true;
-            Close();
-        }
-
+        #region View Actions
+        /// <summary>
+        /// group list by sender name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnGroupBySenderName_Click(object sender, RoutedEventArgs e)
         {
             parcelsList.ItemsSource = from parcel in (IEnumerable<ListParcel>)parcelsList.ItemsSource
@@ -86,6 +77,11 @@ namespace PL
                                       select parcel;
         }
 
+        /// <summary>
+        /// group list by receiver name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnGroupByReceiverName_Click(object sender, RoutedEventArgs e)
         {
             parcelsList.ItemsSource = from parcel in (IEnumerable<ListParcel>)parcelsList.ItemsSource
@@ -93,43 +89,81 @@ namespace PL
                                       select parcel;
         }
 
+        /// <summary>
+        /// filters the list by state
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboState_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Refresh();
         }
 
+        /// <summary>
+        /// filters the list by sender name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboSender_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Refresh();
         }
 
+        /// <summary>
+        /// filters the list by receiver name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboReceiver_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Refresh();
         }
 
+        /// <summary>
+        /// filters the list by weight 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Refresh();
         }
 
+        /// <summary>
+        /// filters the list by priority
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboPriority_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Refresh();
         }
 
+        /// <summary>
+        /// filtes the list to be active after the date
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void firstDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             secondDate.DisplayDateStart = firstDate.SelectedDate;
             Refresh();
         }
 
+        /// <summary>
+        /// filtes the list to be active before the date
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void secondDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             firstDate.DisplayDateEnd = secondDate.SelectedDate;
             Refresh();
         }
 
+        /// <summary>
+        /// updates the list by the filters
+        /// </summary>
         public void Refresh()
         {
             parcelsList.ItemsSource = ibl.GetFilteredParcelsList(
@@ -141,7 +175,48 @@ namespace PL
                 comboState.SelectedItem,
                 comboWeight.SelectedItem);
         }
+        #endregion
 
+        #region Other Actions
+        /// <summary>
+        /// opens add parcel window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAddParcel_Click(object sender, RoutedEventArgs e)
+        {
+            ParcelWindow pW = new ParcelWindow(ibl);
+            pW.Owner = this;
+            pW.Show();
+        }
+
+        /// <summary>
+        /// closes the window if allowed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (exit == false)
+                e.Cancel = true;
+        }
+
+        /// <summary>
+        /// closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            exit = true;
+            Close();
+        }
+
+        /// <summary>
+        /// opens a parcel window of the selected parcel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void parcelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (parcelsList.Items.Count > 0)
@@ -151,5 +226,6 @@ namespace PL
                 pW.Show();
             }
         }
+        #endregion
     }
 }

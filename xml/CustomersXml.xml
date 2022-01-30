@@ -126,4 +126,11 @@
     <Longitude>35.19806094636715</Longitude>
     <Latitude>31.806173419433698</Latitude>
   </Customer>
+  <Customer>
+    <Id>2039</Id>
+    <Name>eytan sabag</Name>
+    <Phone>056789487</Phone>
+    <Longitude>-178</Longitude>
+    <Latitude>-30.22</Latitude>
+  </Customer>
 </ArrayOfCustomer>

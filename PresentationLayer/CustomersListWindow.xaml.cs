@@ -17,17 +17,30 @@ namespace PL
 {
     /// <summary>
     /// Interaction logic for CustomersListWindow.xaml
-    /// </summary>
+    /// </summary>    
+
     public partial class CustomersListWindow : Window
     {
         BlApi.IBL ibl;
         bool exit = false;
+
+        /// <summary>
+        /// constarctor
+        /// </summary>
+        /// <param name="myBl"></param>
         public CustomersListWindow(BlApi.IBL myBl)
         {
             ibl = myBl;
             InitializeComponent();
             lstvCustomers.ItemsSource = ibl.GetCustomersList();
         }
+
+        #region Actions
+        /// <summary>
+        /// opens a customer actions window for the selected customer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openActionsWindow(object sender, MouseButtonEventArgs e)
         {
             if (lstvCustomers.Items.Count > 0)
@@ -37,29 +50,34 @@ namespace PL
                 pw.Show();
             }
         }
-        private void btnAddDrones_Click(object sender, RoutedEventArgs e)
-        {
-            CustomerWindow pw = new CustomerWindow(ibl);
-            pw.Owner = this;
-            pw.Show();
-        }
 
+        /// <summary>
+        /// closes the window 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             exit = true;
             Close();
         }
 
+        /// <summary>
+        /// close the window if allowed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (exit == false)
                 e.Cancel = true;
         }
-        public void Refresh()
-        {
-            lstvCustomers.ItemsSource = ibl.GetCustomersList();
-        }
 
+        /// <summary>
+        /// opens an add customer window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
         {
             CustomerWindow cw = new CustomerWindow(ibl);
@@ -67,5 +85,15 @@ namespace PL
             cw.Show();
             exit = true;
         }
+
+        /// <summary>
+        /// Update the customer list
+        /// </summary>
+        public void Refresh()
+        {
+            lstvCustomers.ItemsSource = ibl.GetCustomersList();
+        }
+        #endregion
+
     }
 }

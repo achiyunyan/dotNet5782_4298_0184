@@ -255,7 +255,7 @@ namespace BL
             {
                 //parcels that where active between firstDate to secondDate
                 dalParcels = myDal.GetParcelsList(pr => pr.Requested >= firstDate && pr.Requested <= secondDate || DalParcelLastTime(pr) >= firstDate && DalParcelLastTime(pr) <= secondDate);
-                
+
                 parcels = from dalParcel in dalParcels
                           select new ListParcel
                           {
@@ -268,19 +268,19 @@ namespace BL
                           };
             }
             //the filters are given in objects from comobox so they are not active if they are null (nothing chosen) or "" (empty selection)
-            if (!(Sender == null || (string)Sender == ""))
+            if (Sender != null && (string)Sender != "")
                 parcels = parcels.Where(par => par.SenderName == (string)Sender);
 
-            if (!(Receiver == null || (string)Receiver == ""))
+            if (Receiver != null && (string)Receiver != "")
                 parcels = parcels.Where(par => par.ReceiverName == (string)Receiver);
 
-            if (!(Priority == null || (string)Priority == ""))
+            if (Priority != null && Priority.ToString() != "")
                 parcels = parcels.Where(par => par.Priority == (Priority)Priority);
 
-            if (!(State == null || State == ""))
+            if (State != null && State != "")
                 parcels = parcels.Where(par => par.State == (ParcelState)State);
 
-            if (!(Weight == null || Weight == ""))
+            if (Weight != null && Weight != "")
                 parcels = parcels.Where(par => par.WeightCategory == (WeightCategory)Weight);
 
             return parcels;

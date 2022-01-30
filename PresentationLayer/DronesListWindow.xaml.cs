@@ -21,26 +21,38 @@ namespace PL
     public partial class DronesListWindow : Window
     {
         BlApi.IBL ibl;
-        bool exit = false;
+        bool exit = false;//stops the window from being closed by x
+
+        /// <summary>
+        /// constractor
+        /// </summary>
+        /// <param name="myBl"></param>
         public DronesListWindow(BlApi.IBL myBl)
         {
             ibl = myBl;
-
             InitializeComponent();
-            //this.comboMaxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategory));
+
             this.comboMaxWeight.Items.Add("");
             foreach (var x in Enum.GetValues(typeof(WeightCategory)))
             {
                 this.comboMaxWeight.Items.Add(x);
             }
+
             this.comboStatus.Items.Add("");
             foreach (var x in Enum.GetValues(typeof(DroneState)))
             {
                 this.comboStatus.Items.Add(x);
             }
+
             this.lstvDrones.ItemsSource = ibl.GetDronesList();
         }
 
+        #region View Actions
+        /// <summary>
+        /// filters the list by status
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboStatus.SelectedItem.ToString() == "")
@@ -65,6 +77,12 @@ namespace PL
                 }
             }
         }
+
+        /// <summary>
+        /// filters the list by max weight
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboMaxWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboMaxWeight.SelectedItem.ToString() == "")
@@ -90,34 +108,24 @@ namespace PL
             }
 
         }
-        private void openActionsWindow(object sender, MouseButtonEventArgs e)
+
+        /// <summary>
+        /// groups the list by state
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnGroupByState_Click(object sender, RoutedEventArgs e)
         {
-            if (lstvDrones.Items.Count > 0)
-            {
-                DroneWindow dw = new DroneWindow((ListDrone)lstvDrones.SelectedItem, ibl);
-                dw.Owner = this;
-                dw.Show();
-            }
-        }
-        private void btnAddDrones_Click(object sender, RoutedEventArgs e)
-        {
-            DroneWindow dw = new DroneWindow(ibl);
-            dw.Owner = this;
-            dw.Show();
-            exit = true;
+            var groupsList = from drone in (IEnumerable<ListDrone>)lstvDrones.ItemsSource
+                             group drone by drone.State;
+            lstvDrones.ItemsSource = from list in groupsList
+                                     from drone in list
+                                     select drone;
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            exit = true;
-            Close();
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (exit == false)
-                e.Cancel = true;
-        }
+        /// <summary>
+        /// updates the list according to the filters
+        /// </summary>
         public void Refresh()
         {
 
@@ -143,14 +151,58 @@ namespace PL
                 }
             }
         }
+        #endregion
 
-        private void btnGroupByState_Click(object sender, RoutedEventArgs e)
+        #region Other Actions
+        /// <summary>
+        /// opens a drone actions window of the selected drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void openActionsWindow(object sender, MouseButtonEventArgs e)
         {
-            var groupsList = from drone in (IEnumerable<ListDrone>)lstvDrones.ItemsSource
-                             group drone by drone.State;
-            lstvDrones.ItemsSource = from list in groupsList
-                                     from drone in list
-                                     select drone;
+            if (lstvDrones.Items.Count > 0)
+            {
+                DroneWindow dw = new DroneWindow((ListDrone)lstvDrones.SelectedItem, ibl);
+                dw.Owner = this;
+                dw.Show();
+            }
         }
+
+        /// <summary>
+        /// opens an add drone window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAddDrones_Click(object sender, RoutedEventArgs e)
+        {
+            DroneWindow dw = new DroneWindow(ibl);
+            dw.Owner = this;
+            dw.Show();
+            exit = true;
+        }
+
+        /// <summary>
+        /// closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            exit = true;
+            Close();
+        }
+
+        /// <summary>
+        /// closes the window only if allowed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (exit == false)
+                e.Cancel = true;
+        }
+        #endregion
     }
 }

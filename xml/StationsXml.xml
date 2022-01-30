@@ -5,27 +5,34 @@
     <Name>Rehavia</Name>
     <Longitude>35.21284491679851</Longitude>
     <Latitude>31.773883970410303</Latitude>
-    <ChargeSlots>2</ChargeSlots>
+    <ChargeSlots>-2</ChargeSlots>
   </Station>
   <Station>
     <Id>61972</Id>
     <Name>Katamon</Name>
     <Longitude>35.206849163507805</Longitude>
     <Latitude>31.761073049323283</Latitude>
-    <ChargeSlots>2</ChargeSlots>
+    <ChargeSlots>0</ChargeSlots>
   </Station>
   <Station>
     <Id>88132</Id>
     <Name>Givat Mordechai</Name>
     <Longitude>35.19817109950662</Longitude>
     <Latitude>31.762682895985005</Latitude>
-    <ChargeSlots>3</ChargeSlots>
+    <ChargeSlots>-3</ChargeSlots>
   </Station>
   <Station>
     <Id>16029</Id>
     <Name>Arnona</Name>
     <Longitude>35.21964424530334</Longitude>
     <Latitude>31.747320910723996</Latitude>
-    <ChargeSlots>1</ChargeSlots>
+    <ChargeSlots>0</ChargeSlots>
+  </Station>
+  <Station>
+    <Id>11111</Id>
+    <Name>eliezer</Name>
+    <Longitude>35.2</Longitude>
+    <Latitude>31.8</Latitude>
+    <ChargeSlots>-7</ChargeSlots>
   </Station>
 </ArrayOfStation>

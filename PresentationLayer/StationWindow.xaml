@@ -86,7 +86,7 @@
             </StackPanel>
         </Grid>
         <!-- Add Station -->
-        <Grid x:Name="AddStation" Visibility="Collapsed"> 
+        <Grid x:Name="AddStation"> 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
