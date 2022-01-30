@@ -1,0 +1,38 @@
+﻿<Window x:Class="PL.EntrenceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        Background="MintCream"        
+        Icon="DroneIcon.png">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBox Background="Aquamarine" Height="80" BorderThickness="0" IsReadOnly="True" />
+        <TextBox Text="Welcome to our drones managing program!" Style="{StaticResource Title}" HorizontalAlignment="Stretch" FontWeight="Black" FontSize="30" Height="50" />
+        <Image   x:Name="imageDrone" Visibility="Visible" Source="DroneLogo.png" Height="151" Width="388"  HorizontalAlignment="Stretch" Grid.Row="1"/>
+        <TextBox Background="Aquamarine" Grid.Row="2" Height="80" BorderThickness="0" IsReadOnly="True" />
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <TextBox Text="Enter Your Id:"  Style="{StaticResource SimpleTextStyle}" VerticalAlignment="Top" Margin="25" Background="Aquamarine"/>
+                <TextBox  x:Name="Id"  TextChanged="btnId_TextChanged" Style="{StaticResource SimpleTextStyle}" IsReadOnly="False" />
+                <TextBox x:Name="IdExeption" Style="{StaticResource SimpleTextStyle}" VerticalAlignment="Bottom" Margin="25,30,25,22" Background="Aquamarine"/>
+            </Grid>
+            <Button  x:Name="btnSignIn" Content="Sign in " Grid.Column="1" Style="{StaticResource mainWindowButtonStyle}" Click="btnSignIn_Click" />
+            <Button  x:Name="btnRegister" Content="Register" Grid.Column="2" Style="{StaticResource mainWindowButtonStyle}" Click="btnRegister_Click" />
+            <Button  x:Name="btnAdmin" Content="Admin" Grid.Column="3" Style="{StaticResource mainWindowButtonStyle}" Click="btnAdmin_Click" />
+        </Grid>
+    </Grid>
+</Window>

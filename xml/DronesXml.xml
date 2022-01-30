@@ -1,27 +1,42 @@
 <?xml version="1.0"?>
 <ArrayOfDrone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Drone>
-    <Id>47465</Id>
-    <Model>EX501</Model>
-    <MaxWeight>Light</MaxWeight>
-  </Drone>
-  <Drone>
-    <Id>83098</Id>
+    <Id>89041</Id>
     <Model>EX502</Model>
     <MaxWeight>Medium</MaxWeight>
   </Drone>
   <Drone>
-    <Id>46357</Id>
+    <Id>51382</Id>
     <Model>EX503</Model>
     <MaxWeight>Heavy</MaxWeight>
   </Drone>
   <Drone>
-    <Id>80663</Id>
+    <Id>50108</Id>
+    <Model>EX502</Model>
+    <MaxWeight>Medium</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>70761</Id>
     <Model>EX503</Model>
     <MaxWeight>Heavy</MaxWeight>
   </Drone>
   <Drone>
-    <Id>35044</Id>
+    <Id>45333</Id>
+    <Model>EX503</Model>
+    <MaxWeight>Heavy</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>40013</Id>
+    <Model>EX501</Model>
+    <MaxWeight>Light</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>44211</Id>
+    <Model>EX502</Model>
+    <MaxWeight>Medium</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>64300</Id>
     <Model>EX503</Model>
     <MaxWeight>Heavy</MaxWeight>
   </Drone>

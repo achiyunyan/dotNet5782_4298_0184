@@ -31,7 +31,7 @@ namespace Dal
 
             // not in use 
             #region write to xml
-            
+            /* 
             XmlTools.SaveListToXMLSerializer<Customer>(DataSource.Customers, @"CustomersXml.xml");
             XmlTools.SaveListToXMLSerializer<Drone>(DataSource.Drones, @"DronesXml.xml");
             XmlTools.SaveListToXMLSerializer<Station>(DataSource.Stations, @"StationsXml.xml");
@@ -55,11 +55,11 @@ namespace Dal
             }
 
             XmlTools.SaveListToXMLElement(parcelElement, @"ParcelsXml.xml");
-            
+            */
             #endregion 
         }
 
-        #endregion
+#endregion
 
         #region Add
         /// <summary>

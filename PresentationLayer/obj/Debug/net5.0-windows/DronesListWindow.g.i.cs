@@ -133,7 +133,7 @@ namespace PL {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/PL;V1.0.0.0;component/droneslistwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/PL;component/droneslistwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\DronesListWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
