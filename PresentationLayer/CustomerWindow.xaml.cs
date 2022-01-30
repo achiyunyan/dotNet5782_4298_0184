@@ -20,6 +20,7 @@ namespace PL
     /// </summary>
     public partial class CustomerWindow : Window
     {
+        #region config
         BlApi.IBL bl;
         Customer customer;
         bool[] well = { false, false, false, false, false };
@@ -28,11 +29,15 @@ namespace PL
         private bool first2 = true;
         private bool phoneIsOk = true;
         private bool openParcels;
+        #endregion
 
+        #region show customer
         /// <summary>
-        /// Customer actions functions
+        /// ctor for show customer window
         /// </summary>
-        
+        /// <param name="myCustomer"></param>
+        /// <param name="myBl"></param>
+        /// <param name="openParcels"></param>
         public CustomerWindow(BO.ListCustomer myCustomer, BlApi.IBL myBl, bool openParcels = true)
         {
             bl = myBl;
@@ -44,12 +49,21 @@ namespace PL
             CustomerActions.DataContext = customer;
         }
 
+
+        /// <summary>
+        /// Let only allowed exit to happen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (exit == false)
                 e.Cancel = true;
         }
 
+        /// <summary>
+        /// Refresh the customer presented in the window and int owner
+        /// </summary>
         public void Refresh()
         {
             if (CustomerActions.Visibility == Visibility.Visible)
@@ -63,6 +77,12 @@ namespace PL
                 ((ParcelWindow)this.Owner).Refresh();
         }
 
+        /// <summary>
+        /// Exit the window
+        /// Open other window if nececcary
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
         {
             Refresh();
@@ -72,10 +92,15 @@ namespace PL
             this.Close();
         }
 
+        /// <summary>
+        ///Phone was changed
+        /// Update the relevant fields and textboxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Phone_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ulong phone;
-            if (!first1 && ulong.TryParse(Phone.Text, out phone) && (Phone.Text.Length == 10 || Phone.Text.Length == 9))
+            if (!first1 && ulong.TryParse(Phone.Text, out _) && (Phone.Text.Length == 10 || Phone.Text.Length == 9))
             {
                 phoneIsOk = true;
                 Phone.Background = Brushes.MintCream;
@@ -98,6 +123,12 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Name was changed
+        /// Update the relevant fields and textboxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Name_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!first2 && phoneIsOk)
@@ -106,6 +137,11 @@ namespace PL
                 first2 = false;
         }
 
+        /// <summary>
+        /// Update the customer details 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             bl.UpdateCustomer(customer.Id, Name.Text, Phone.Text);
@@ -113,6 +149,11 @@ namespace PL
             Update.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// One of the parcels the customer sent was clicked. Open its window 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void outParcelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (openParcels)
@@ -123,6 +164,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        ///  One of the parcels sent to the customer was clicked. Open its window 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void InParcelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (openParcels)
@@ -133,17 +179,26 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Open the window to add parcel wich will be sent from this customer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddParcel_Click(object sender, RoutedEventArgs e)
         {
             ParcelWindow pw = new ParcelWindow(bl, customer.Id);
             pw.Owner = this;
             pw.Show();
         }
+#endregion 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Add customer functions
         /// </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        #region Add customer
+
+
         public CustomerWindow(BlApi.IBL myBl)
         {
             bl = myBl;
@@ -152,6 +207,12 @@ namespace PL
             Title = "AddCustomerWindow";            
         }
 
+        /// <summary>
+        /// Id was changed
+        /// Update the relevant fields and textboxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void IdGet_TextChanged(object sender, TextChangedEventArgs e)
         {
             uint id;
@@ -169,6 +230,12 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Name was changed
+        /// Update the relevant fields and textboxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NameGet_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (NameGet.Text != "")
@@ -185,6 +252,12 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Phone was changed
+        /// Update the relevant fields and textboxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PhoneGet_TextChanged(object sender, TextChangedEventArgs e)
         {
             ulong phone;
@@ -202,6 +275,12 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Latitude was changed
+        /// Update the relevant fields and textboxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LocationLatGet_TextChanged(object sender, TextChangedEventArgs e)
         {
             double l;
@@ -219,6 +298,12 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Longitude was changed
+        /// Update the relevant fields and textboxes 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LocationLongGet_TextChanged(object sender, TextChangedEventArgs e)
         {
             double l;
@@ -235,7 +320,13 @@ namespace PL
                 well[4] = false;
             }
         }
-
+        
+        /// <summary>
+        /// Add the customer if everything is legal
+        /// Update the user about the result of the action
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addCustomerBtn_Click(object sender, RoutedEventArgs e)
         {
             if(well.All(pl => pl == true))
@@ -266,7 +357,7 @@ namespace PL
                 }
             }
         }
+        #endregion
 
-        
     }
 }

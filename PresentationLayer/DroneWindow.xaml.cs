@@ -115,7 +115,13 @@ namespace PL
         /// <summary>
         /// Drone actions functions
         /// </summary>
+        #region Drone Actions
 
+        /// <summary>
+        /// constractor for drone actions window
+        /// </summary>
+        /// <param name="myDrone"></param>
+        /// <param name="myBl"></param>
         public DroneWindow(BO.ListDrone myDrone, BlApi.IBL myBl)
         {
             bl = myBl;
@@ -126,6 +132,9 @@ namespace PL
             DroneActions.DataContext = poDrone;
         }
 
+        /// <summary>
+        /// updates the window 
+        /// </summary>
         public void Refresh()
         {
             poDrone = new PO.Drone(bl.GetDrone(poDrone.Id));
@@ -140,6 +149,11 @@ namespace PL
                 ((ParcelWindow)this.Owner).Refresh();
         }
 
+        /// <summary>
+        /// Show the update button for possible model change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Model_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!first)
@@ -148,7 +162,11 @@ namespace PL
                 first = false;
         }
 
-
+        /// <summary>
+        /// updates the drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             bl.UpdateDrone(poDrone.Id, Model.Text);
@@ -156,6 +174,11 @@ namespace PL
             Update.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// sends the drone to charge
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SendToCharge_Click(object sender, RoutedEventArgs e)
         {
             string str = "Drone sent to charge successfully!";
@@ -172,6 +195,11 @@ namespace PL
             Refresh();
         }
 
+        /// <summary>
+        /// Realse the drone from charging
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FreeFromCharge_Click(object sender, RoutedEventArgs e)
         {
             string str = "Drone freed from charge successfully!";
@@ -187,6 +215,11 @@ namespace PL
             Refresh();
         }
 
+        /// <summary>
+        /// Sends the drone to delivery
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SendToDelivery_Click(object sender, RoutedEventArgs e)
         {
             string str = "Drone sent to delivery successfully!";
@@ -202,6 +235,11 @@ namespace PL
             Refresh();
         }
 
+        /// <summary>
+        /// Collect the parcel from the sender
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CollectParcel_Click(object sender, RoutedEventArgs e)
         {
             string str = "Parcel collected successfully!";
@@ -217,6 +255,11 @@ namespace PL
             Refresh();
         }
 
+        /// <summary>
+        /// Deliver the parcel to the receiver
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
         {
             string str = "Parcel Delivered successfully!";
@@ -232,6 +275,11 @@ namespace PL
             Refresh();
         }
 
+        /// <summary>
+        /// Opens the parcel window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openParcelBtn_Click(object sender, RoutedEventArgs e)
         {
             if (Owner is ParcelWindow)
@@ -246,21 +294,39 @@ namespace PL
             parcelWindow.Show();
         }
 
+        /// <summary>
+        /// Turn on simulation mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Automatic_Click(object sender, RoutedEventArgs e)
         {
             Automatic.Visibility = Visibility.Collapsed;
             Manual.Visibility = Visibility.Visible;
             ActionsButtons.Visibility = Visibility.Collapsed;
-            worker =  new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true, };
+            worker = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true, };
             worker.DoWork += (sender, args) => bl.StartSimulator(poDrone.Id, updateWindow, checkStop);
             worker.RunWorkerCompleted += (sender, args) => { worker = null; };
             worker.ProgressChanged += (sender, args) => Refresh();
             worker.RunWorkerAsync(poDrone.Id);
         }
 
+        /// <summary>
+        /// update window by calling the progressChanged event
+        /// </summary>
         private void updateWindow() { worker.ReportProgress(0); }
+
+        /// <summary>
+        /// checks if worker was assked to stop
+        /// </summary>
+        /// <returns></returns>
         private bool checkStop() { return !worker.CancellationPending; }
 
+        /// <summary>
+        /// changes the drone mode to manual
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Manual_Click(object sender, RoutedEventArgs e)
         {
             worker.CancelAsync();
@@ -269,13 +335,20 @@ namespace PL
             ActionsButtons.Visibility = Visibility.Visible;
             Manual.Visibility = Visibility.Collapsed;
         }
-
+        #endregion
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Add drone functions
         /// </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        #region Add Drone
+
+        /// <summary>
+        /// constractor for add drone window
+        /// </summary>
+        /// <param name="myBl"></param>
         public DroneWindow(BlApi.IBL myBl)
         {
             bl = myBl;
@@ -286,6 +359,11 @@ namespace PL
             this.comboMaxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategory));
         }
 
+        /// <summary>
+        /// adds the drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addDroneBtn_Click(object sender, RoutedEventArgs e)
         {
             if (well.All(pl => pl == true))
@@ -315,6 +393,11 @@ namespace PL
 
         }
 
+        /// <summary>
+        /// closes the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnBackToList_Click(object sender, RoutedEventArgs e)
         {
             if (worker != null)
@@ -328,7 +411,11 @@ namespace PL
             this.Close();
         }
 
-
+        /// <summary>
+        /// gets the id and checks if valid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Id_TextChanged(object sender, TextChangedEventArgs e)
         {
             int id;
@@ -356,6 +443,11 @@ namespace PL
 
         }
 
+        /// <summary>
+        /// gets the model and checks if valid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ModelAdd_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (ModelAdd.Text == "")
@@ -370,21 +462,36 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// valid the max weight
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboMaxWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             well[2] = true;
         }
 
+        /// <summary>
+        /// valid the initial station  
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboInitialStation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             well[3] = true;
         }
 
+        /// <summary>
+        /// closes the window if allowed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (exit == false)
                 e.Cancel = true;
         }
-
+        #endregion
     }
 }
