@@ -29,24 +29,38 @@ namespace PL
             InitializeComponent();
         }
 
-         private void btnShowDrones_Click(object sender, RoutedEventArgs e)
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            new DronesListWindow(myBl).Show();
+            new EntrenceWindow().Show();
+            base.OnClosing(e);
+        }
+
+        private void btnShowDrones_Click(object sender, RoutedEventArgs e)
+        {
+            DronesListWindow dw =  new DronesListWindow(myBl);
+            dw.Owner = this;
+            dw.Show();
         }
 
         private void btnShowStations_Click(object sender, RoutedEventArgs e)
         {
-            new StationsListWindow(myBl).Show();
+            StationsListWindow sw = new StationsListWindow(myBl);
+            sw.Owner = this;
+            sw.Show();
         }
 
         private void btnShowCustomers_Click(object sender, RoutedEventArgs e)
         {
-            new CustomersListWindow(myBl).Show();
+            CustomersListWindow cw = new CustomersListWindow(myBl);
+            cw.Owner = this;
+            cw.Show();
         }
 
         private void btnShowParcels_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelsListWindow(myBl).Show();
+            ParcelsListWindow pw = new ParcelsListWindow(myBl);
+            pw.Owner = this;
+            pw.Show();
         }
     }
 }

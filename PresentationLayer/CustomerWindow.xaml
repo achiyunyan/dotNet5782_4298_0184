@@ -81,7 +81,8 @@
                          Height="125" ScrollViewer.CanContentScroll="False" Background="MintCream" HorizontalContentAlignment="Stretch" MouseDoubleClick="InParcelsList_MouseDoubleClick"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="2" Grid.Row="1">
+            <StackPanel Grid.Column="2" Grid.Row="1">                
+                <Button x:Name="AddParcel" Content="Add Parcel" Click="AddParcel_Click" Style="{StaticResource StackPanelButtonStyle}"/>
                 <Button x:Name="Update" Content="Update" Click="Update_Click"  Style="{StaticResource StackPanelButtonStyle}" Visibility="Collapsed"/>
             </StackPanel>
         </Grid>

@@ -33,7 +33,7 @@ namespace PL
         /// <summary>
         /// Parcel actions functions
         /// </summary>
-        /// 
+         
         public ParcelWindow(BO.ListParcel myParcel, BlApi.IBL myBl)
         {
             exist = true;
@@ -120,10 +120,15 @@ namespace PL
         /// Add Parcel functions
         /// </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public ParcelWindow(BlApi.IBL myBl)
-        {
+        public ParcelWindow(BlApi.IBL myBl, int senderId = -1)
+        {            
             bl = myBl;
             InitializeComponent();
+            if (senderId != -1)
+            {
+                SenderId.IsReadOnly = true;
+                SenderId.Text = senderId.ToString();
+            }
             ParcelActions.Visibility = Visibility.Hidden;
             Title = "AddParcelWindow";
             comboPriority.ItemsSource = Enum.GetValues(typeof(BO.Priority));

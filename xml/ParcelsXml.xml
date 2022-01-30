@@ -29,11 +29,11 @@
     <SenderId>688010187</SenderId>
     <ReciverId>859248193</ReciverId>
     <Weight>1</Weight>
-    <Priority>1</Priority>
-    <Requested>2022-01-25T12:44:45.986592+02:00</Requested>
-    <Scheduled>2022-01-25T12:47:57.986592+02:00</Scheduled>
-    <PickedUp />
-    <Delivered />
+    <Priority>0</Priority>
+    <Requested>25 ינואר 2022 12:44:45</Requested>
+    <Scheduled>25 ינואר 2022 12:47:57</Scheduled>
+    <PickedUp>30 ינואר 2022 16:03:31</PickedUp>
+    <Delivered>30 ינואר 2022 16:03:39</Delivered>
     <DroneId>50108</DroneId>
   </Parcel>
   <Parcel>
@@ -41,11 +41,11 @@
     <SenderId>972797477</SenderId>
     <ReciverId>154911678</ReciverId>
     <Weight>2</Weight>
-    <Priority>1</Priority>
-    <Requested>2022-01-27T12:34:31.9866522+02:00</Requested>
-    <Scheduled>2022-01-28T07:55:37.9866522+02:00</Scheduled>
-    <PickedUp />
-    <Delivered />
+    <Priority>0</Priority>
+    <Requested>27 ינואר 2022 12:34:31</Requested>
+    <Scheduled>28 ינואר 2022 07:55:37</Scheduled>
+    <PickedUp>30 ינואר 2022 16:02:23</PickedUp>
+    <Delivered>30 ינואר 2022 16:02:26</Delivered>
     <DroneId>51382</DroneId>
   </Parcel>
   <Parcel>
@@ -53,11 +53,11 @@
     <SenderId>818577198</SenderId>
     <ReciverId>147497819</ReciverId>
     <Weight>0</Weight>
-    <Priority>1</Priority>
-    <Requested>2022-01-24T00:01:47.9866537+02:00</Requested>
-    <Scheduled>2022-01-24T17:52:36.9866537+02:00</Scheduled>
-    <PickedUp>2022-01-25T14:54:36.9866537+02:00</PickedUp>
-    <Delivered />
+    <Priority>0</Priority>
+    <Requested>24 ינואר 2022 00:01:47</Requested>
+    <Scheduled>24 ינואר 2022 17:52:36</Scheduled>
+    <PickedUp>25 ינואר 2022 14:54:36</PickedUp>
+    <Delivered>30 ינואר 2022 16:03:16</Delivered>
     <DroneId>40013</DroneId>
   </Parcel>
   <Parcel>

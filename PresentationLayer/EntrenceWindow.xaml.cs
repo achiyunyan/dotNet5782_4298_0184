@@ -39,7 +39,7 @@ namespace PL
                 }
                 else
                 {
-                    CustomerWindow cw = new CustomerWindow(listCustomer, myBl);
+                    CustomerWindow cw = new CustomerWindow(listCustomer, myBl, false);
                     cw.Show();
                     this.Close();
                 }
@@ -51,6 +51,7 @@ namespace PL
         {
             CustomerWindow cw = new CustomerWindow(myBl);
             cw.Show();
+            Close();
         }
 
         private void btnAdmin_Click(object sender, RoutedEventArgs e)

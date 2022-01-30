@@ -27,14 +27,17 @@ namespace PL
         private bool first1 = true;
         private bool first2 = true;
         private bool phoneIsOk = true;
+        private bool openParcels;
+
         /// <summary>
         /// Customer actions functions
         /// </summary>
-        /// 
-        public CustomerWindow(BO.ListCustomer myCustomer, BlApi.IBL myBl)
+        
+        public CustomerWindow(BO.ListCustomer myCustomer, BlApi.IBL myBl, bool openParcels = true)
         {
             bl = myBl;
             customer = new Customer(bl.GetCustomer(myCustomer.Id));
+            this.openParcels = openParcels;
             InitializeComponent();
             AddCustomer.Visibility = Visibility.Hidden;
             Title = "CustomerActionsWindow";
@@ -64,6 +67,8 @@ namespace PL
         {
             Refresh();
             exit = true;
+            if (!openParcels)
+                new EntrenceWindow().Show();
             this.Close();
         }
 
@@ -110,14 +115,27 @@ namespace PL
 
         private void outParcelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ParcelWindow pw = new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == ((BO.ParcelInCustomer)OutParcelsList.SelectedItem).Id), bl);
-            pw.Owner = this;
-            pw.Show();
+            if (openParcels)
+            {
+                ParcelWindow pw = new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == ((BO.ParcelInCustomer)OutParcelsList.SelectedItem).Id), bl);
+                pw.Owner = this;
+                pw.Show();
+            }
         }
 
         private void InParcelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ParcelWindow pw = new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == ((BO.ParcelInCustomer)InParcelsList.SelectedItem).Id), bl);
+            if (openParcels)
+            {
+                ParcelWindow pw = new ParcelWindow(bl.GetParcelsList().First(pr => pr.Id == ((BO.ParcelInCustomer)InParcelsList.SelectedItem).Id), bl);
+                pw.Owner = this;
+                pw.Show();
+            }
+        }
+
+        private void AddParcel_Click(object sender, RoutedEventArgs e)
+        {
+            ParcelWindow pw = new ParcelWindow(bl, customer.Id);
             pw.Owner = this;
             pw.Show();
         }
@@ -248,5 +266,7 @@ namespace PL
                 }
             }
         }
+
+        
     }
 }
