@@ -25,8 +25,7 @@ namespace BL
         private static Random rand = new Random();
 
         #region singleton
-        private static readonly IBL instance = new BL();
-        public static IBL Instance { get { return instance; } }
+        public static IBL Instance { get; } = new BL();
         #endregion
 
         /// <summary>
@@ -146,6 +145,7 @@ namespace BL
                         IEnumerable<DO.Parcel> dalDeliveredParcels = dalParcels.Where(par => par.Delivered != null); // customers that got parcels
                         DO.Customer customer;
                         // picks a random customer that is close enough to a station
+                        int count = dalDeliveredParcels.Count();
                         do
                         {
                             lock (myDal)
@@ -153,7 +153,7 @@ namespace BL
                                 DO.Parcel x = dalDeliveredParcels.ElementAt(rand.Next(0, dalDeliveredParcels.Count()));
                                 customer = myDal.GetCustomer(x.ReciverId);
                             }
-                        } while (DistanceFromClosestStation(customer.Latitude, customer.Longitude) * ElectricityUsePerKmAvailable > 100);
+                        } while (DistanceFromClosestStation(customer.Latitude, customer.Longitude) * ElectricityUsePerKmAvailable > 100 && --count > 0);
 
                         state = DroneState.Available;
                         location = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };
